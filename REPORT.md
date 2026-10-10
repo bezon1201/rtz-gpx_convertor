@@ -2,28 +2,26 @@
 
 ## IP-5 planning handoff
 
-- **IP-5 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2).**
+- **IP-5 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK.** (Architectural review: approved with minor conditions; R1 corrections applied.)
 - **IP-5 EXECUTION: NOT AUTHORIZED.**
 - **OVERALL IMPLEMENTATION: NOT AUTHORIZED.**
-- Branch: `docs/ip-5-cli-runtime-packaging`, based on IP-4 R1 `34f067112187a4c755f5c4cc94d5b6f36cfae1ae`.
+- Branch: `docs/ip-5-cli-runtime-packaging`, reviewed baseline `af619b326a3a60a8a32912b3eda94774223c960f`.
 
-Created `docs/implementation/IP-5-CLI-RUNTIME-PACKAGING-PLAN.md`. It defines the Swift CLI boundaries, versioned protocol, safe input/output references, IP-2/IP-3/IP-4 orchestration, stateless preview/confirmation proposal, IP-5 filesystem writer ownership, cancellation/concurrency/recovery, diagnostic/privacy/offline contract, Shortcuts boundary, distribution comparison, verification matrix and future IP-5A–IP-5F stages.
+Updated `docs/implementation/IP-5-CLI-RUNTIME-PACKAGING-PLAN.md` to close four R1 conditions while preserving IP-5A–IP-5F. IP-5A through IP-5F remain future execution sub-stages; none is executed or individually passed.
 
-Proposed primary protocol: one bounded JSON request on stdin and exactly one JSON response on stdout; fixed non-sensitive argv selectors only; bounded privacy-safe stderr; stable exit mapping. This remains conditional on actual IP-1D Shortcuts and file-reference feasibility evidence. Input references remain untrusted; no path or assumed security-scope inheritance is accepted as authority. If a safe process-boundary capability cannot be preserved, the plan requires fail-closed behavior and architecture review.
+R1 corrections: (1) `inspect` uses the approved file-reference mechanism and the exact IP-2 secure acquisition, bounded read, dialect/schema/semantic validation path; summaries derive only from immutable validated `RouteDocument`. No separate parser, path reader, filename inference or schema bypass; output bounds and over-limit strategy are explicit planning requirements. (2) Preview/confirmation requires fresh authorized reference acquisition, fresh IP-2 validation, and verified source-object identity plus source-content continuity; capability lifetime, semantic preview equivalence and user consent remain distinct. The continuity mechanism is unresolved pending joint IP-2/IP-5/IP-7 qualification; no stateless feasibility or default private digest is claimed. (3) Output permissions are evidence-gated: `0600` is only a candidate; IP-5E must qualify macOS defaults, umask, ACLs, extended attributes and provider semantics separately for creation/replacement, without unsafe inheritance or silent loss. No final mode is selected. (4) IP-5D does not PASS if secure continuity cannot be demonstrated. Rollback may restore verified work; dropping Current Position from V1 requires separate explicit product-governance approval and cannot be an IP-5 unilateral downgrade.
 
-Proposed packaging direction: signed/notarized `.app` bundle containing the native arm64 CLI and legally approved resources, distributed through a user-level DMG install with a stable documented CLI path, no GUI workflow/admin/runtime installation. This is not qualified; app-bundle invocation, Gatekeeper, signing identity, schema rights, target path and minimum macOS require evidence. Preview/confirmation uses a separate invocation and fresh source/model/preview reconstruction as a provisional model; tokens are correlation only, never proof of consent. IP-4’s one-point and route-name decisions remain unresolved and owned by Gate 3, not IP-5.
+The existing conditional JSON stdio proposal, file-reference security boundary, local self-contained packaging direction, offline requirements, writer ownership and explicit user consent remain. No protocol, package, filesystem API, Shortcuts behavior, minimum OS, permission policy or source-continuity mechanism is claimed as qualified. IP-4 one-point and route-name decisions remain Gate 3 items.
 
-The plan preserves IP-5’s writer responsibility: IP-4 returns immutable validated bytes; IP-5 owns destination identity/collision, staging, atomic/no-replace or exact-target confirmed replacement, cleanup and final save status; IP-7 owns destination UI, overwrite consent and feedback. No protocol, package, filesystem API, Shortcuts behavior, minimum OS or upstream execution result is claimed as implemented or verified.
-
-Remaining dependencies include IP-1D transport and IP-1E packaging research; IP-1A schema rights/offline validator; IP-2A alias/security-scope/identity policy and execution evidence; IP-3 confirmed-command APIs and geometry qualification; IP-4 Gate 3 policy/validated artifact; IP-6 consumer evidence; IP-7 UI/install binding; and actual macOS filesystem, signing, Gatekeeper, cancellation and clean-user verification.
+Remaining Gate 3 decisions and blockers: cross-check inspect limits and pagination/error strategy with IP-2; jointly qualify source identity/content continuity and reference/capability lifetime with IP-2/IP-7; resolve IP-4 one-point/name policies; reconcile IP-1D transport and IP-1E packaging. Execution/platform blockers include IP-1A schema rights/offline validator, IP-2A alias/security-scope policy, IP-3 confirmed-command/geometry evidence, IP-6 Windy results, IP-7 UI/install binding, actual filesystem permissions/ACL/atomicity, signing/notarization, cancellation, Gatekeeper and clean-user verification.
 
 No application code, scripts, tests, probes, fixtures, schemas, dependencies, binaries, GPX, packages or Shortcuts were created; no tests or platform probes were run. No private routes, credentials or generated artifacts were added.
 
 ## IP-5 repository state
 
 - Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`
-- Commit and remote verification: recorded in the final task handoff after publication.
-- Next: architectural review of IP-5 plan; do not execute IP-5 or begin IP-6 planning.
+- R1 correction commit and remote-head verification: recorded in the final task handoff after publication.
+- Next: Gate 3 cross-check when the full detailed-plan set is ready; do not execute IP-5 or begin IP-6 planning without separate authorization.
 
 ## IP-4 R1 correction handoff
 

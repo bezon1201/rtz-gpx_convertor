@@ -2,17 +2,18 @@
 
 ## Current gate activity
 
-**IP-5 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2)**
+**IP-5 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK** (R1 conditions closed)
 
 - Gate 1: **APPROVED / PASS**.
 - IP-1 through IP-4 plans: **APPROVED / READY FOR GATE 3 CROSS-CHECK**; upstream execution remains **NOT AUTHORIZED**.
 - IP-5 execution and overall implementation: **NOT AUTHORIZED**.
-- Branch: `docs/ip-5-cli-runtime-packaging`, based on IP-4 R1 `34f067112187a4c755f5c4cc94d5b6f36cfae1ae`.
-- Plan proposes JSON stdio with fixed non-sensitive argv, conditional on IP-1D; a signed arm64 `.app` CLI container/DMG user-level install, conditional on IP-1E and later qualification; and separate-process preview/confirm with fresh recomputation, conditional on IP-2A/IP-3/IP-7 contracts.
-- IP-5 writer ownership: immutable validated bytes from IP-4; IP-5 writes and reports save state; IP-7 owns destination, overwrite consent and feedback. Safe file identity, atomicity, cancellation and sidecar boundaries remain explicit.
-- Open dependencies: Shortcuts/file-reference feasibility; schema rights/offline validation; aliases/security scope/identity; IP-3 confirmation binding; IP-4 one-point/name Gate 3 choices; filesystem/provider behavior; signing/notarization and minimum macOS; IP-7 install and interaction verification.
+- Branch: `docs/ip-5-cli-runtime-packaging`, reviewed baseline `af619b326a3a60a8a32912b3eda94774223c960f`.
+- Four R1 corrections: secure `inspect` shares IP-2 acquisition/open/bounded parse/schema/semantic validation and emits bounded transient summaries only from immutable validated `RouteDocument`; preview/confirmation distinguishes source-object identity, content continuity, reference lifetime, semantic preview equivalence and UI consent, with the continuity mechanism unresolved pending IP-2/IP-5/IP-7 qualification; output permissions are evidence-gated (`0600` is only a candidate, with no final mode selected); IP-5D cannot PASS or be rescued by unilateral removal of Current Position from V1.
+- Existing conditional JSON stdio and self-contained arm64 `.app`/DMG proposals remain unqualified; IP-5A–IP-5F structure is preserved and none is executed or individually passed.
+- IP-5 writer ownership: immutable validated bytes from IP-4; IP-5 writes and reports save state; IP-7 owns destination, overwrite consent and feedback. New-file and replacement policies must separately qualify atomicity, permissions, ACLs, extended attributes and destination-provider semantics.
+- Remaining Gate 3 decisions/blockers: inspect over-limit error vs pagination; joint source-continuity and reference/capability lifetime policy; IP-4 one-point/name decisions; IP-1D transport and IP-1E packaging reconciliation. Execution evidence remains needed for schema rights/offline validation, IP-2A alias/scope policy, IP-3 confirmation, IP-6, IP-7, filesystem/provider semantics, signing/notarization and supported macOS matrix.
 - No application code, scripts, tests, probes, fixtures, schemas, dependencies, binaries, GPX, packages or Shortcuts created; no tests/probes run.
-- Next: architectural review of IP-5 plan; do not execute IP-5 or begin IP-6 planning.
+- Next: Gate 3 cross-check when complete; do not execute IP-5 or begin IP-6 planning without separate authorization.
 - Commit and remote verification are reported in the final task handoff.
 
 **IP-4 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK (R1 conditions closed)**

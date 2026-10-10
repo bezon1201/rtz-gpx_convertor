@@ -62,7 +62,7 @@ Proposed response/request envelope fields (exact schema is to be frozen only aft
 
 - `protocol_version`: integer major version; version `1` is the initial proposal.
 - `request_id`: random per-invocation correlation ID unrelated to input, route, source path or content digest.
-- `action`: `capabilities`, `inspect`, `preview`, `confirm_export`, or `cancel`. In the proposed stateless protocol, `cancel` abandons a pending UI flow and returns a no-op cancelled response; it cannot terminate a different active process. Active-process cancellation uses the qualified launcher’s signal/pipe-close behavior, which IP-1D must verify.
+- `action`: `capabilities`, `inspect`, `preview`, `confirm_export`, or `cancel`. In the proposed separate-invocation protocol, `cancel` abandons a pending UI flow and returns a no-op cancelled response; it cannot terminate a different active process. Active-process cancellation uses the qualified launcher’s signal/pipe-close behavior, which IP-1D must verify. Separate-invocation/stateless feasibility remains unqualified.
 - `input_reference`: opaque reference object supplied by the approved bridge; no raw path is an authority.
 - `mode`: `full_route`, `from_waypoint`, `current_direct`, or `current_join` where applicable.
 - `selection`: explicit source-order waypoint/leg reference; current-position entered latitude/longitude; explicit next waypoint; explicit qualified connector geometry; and any approved export naming choice.
@@ -71,6 +71,12 @@ Proposed response/request envelope fields (exact schema is to be frozen only aft
 - `overwrite_authorization`: explicit IP-7 consent tied to the selected target identity; absence means no replacement.
 
 Response fields: `protocol_version`, `request_id`, `outcome`, `phase`, `capabilities` where requested, safe `diagnostics`, `preview` where requested, IP-4 `validation` and `loss_report`, and separate `save_result` when writing was attempted. User-facing preview/result data may contain coordinates/names required to display the selected transformation; these values must not be copied to logs or generic diagnostics. A successful save may return a display-only output reference/name for IP-7 to show or reveal; never include full paths in default diagnostics or logs.
+
+#### `inspect` action contract
+
+`inspect` is a summary operation over the same securely acquired and validated input as conversion, not a lightweight content peek. It must receive an approved file reference, use IP-2 secure open and bounded read, exact dialect dispatch, schema validation and semantic model construction, and derive all route/waypoint summaries solely from the resulting immutable validated `RouteDocument`. It must not introduce another XML parser or path-based reader, infer route names/waypoint names/counts/identifiers from a filename, or bypass mandatory schema qualification. Finder, Shortcuts and CLI origins confer no trust.
+
+Inspect output is bounded: cap returned waypoint entries, each name/label length, total response bytes, and diagnostics under evidence-based IP-2/protocol limits. The contract must specify either a structured `SUMMARY_LIMIT_EXCEEDED` error that does not represent an incomplete list as complete, or explicit stable pagination over the validated model; choose and qualify the strategy before freezing protocol v1. User-facing route details exist only in the transient response and never in default logs. The response may identify only route fields present in the validated model; it must not manufacture identifiers or names.
 
 Use a strict, documented JSON encoding and field schema. Reject malformed JSON, duplicate/unknown required fields, invalid enum values, unsupported features and unsupported major protocol versions with a structured response when the stream permits. Additive evolution requires explicit compatibility rules and capability negotiation. A client must not infer that a capability exists from a version number alone. Unsupported protocol versions fail explicitly; no best-effort reinterpretation.
 
@@ -85,6 +91,8 @@ Capability reporting returns CLI version, protocol versions, build architecture,
 - A nonzero exit is never suppressed because a JSON response exists. A zero exit never substitutes for `outcome` and `save_result` fields. If stdout cannot be written, emit only a short safe stderr diagnostic and nonzero status.
 - Identical request, model, qualified resources and approved settings produce the same semantic preview, diagnostics order, GPX bytes meaning and loss report. Request IDs may differ. Byte equality is only required if approved IP-1/IP-4 decisions demand it.
 - Enforce byte/depth/item/time limits from IP-2 and protocol-specific caps chosen by evidence. Do not invent unreviewed route limits. Oversize requests fail before expensive parsing. Bound diagnostics and preview serialization.
+
+`inspect` uses the same input-acquisition and IP-2 validation phases as every conversion action (§5). Response-size limits must not cause a separate parser, partial-validation shortcut, or filename-derived fallback.
 
 ## 4. Input-reference and file-access security boundary
 
@@ -124,7 +132,7 @@ One request follows explicit phases with independent results:
 4. Retain the immutable source route model and source-order waypoint/leg references only for this process/request. No source route database or durable session is introduced.
 5. Apply user-provided mode and selections. Full Route uses source order. From Waypoint requires a selected source-order waypoint. Current Position requires manual coordinate strings, explicit next waypoint, and explicit Direct to Next WP or Join Selected Route Leg choice; a join requires an explicitly selected leg and explicitly qualified connector geometry.
 6. For a preview action, call IP-3 candidate/preview API and return its immutable ordered point sequence, geometry availability, warnings, endpoint/leg display information, provenance-safe references, and advisory distances separately. Never allow an advisory distance to choose or alter route construction.
-7. For confirmation, obtain IP-3’s exact confirmed-command validation. A fresh process must reacquire/revalidate the same source reference and reconstruct the same preview under the same explicit selections. Reject stale/mismatched input, changed file identity, changed model/algorithm revision or changed command options; return a new preview request rather than selecting replacements.
+7. For confirmation, obtain IP-3’s exact confirmed-command validation. A fresh process must reacquire the input using a newly authorized reference or separately qualified reusable capability, then perform a fresh IP-2 secure open and validation. Establish the same qualified source identity and content state under the approved IP-2/IP-5 identity contract, and reconstruct preview from the same selections and model/algorithm revision. Reject changed source content, selections or stale previews; return a new preview request rather than selecting replacements.
 8. Only a finalized IP-3 `TransformedRoute` can be passed to IP-4. IP-5 cannot upgrade a preview/candidate into a final transform or suppress an IP-3 error.
 9. Invoke IP-4 eligibility, GPX serialization, offline schema validation, semantic/representation-specific round-trip validation, and loss reporting. Respect the Gate 3 one-point policy and naming contract; IP-5 makes neither product decision.
 10. Receive immutable validated GPX bytes and loss report. Reject absent/invalid validation status. No filesystem operation begins on failed serialization, eligibility or validation.
@@ -140,18 +148,18 @@ No layer may silently change the selected waypoint/leg, infer geometry, normaliz
 | Model | Advantages | Risks / disposition |
 |---|---|---|
 | Single-process interaction: CLI remains alive while Shortcuts displays preview and returns consent | Keeps the same parsed model and file access in memory; avoids reacquiring a reference; no persistent session store. | Shortcuts may not support a human interaction while a child process remains blocked; risks timeout, orphan process, unclear cancellation and scope lifetime. No daemon is intended. IP-1D must prove actual behavior. |
-| Separate-process requests: preview returns, Shortcut presents it, then invokes again with explicit user response | Fits sequential Shortcut actions; process is short-lived; crashes/cancel do not leave a resident session; no database needed. | Reference/capability must survive/reacquire safely; file or model may change; must rerun IP-2/IP-3 and reject stale state. Preferred planning model, conditional on IP-1D/IP-2A file-reference evidence. |
+| Separate-process requests: preview returns, Shortcut presents it, then invokes again with explicit user response | Fits sequential Shortcut actions; process is short-lived; crashes/cancel do not leave a resident session. | Reference/capability must be reacquired or separately qualified; file or model may change; must rerun IP-2/IP-3 and reject stale state. Candidate only; feasibility and privacy/security qualification are unresolved. |
 
-Do not build a background server, listener, persistent session database or implicit conversion queue to mask these tradeoffs. If separate invocation cannot safely preserve/reacquire input identity and explicit consent, stop for architecture review; revisit single-process or a tested native bridge rather than weaken the gate.
+Do not build a background server, listener, persistent session database or implicit conversion queue to mask these tradeoffs. Do not promise a stateless solution before evidence establishes feasibility. If separate invocation cannot securely re-establish source identity and content-state continuity plus explicit consent, stop for architecture review; evaluate a supported alternative transport rather than weaken the gate.
 
-### 6.2 Proposed separate-invocation state protocol
+### 6.2 Proposed separate-invocation state protocol (feasibility unresolved)
 
 1. `preview` request includes exact entered current position, selected next waypoint, selected leg where applicable, chosen mode, qualified connector geometry, route-name choice permitted by Gate 3, and opaque source reference.
 2. The CLI returns a bounded `preview` payload: a random correlation ID/revision, mode, entered position, explicit selections and their display labels, ordered proposed points, connector endpoints/geometry, included/excluded leg semantics, warnings, geometry availability, advisory distances clearly labelled non-authorizing, and source/model revision metadata that contains no source hash.
 3. IP-7 presents the proposed geometry/order and obtains a distinct user confirmation or cancellation. Cancel sends no export request and produces no file. IP-7 must not edit or silently substitute a waypoint, leg, coordinate or geometry.
 4. `confirm_export` is a new request containing the same explicit inputs/selections and correlation data, plus an authorized output capability and any separately approved overwrite consent. IP-7 must construct/send it only after a separate affirmative user action. A JSON `confirmed` flag, preview ID or request token is not proof of UI consent; the CLI cannot authenticate that a caller is Shortcuts, so this protocol makes no cryptographic or caller-authentication claim.
-5. The CLI reacquires the same source object under the approved reference policy, revalidates via IP-2, regenerates the IP-3 preview and validates the confirmed command against that fresh preview. It compares all explicit choices, input coordinates, qualified geometry, source-file identity/revision evidence and preview revision. Any mismatch returns `STALE_PREVIEW` or `PREVIEW_BINDING_MISMATCH`; no output file is created.
-6. A preview ID, revision, selection digest or user-editable token is **not** proof of confirmation or a cryptographic security mechanism. Do not calculate a full source-route digest by default. The fresh IP-3 validation prevents replaying stale choices; the affirmative UI action is the user-consent signal. If the implementation cannot establish the necessary source identity/revision continuity without a private full digest, reject and request a fresh preview/confirmation in a supported single operation.
+5. The confirmation invocation reacquires input using a newly authorized reference or separately qualified reusable capability. It performs a fresh IP-2 secure open and validation, verifies source-object identity and source-content state separately under the approved IP-2/IP-5 identity contract, regenerates the IP-3 preview, and validates the confirmed command against it. It compares explicit choices, coordinates, qualified geometry, model/algorithm revision and preview semantics. Path/name equality, timestamp alone, or file identity alone does not prove unchanged content. Any mismatch returns `STALE_PREVIEW` or `PREVIEW_BINDING_MISMATCH`; no output is created.
+6. A preview ID, revision, selection digest or user-editable token is **not** proof of consent or a cryptographic security mechanism. Do not calculate a full source-route digest by default. Source-object identity, source-content state, reference/capability lifetime, preview semantic equivalence, and explicit UI confirmation are distinct properties; none substitutes for another. The continuity mechanism remains **UNRESOLVED** pending joint IP-2/IP-5/IP-7 qualification. If continuity cannot be established under the approved privacy/security policy, fail closed and require a fresh preview and confirmation. IP-2A may propose a private full-route digest only for a documented technical need, privacy review and explicit approval.
 7. IP-3 remains authority for domain confirmation validity. IP-5 owns transport and stale/mismatch binding. IP-7 owns the user-visible preview and consent action. IP-5 does not invent a private confirmation bypass or treat `confirmed=true` alone as domain validation; UI ordering and confirmation are interaction requirements, not a security boundary against a caller that can invoke the CLI directly.
 
 The protocol may return a refreshed preview after a stale result, but never auto-confirms it. Each confirmation binds only to the currently displayed explicit choices. Preview content is returned for user display, not copied to logs. Keep request/response and any transient file-reference material in memory/pipes where possible.
@@ -181,13 +189,13 @@ The user-facing operation is complete only when `save_result.gpx == saved`. If t
 - Validate parent-directory access and identity through the approved macOS file-reference APIs. Reject directories/devices/FIFOs/sockets as a GPX target. Verify output is not the same file/object as the selected source RTZ, including aliases/hard links where detection is qualified.
 - Existing regular file: IP-7 must obtain explicit consent tied to that exact selected target. Recheck target identity immediately before replacement. If it changed, cancel replacement and request fresh consent. Never overwrite a different target merely because the path string matches.
 - New file: fail on collision by default and use an OS-supported atomic no-replace publication primitive. Do not check-then-write with a race window.
-- Stage to an unpredictable exclusive temporary file in the same directory/volume when supported; never use the final `.gpx` path until complete. Set restrictive user-only permissions (mode 0600 is a candidate requiring target-macOS/API review), write all bytes, flush as required, close, verify length and exact content against IP-4 bytes, then atomically publish. The selected API and metadata/ACL semantics are future qualification decisions.
-- Confirmed replace must use a reviewed platform replacement operation preserving expected permissions/ACLs. If no reliable no-replace/replace guarantee exists for that filesystem/provider, fail closed or ask the user to choose a supported local destination.
+- Stage to an unpredictable exclusive temporary file in the same directory/volume when supported; never use the final `.gpx` path until complete. Apply only a permissions/metadata policy justified by the approved user-selected destination and security policy. Mode `0600` is one candidate, not frozen or implicitly preferred: IP-5E must evaluate macOS default permissions, umask, ACLs, extended attributes and destination-provider semantics, avoid exposing private route data, and avoid restrictions that block legitimate local applications. Do not blindly inherit unsafe permissions from an existing target or staging directory. Write all bytes, flush as required, close, verify length and exact content against IP-4 bytes, then atomically publish. No final mode is selected in this plan.
+- Treat new-file creation and replacement of an existing file as separate cases. New files use the qualified creation policy and atomic no-replace. Replacement requires exact-target consent from IP-7 and a reviewed replacement operation; do not silently discard security-relevant ACLs or metadata or blindly inherit unsafe target permissions. If security-relevant metadata cannot be handled safely, fail closed pending a user-selected supported destination or policy review.
 - File Provider/cloud-backed or cross-volume behavior must be observed. Conversion cannot trigger network access or cloud upload. Require a locally available destination and a measured atomicity guarantee; otherwise return `DESTINATION_PROVIDER_UNSUPPORTED` / `DESTINATION_NOT_LOCAL` with a safe explanation.
 - On any error/cancel before publication, remove only the temporary object created by this request and leave every preexisting target/source intact. Never report a partial file as GPX success.
 - Optional sidecar is a second independent artifact and transaction. It requires its own selected destination/consent if applicable, safe write, and result. Never silently save it beside GPX.
 
-No specific POSIX syscall, Foundation API, directory-fd technique, atomic replacement function or file-coordination primitive is frozen here. IP-5E must compare supported macOS APIs and demonstrate race behavior; code review and tests must verify equivalent guarantees on the qualified OS/filesystems.
+No specific POSIX syscall, Foundation API, directory-fd technique, atomic replacement function, permission mode or file-coordination primitive is frozen here. IP-5E must compare supported macOS APIs, obtain real macOS filesystem evidence for permissions/ACLs/metadata and demonstrate race behavior; code review and tests must verify equivalent guarantees on the qualified OS/filesystems.
 
 ### 7.3 Concurrency and source/output protection
 
@@ -289,11 +297,11 @@ Apple’s notarization documentation describes code signing, Developer ID, harde
 
 No tests, fixtures, probes or build products are created in this planning task. Later authorized IP-5 execution uses IP-1 synthetic fixtures and test cases only; never real voyage routes or vessel coordinates.
 
-- Protocol v1 request/response schema, capabilities negotiation, unsupported version, unknown action/field, malformed/duplicate-key JSON, truncation, oversized input, request ID uniqueness, deterministic error ordering, exactly-one-JSON stdout, stderr privacy, exit status mapping and no mixed output.
+- Protocol v1 request/response schema, capabilities negotiation, `inspect` via the exact secure IP-2 acquisition/open/parse/schema/semantic pipeline, no independent path reader or filename inference, bounded names/waypoint entries/diagnostics/response, explicit over-limit error or pagination behavior, unsupported version, unknown action/field, malformed/duplicate-key JSON, truncation, oversized input, request ID uniqueness, deterministic error ordering, exactly-one-JSON stdout, stderr privacy, exit status mapping and no mixed output.
 - Every route mode: Full Route, From Waypoint (first/middle/last/ambiguous), Current Direct and Current Join; absent selection/unsupported geometry rejected; no auto-selection or geometry fallback.
-- Preview/confirm/cancel: explicit fields, sequence display, same preview binding, stale input/model/file identity, modified options, replay, mismatched request ID, cancellation before/after each phase, no finalization without IP-3 validation, no source digest by default.
+- Preview/confirm/cancel: explicit fields, sequence display, authorized reacquisition, source-object identity distinct from source-content state and reference lifetime, semantic preview equivalence, stale input/model/content/selections, modified options, path/timestamp/token insufficiency, replay, mismatched request ID, cancellation before/after each phase, no finalization without IP-3 validation, no source digest by default, fail-closed when continuity cannot be proven.
 - Safe input: missing, malformed, oversized, unreadable, nonregular and replaced source; filename spoof/extension mismatch; selected alias and symlink policy; path traversal; Unicode/spaces; file URL encoding; security scope expired/denied; resource access race; content mutation; cloud-only File Provider item; no network; identity mismatch.
-- Writer: IP-4 artifact required; serialization/validation/eligibility status combinations; exact staged bytes; source/output same object; existing regular file/directory/device/symlink; no-replace race; exact-target overwrite consent; target replaced after consent; read-only/permission failure; alias/hardlink behavior; ACL/permissions; Unicode path; cross-volume; File Provider; provider atomicity unsupported; partial write; flush failure; cancellation before/during/immediately before/after publication; temp cleanup/orphan recovery; optional sidecar succeeds/fails independently.
+- Writer: IP-4 artifact required; serialization/validation/eligibility status combinations; exact staged bytes; source/output same object; existing regular file/directory/device/symlink; no-replace race; exact-target overwrite consent; target replaced after consent; read-only/permission failure; alias/hardlink behavior; macOS default mode/umask/ACL/extended-attribute/destination-provider semantics for new-file creation versus replacement; no unsafe inheritance or silent loss of security-relevant metadata; Unicode path; cross-volume; File Provider; provider atomicity unsupported; partial write; flush failure; cancellation before/during/immediately before/after publication; temp cleanup/orphan recovery; optional sidecar succeeds/fails independently.
 - Concurrency: separate inputs, same destination, same source and output, duplicated request IDs, simultaneous overwrite consent attempts, aggregate resource caps, process termination, no cross-request state/permission/preview reuse.
 - Offline/privacy: network disabled, no attempted connection/DNS/schema retrieval/telemetry; logs and errors contain no paths/coordinates/names/XML/GPX/full digest/bookmark; preview JSON delivered only to Shortcut; no source mutation.
 - Distribution: arm64 runtime; resource hash verification; signature verification for every nested executable; notarization/ticket/Gatekeeper/quarantine; clean user without developer tools/Homebrew/Python/Node; no admin; app path stability; Shortcut import and launch path; Finder Quick Action; Dock/keyboard picker fallback; cancellation and process result; update/rollback/uninstall.
@@ -325,9 +333,9 @@ These are future work packages only, not implementation instructions or authoriz
 - **Exclusions:** no private data in argv/logs; no protocol claiming unqualified capabilities; no persistent listener.
 - **Proposed files:** `Sources/RTZCLI/Protocol/Request.swift`, `Response.swift`, `DiagnosticEnvelope.swift`, protocol docs and synthetic tests.
 - **Dependencies:** IP-1D transport feasibility; IP-2/IP-3/IP-4 stable type/code review; IP-5A executable/path decision; Gate 4 authorization.
-- **Sequence:** schema/version policy → parse limits → capabilities/action map → exit/error contract → stdout/stderr separation → compatibility review.
+- **Sequence:** schema/version policy → parse limits → capabilities/action map and secure `inspect` contract → exit/error contract → stdout/stderr separation → compatibility review.
 - **Synthetic tests/evidence:** malformed/unsupported requests, strict parser, version mismatch, one response, clean streams, deterministic mapping, no sensitive argv/logs.
-- **Acceptance:** documented stable contract, backward-compatibility rules, supported capability reporting and failure behavior; actual Shortcuts round-trip passes IP-1D evidence.
+- **Acceptance:** documented stable contract, backward-compatibility rules, supported capability reporting and failure behavior; `inspect` uses the validated IP-2 model with bounded output and qualified over-limit behavior; actual Shortcuts round-trip passes IP-1D evidence.
 - **Risks:** Shortcut coercion, schema drift, accidental debug output or protocol break.
 - **Rollback:** retain last compatible protocol implementation; reject unsupported majors explicitly.
 - **PASS:** independent protocol review and actual supported-transport verification; no unqualified field or behavior.
@@ -339,9 +347,9 @@ These are future work packages only, not implementation instructions or authoriz
 - **Exclusions:** no parser/domain/serializer duplication; no blanket alias rejection without evidence; no source digest default.
 - **Proposed files:** `Sources/RTZCLI/InputReferenceAdapter.swift`, `ConversionOrchestrator.swift`, `OutputReferenceAdapter.swift`, interface and privacy tests.
 - **Dependencies:** IP-2A joint security-scope/alias/identity/limit policy; IP-1D transport; IP-3/IP-4 approved interfaces; IP-5A/B; Gate 4 authorization.
-- **Sequence:** select one demonstrated carrier → bind one invocation → open/parse via IP-2 → keep immutable model request-local → map mode/selection → call IP-3 → call IP-4 only on finalized result → return structured result.
+- **Sequence:** select one demonstrated carrier → bind one invocation → open/parse/validate via IP-2 → for `inspect`, summarize only the validated immutable model → otherwise keep model request-local, map mode/selection → call IP-3 → call IP-4 only on finalized result → return bounded structured result.
 - **Synthetic tests/evidence:** Finder/Shortcut/CLI source capability, revoked/expired scope, identity replacement, content mutation, unsupported provider, size limits, all mode dispatches, no path reopen/source mutation, privacy.
-- **Acceptance:** only validated model enters domain; no path/content trust bypass; no partial model; deterministic errors; access revoked/closed after operation; no capability persistence.
+- **Acceptance:** only validated model enters domain or `inspect`; no independent XML/path reader, filename inference, path/content trust bypass or schema bypass; bounded inspect output has explicit over-limit behavior; no partial model; deterministic errors; access revoked/closed after operation; no capability persistence unless separately qualified.
 - **Risks:** process loses scope, alias race, File Provider hydration, interface drift.
 - **Rollback:** reject unproven carrier and disable affected workflow; do not weaken IP-2 requirements.
 - **PASS:** joint IP-2A/IP-5/IP-7 signed-off behavior and platform evidence for each supported launch path.
@@ -349,16 +357,16 @@ These are future work packages only, not implementation instructions or authoriz
 ### IP-5D — Preview/confirmation transport and binding
 
 - **Objective:** transport IP-3 previews and bind a distinct affirmative Shortcut action to a freshly validated confirmed command.
-- **Scope:** stateless preview/confirm request and result lifecycle; no geometry algorithms/UI implementation.
+- **Scope:** preview/confirm request and result lifecycle across candidate invocation models; separate-invocation/stateless operation is not promised until qualified. No geometry algorithms/UI implementation.
 - **Exclusions:** no trusted token-only decision, full source digest, persistent DB, daemon, implicit confirmation or selection changes.
 - **Proposed files:** `Sources/RTZCLI/PreviewBinding.swift`, `ConfirmationRequest.swift`, response-model tests/docs.
 - **Dependencies:** IP-3 confirmed-command contract; IP-7 UX/consent; IP-5B protocol, IP-5C reference/identity; IP-4 one-point/naming Gate 3 decisions; Gate 4 authorization.
-- **Sequence:** inspect/recompute preview → return display payload → collect user consent in Shortcut → fresh process reacquires/revalidates and recomputes → compare choices/revision/identity → IP-3 validates confirmed command → only then IP-4/export.
-- **Synthetic tests/evidence:** stale/replayed/mismatched preview, file mutation, all current-position variants, explicit route leg/next-WP, cancellation, user-editable token tampering, scope lifetime.
-- **Acceptance:** no export from preview alone; changed source/options require re-preview; no navigation choice inferred; token/revision treated as correlation only; user consent is distinct and explicit.
-- **Risks:** identity continuity without digest; Shortcuts cannot render/retain preview; cancellation race.
-- **Rollback:** disable current-position export and retain Full Route/From Waypoint only if product approval allows; otherwise stop and request architecture review.
-- **PASS:** IP-3 domain and IP-7 UX review plus real Shortcuts end-to-end evidence; no false confirmation claim.
+- **Sequence:** inspect/recompute preview → return display payload → collect user consent in Shortcut → new invocation obtains newly authorized input reference or separately qualified reusable capability → fresh IP-2 open/validation and IP-3 recomputation → verify source-object identity and source-content state separately, plus selections and preview semantic equivalence → IP-3 validates confirmed command → only then IP-4/export.
+- **Synthetic tests/evidence:** stale/replayed/mismatched preview, changed bytes with stable file identity, changed object with same path/name/timestamp, changed selections/model/algorithm revision, all current-position variants, explicit route leg/next-WP, cancellation, user-editable token tampering, capability/reference lifetime, continuity failure and fail-closed response.
+- **Acceptance:** no export from preview alone; changed source content/options require re-preview; continuity established under the jointly approved IP-2/IP-5 identity contract; no navigation choice inferred; token/revision treated as correlation only; user consent is distinct and explicit. If continuity cannot be demonstrated, IP-5D does not PASS and Current Position remains not implemented/accepted/release-ready.
+- **Risks:** source identity/content continuity without default digest; capability lifetime and reacquisition; Shortcuts cannot render/retain preview; cancellation race.
+- **Rollback:** may revert incomplete IP-5D implementation changes to a previously verified state. Disabling Current Position and releasing only Full Route/From Waypoint is a separate product-scope decision requiring explicit project-governance approval; IP-5 cannot downgrade approved V1 requirements.
+- **PASS:** secure preview/confirmation binding is demonstrated under the approved identity/content-continuity contract, with IP-3 domain and IP-7 UX review plus real Shortcuts end-to-end evidence. If this is infeasible, IP-5D does not PASS; stop and escalate for architectural review of a supported alternative transport. Partial functionality or scope reduction is not equivalent to PASS.
 
 ### IP-5E — Safe filesystem writer and output lifecycle
 
@@ -369,10 +377,10 @@ These are future work packages only, not implementation instructions or authoriz
 - **Dependencies:** IP-4 immutable artifact/status; IP-7 destination/overwrite authorization; IP-2A reference and identity policy; IP-5A/B/C; supported filesystem matrix; Gate 4 authorization.
 - **Sequence:** resolve authorized destination → secure parent/target identity → compare source/output → exclusive same-volume temp → complete-byte check → atomic no-replace or confirmed replacement → cleanup/report actual state.
 - **Synthetic/platform tests:** collision/replacement race, source-output identity, permission/ACL, alias/symlink, read-only, cross-volume, File Provider, failed write/flush, cancellation at every boundary, process kill/orphan cleanup, sidecar partial success.
-- **Acceptance:** no silent overwrite/partial success or unsafe fallback; no preexisting user file removed; output identity/consent rechecked; supported destinations have demonstrated semantics; unsupported ones fail closed; sidecar status separate.
+- **Acceptance:** no silent overwrite/partial success or unsafe fallback; no preexisting user file removed; output identity/consent rechecked; new-file and replacement permission/metadata behavior is separately evidenced on real macOS filesystems; final mode/ACL policy does not broaden exposure or impose unjustified restrictions; supported destinations have demonstrated semantics; unsupported ones fail closed; sidecar status separate.
 - **Risks:** atomic APIs differ, provider semantics, ACL change, termination at publish boundary.
 - **Rollback:** preserve old output; remove only verified operation-owned temporary files; disable unsupported destinations.
-- **PASS:** reviewed race/atomicity/cleanup evidence on every supported macOS/filesystem class; no output claim without actual publish result.
+- **PASS:** reviewed race/atomicity/cleanup and permission/ACL/metadata evidence on every supported macOS/filesystem class; no output claim without actual publish result. Planning does not select a final permission mode.
 
 ### IP-5F — Shortcuts integration qualification and release handoff
 
@@ -380,13 +388,13 @@ These are future work packages only, not implementation instructions or authoriz
 - **Scope:** launch/input/output protocol and release readiness; IP-7 remains UI owner.
 - **Exclusions:** no Shortcut authoring in this plan; no Windy test, no real RTZ, no product marketing or unsupported OS promise.
 - **Proposed files:** `docs/research/IP-5/SHORTCUTS-INTEGRATION-ACCEPTANCE.md`, install/version/update contract and release checklist.
-- **Dependencies:** IP-1D/E; IP-5A–E PASS; IP-7 Shortcut design; IP-6 separate; Gate 4 authorization.
+- **Dependencies:** IP-1D/E; IP-5A–E PASS, including an explicit IP-5D PASS; IP-7 Shortcut design; IP-6 separate; Gate 4 authorization. IP-5D failure blocks this release gate unless project governance separately approves a V1 scope change.
 - **Sequence:** clean install → import Shortcut → Finder Quick Action/file path → Dock/keyboard picker fallback → exercise all modes/preview/confirm/save/cancel/error → offline/Gatekeeper/update/rollback → privacy review → hand off to IP-7.
 - **Synthetic tests/evidence:** complete §12 on candidate minimum/current OS; spaces/Unicode; stdout/stderr/status/cancel; file scopes; save destination; reveal; no Terminal; no admin; no network.
-- **Acceptance:** reproducible documented installation/binding; actual Shortcuts handles all required interactions; no CLI Terminal exposure; executable path remains valid under supported update; errors and consent are clear.
+- **Acceptance:** reproducible documented installation/binding; actual Shortcuts handles all approved V1 interactions, including Current Position only after IP-5D PASS; no CLI Terminal exposure; executable path remains valid under supported update; errors and consent are clear. Scope reduction is not implied by a partial integration result.
 - **Risks:** OS/Shortcut action drift, permission prompts, input flattening, bundle relocation, user cancellation behavior.
 - **Rollback:** remove only test installation/Shortcut; restore prior signed version and documented binding.
-- **PASS:** independent end-to-end evidence on supported OS matrix and explicit IP-7 acceptance; no assumed platform behavior.
+- **PASS:** independent end-to-end evidence on supported OS matrix, IP-5D PASS, and explicit IP-7 acceptance; no assumed platform behavior. If IP-5D fails, IP-5F cannot pass or release V1 under a reduced mode set without separate explicit project-governance approval.
 
 ## 14. Cross-stage dependency and decision matrix
 
@@ -397,10 +405,13 @@ These are future work packages only, not implementation instructions or authoriz
 | Swift runtime/package/path | IP-5A packaging; IP-7 installation | **PROVISIONAL** | Signed app bundle vs binary evidence; stable path; clean-user no-admin/no-tools installation. |
 | RTZ schema rights/resources/offline validation | IP-1A rights and validator; IP-5 bundles only cleared resources | **UNRESOLVED** | Exact schema/resource hashes, rights and offline fail-closed strategy. |
 | Input file-reference carrier | IP-2A secure open; IP-5 bridge; IP-7 selected file | **UNRESOLVED** | Security scope/bookmark/descriptor transfer; aliases, permissions, identity, replacement, File Provider and lifetime jointly verified. |
+| `inspect` summary boundary | IP-2 validates; IP-5B/C transports; IP-7 presents | **REQUIRED; STRATEGY OPEN** | Same IP-2 secure/schema-qualified parse; bounded summary output; select error vs stable pagination before protocol freeze. |
 | IP-2 model/error/limits | IP-2 owns parse/model; IP-5 dispatches/maps only | **APPROVED AS PLAN; EXECUTION PENDING** | Exact interfaces/limits/dialects, immutable model and diagnostics from authorized IP-2 evidence. |
 | IP-3 route selections/preview/confirmation | IP-3 domain; IP-5 transport/binding; IP-7 consent | **APPROVED AS PLAN; CONTRACT PROVISIONAL** | Explicit waypoint/leg, connector geometry, stale confirmation and no automatic decisions; numerical geometry decisions remain upstream. |
+| Cross-invocation source continuity | IP-2 identity contract; IP-5D binding; IP-7 capability/UI | **UNRESOLVED; IP-5D BLOCKING** | Newly authorized reference or qualified reusable capability; object identity and content state separately proven; no default private digest; fail closed if unavailable. |
 | IP-4 validated artifact/eligibility/loss | IP-4 creates immutable validated bytes; IP-5 writes | **APPROVED AS PLAN; EXECUTION PENDING** | GPX/schema/value semantics and loss report; Gate 3 chooses one-point policy and route-name override; no IP-5 override. |
-| Writer/destination/overwrite | IP-5 writer; IP-7 destination/consent | **OWNER BOUNDARY APPROVED; IMPLEMENTATION UNQUALIFIED** | Same-object protection, atomic/no-replace/replace, provider matrix, permissions, cancellation and cleanup evidence. |
+| Writer/destination/overwrite | IP-5 writer; IP-7 destination/consent | **OWNER BOUNDARY APPROVED; IMPLEMENTATION UNQUALIFIED** | Same-object protection, atomic/no-replace/replace, provider matrix, evidence-based permissions/ACL/metadata for creation and replacement, cancellation and cleanup. |
+| IP-5D / IP-5F release gate | IP-5D continuity; IP-5F integration/release | **MANDATORY; NOT QUALIFIED** | IP-5D must PASS; if it fails, IP-5F cannot pass by omitting Current Position absent separate governance approval for scope change. |
 | IP-6 Windy acceptance | IP-6 only | **UNRESOLVED** | Synthetic empirical Route Planner results. These inform compatibility, not IP-4 product policy. |
 | IP-7 UI/install | IP-7 user interaction, Shortcut artifact and installation docs | **UNRESOLVED** | Actual file picker/Quick Action/Dock/keyboard/preview/confirmation/save/reveal end-to-end test. |
 | Privacy/offline | All stages; IP-5 process protocol/runtime | **APPROVED REQUIREMENT; EXECUTION UNVERIFIED** | No logs/data persistence/network, private reference lifetime, offline run and privacy review. |
@@ -411,16 +422,18 @@ No upstream execution PASS is claimed. IP-5 must not freeze a transport, file-re
 
 1. **Shortcuts transfer semantics:** documented UI launches do not prove file capability, stdio, cancellation or exit status. IP-1D is a hard dependency.
 2. **Cross-process scope:** security-scoped URLs/bookmarks and file identity may not survive a second invocation as required. Fail closed if access cannot be transferred and verified.
-3. **Protocol exposure:** stdout preview necessarily contains user-facing route data; keep ephemeral and distinct from logs. No sensitive values in argv or stderr.
-4. **Preview binding:** no token proves consent. Fresh IP-2/IP-3 recomputation and a distinct Shortcut confirmation are required; no full source digest default.
-5. **IP-4 unresolved decisions:** one-point export and route-name override must be settled at Gate 3; IP-5 cannot assume either policy.
-6. **Writer atomicity:** filesystem/provider replacement primitives and security scopes differ. Unsupported semantics must fail safely, never silently degrade.
-7. **Schema redistribution/runtime:** IP-1 legal/technical decisions may block self-contained offline validation; no download-at-runtime workaround.
-8. **Packaging/security:** code signing, notarization, Gatekeeper, app-bundle invocation and a stable install path are not qualified. No bypass instructions.
-9. **Minimum macOS:** stays provisional until real Shortcuts and packaging matrix passes.
-10. **Cancellation after publication:** must accurately report saved state even when Shortcut cancellation races with commit.
-11. **Resource exhaustion/concurrency:** parser and preview are bounded by IP-2; IP-5 also bounds JSON, response size, process concurrency and temporary bytes without inventing upstream route limits.
-12. **Privacy:** capabilities/bookmarks, paths, source names and coordinates must not leak to process listing, logs, crash reports, telemetry or persisted sessions.
+3. **Inspect exposure and bounds:** inspect output comes only from the schema-validated IP-2 model, is bounded, and is transient; no filename inference, independent parser, or route details in default logs.
+4. **Protocol exposure:** stdout preview necessarily contains user-facing route data; keep ephemeral and distinct from logs. No sensitive values in argv or stderr.
+5. **Preview binding:** no token proves consent. Fresh IP-2/IP-3 recomputation and distinct Shortcut confirmation are required; identity/content continuity remains unresolved; no full source digest by default.
+6. **IP-5D failure:** inability to establish secure source continuity is a mandatory-capability failure; IP-5D and dependent IP-5F do not PASS. Partial Current Position support or unilateral scope reduction cannot satisfy the approved V1 gate.
+7. **IP-4 unresolved decisions:** one-point export and route-name override must be settled at Gate 3; IP-5 cannot assume either policy.
+8. **Writer atomicity and permissions:** filesystem/provider replacement primitives, modes, ACLs, extended attributes and security scopes differ. Supported behavior requires IP-5E evidence; unsupported semantics fail safely.
+9. **Schema redistribution/runtime:** IP-1 legal/technical decisions may block self-contained offline validation; no download-at-runtime workaround.
+10. **Packaging/security:** code signing, notarization, Gatekeeper, app-bundle invocation and a stable install path are not qualified. No bypass instructions.
+11. **Minimum macOS:** stays provisional until real Shortcuts and packaging matrix passes.
+12. **Cancellation after publication:** must accurately report saved state even when Shortcut cancellation races with commit.
+13. **Resource exhaustion/concurrency:** parser and preview are bounded by IP-2; IP-5 also bounds JSON, response size, process concurrency and temporary bytes without inventing upstream route limits.
+14. **Privacy:** capabilities/bookmarks, paths, source names and coordinates must not leak to process listing, logs, crash reports, telemetry or persisted sessions.
 
 ## 16. IP-5 planning acceptance and future execution PASS
 
@@ -430,8 +443,9 @@ No upstream execution PASS is claimed. IP-5 must not freeze a transport, file-re
 - JSON stdio is recommended conditionally; CLI args and file-backed envelopes compared; IP-1D feasibility remains explicit.
 - File references are untrusted capabilities; no path trust, unsafe reopen, or assumed cross-process security scope.
 - Deterministic IP-2/IP-3/IP-4 orchestration and explicit modes are mapped.
-- Preview/confirmation lifecycle compares both process models, recomputation, staleness and token limitations.
-- IP-5 filesystem writer ownership is explicit; no-replace, exact overwrite consent, atomicity, cleanup, offline and source-protection invariants are specified.
+- `inspect` has an explicit secure-IP-2-only contract, bounded response and unresolved over-limit strategy.
+- Preview/confirmation lifecycle compares both process models, fresh recomputation, source identity versus content continuity, reference lifetime, semantic equivalence and token limitations; separate-process/stateless feasibility remains unqualified.
+- IP-5 filesystem writer ownership is explicit; no-replace, exact overwrite consent, atomicity, cleanup, offline and source-protection invariants are specified. Permission/ACL/metadata policy is evidence-gated and no final mode is selected.
 - Shortcuts responsibilities and limitations are evidence-bounded; no Shortcut is created.
 - Self-contained packaging options are compared with a V1 direction and explicit signing/notarization/OS/path qualification gates.
 - Diagnostics, cancellation, concurrency, recovery, privacy, offline guarantees and synthetic verification are covered.
@@ -440,7 +454,7 @@ No upstream execution PASS is claimed. IP-5 must not freeze a transport, file-re
 
 ### Future IP-5 execution PASS
 
-Only after Gate 3 cross-check, resolution of blocking decisions, and explicit Gate 4/IP-5 authorization: stable protocol is tested through the qualified Shortcut transport; input is securely referenced/opened and IP-2 validates it; explicit IP-3 preview/confirmation cannot be bypassed or become stale; IP-4 returns a valid immutable artifact; IP-5 writer passes identity/collision/atomicity/permissions/cancellation/concurrency and sidecar tests on every claimed filesystem; offline/no-telemetry/privacy checks pass; signed/notarized package installs on the declared Apple Silicon macOS matrix without developer tools/admin; actual Shortcuts entry points work; update/rollback/uninstall preserve user data; and independent review accepts evidence. No execution PASS or platform support claim is implied by this plan.
+Only after Gate 3 cross-check, resolution of blocking decisions, and explicit Gate 4/IP-5 authorization: stable protocol is tested through the qualified Shortcut transport; input is securely referenced/opened and IP-2 validates it; `inspect` shares that same secure/schema-qualified boundary; explicit IP-3 preview/confirmation cannot be bypassed or become stale and IP-5D passes the jointly approved source identity/content-continuity contract; IP-4 returns a valid immutable artifact; IP-5 writer passes identity/collision/atomicity/permissions/ACL/metadata/cancellation/concurrency and sidecar tests on every claimed filesystem; offline/no-telemetry/privacy checks pass; signed/notarized package installs on the declared Apple Silicon macOS matrix without developer tools/admin; all approved V1 modes and Shortcuts entry points work; update/rollback/uninstall preserve user data; and independent review accepts evidence. If IP-5D does not PASS, overall IP-5/IP-5F cannot pass through partial mode support; any V1 scope change requires separate explicit governance approval. No execution PASS or platform support claim is implied by this plan.
 
 ## 17. Primary platform references
 
@@ -456,4 +470,4 @@ Research checked 2026-10-11. Platform documentation can change; recheck at IP-1/
 
 ## Approval request
 
-Please review the conditional JSON stdio recommendation, file-reference carrier and cross-process scope policy, stateless preview/confirmation model, safe writer protocol, signed app-bundle/DMG direction, launch/input boundaries and IP-5A–IP-5F decomposition. Gate 3 must reconcile these plans with IP-1D/IP-1E and settle IP-4 one-point and naming policy before IP-5A can implement or freeze dependent behavior. Do not begin IP-5 execution or IP-6 planning without separate explicit authorization.
+Please review the conditional JSON stdio recommendation, secure `inspect` contract, file-reference carrier and cross-process scope policy, unresolved source identity/content continuity for preview/confirmation, evidence-gated writer permissions, signed app-bundle/DMG direction, launch/input boundaries and IP-5A–IP-5F decomposition. Gate 3 must reconcile these plans with IP-1D/IP-1E and settle IP-4 one-point and naming policy before implementation or freezing dependent behavior. Do not begin IP-5 execution or IP-6 planning without separate explicit authorization.
