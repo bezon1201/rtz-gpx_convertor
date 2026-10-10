@@ -8,13 +8,13 @@
 - Evidence: Supplied `AGENTS.md` installed at repository root; master plan and project records drafted; official CIRM, IEC, Topografix, Windy, and Apple documentation reviewed; two user-supplied RTZ examples inspected read-only.
 - Tests: None run; no implementation exists.
 - Next action: User reviews and approves or revises the master plan.
-- Commit: Recorded in the stage completion commit; see `git log`.
+- Commit: `bacfd5b9263333e6454b882cbdb3b337a67fa73f` (`docs/master-plan`).
 
 ## Stage ledger
 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
-| 0. Discovery and master plan | REVIEW | This plan and project scaffolding are ready for architect review; approval is pending. | See `git log` |
+| 0. Discovery and master plan | REVIEW | This plan and project scaffolding are ready for architect review; approval is pending. | `bacfd5b` |
 | 1. Standards and fixture baseline | PLANNED | Version/schema matrix, sanitized synthetic fixtures, and format decisions accepted. | — |
 | 2. Core model and safe parsing | PLANNED | Input version detection, parsing, and validation satisfy the approved contracts. | — |
 | 3. Route modes and geometry | PLANNED | All three modes produce explicit, reviewable geometry and documented estimates. | — |

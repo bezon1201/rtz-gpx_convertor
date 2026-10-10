@@ -45,7 +45,7 @@ Native macOS application on Apple Silicon, with separate format detection/parsin
 ## Repository state
 
 - Branch: `docs/master-plan`
-- Planning commit: see final response for the confirmed commit hash.
+- Planning commit: `bacfd5b9263333e6454b882cbdb3b337a67fa73f` on `docs/master-plan`.
 - Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git` is configured by the clone. Push status: **not pushed**; explicit push authorization is still required by the supplied governance instructions.
 
 ## Next requested decision
