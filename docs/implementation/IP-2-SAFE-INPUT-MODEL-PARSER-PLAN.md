@@ -37,8 +37,8 @@ Production accepts one selected local file reference only; no URL, archive, mult
 
 ### Pipeline
 
-1. Require one readable regular file. Reject directories, devices, FIFOs and sockets; extension is a hint only.
-2. Open without following a final symlink where supported; inspect and read from the opened descriptor, not by reopening the path. Compare identity/size before and after reading. A path swap must not redirect the descriptor. Fail closed if safe access cannot be established.
+1. Receive one opaque local-file reference. Its path and contents remain untrusted until securely opened and validated. Origin from Finder, Shortcuts, or CLI does not bypass checks. Reject directories, devices, FIFOs and sockets; extension is a hint only.
+2. Distinguish unsafe path-based symlink traversal from legitimately user-selected files. Do not categorically reject a selected alias/symlink before IP-2A/IP-5/IP-7 establish macOS reference behavior. Open through the selected reference/security-scoped API where applicable, inspect the resulting descriptor, and read from that same descriptor without unsafe path reopening. Compare file identity and relevant metadata across the read. A path swap must not redirect the opened descriptor. Any permitted resolution must be explicit, bounded, and resistant to replacement; if safety cannot be established, fail closed.
 3. Enforce the byte limit from file metadata and during reads; read at most limit plus one byte. Avoid duplicate whole-file buffers. Path normalization is not a security boundary.
 4. Parse strict encoding/XML characters, without lossy decoding, repair, or recovery mode.
 5. Enable namespace processing; prohibit DTD/entity resolution; never process XInclude; ignore input schema hints; disable network/catalog access. Abort on any external-resolution request.
@@ -58,7 +58,7 @@ Production accepts one selected local file reference only; no URL, archive, mult
 | Deep/large XML, node/text/attribute floods | Enforce streaming event counters during parse and abort at caps. |
 | Malformed XML/invalid Unicode | Strict parser, no replacement/recovery; safe error mapping. |
 | Oversize input/unbounded memory | Bounded descriptor reads; streaming preferred; measure time/peak memory. Tree parsing only with evidence of headroom. |
-| Symlink/traversal/replacement race | Trusted file reference, no-follow where possible, regular-file descriptor, one-descriptor read, metadata comparison; test symlink, swapped path, nonregular/unreadable files. |
+| Unsafe path-based symlink traversal or replacement race | Treat path/content as untrusted; distinguish unsafe traversal from Finder/Shortcuts-selected aliases/security-scoped URLs. IP-2A/IP-5/IP-7 jointly decide alias, scope, permission and identity behavior. Any permitted resolution is explicit/bounded and reads one descriptor without reopening a path. Test selected alias, unsafe traversal, replacement, nonregular and unreadable files. |
 | ZIP/RTZP | Detect common ZIP signature; unsupported-container error; never decompress or extract. |
 | Network | No URL entry, resolver, catalog, XInclude or schema fetch; verify offline and resolver denial. |
 | Confidential logging | No full path, coordinates, waypoint names, raw XML, vessel metadata or username in default logs/messages; test with synthetic sentinels. |
@@ -106,7 +106,7 @@ Proposed domain concepts, not frozen Swift signatures:
 - RouteDocument: RouteIdentity, SourceProvenance, QualifiedDialect, ordered waypoints, route metadata, unsupported-content summaries, warnings.
 - RouteIdentity: optional route name and ID.
 - QualifiedDialect: literal version, namespace URI, schema digest.
-- SourceProvenance: byte count, optional digest, optional safe display name.
+- SourceProvenance: minimal processing provenance such as byte count; no source filename or source-file digest by default. File identity used to secure an active read is ephemeral processing state, not persisted route provenance.
 - Waypoint: ID, optional name, WGS84Position, optional IncomingLeg, metadata.
 - WGS84Position: finite latitude/longitude degrees.
 - IncomingLeg: GeometryKind and metadata.
@@ -114,7 +114,9 @@ Proposed domain concepts, not frozen Swift signatures:
 - RecognizedMetadata: qualified field and typed value.
 - UnsupportedItemSummary: optional namespace, local name, count, reason.
 
-Use immutable value types/collections; construction restricted to validated builder. No parser, serializer, CLI or UI types escape. Waypoint order is XML order and independent of IDs; never sort by ID. Required/unique ID rules come from qualified dialect; never invent IDs. Preserve absent names distinctly. Coordinates are a pair; a missing component is fatal; never clamp, wrap, round or infer datum. A leg belongs to its destination waypoint as incoming leg under the Master Plan; the first normally has none, with schema evidence controlling exceptions. Never shift or synthesize. Optional absence is not zero/default geometry/assumed unit. Unknown geometry is never interpreted. Recognized metadata is limited to IP-1’s field matrix; unknown extensions become bounded summaries, not opaque XML. Provenance excludes full paths/payload; digest retention requires privacy review. Decimal representation must preserve precision; exact wrapper remains open.
+Use immutable value types/collections; construction restricted to validated builder. No parser, serializer, CLI or UI types escape. Waypoint order is XML order and independent of IDs; never sort by ID. Required/unique ID rules come from qualified dialect; never invent IDs. Preserve absent names distinctly. Coordinates are a pair; a missing component is fatal; never clamp, wrap, round or infer datum. A leg belongs to its destination waypoint as incoming leg under the Master Plan; the first normally has none, with schema evidence controlling exceptions. Never shift or synthesize. Optional absence is not zero/default geometry/assumed unit. GeometryKind.UnknownLiteral is preserved only as uninterpreted source metadata; it must never drive navigation, distance, selection, or transformation. IP-3 may use only explicitly qualified geometry types. If the qualified dialect/schema prohibits the literal, parsing fails closed; never fall back to Loxodrome or Orthodrome. Recognized metadata is limited to IP-1’s field matrix; unknown extensions become bounded summaries, not opaque XML. Provenance excludes full paths/payload. Decimal representation must preserve precision; exact wrapper remains open.
+
+Source-file digest calculation is opt-in, not default provenance. By default, do not calculate or persist a full RTZ digest and never expose a source hash in diagnostics, logs, CLI output, or Shortcut messages. IP-2A may propose digest use only for a documented technical need, privacy review, and explicit approval. Mandatory schema-artifact hashes used for qualification are separate and unaffected.
 
 ## 7. Semantic validation
 
@@ -140,7 +142,7 @@ Warnings never alter positions, order, names, metadata, leg ownership or route i
 
 Proposed IDs until reconciled with IP-5: INPUT_NOT_FOUND, INPUT_UNREADABLE, INPUT_INVALID_TYPE, INPUT_TOO_LARGE, INPUT_CHANGED_DURING_READ, XML_MALFORMED, XML_UNSAFE, XML_INVALID_ENCODING, RTZ_UNSUPPORTED_VERSION, RTZ_NAMESPACE_MISMATCH, RTZ_SCHEMA_UNAVAILABLE, RTZ_SCHEMA_INVALID, RTZ_SEMANTIC_INVALID, RTZ_UNSUPPORTED_DIALECT, RTZ_RESOURCE_LIMIT, CANCELLED, INTERNAL_ERROR.
 
-Each has stable code, severity, safe message, optional qualified field path, optional 1-based waypoint ordinal, reliable line/column if available, and optional safe recovery hint. Do not expose coordinates, names, raw XML, full paths, username or schema path.
+Each has stable code, severity, safe message, optional qualified field path, optional 1-based waypoint ordinal, reliable line/column if available, and optional safe recovery hint. Do not expose coordinates, names, raw XML, full paths, username, schema path, or source-file hashes.
 
 Order by phase (input, XML, dispatch, schema, semantic), reliable source position, then code/field; otherwise preserve encounter order. Deduplicate identical code/field/position. Fatal errors stop later phases and suppress cascades. Proposed cap 100 (first 99 plus DIAGNOSTIC_LIMIT_REACHED) requires validation before freeze. Cancellation returns no model. IP-5 owns CLI result/exit mapping; identifiers remain proposals.
 
@@ -156,7 +158,7 @@ Proposed language-neutral boundaries:
 - RouteModelBuilder.build(SemanticallyValidatedStructure, ProvenancePolicy) → Result<RouteDocument, Diagnostics>
 - RTZParser.parse(FileReference, Configuration, Cancellation) → ParseResult<RouteDocument>
 
-Success is immutable model plus warnings; failure contains errors only. FileReference is trusted local-file abstraction, not URL. One parse owns context; cancellation is cooperative/thread-safe; no global resolver/catalog. Tests may inject synthetic bounded bytes; production remains file-only. Identical bytes/config yield identical semantic model and diagnostic ordering. No GPX/navigation API.
+Success is immutable model plus warnings; failure contains errors only. FileReference is an opaque local-file reference, not a trust assertion: its path and contents remain untrusted until securely opened and validated. It is not a URL. One parse owns context; cancellation is cooperative/thread-safe; no global resolver/catalog. Tests may inject synthetic bounded bytes; production remains file-only. Identical bytes/config yield identical semantic model and diagnostic ordering. No GPX/navigation API.
 
 IP-3 consumes ordered WGS84 points/IDs/names/incoming legs, but adds transformations separately. IP-4 consumes validated data and metadata/loss inventory, and owns GPX. IP-5 owns CLI arguments/stdout/stderr/exit; IP-2 supplies parse results and safe diagnostics. IP-7 owns prompts/presentation and consumes safe summary/errors.
 
@@ -177,13 +179,13 @@ Planning only; map to IP-1B fixture IDs later. No fixtures/tests created or run.
 | File/depth/node/text/attribute/waypoint caps at −1/exact/+1 | Success/resource failure per approved cap | Enforcement evidence. |
 | Missing/nonnumeric/nonfinite/out-of-range coordinate | Schema/semantic invalid | No defaults/clamp/wrap. |
 | Duplicate ID/equal consecutive positions | Frozen fatal/warning policy | Preserve both/order. |
-| Empty/one-point route, missing/unknown/mixed geometry | Contract-specific | No invented point/type; correct incoming leg. |
+| Empty/one-point route, missing/unknown/mixed geometry | Contract-specific | No invented point/type; correct incoming leg. UnknownLiteral is uninterpreted metadata only; if the qualified dialect prohibits it, fail closed. |
 | Invalid/absent optional metadata | Schema/semantic/warning | Absence != zero; loss explicit. |
 | Unknown extension | Bounded summary or fail closed | No payload retention. |
 | Unicode/XML escaping | Success when valid | Safe values; no sentinel log echo. |
 | Antimeridian/high latitude | Success | Coordinates unchanged; no geodesy. |
 | Malformed bytes/XML/extra root | Malformed | No recovery/partial result. |
-| Missing/unreadable/symlink/nonregular/swapped file | Input error | Safe open, no hang/path disclosure. |
+| Missing/unreadable, unsafe path traversal, user-selected alias, nonregular/swapped file | Input error or reviewed selected-reference outcome | IP-2A/IP-5/IP-7 settle API/permissions; bounded resolution, descriptor identity, and no unsafe reopening. |
 | ZIP/RTZP | Unsupported | No decompression. |
 | Offline run/sentinel resolver | Success or fail closed | Zero external requests. |
 | Repeated parse/cancel/diagnostic flood | Deterministic/cancel/resource | Stable output, bounded latency/cap, no model on fatal. |
@@ -196,12 +198,12 @@ Paths are proposals against the current documentation-only tree; none exists.
 - **Objective:** close dependencies; evidence candidate parser, limits, security and semantics.
 - **Scope/exclusions:** decision records only; no code/schema/fixtures/tests.
 - **Files:** docs/research/IP-2/INPUT-AND-SECURITY-DECISIONS.md; docs/research/IP-2/RESOURCE-LIMITS.md; REPORT.md; PROGRESS.md.
-- **Dependencies:** IP-1A/B, lawful offline schema runtime, field matrix, candidate macOS.
-- **Interface:** deliver frozen SecurityPolicy, Limits, QualifiedDialectRegistry source and decision records to IP-2B onward.
+- **Dependencies:** IP-1A/B, lawful offline schema runtime, field matrix, candidate macOS; coordinate file-reference behavior with IP-5 and IP-7.
+- **Interface:** deliver frozen SecurityPolicy, Limits, QualifiedDialectRegistry source, joint alias/security-scope/permission/identity policy, and source-digest decision to IP-2B onward.
 - **Sequence:** review evidence; separately authorized bounded probe if needed; measure approved synthetic inputs; derive caps/rules.
-- **Future cases:** API/security/encoding/resource probe only with specific authorization.
-- **Acceptance:** exact registry source, legal runtime, cap rationale/enforcement and reproducible security evidence.
-- **Risks:** undocumented behavior; exact probe/owner/blocker, fail closed.
+- **Future cases:** API/security/encoding/resource probe only with specific authorization; test Finder/Shortcuts/CLI-selected files, aliases, security-scoped URLs, permissions, file replacement and identity.
+- **Acceptance:** exact registry source, legal runtime, cap rationale/enforcement, reproducible security evidence, and jointly reviewed IP-2A/IP-5/IP-7 file-reference policy.
+- **Risks:** undocumented alias or security-scope behavior; define exact probe/owner/blocker, allow only explicit bounded resolution, fail closed if identity cannot be maintained.
 - **Rollback:** revert decisions and block dependents.
 - **PASS evidence:** reviewed dependency matrix, licensing, measurements and execution authorization.
 
@@ -212,7 +214,7 @@ Paths are proposals against the current documentation-only tree; none exists.
 - **Dependencies:** IP-2A PASS and approved synthetic cases.
 - **Interface:** provide BoundedInput and namespace-aware ParsedStructure plus input/XML diagnostics to IP-2C.
 - **Sequence:** descriptor reader, streaming adapter, counters, safe errors, adversarial tests.
-- **Future cases:** symlink/race, nonregular, XXE, XInclude, malformed encoding, floods, offline, cancellation.
+- **Future cases:** path traversal, selected alias/symlink, security-scoped access, permission denial, file replacement/identity, nonregular, XXE, XInclude, malformed encoding, floods, offline, cancellation.
 - **Acceptance:** no resolution/network; bounded work; controlled errors; source unchanged.
 - **Risks:** OS differences/buffering; verify candidate OS, no unsafe fallback.
 - **Rollback:** revert reader/tests and reopen selection.
@@ -287,9 +289,9 @@ Paths are proposals against the current documentation-only tree; none exists.
 5. ID uniqueness and minimum useful point count: IP-1A/IP-2A.
 6. Geometry literals, incoming-leg semantics and optional metadata rules: IP-1A/IP-2A.
 7. Decimal representation/source precision: IP-1A/IP-2A/IP-4.
-8. Extension summaries and digest privacy: IP-1A/IP-2A.
-9. No-follow handling with CLI/Shortcuts security-scoped references: IP-2A/IP-5/IP-7.
-10. Stable diagnostics compatible with CLI/Shortcut: IP-2/IP-5/IP-7.
+8. Extension summaries and optional source-digest privacy decision: IP-1A/IP-2A; no source digest by default, while schema artifact hashes remain required.
+9. Joint IP-2A/IP-5/IP-7 decision on Finder/Shortcuts/CLI references, aliases, security-scoped URLs, permissions, identity and safe bounded resolution without unsafe reopening.
+10. Stable diagnostics compatible with CLI/Shortcut: IP-2/IP-5/IP-7; never expose source hashes.
 
 ## 15. Governance and next process
 
