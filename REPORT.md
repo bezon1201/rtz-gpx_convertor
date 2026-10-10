@@ -50,7 +50,7 @@ Offline Apple Silicon CLI with separate format detection/parsing, validation, ro
 ## Repository state
 
 - Branch: `docs/master-plan`
-- Planning commit: to be recorded after this planning-only commit is created on `docs/master-plan`.
+- Planning commit: `d3d98f7bad2944eb0805e21fd54f3d1310f2f626` on `docs/master-plan`.
 - Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git` is configured by the clone. Push status: **not pushed**; explicit push authorization is still required by the supplied governance instructions.
 
 ## Next requested decision
