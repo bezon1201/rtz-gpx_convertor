@@ -1,5 +1,30 @@
 # Architect review handoff
 
+## IP-5 planning handoff
+
+- **IP-5 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2).**
+- **IP-5 EXECUTION: NOT AUTHORIZED.**
+- **OVERALL IMPLEMENTATION: NOT AUTHORIZED.**
+- Branch: `docs/ip-5-cli-runtime-packaging`, based on IP-4 R1 `34f067112187a4c755f5c4cc94d5b6f36cfae1ae`.
+
+Created `docs/implementation/IP-5-CLI-RUNTIME-PACKAGING-PLAN.md`. It defines the Swift CLI boundaries, versioned protocol, safe input/output references, IP-2/IP-3/IP-4 orchestration, stateless preview/confirmation proposal, IP-5 filesystem writer ownership, cancellation/concurrency/recovery, diagnostic/privacy/offline contract, Shortcuts boundary, distribution comparison, verification matrix and future IP-5A–IP-5F stages.
+
+Proposed primary protocol: one bounded JSON request on stdin and exactly one JSON response on stdout; fixed non-sensitive argv selectors only; bounded privacy-safe stderr; stable exit mapping. This remains conditional on actual IP-1D Shortcuts and file-reference feasibility evidence. Input references remain untrusted; no path or assumed security-scope inheritance is accepted as authority. If a safe process-boundary capability cannot be preserved, the plan requires fail-closed behavior and architecture review.
+
+Proposed packaging direction: signed/notarized `.app` bundle containing the native arm64 CLI and legally approved resources, distributed through a user-level DMG install with a stable documented CLI path, no GUI workflow/admin/runtime installation. This is not qualified; app-bundle invocation, Gatekeeper, signing identity, schema rights, target path and minimum macOS require evidence. Preview/confirmation uses a separate invocation and fresh source/model/preview reconstruction as a provisional model; tokens are correlation only, never proof of consent. IP-4’s one-point and route-name decisions remain unresolved and owned by Gate 3, not IP-5.
+
+The plan preserves IP-5’s writer responsibility: IP-4 returns immutable validated bytes; IP-5 owns destination identity/collision, staging, atomic/no-replace or exact-target confirmed replacement, cleanup and final save status; IP-7 owns destination UI, overwrite consent and feedback. No protocol, package, filesystem API, Shortcuts behavior, minimum OS or upstream execution result is claimed as implemented or verified.
+
+Remaining dependencies include IP-1D transport and IP-1E packaging research; IP-1A schema rights/offline validator; IP-2A alias/security-scope/identity policy and execution evidence; IP-3 confirmed-command APIs and geometry qualification; IP-4 Gate 3 policy/validated artifact; IP-6 consumer evidence; IP-7 UI/install binding; and actual macOS filesystem, signing, Gatekeeper, cancellation and clean-user verification.
+
+No application code, scripts, tests, probes, fixtures, schemas, dependencies, binaries, GPX, packages or Shortcuts were created; no tests or platform probes were run. No private routes, credentials or generated artifacts were added.
+
+## IP-5 repository state
+
+- Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`
+- Commit and remote verification: recorded in the final task handoff after publication.
+- Next: architectural review of IP-5 plan; do not execute IP-5 or begin IP-6 planning.
+
 ## IP-4 R1 correction handoff
 
 - **IP-4 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK.** (Architectural review: approved with minor conditions; R1 corrections applied.)

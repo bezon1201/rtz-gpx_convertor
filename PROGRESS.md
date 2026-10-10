@@ -2,6 +2,19 @@
 
 ## Current gate activity
 
+**IP-5 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2)**
+
+- Gate 1: **APPROVED / PASS**.
+- IP-1 through IP-4 plans: **APPROVED / READY FOR GATE 3 CROSS-CHECK**; upstream execution remains **NOT AUTHORIZED**.
+- IP-5 execution and overall implementation: **NOT AUTHORIZED**.
+- Branch: `docs/ip-5-cli-runtime-packaging`, based on IP-4 R1 `34f067112187a4c755f5c4cc94d5b6f36cfae1ae`.
+- Plan proposes JSON stdio with fixed non-sensitive argv, conditional on IP-1D; a signed arm64 `.app` CLI container/DMG user-level install, conditional on IP-1E and later qualification; and separate-process preview/confirm with fresh recomputation, conditional on IP-2A/IP-3/IP-7 contracts.
+- IP-5 writer ownership: immutable validated bytes from IP-4; IP-5 writes and reports save state; IP-7 owns destination, overwrite consent and feedback. Safe file identity, atomicity, cancellation and sidecar boundaries remain explicit.
+- Open dependencies: Shortcuts/file-reference feasibility; schema rights/offline validation; aliases/security scope/identity; IP-3 confirmation binding; IP-4 one-point/name Gate 3 choices; filesystem/provider behavior; signing/notarization and minimum macOS; IP-7 install and interaction verification.
+- No application code, scripts, tests, probes, fixtures, schemas, dependencies, binaries, GPX, packages or Shortcuts created; no tests/probes run.
+- Next: architectural review of IP-5 plan; do not execute IP-5 or begin IP-6 planning.
+- Commit and remote verification are reported in the final task handoff.
+
 **IP-4 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK (R1 conditions closed)**
 
 - Gate 1: **APPROVED / PASS**.
@@ -50,7 +63,7 @@
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check. Execution unauthorized. | — |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | R1 corrections closed; ready for Gate 3 cross-check; execution unauthorized. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check; execution unauthorized. | R1 correction commit in task handoff |
-| 5. Stable local CLI and self-contained runtime (IP-5) | PLANNED | Detailed plan not created in this task. | — |
+| 5. Stable local CLI and self-contained runtime (IP-5) | PLAN SUBMITTED FOR REVIEW | Detailed protocol/runtime/writer plan created; execution unauthorized. | task handoff |
 | 6. Windy Route Planner acceptance (IP-6) | PLANNED | Detailed plan not created in this task. | — |
 | 7. V1 Shortcuts release (IP-7) | PLANNED | Detailed plan not created in this task. | — |
 
