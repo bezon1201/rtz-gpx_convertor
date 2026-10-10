@@ -1,5 +1,26 @@
 # Architect review handoff
 
+## IP-3 planning handoff
+
+- **IP-3 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2).**
+- **IP-3 EXECUTION: NOT AUTHORIZED.**
+- **OVERALL IMPLEMENTATION: NOT AUTHORIZED.**
+- Planning branch is based on corrected IP-2 commit `8011d3f0c4baf62cb15194ab9308f4e312269615`; no upstream execution PASS is implied.
+
+Created `docs/implementation/IP-3-ROUTE-MODES-GEOMETRY-PLAN.md`. It specifies Full Route, From Waypoint, Current Position / Direct to Next WP, and Current Position / Join Selected Route Leg; immutable source-order transforms; scoped ordinal waypoint/leg references; incoming-leg ownership; synthetic-point and source-leg provenance; preview-bound explicit confirmation; privacy-safe diagnostics; metadata losses; advisory-only distance; and IP-4/IP-5/IP-7 handoffs. The proposed great-circle finite-arc projection and rhumb finite-leg global-minimum approach are qualification-gated, not claimed verified. If reliable rhumb root enumeration cannot be established, IP-3E remains blocked for architectural decision; no fallback or silent scope downgrade is permitted.
+
+Remaining decisions/evidence include IP-1 qualified schema/geometry literals and independent distance oracles/tolerances; IP-2 implemented model and ID semantics; exact output minimum/duplicate-coordinate policy; great-circle degeneracy thresholds; rhumb global-minimum reliability; field-by-field split-leg metadata applicability; and IP-4/IP-5/IP-7 interface contracts. IP-1 and IP-2 are plan-approved but their execution evidence is pending. Gate 3 remains pending the complete detailed-plan set and cross-check.
+
+No implementation code, tests, fixtures, probes, schemas, dependencies, CLI, GPX, or Shortcuts were created or run. No real routes, derived vessel coordinates, credentials, or full source-route digest were added.
+
+## IP-3 repository state
+
+- Branch: `docs/ip-3-route-modes-geometry`
+- Base: `8011d3f0c4baf62cb15194ab9308f4e312269615`
+- Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`
+- Commit and remote-head verification: to be recorded after the focused planning commit.
+- Next action: architectural review of IP-3 plan. Do not execute IP-3 or begin IP-4.
+
 ## Status
 
 - Gate 1: **APPROVED / PASS**.
