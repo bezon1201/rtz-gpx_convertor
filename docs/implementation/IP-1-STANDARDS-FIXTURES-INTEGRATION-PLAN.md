@@ -31,7 +31,9 @@ Label each result **Verified fact** (primary source/reproducible result), **Obse
 
 For each XSD, test set and specification record issuer, exact title/revision, canonical URL, UTC retrieval date, normative/informative/proposal/sample status, filename, byte size, SHA-256, declared version, targetNamespace, imports/includes and test-suite revision. Track each dependency and its hash. Candidate references are [CIRM RTZ XML Schemas](https://cirm.org/rtz-xml-schemas), [IEC PAS 61174-1:2021](https://webstore.iec.ch/en/publication/67774), and [STM schema materials](https://www.seatrafficmanagement.info/developers-forum/schemas/). The approved Master Plan reports CIRM 1.0/1.2 schema publication and IEC’s revised 1.2 retaining 1.0; historical STM 1.1 is only a research lead, not an assumed normative equivalent. IP-1 must inspect the actual artifact and licensed normative text as necessary.
 
-A public download does not prove redistribution rights. Record license/terms and link or written permission. If terms are ambiguous, mark **not cleared for bundling**; do not vendor or claim offline validation is ready pending resolution. Do not rewrite an official schema and label it official. Record exact digests in `docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md`; a changed digest requires re-review. Schema retrieval is development-time only. Runtime schema dependencies must be closed, local, licensed and incapable of network resolution.
+A public download does not prove redistribution rights. Keep two determinations separate. **Technical schema qualification** establishes provenance/authenticity, exact version/namespace pairing, schema compatibility and structural analysis, positive/negative validation evidence, and independent review. A schema can be technically qualified even if redistribution rights are unresolved. **Legal distribution clearance** determines whether the XSDs/dependencies may be bundled or redistributed, on what conditions, and which runtime validation strategy is permitted. Record license/terms and link or written permission; ambiguous status is **not cleared for bundling**. Do not rewrite an official schema and label it official. Record exact digests in `docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md`; a changed digest requires re-review. Schema retrieval is development-time only.
+
+V1 must not ship a schema or runtime validation mechanism contrary to licensing requirements. If redistribution is prohibited or unresolved, IP-1 must document an alternative legally permissible offline runtime validation strategy for architectural review. That strategy must retain schema-backed validation and fail-closed behavior; do not silently omit required validation, weaken constraints, or claim an unverified substitute is equivalent. Do not resolve the legal/architecture choice by assumption.
 
 ### 3.2 Exact allowlist and structural comparison
 
@@ -43,13 +45,21 @@ Create a reviewed field matrix, with schema component path, exact observed diffe
 |---|---|---|
 | RTZ 1.0 | Mandatory V1 target | Exact schema/hash/namespace; all §3.3 evidence required. |
 | RTZ 1.2 | Mandatory V1 target | Exact schema/hash/namespace; all §3.3 evidence required. |
-| RTZ 1.1 | Conditional, non-blocking | Qualify only a specifically named lineage with rights-cleared schema and fixtures; otherwise reject. |
+| RTZ 1.1 | Conditional, non-blocking | Technically qualify only a specifically named lineage with a traceable schema and fixtures; assess legal clearance separately. Otherwise reject. |
 
-### 3.3 Evidence and parser contract
+### 3.3 Technical qualification and parser contract
 
-Qualification requires: traceable schema and dependency hashes; offline redistribution disposition; exact version/namespace pairing; reviewed structural/field/loss comparison; synthetic positive and negative fixtures; offline validation with external access disabled; separation of schema checks from semantic/safety checks; independent reviewer sign-off. If a mandatory target does not satisfy all, it remains unqualified and cannot be claimed supported. 1.1 may remain unqualified without blocking V1.
+Technical qualification requires traceable/authentic schema and dependency hashes, exact version/namespace pairing, reviewed schema compatibility and structural/field/loss comparison, synthetic positive and negative fixtures, offline validation with external access disabled, separation of schema checks from semantic/safety checks, and independent reviewer sign-off. It does **not** itself grant permission to bundle or redistribute the schema. If a mandatory target lacks technical evidence, it remains technically unqualified and cannot be claimed supported. 1.1 may remain unqualified without blocking V1.
+
+Record legal clearance separately for each schema, dependency and validation component, including notices, attribution, redistribution/modification conditions and terms of use. If redistribution is not cleared, propose and review a legally permissible offline runtime validation alternative before downstream implementation; it must retain schema-backed validation and fail closed. No mandatory V1 target may ship without both technical qualification and a legally cleared runtime validation strategy.
 
 Downstream parser must inspect root expanded name/version before schema selection; disable DTD, external entities, XInclude, external schema fetch and URI resolution; ignore input `xsi:schemaLocation`; use closed local schema catalog; fail closed on missing schema. IP-2 sets bounded byte/depth/node/text/waypoint limits. Distinguish malformed XML, unsupported/mismatched dialect, schema-invalid, semantically invalid, and recognized-but-dropped data. No namespace stripping, permissive fallback or best-effort coordinate extraction.
+
+### 3.4 Independent qualification and distribution gates
+
+**Technical qualification** (per dialect) passes only with authenticated provenance and exact hashes, exact namespace/version match, reviewed structure/field comparison, synthetic positive/negative evidence, offline validation with external resolution disabled, semantic-vs-schema boundaries, and reviewer sign-off.
+
+**Legal clearance and runtime strategy** (per shipped runtime) separately records rights/conditions for schemas, dependencies and validation components. V1 must not distribute uncleared materials. If redistribution is prohibited or unresolved, document an alternative legally permissible offline runtime validation strategy and obtain architectural review before implementation. It must preserve schema-backed validation and fail-closed behavior; required validation cannot be omitted or weakened. The release needs both technical qualification and a legally cleared runtime strategy for mandatory 1.0/1.2. A schema may be technically qualified but not cleared for redistribution.
 
 ## 4. Synthetic fixture strategy
 
@@ -78,11 +88,11 @@ Keep approved convention unchanged: WGS84 authalic sphere `R=6,371,007.1809 m`; 
 
 | ID | Endpoints/method | Planning expectation |
 |---|---|---|
-| GC-EQ-1 | (0,0) to (0,1), orthodrome | R·π/180 ≈111,195.05 m / 60.0405 NM. |
-| RH-EQ-1 | Same, loxodrome | Same as GC-EQ-1 within reference rounding. |
-| RH-MER-1 | (0,0) to (1,0), rhumb | Same one-degree spherical arc. |
-| GC-AM-2 | (0,179) to (0,-179), orthodrome | Short 2° ≈222,390.16 m /120.0809 NM, not 358°. |
-| RH-LAT60-10 | (60,0) to (60,10), rhumb | R·cos(60°)·10π/180 ≈555,975.4 m /300.202 NM. |
+| GC-EQ-1 | (0,0) to (0,1), orthodrome | R·π/180; sanity check only, not an authoritative oracle. |
+| RH-EQ-1 | Same, loxodrome | Same as GC-EQ-1 under the spherical model; sanity check only. |
+| RH-MER-1 | (0,0) to (1,0), rhumb | Same one-degree spherical arc; sanity check only. |
+| GC-AM-2 | (0,179) to (0,-179), orthodrome | Short 2° arc rather than 358°; sanity check only. |
+| RH-LAT60-10 | (60,0) to (60,10), rhumb | R·cos(60°)·10π/180; sanity check only. |
 | GC-LAT60-10 | Same endpoints, orthodrome | Independently derived spherical value, shorter than rhumb. |
 | ZERO-1 | Same valid endpoints | Exactly zero; no NaN or route mutation. |
 | NEAR-1 | Very short distinct endpoints | Small finite positive value checked against high-precision reference. |
@@ -90,7 +100,7 @@ Keep approved convention unchanged: WGS84 authalic sphere `R=6,371,007.1809 m`; 
 | GC-ANTI-1 | Near antipodes | Stable shortest distance; directional ambiguity documented. |
 | NM-1 | 1,852 metres | Exactly one NM. |
 
-Listed values are reasonableness checks, not final oracle. Two independent calculations and reviewer reproduction establish full values. For well-conditioned future comparisons use `max(0.01 m, 1e-10 × reference_m)`; reviewer recomputation within `max(0.1 m, 1e-8 × reference_m)`. Pole/near-antipode cases get separately reviewed behavior/tolerance. Any relaxed tolerance needs evidence and approval before IP-3. Assert route coordinates unchanged before/after diagnostic calculation. Warning thresholds are separate; distance never changes route.
+Every numerical value, formula result and tolerance shown here is illustrative/sanity-check material only; none is an authoritative expected test result. During authorized IP-1 execution, independently recompute each final oracle from the approved formula and convention, state units and calculation precision, identify independent references, derive tolerances from reference precision/conditioning, and have a reviewer reproduce and approve each value. Trace every final test oracle to its independent source and derivation in the vector record. The tolerance expressions in this plan are proposals only and must be recalculated and reviewed rather than copied mechanically into tests. Pole/near-antipode cases get separately reviewed behavior/tolerance. Assert route coordinates unchanged before/after diagnostic calculation. Warning thresholds are separate; distance never changes route.
 
 ## 6. GPX 1.1 contract proposal
 
@@ -98,7 +108,9 @@ One source route produces exactly one `<rte>` in GPX 1.1 namespace `http://www.t
 
 `rte/name` is user-confirmed; when source name is absent offer a neutral proposal and require confirmation. Include `rtept/name` only for non-empty source waypoint names. Never create names or copy IDs/revisions into unrelated metadata. Omit author, time, extensions, schedules, vessel/safety/leg fields unless separately approved mapping exists.
 
-Preserve numeric coordinate value; prefer decimal-preserving parse and shortest round-trippable locale-independent decimal. No fixed rounding without error bound; no exponent until schema/consumer review; reject nonfinite/out-of-range; decide negative zero and Unicode normalization in IP-4. Use standards-compliant XML serializer, never concatenate names; invalid XML characters fail field-locally. Define UTF-8, declaration, newline, indentation, child order, fixed creator, no timestamp/random IDs. If byte-level attribute ordering is library-dependent, define deterministic GPX infoset and document byte behavior. Pin GPX schema/hash/license and validate offline; never fetch schemaLocation.
+Preserve numeric coordinate value; prefer decimal-preserving parse and shortest round-trippable locale-independent decimal. No fixed rounding without error bound; no exponent until schema/consumer review; reject nonfinite/out-of-range; decide negative zero and Unicode normalization in IP-4. Use a standards-compliant XML serializer, never concatenate names; invalid XML characters fail field-locally. Pin GPX schema/hash/license and validate offline; never fetch schemaLocation. Avoid custom XML serialization if a standard serializer satisfies GPX validity and semantic round-trip requirements.
+
+**Semantic determinism is mandatory for V1:** identical choices produce identical route-point order, coordinate values, route/waypoint names, GPX meaning, and loss-report categories. **Byte-level determinism is optional** unless IP-1C identifies and justifies a concrete technical requirement for identical serialized XML bytes across repeated conversions. IP-1C must explicitly decide whether byte-level determinism is necessary and record its rationale. If it is not justified, do not add bespoke canonicalization or serializer logic solely to force identical bytes; define stable formatting expectations separately from semantic equivalence.
 
 Reparse output and compare count/order/numeric coordinates/route name/names. Report dropped IDs/revisions, radius, leg geometry, XTD, speed/course/safety, notes, schedules/ETAs, vessel/route info and opaque extensions by category/count, never payload. State: “Coordinates and ordered waypoint names copied; RTZ navigation semantics are not preserved.” Primary reference: [Topografix GPX 1.1 schema](https://www.topografix.com/gpx/1/1/).
 
@@ -108,12 +120,12 @@ Apple documents Shortcuts Quick Actions, Dock, keyboard, Finder input and local 
 
 | Approach | Benefits | Risks | Position |
 |---|---|---|---|
-| A. Shortcuts Run Shell Script with fixed script and typed input as argv/stdin | Minimal, same Shortcut, no Terminal | Must prove file objects aren’t flattened/split and errors/output/cancellation work | Preferred probe candidate only. Static script; never interpolate user paths. Prefer discrete argv, otherwise validated unambiguous stdin protocol. |
-| B. Fixed native launcher using Foundation Process explicit argv | Native argv and stdout/stderr/exit capture | New executable, signature/path/access complexity | Fallback only after architecture review if A fails. |
+| A. Shortcuts Run Shell Script with fixed script and typed input as argv/stdin | Same Shortcut, no Terminal | Must prove file objects aren’t flattened/split and errors/output/cancellation work | Candidate; no default preference. Static script; never interpolate user paths. |
+| B. Fixed native launcher using Foundation Process explicit argv | Native argv and stdout/stderr/exit capture | New executable, signature/path/access complexity | Equally acceptable if reproducible evidence favors it; verify packaging remains within approved direction. |
 | C. Concatenated shell commands or interpolated path | Superficially easy | Injection, quoting/path splitting, weak errors | Rejected. |
 | D. Direct executable Shortcut action | Potentially simple | No built-in action proven by cited official evidence | Research only, do not assume. |
 
-**Deferred probe (not run now):** only if documentation is insufficient and separately authorized. Temporary inert helper reports argument count, byte lengths and UTF-8 hex for harmless values; no RTZ parser, file contents, network, writes or input evaluation. Try spaces, Unicode composed/decomposed, quotes, apostrophe, semicolon, `$()`, leading dash and two files; no dynamic value in script source. Test picker and Finder, Shortcuts/Dock/keyboard, structured success and deliberate nonzero error, stdout/stderr, cancel-before-call, save and Reveal. Disable networking. Record OS build, Shortcuts version, action config and redacted data shape, no account or user paths. Pass only if values arrive intact as discrete values/one documented record, no shell evaluation/Terminal, actionable errors, Finder input unchanged, cancel creates nothing, save/reveal works offline and behavior repeats on oldest/current candidate OS. Otherwise reject A, assess B or record blocker. This probe requires explicit authorization and creates no product artifact.
+**Deferred probe (not run now):** only if documentation is insufficient and separately authorized. Compare candidate transports using a reproducible procedure and select from evidence, not implementation simplicity. A temporary inert helper reports argument count, byte lengths and UTF-8 hex for harmless values; no RTZ parser, file contents, network, writes or input evaluation. Try spaces, Unicode composed/decomposed, quotes, apostrophe, semicolon, `$()`, leading dash and two files; no dynamic value in script source. Test picker/Finder, Shortcuts/Dock/keyboard, structured success and deliberate nonzero error; distinguish stdout, stderr and exit status; verify cancellation before invocation, save, Reveal and permission-denied/retry behavior. Disable networking. Record OS build, Shortcuts version, action config and redacted data shape, no account or user paths. Pass only if values arrive intact as discrete values or one documented unambiguous record, there is no shell evaluation/Terminal, errors map actionably, Finder input is unchanged, cancellation creates nothing, permissions fail safely, save/reveal works offline, and behavior repeats on candidate OSes. Either A or B may be selected if evidence passes; no shell transport is preferred by default. If evidence is insufficient, retain a conditional decision and specify the remaining probe, owner and closure point before IP-5/IP-7 implementation planning closes. This probe requires explicit authorization and creates no product artifact.
 
 Feasibility matrix per OS covers: native single-.rtz picker and cancel; Finder selected input/no repick; reject multiple/non-RTZ; all launch paths; spaces/Unicode/metacharacters; mode prompts and manual confirmations using inert data; native destination/collision/permission behavior; useful errors; Finder reveal; offline local Shortcut import. Minimum OS remains open until actual candidate OSes pass.
 
@@ -123,7 +135,7 @@ Compare: (1) arm64 Swift CLI inside signed app bundle used only as container plu
 
 Investigate signed/notarized DMG as preferred candidate over ZIP for clearer installation and ticket stapling; verify actual nested executable and offline Gatekeeper behavior. Apple documents direct distribution, Developer ID, notarization, ticket and that a ZIP itself is not signed: [Packaging Mac software](https://developer.apple.com/documentation/xcode/packaging-mac-software-for-distribution), [Notarization](https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution). If signing identity/account is unavailable, report a release blocker or approved alternative; never ask users to bypass Gatekeeper. App Store is not default; research sandbox file access, external CLI and local Shortcut import before considering it.
 
-Candidate install: versioned DMG with CLI app bundle (no GUI), exported `.shortcut`, install/remove instructions. Decide `~/Applications` vs `/Applications` only after testing permissions and path stability. Import Shortcut locally, enable Finder Quick Action, add Dock icon, configure keyboard shortcut. Update replaces bundle atomically and reimports Shortcut only as needed; rollback retains prior version; uninstall removes only app artifacts, never user routes. No auto-updater/service. Clean-user test has no Homebrew/Python/dev tools/prior configuration/admin; install, run offline, Gatekeeper, update, rollback, uninstall. OS matrix records build, picker/input, Quick Action, Dock/keyboard, shell, permissions, save, CLI, Gatekeeper, local import and offline. Select oldest OS only if every required flow passes and can be tested.
+Candidate install: versioned DMG with CLI app bundle (no GUI), exported `.shortcut`, install/remove instructions. Decide `~/Applications` vs `/Applications` only after testing permissions and path stability. Import Shortcut locally, enable Finder Quick Action, add Dock icon, configure keyboard shortcut. Update replaces bundle atomically and reimports Shortcut only as needed; rollback retains prior version; uninstall removes only app artifacts, never user routes. No auto-updater/service. Clean-user test has no Homebrew/Python/dev tools/prior configuration/admin; install, run offline, Gatekeeper, update, rollback, uninstall. OS matrix records build, picker/input, Quick Action, Dock/keyboard, shell, permissions, save, CLI, Gatekeeper, local import and offline. IP-1E may recommend a candidate minimum macOS version and define the supported-version test matrix and exact feasibility evidence needed to finalize it. Documentary research alone must not label untested versions supported. Final release compatibility depends on actual authorized Shortcuts/CLI/packaging verification. If that verification is pending, record a named blocker and closure point instead of claiming support.
 
 Artifact `docs/research/IP-1/PACKAGING-DECISION.md` compares admin need, path, signing, install/offline, update/remove, Shortcut access, clean-user evidence, OS floor, account/cost and risks. No package/tool installed during planning.
 
@@ -142,14 +154,14 @@ All work below is future work after Gate 3 and explicit Gate 4 authorization. Ea
 
 ### IP-1A — Schema provenance and qualification
 
-- **Objective:** pin schemas/rights, compare structures, decide exact pair matrix/status.
-- **Artifacts:** `docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md`, source manifest; no schema vendoring before rights.
-- **Dependencies/interface:** authorized work and official/licensed sources; IP-2 consumes pair allowlist, schema IDs, fields, rights, reject cases.
-- **Sequence:** obtain sources read-only; hash/rights/dependency review; component diff; normative semantic research; qualification evidence; independent review.
+- **Objective:** independently establish technical schema qualification and legal distribution clearance; compare structures and decide exact pair/runtime status.
+- **Artifacts:** `docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md`, source/license manifest; no schema vendoring before distribution rights clear.
+- **Dependencies/interface:** authorized work and official sources; IP-2 consumes pair allowlist, schema IDs, fields, technical status and reject cases. IP-5/IP-7 consume the separate legal clearance and approved runtime validation strategy.
+- **Sequence:** obtain sources read-only; hash/provenance/dependency review; structural diff and normative semantic research; technical validation evidence and independent review; separately resolve license terms and document a cleared bundling or alternative offline runtime strategy.
 - **Future cases:** right pair selects right schema; cross/unknown rejects; positive/negative offline validation; no network.
-- **Risks/mitigations:** inaccessible text, 1.1 ambiguity, changed hash, unclear rights; keep unqualified, do not block 1.0/1.2 on optional 1.1.
+- **Risks/mitigations:** inaccessible text, 1.1 ambiguity, changed hash, unclear rights; keep technical and legal status separate. Unresolved rights block bundling/runtime approval, not technical qualification. Do not block mandatory 1.0/1.2 on optional 1.1.
 - **Rollback:** revert only records/schema additions, mark dialect unqualified; Master Plan untouched.
-- **PASS evidence:** hash/rights ledger, reviewed diff, exact pairs, offline evidence and reviewer sign-off.
+- **PASS evidence:** separate technical qualification and legal/runtime decisions. Technical evidence includes hashes, reviewed diff, exact pairs, offline positives/negatives and reviewer sign-off. Legal evidence records permitted use and notices, or an architecturally reviewed legally permissible offline validation alternative that does not weaken fail-closed schema validation. A technically qualified schema may remain uncleared for redistribution; V1 must not ship it uncleared.
 
 ### IP-1B — Synthetic fixture catalog/static corpus
 
@@ -164,36 +176,36 @@ All work below is future work after Gate 3 and explicit Gate 4 authorization. Ea
 
 ### IP-1C — Geometry vectors and GPX contract
 
-- **Objective:** independent vector oracle/tolerances and frozen GPX contract.
+- **Objective:** independently verified vector oracle/tolerances and frozen GPX contract; decide semantic versus byte-level determinism explicitly.
 - **Artifacts:** `docs/research/IP-1/GEOMETRY-REFERENCE-VECTORS.md`, `docs/research/IP-1/GPX-1.1-CONTRACT.md`.
 - **Dependencies/interface:** approved convention and GPX source; IP-3 consumes methods/units/vectors, IP-4 consumes shape/naming/precision/escaping/loss.
-- **Sequence:** two independent derivations; poles/antipodes; no-mutation invariant; schema mapping; precision/escaping/determinism and metadata review.
-- **Future cases:** reviewer reproduces within tolerance, route unchanged, schema accepts shape, round-trip contract explicit.
+- **Sequence:** two independent derivations with source traceability; poles/antipodes; no-mutation invariant; schema mapping; precision/escaping/semantic-determinism and metadata review; decide whether a concrete requirement justifies byte-level determinism. Prefer a standard serializer if it satisfies GPX validity and semantic round-trip checks.
+- **Future cases:** reviewer reproduces each oracle within approved tolerance; route unchanged; schema accepts shape; semantic fields match after round trip. If byte determinism is required, document its concrete rationale and separately verify it; otherwise do not impose it.
 - **Risks/mitigations:** sphere/ellipsoid mix, false precision, consumer normalization; label model and defer Windy to Stage 6.
 - **Rollback:** revert unapproved contract; do not change Master Plan convention.
-- **PASS evidence:** signed vectors and reviewed downstream GPX contract.
+- **PASS evidence:** reviewer-confirmed vector values, formulas, units, precision, independently derived source and tolerances; reviewed GPX contract with semantic determinism mandatory, explicit byte-level decision/rationale, and standard serializer preference.
 
 ### IP-1D — Shortcut feasibility
 
-- **Objective:** documentation review and, only if necessary, separately authorized inert probe.
+- **Objective:** select the Shortcuts-to-CLI transport from reproducible evidence, through documentation or, only if needed, a separately authorized inert probe; no forced shell preference.
 - **Artifacts:** `docs/research/IP-1/SHORTCUTS-FEASIBILITY.md`; redacted evidence; no product Shortcut/helper.
 - **Dependencies/interface:** Gate 3 and probe-specific Gate 4 authorization; IP-5 gets transport/error, IP-7 gets launch/input/output/OS.
 - **Sequence:** source mapping, action input review, compare options, request/run bounded probe if needed, record result/recommendation.
-- **Future cases:** full §7 matrix on candidate OSes; path intact, no evaluation, errors/cancellation/save/offline correct.
+- **Future cases:** full §7 matrix on candidate OSes; stdout, stderr, exit status, cancellation, Unicode/special paths, permissions, save and offline behavior documented; transport preserves discrete argv or another demonstrated unambiguous protocol without interpolating user values into commands.
 - **Risks/mitigations:** action changes, permissions, flattened input; test oldest/current, static script, discrete argv/stdin, fail closed.
 - **Rollback:** remove temp helper/files and restore shortcut settings; retain only redacted result.
-- **PASS evidence:** official mapping plus repeatable results as needed, accepted invocation/fallback and no interpolation proof.
+- **PASS evidence:** documented selection rationale based on reproducible results; handling for stdout/stderr/exit/cancellation/Unicode/permissions; accepted transport and fallback; proof no interpolated user-controlled command. If evidence remains insufficient, IP-1 records the conditional choice, exact probe, owner and closure point before downstream implementation plans close.
 
 ### IP-1E — Packaging decision
 
-- **Objective:** recommend self-contained path, container, OS floor, signing, update/remove.
+- **Objective:** recommend self-contained path, container, candidate minimum macOS version and supported-version test matrix; identify what actual verification is needed before final support claims.
 - **Artifacts:** `docs/research/IP-1/PACKAGING-DECISION.md`; no binary/package.
 - **Dependencies/interface:** IP-1D and Apple docs; IP-5 gets path/runtime policy, IP-7 install procedure.
 - **Sequence:** compare candidates; assess Swift CLI/bundle/path without building; ZIP/DMG/security/account review; clean-user requirements.
-- **Future cases:** clean user/no tools/admin installs and runs offline, Gatekeeper passes, update/rollback/uninstall preserves user data.
+- **Future cases:** clean user/no tools/admin installs and runs offline, Gatekeeper passes, update/rollback/uninstall preserves user data; actual candidate OS verification determines the eventual minimum and supported versions.
 - **Risks/mitigations:** absent signing, path movement, permissions; record blocker, no security bypass, reversible user-level path.
 - **Rollback:** revise recommendation; no system artifact exists.
-- **PASS evidence:** comparison, preferred path and assumptions, OS floor or named blocker and clean-user procedure.
+- **PASS evidence:** comparison, preferred path and assumptions, candidate OS floor and matrix, exact verification procedure, and named blocker/closure point if verification is pending. Do not label an untested OS version supported.
 
 ### IP-1F — Windy protocol
 
@@ -234,19 +246,19 @@ IP-2–IP-7 plans require separate authorization for the complete set. Any condi
 
 **Planning acceptance for this document:** scopes, workflow, files, sub-stages, interfaces, future verification, rollback, risks, dependencies and exit criteria are specified; approved decisions preserved; no AGENTS/Master Plan edit; no code, executable fixtures/tests, schema/package/Shortcut; facts separated from assumptions.
 
-**Future IP-1 execution PASS requires:** (1) hash-pinned 1.0/1.2 schema and dependencies with rights for offline use; (2) reviewed structural/field comparison and exact pairs/errors; (3) positive/negative synthetic examples per mandatory version, hashes and privacy approval; explicit optional 1.1 decision; (4) independent vectors for GC/rhumb/NM/date-line/high-latitude/degenerate cases, tolerances and no-mutation verified; (5) frozen GPX contract and offline schema policy; (6) safe Shortcuts feasibility with authorized probe if needed and no interpolation; (7) self-contained package recommendation, tested OS floor or blocker, local Shortcut/install/update/remove and clean-user/offline criteria; (8) separate synthetic Windy protocol, no IP-1 upload; (9) every mandatory item evidence-mapped, no hidden blocker; (10) privacy scan finds no private routes, derived coordinates, identity, credentials or user paths; (11) reports state actual execution status. Any failed mandatory criterion means REVIEW/BLOCKED, not PASS. Optional 1.1 may remain not qualified.
+**Future IP-1 execution PASS requires:** (1) technical qualification of hash-pinned 1.0/1.2 schemas and dependencies with exact pairs, structural review, positive/negative evidence and independent sign-off; (2) a separate legal clearance/runtime strategy decision for every shipped validation component, including a legally permissible offline alternative if redistribution is unavailable, preserving schema-backed fail-closed validation; (3) reviewed structure/field comparison and unsupported errors; (4) synthetic positive/negative examples per mandatory version, hashes and privacy approval; explicit optional 1.1 decision; (5) independently recomputed/reviewer-confirmed vectors with formulas, units, precision, tolerances and source traceability; no-mutation verified; (6) frozen GPX contract with semantic determinism required and explicit byte-level decision/rationale; (7) safe Shortcuts feasibility with transport selected by reproducible evidence, stdout/stderr/exit/cancel/path/permission behavior and no interpolation; (8) self-contained package recommendation, candidate OS floor/matrix and exact verification requirements, or named blocker; no unsupported claim for untested macOS versions; (9) local Shortcut/install/update/remove and clean-user/offline criteria; (10) separate synthetic Windy protocol, no IP-1 upload; (11) every mandatory item evidence-mapped, no hidden blocker; (12) privacy scan finds no private routes, derived coordinates, identity, credentials or user paths; (13) reports state actual execution status. Any failed mandatory criterion means REVIEW/BLOCKED, not PASS. Optional 1.1 may remain not qualified.
 
 ## 13. Open questions and owners
 
 1. CIRM schema/dependency redistribution rights — IP-1A; before bundling.
 2. Exact 1.2 namespace/version pairing — IP-1A; before allowlist freeze.
 3. Specific rights-cleared 1.1 lineage and Leg Extensions — IP-1A; optional, may reject.
-4. Permitted local XSD validator without target runtime — IP-1A/IP-5; no installation absent authorization.
+4. Legally permitted local XSD validator or alternative offline schema-backed strategy without target runtime — IP-1A/IP-5; no installation absent authorization. Technical schema qualification and redistribution clearance remain separate.
 5. Constraints beyond XSD — IP-1A/IP-2.
 6. Numeric preservation vs deterministic GPX lexical output — IP-1C/IP-4.
-7. Lossless Shortcut file transport/error/cancel on candidate OS — IP-1D; any probe needs specific authorization.
+7. Lossless Shortcut file transport with documented stdout/stderr/exit/cancel/Unicode/permission behavior on candidate OS — IP-1D; choose transport by reproducible evidence; any probe needs specific authorization.
 8. Developer ID availability/app-bundle container suitability — IP-1E; otherwise release blocker/options.
-9. Minimum macOS passing all flows — IP-1D/IP-1E; before IP-7 plan closes.
+9. Candidate minimum and supported macOS matrix — IP-1E; documentary research can propose but not finalize support. Actual authorized verification closes the release compatibility decision; until then list a named blocker and do not claim untested versions supported.
 10. Current Route Planner GPX import and preserved fields — Stage 6 only, following IP-1F protocol.
 
 ## 14. Privacy, change control and rollback

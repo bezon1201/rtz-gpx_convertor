@@ -1,44 +1,43 @@
 # Architect review handoff
 
-## Stage and status
+## Status
 
-Gate 1 / Stage 0 remains **APPROVED / PASS**. Gate 2 is **IN PROGRESS — IP-1 detailed plan submitted for architectural review**. The IP-1 execution stage remains **NOT AUTHORIZED**; IP-2 through IP-7 have not been started. Approval of this plan alone does not authorize any probe, fixture creation, or implementation.
+- Gate 1: **APPROVED / PASS**.
+- IP-1 PLAN: **APPROVED / READY FOR GATE 3 CROSS-CHECK** after the R1 minor conditions were addressed.
+- IP-1 EXECUTION: **NOT AUTHORIZED**.
+- OVERALL IMPLEMENTATION: **NOT AUTHORIZED**.
 
-## Current architecture and approved direction
+No IP-1 execution PASS is claimed. The plan is ready to be cross-checked with the remaining Gate 2 plans; this correction task did not begin that cross-check or create IP-2 through IP-7 plans.
 
-V1 remains an offline Apple Silicon macOS utility with a reproducibly installable Shortcuts workflow as primary UI and a self-contained local CLI, no standalone GUI, Homebrew or target-Mac Python. Preserve Full Route, From Waypoint and From Current Position; Current Position requires manual coordinates and explicit next-WP/route-leg confirmation plus Direct to Next WP / Join Selected Route Leg. GPX 1.1 is the output; losses are disclosed; no automatic navigational decisions and no ECDIS geometry equivalence.
+## R1 corrections recorded
 
-Approved RTZ policy remains 1.0 and 1.2 mandatory subject to schema-backed qualification, 1.1 conditional and nonblocking, unsupported dialects rejected clearly. RTZP is OUT OF SCOPE for V1 and may be reconsidered after release; no RTZP stage. Distance is advisory only and never chooses or modifies the intended route.
+1. **Schema qualification vs rights — IP-1 §3.1, §3.3, new §3.4, IP-1A and execution PASS criteria.** Technical schema qualification is separate from legal distribution clearance. Schemas may qualify technically without redistribution permission; V1 still needs a cleared runtime validation strategy. If redistribution is prohibited or unresolved, IP-1 must document a legally permissible offline, schema-backed alternative for architectural review. Validation cannot be omitted or weakened.
+2. **Shortcut-to-CLI transport — IP-1 §7 and IP-1D.** Run Shell Script and a Foundation Process launcher are neutral candidates. Select by reproducible feasibility evidence, not simplicity. Preserve discrete argv or a proven unambiguous protocol; document stdout, stderr, exit status, cancellation, Unicode paths and permissions. No user-controlled interpolation. Insufficient evidence stays conditional with an exact probe, owner and closure point.
+3. **Geometry values — IP-1 §5 and IP-1C / execution criteria.** Numerical examples and current tolerance suggestions are sanity checks only. Authorized IP-1 execution must independently recompute every oracle, record formulas/units/precision/tolerances/source traceability, and obtain reviewer confirmation. The approved sphere convention and advisory-only/no-route-change rule remain unchanged.
+4. **GPX determinism — IP-1 §6 and IP-1C.** Semantic determinism is mandatory. Byte-level determinism is optional unless a concrete technical need is justified; IP-1C must decide and record why. Prefer a standard XML serializer when it meets schema and semantic round-trip requirements.
+5. **Minimum macOS — IP-1 §8, IP-1E and open questions.** IP-1E may propose a candidate floor, test matrix and verification criteria. Documentary research cannot claim untested OS versions are supported. Final release compatibility requires actual authorized Shortcut/CLI/package verification; pending work is a named blocker with closure point.
 
-## This planning change
+The approved Master Plan and IP-1A–IP-1G decomposition are preserved.
 
-- Added `docs/implementation/IP-1-STANDARDS-FIXTURES-INTEGRATION-PLAN.md`, detailed Gate 2 planning for Stage 1 only.
-- The plan specifies schema provenance/license/hash and version/namespace qualification, a synthetic fixture catalog, independently reviewed geometry vectors, a GPX 1.1 contract, safe Shortcuts invocation options and a deferred inert probe, self-contained packaging evaluation, and a separate synthetic-only Windy Uploader/Route Planner protocol.
-- Decomposes future IP-1 execution into IP-1A through IP-1G with artifacts, dependencies, work sequences, future verification cases, risks, rollback and PASS evidence. Maps handoffs to IP-2 through IP-7 and distinguishes planning acceptance from execution PASS.
-- Does not change `AGENTS.md` or the approved Master Plan. No probe, fixture, test, schema, package, code or Shortcut was created. No tests were run.
+## Remaining execution gates and risks
 
-## Open technical questions
+No known blocker remains to submit this plan for Gate 3 cross-check. IP-1 execution must still resolve schema rights and a legally permissible offline validation path, choose invocation transport from reproducible evidence, independently verify geometry oracles, explicitly decide byte-level determinism, and validate the eventual OS floor. These items have owners and closure points in the plan. RTZP remains out of V1 scope; 1.1 remains optional.
 
-- Rights to redistribute the CIRM schemas/dependencies for offline validation; exact pinned 1.2 namespace and schema lineage.
-- Whether any specific RTZ 1.1 dialect is rights-cleared and sufficiently specified; 1.1 may remain unsupported.
-- Permitted offline XSD validation approach without adding a target runtime dependency.
-- Safe, lossless Shortcuts-to-CLI argument/result behavior across candidate macOS versions; any probe is separately authorization-gated.
-- Minimum macOS release, Developer ID availability, stable user-level install path, container/signing/notarization and clean-user procedure.
-- Numeric precision and deterministic GPX serialization choices; actual Windy Route Planner acceptance remains Stage 6.
+## Changed files and verification
 
-## Verification and privacy
+- `docs/implementation/IP-1-STANDARDS-FIXTURES-INTEGRATION-PLAN.md`
+- `REPORT.md`
+- `PROGRESS.md`
 
-- Planning-only documentation review; no tests run.
-- No implementation code, scripts, executable fixtures, test suite, CLI, Shortcut, Quick Action, schemas, or dependencies created/installed.
-- No real RTZ/GPX route or derived coordinate data added. The full three-file diff and tracked-file inventory were reviewed; no route data, credentials, or personal paths were found.
+Documentation-only review. No implementation, probes, schemas, fixtures, tests, dependencies, CLI or Shortcuts were created. No tests were run. No private routes, derived coordinates or credentials are included.
 
 ## Repository state
 
-- Branch: `docs/ip-1-standards-fixtures-integration`, created from approved baseline `d57d0935c7885eb25eb14542e7996839644e96e2` on `docs/master-plan`.
-- Planning commit: this focused IP-1 plan/report/ledger change; exact SHA is in Git history and task handoff.
+- Branch: `docs/ip-1-standards-fixtures-integration`
+- Reviewed base: `6c8bfa2c1b3fcb12b7b6f89ef2281a43143f83b5`
 - Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`
-- Push: the dedicated branch is pushed without force after privacy review; remote SHA matches local HEAD (exact SHA and branch URL in task handoff).
+- The R1 correction commit SHA and post-push remote verification are recorded in the task handoff and Git history.
 
 ## Next requested decision
 
-Please review the IP-1 plan. Then, in a separate authorized task, prepare detailed plans for IP-2 through IP-7, cross-check the full Gate 2 plan set, resolve findings, and obtain explicit implementation authorization before any execution. Do not start IP-1 execution from this plan approval alone.
+Proceed with Gate 3 cross-check of the complete IP-1–IP-7 plan set only when those other plans are separately authorized and available. Resolve cross-check findings before any implementation authorization. IP-1 execution and overall implementation remain unauthorized.
