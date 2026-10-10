@@ -1,27 +1,25 @@
 # Architect review handoff
 
-## IP-4 planning handoff
+## IP-4 R1 correction handoff
 
-- **IP-4 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2).**
+- **IP-4 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK.** (Architectural review: approved with minor conditions; R1 corrections applied.)
 - **IP-4 EXECUTION: NOT AUTHORIZED.**
 - **OVERALL IMPLEMENTATION: NOT AUTHORIZED.**
-- Branch: `docs/ip-4-gpx-serialization-loss-report`, based on approved IP-3 R1 commit `8e35edff864de87278aa7c61c7376e49845c3d74`.
+- Branch: `docs/ip-4-gpx-serialization-loss-report`, reviewed baseline `df9ebbb31ddd3679d0c6c3adb828ab35a64f6303`.
 
-Created `docs/implementation/IP-4-GPX-SERIALIZATION-LOSS-REPORT-PLAN.md`. It defines a GPX 1.1 core contract with one ordered `rte`, exact decimal coordinate round-trip, offline schema validation, typed loss inventory and privacy-safe summary, export eligibility, and separate local save responsibilities for IP-4/IP-5/IP-7. It separates schema validity from export eligibility and empirical Windy compatibility.
+Updated `docs/implementation/IP-4-GPX-SERIALIZATION-LOSS-REPORT-PLAN.md` and preserved the IP-4A–IP-4F decomposition.
 
-The plan proposes allowing a one-point GPX with an explicit insufficient-points warning and user acknowledgement because the GPX 1.1 schema permits zero or more `rtept`; this may broaden the Master Plan’s “minimum useful point count” check, so it requires explicit architectural approval before the policy freezes. It does not establish Windy support; IP-6 must test a synthetic one-point file. The plan also identifies the GPX longitude +180 exclusive-bound conflict: proposed behavior is fail closed without normalization. This and exact decimal-model support require cross-stage review. No schema was downloaded or bundled, and no implementation evidence is claimed.
+The plan now records four corrections: (1) one-point export is an unresolved Gate 3 decision between ALLOW_WITH_WARNING and REFUSE_EXPORT; the valid IP-3 neutral transformation remains valid either way, and IP-6 provides compatibility evidence without deciding product policy. (2) IP-3 owns the source route name/provenance, IP-4 serializes approved naming input, IP-5 transports it, and IP-7 owns any confirmation UI; a confirmed export-only display-name override remains an explicit Gate 3 choice, with no automatic vessel/route/filename fallback. (3) IP-4 returns immutable validated bytes and the loss report; IP-5 owns filesystem writing/staging/identity/collision/publishing/cleanup/save result; IP-7 owns destination selection, overwrite consent and save feedback. Safe-save invariants remain intact. (4) coordinate preservation is representation-aware: exact decimals require mathematical equality; binary floating point may use qualified shortest round trip to the same finite value, with source-decimal error analysis and independently verified tolerance required before freeze. No RTZ lexical preservation is claimed. Longitude +180 remains fail-closed unless approved otherwise.
 
-IP-4A–IP-4F cover schema/serialization contract, serializer, loss report, eligibility/validation, safe artifact handoff, and synthetic acceptance/IP-6 handoff. Remaining blockers include IP-1’s exact XSD hash/license/offline validator strategy; IP-2’s decimal representation/presence model; IP-3/IP-5/IP-7 confirmation and save-reference contracts; +180 handling; atomicity/permissions on target filesystems; and IP-6 empirical acceptance. Gate 3 remains pending the complete plan set and cross-check.
+Gate 3 decisions: one-point policy and whether to permit a confirmed export-only route-name override, including reconciliation with Master Plan wording. Remaining evidence/execution blockers include IP-1 schema identity/license/offline validation; IP-2 numeric representation and error evidence; IP-3 model/confirmation evidence; +180 handling; IP-5/IP-7 file-reference and save contracts plus filesystem/provider verification; and IP-6 Windy empirical evidence. Gate 3 cross-check remains ahead; no unresolved decision or evidence is represented as approved or tested.
 
-No application code, GPX, fixtures, tests, probes, schemas, dependencies, CLI, or Shortcuts were created or run. No confidential routes, coordinates, credentials, or route-derived artifacts were added.
+No application code, tests, fixtures, schemas, GPX, CLI, Shortcuts, dependencies or implementation artifacts were created. No tests were run; no private routes, credentials or generated artifacts were added.
 
 ## IP-4 repository state
 
-- Branch: `docs/ip-4-gpx-serialization-loss-report`
-- Base: `8e35edff864de87278aa7c61c7376e49845c3d74`
 - Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`
-- Commit and remote verification: recorded in the final task handoff after publication.
-- Next: architectural review of the IP-4 plan. Do not execute IP-4 or begin IP-5.
+- R1 correction commit and remote verification: recorded in the final task handoff after publication.
+- Next: Gate 3 cross-check when the complete detailed-plan set is available. Do not execute IP-4 or begin IP-5 planning.
 
 ## IP-3 planning handoff
 
