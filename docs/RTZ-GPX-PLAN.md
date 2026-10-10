@@ -1,6 +1,6 @@
 # RTZ-GPX-Converter — Master Plan
 
-**Status:** Draft for architect review (Gate 1). This document sets project direction; it is not an implementation plan. No application code, conversion scripts, tests, CLI executable, Shortcut package, Finder Quick Action, or release package are part of this stage.
+**Gate 1:** APPROVED / PASS (architectural review: approved with minor conditions; conditions closed here). **Gate 2:** READY FOR DETAILED PLANNING. **Implementation:** NOT AUTHORIZED. This document sets project direction; it is not an implementation plan. No application code, conversion scripts, tests, CLI executable, Shortcut package, Finder Quick Action, or release package are part of this stage.
 
 ## 1. Purpose and boundaries
 
@@ -28,12 +28,12 @@ These observations establish sample shapes only. They do not establish general v
 
 | Version / format | Verified evidence | Planning posture |
 |---|---|---|
-| RTZ 1.0 | CIRM publishes a 1.0 schema. IEC PAS 61174-1:2021 states 1.0 is retained from IEC 61174:2015. Sample namespace is `/RTZ/1/0`. | Candidate supported input; validate against a vendored, versioned 1.0 schema. |
-| RTZ 1.1 | STM materials publish a 1.1 schema/proposal and use namespace `/RTZ/1/1`. IEC PAS describes 1.1 as an STM project iteration, notes it was used in STM, and says it lacked the optional `Extensions` in `Leg`. CIRM's published schema page lists 1.0 and 1.2 schema files, not a 1.1 schema. | Do not promise broad 1.1 support yet. Discovery must identify a vetted schema lineage, compare it to 1.0/1.2, and build fixtures for relevant dialects. Unsupported or ambiguous variants must fail clearly rather than be guessed. |
-| RTZ 1.2 | IEC PAS 61174-1:2021 supplies revised schema 1.2 and keeps 1.0. CIRM publishes 1.2 schema and v1.2 test files. The PAS describes WGS84 coordinates and nautical-mile measurement conventions unless otherwise specified. | Candidate supported input; validate against the official 1.2 schema and test files after reviewing redistribution/licensing requirements. |
+| RTZ 1.0 | CIRM publishes a 1.0 schema. IEC PAS 61174-1:2021 states 1.0 is retained from IEC 61174:2015. Sample namespace is `/RTZ/1/0`. | Mandatory V1 target, subject to schema-backed qualification against a vetted, versioned 1.0 schema. This is a policy target, not a claim of implementation or verification. |
+| RTZ 1.1 | STM materials publish a 1.1 schema/proposal and use namespace `/RTZ/1/1`. IEC PAS describes 1.1 as an STM project iteration, notes it was used in STM, and says it lacked the optional `Extensions` in `Leg`. CIRM's published schema page lists 1.0 and 1.2 schema files, not a 1.1 schema. | Conditional V1 support only for a specifically qualified dialect; not a release blocker. Discovery must identify vetted schema lineage, compare it to 1.0/1.2, and build fixtures. Unsupported or ambiguous variants must fail clearly rather than be guessed. |
+| RTZ 1.2 | IEC PAS 61174-1:2021 supplies revised schema 1.2 and keeps 1.0. CIRM publishes 1.2 schema and v1.2 test files. The PAS describes WGS84 coordinates and nautical-mile measurement conventions unless otherwise specified. | Mandatory V1 target, subject to schema-backed qualification against the official 1.2 schema and test files after reviewing redistribution/licensing requirements. This is a policy target, not a claim of implementation or verification. |
 | GPX 1.1 | Topografix's GPX 1.1 schema requires `gpx` attributes `version="1.1"` and `creator`; `rte` is an ordered list of route points and `rtept` uses the waypoint type with required latitude/longitude. GPX has optional namespaces/extensions, but those do not guarantee consumer support. | Emit a minimal core GPX 1.1 route with ordered `rtept` elements. Avoid consumer-specific extensions until tested. |
 
-Official CIRM material currently exposes 1.0 and 1.2 schema downloads and 1.2 test files. IEC's PAS says equipment should import 1.0 and 1.2; it does not make the STM 1.1 schema an equivalent third normative target. Therefore version support is to be evidence-based and stated precisely in the user guide.
+Official CIRM material currently exposes 1.0 and 1.2 schema downloads and 1.2 test files. IEC's PAS says equipment should import 1.0 and 1.2; it does not make the STM 1.1 schema an equivalent third normative target. The approved V1 policy therefore makes 1.0 and 1.2 mandatory targets subject to schema-backed qualification, while 1.1 remains conditional and is not a release blocker. No version or dialect may be described as implemented or verified until its required schema, fixtures, and conformance checks have passed. Unsupported versions or dialects must fail clearly.
 
 RTZ 1.2 describes each route as waypoint positions plus leg parameters attached to the destination waypoint (except the first), schedules, and optional extension data. The schema covers more than coordinates: routeInfo/vessel attributes, default waypoint settings, waypoint revisions and turn radii, leg geometry and limits, schedules/ETAs, and manufacturer extensions can matter to the source system.
 
@@ -86,11 +86,11 @@ For Current Position, never infer the next waypoint from the nearest point or si
 
 ### RTZ input
 
-- Initial scope is one uncompressed `.rtz` XML document with a single `route` root. RTZP ZIP containers are out of scope pending a separate scope decision and archive-bomb threat review.
+- Initial scope is one uncompressed `.rtz` XML document with a single `route` root. RTZP ZIP containers are OUT OF SCOPE for V1 and may be reconsidered after V1 release; no RTZP implementation stage is included.
 - Determine support by matching both the `version` attribute and namespace to a known dialect. A mismatch, unknown major/minor version, unrecognized namespace, unsupported schema variation, or multiple route roots is an explicit error.
 - Preserve document order of `waypoint` children as route order. Treat each non-first waypoint's `leg` metadata as the incoming segment to that waypoint, as described by RTZ.
 - Parse enough routeInfo, waypoint/defaultWaypoint, leg, schedules, and extension information to report recognized fields and losses. Do not claim to preserve all RTZ semantics.
-- Initial support proposal: 1.0 and 1.2 after schema-backed validation; 1.1 only after discovery establishes exact supported variants and fixtures. Any other version fails with an “unsupported version” message.
+- Approved V1 support policy: 1.0 and 1.2 are mandatory targets subject to schema-backed qualification; 1.1 is conditional and is not a release blocker. Unsupported versions, namespaces, or dialects fail clearly. Do not claim any version or dialect is implemented or verified before its qualification evidence exists.
 
 ### GPX 1.1 output
 
@@ -145,6 +145,7 @@ No XML external entity expansion, schema retrieval over the network, arbitrary U
 
 ## 9. Geometry and distance conventions
 
+- Distance calculations are advisory diagnostics only. They must never automatically select, infer, move, or otherwise modify the intended route.
 - Compute distance only as an explanatory estimate and show the selected method and units.
 - Proposed convention: use the WGS84 authalic sphere (radius 6,371,007.1809 m) and calculate each source leg according to its declared `geometryType` (rhumb for `Loxodrome`, great-circle/orthodrome for `Orthodrome`); convert metres to nautical miles using exactly 1 NM = 1,852 m. This is an application-level estimate, not a claim to reproduce ECDIS geometry. Stage 1 must approve this convention and independently reviewed test vectors before implementation.
 - Normalize longitude deltas across the antimeridian. Explicitly test high latitudes and document that RTZ guidance warns that high-latitude and long-leg geometry can differ between systems.
@@ -212,7 +213,7 @@ These are manageable stage boundaries, not detailed implementation plans. Each s
 - **Objective:** settle version support, schema provenance, GPX contract, distance vectors, sanitized fixture inventory, Shortcuts capabilities, and self-contained packaging direction.
 - **Deliverables:** approved version matrix; offline schema strategy; synthetic fixture plan; Windy test protocol; Shortcuts action feasibility findings; CLI distribution and install options comparison.
 - **Dependencies:** Stage 0 approval; access to permitted standards and schemas.
-- **Acceptance:** every promised input version has a traceable schema/dialect and positive/negative fixtures; 1.1 status is explicit; Shortcuts can be shown to receive Finder inputs and invoke the CLI safely; target Mac needs no Homebrew/Python; no private route fixture is needed.
+- **Acceptance:** mandatory 1.0 and 1.2 targets each have a traceable schema and positive/negative fixtures before support is claimed; 1.1 is explicitly conditional and not a release blocker; unsupported dialects fail clearly; independent distance test vectors are reviewed; Shortcuts can be shown to receive Finder inputs and invoke the CLI safely; target Mac needs no Homebrew/Python; no private route fixture is needed.
 - **Risks:** 1.1 dialect ambiguity, schema redistribution constraints, Shortcuts permission/argument behavior, and local install/signing friction.
 - **Verification:** schema diff review, fixture inventory review, standards citations and independently checked geodesic vectors; a no-route-data Shortcuts-to-CLI feasibility prototype is deferred to implementation and must be separately authorized.
 
@@ -230,7 +231,7 @@ These are manageable stage boundaries, not detailed implementation plans. Each s
 - **Objective:** provide the three explicitly selected route transformations and advisory distances.
 - **Deliverables:** Full Route, From Waypoint, direct-to-selected-next-WP, and join-selected-leg behavior; visible loss/warning summary.
 - **Dependencies:** Stage 2 route model and Stage 1 geometry convention.
-- **Acceptance:** choices and outputs are deterministic; no implicit nearest-next-WP or auto-join decision; proposed geometry is shown before export.
+- **Acceptance:** choices and outputs are deterministic; no implicit nearest-next-WP or auto-join decision; proposed geometry is shown before export; distance calculations remain advisory diagnostics and never automatically select or modify the intended route. No ECDIS geometry equivalence is claimed.
 - **Risks:** ambiguous direction/leg choices; projection differences and misleading distance precision.
 - **Verification:** route transformation fixtures, reviewed geometry vectors, UX walkthrough.
 
@@ -281,14 +282,14 @@ No implementation begins before the complete plans are reviewed and explicit aut
 
 ## 15. Unresolved decisions for review
 
-1. Approve the 1.0/1.2 candidate support posture and conditional 1.1 support, or choose a narrower initial scope.
-2. Include RTZP container support in a later stage, or keep `.rtz` only.
-3. Confirm RTZP container scope (default: `.rtz` files only in V1).
-4. Preferred minimum macOS release and self-contained release path (e.g. local ZIP/DMG with `.shortcut` and bundled arm64 CLI; App Store only if sandbox requirements align).
-5. CLI remains an automation interface invoked by the Shortcut; whether direct end-user command-line/batch use is documented is a separate scope decision (default: no Terminal workflow in V1).
-6. Approve the proposed WGS84-derived advisory distance convention after Stage 1 vector review.
-7. Approve default GPX field mapping: user-confirmed route name and existing waypoint names only; report notes, IDs, radii, XTD, schedules, vessel data, and extensions as lost.
-8. Confirm Windy acceptance testing can use synthetic test routes in the user's Windy account, without publishing/sharing.
+1. Confirm the minimum macOS release and self-contained release path (e.g. local ZIP/DMG with `.shortcut` and bundled arm64 CLI; App Store only if sandbox requirements align).
+2. Confirm the exact Shortcuts-to-CLI argument/result contract and whether direct end-user command-line/batch use is documented (default: automation interface only; no Terminal workflow in V1).
+3. Complete schema lineage and dialect qualification for mandatory 1.0/1.2 targets; determine whether any specific 1.1 dialect qualifies. Unsupported versions/dialects must fail clearly; no support claim precedes evidence.
+4. Stage 1 independently reviews test vectors for the documented WGS84-derived advisory distance convention and defines any discrepancy warning threshold. Distance remains diagnostic only and never drives route choices or edits; no ECDIS geometry equivalence is claimed.
+5. Confirm the GPX metadata mapping: route name and existing waypoint names only; report notes, IDs, radii, XTD, schedules, vessel data, and extensions as lost.
+6. Confirm Windy acceptance testing can use synthetic test routes in the user's Windy account, without publishing/sharing.
+
+RTZP containers are explicitly OUT OF SCOPE for V1 and may be reconsidered after V1 release. They have no implementation stage in the approved roadmap.
 
 ## Sources reviewed
 

@@ -2,57 +2,44 @@
 
 ## Stage and status
 
-Stage 0 — Master planning: **REVIEW**. The user has approved the V1 product direction (macOS Shortcuts primary UI plus local CLI); the updated master plan is awaiting architectural review. No implementation has started.
+Stage 0 — Master planning: **PASS**. Gate 1 is **APPROVED / PASS**; the minor review conditions are closed in the master plan. Gate 2 is **READY FOR DETAILED PLANNING**. **Implementation is NOT AUTHORIZED.** The next task may prepare detailed plans for Stages 1–7; no implementation plan is created here.
 
-## Current architecture proposal
+## Current architecture and approved direction
 
-Offline Apple Silicon CLI with separate format detection/parsing, validation, route transformation, distance estimation, GPX serialization, and reporting boundaries. A native Swift CLI using Foundation XML APIs is the current candidate; the macOS Shortcuts artifact is the V1 primary interface and invokes that CLI without Terminal interaction. There is no standalone GUI framework in V1. The exact Shortcuts invocation mechanism, argument/result contract, package form, and installation path remain to be established in the gated plans.
+V1 is a fully offline Apple Silicon macOS utility with a reproducibly installable macOS Shortcut as its primary interface and a self-contained local CLI. The Shortcut must support Shortcuts, Dock, keyboard shortcut, and Finder Quick Action launch; a native file picker when no Finder input is passed; all three route modes; native save flow; actionable success/errors; and Reveal in Finder. The Finder Quick Action reuses the same Shortcut. No standalone GUI framework, Homebrew, or target-machine Python dependency is planned for V1. Stage 7 remains the final implementation stage and must provide reproducible installation and end-to-end verification.
 
-## What changed
+The conversion core remains independent of Shortcuts. Current Position requires manually entered latitude/longitude and explicit next-waypoint and route-leg confirmation, followed by an explicit choice between Direct to Next WP and Join Selected Route Leg. No automatic navigational decisions are allowed. Output is GPX 1.1 route data, with losses disclosed; runtime conversion is offline. No ECDIS geometry equivalence is claimed.
 
-- Added the supplied `AGENTS.md` to the root of the previously empty repository.
-- Added the master plan, project README, ignore rules, this handoff, and the stage ledger.
-- Read-only inspection of two RTZ routes supplied earlier in this conversation found RTZ 1.0 / namespace `http://www.cirm.org/RTZ/1/0`; both included waypoint positions, a `CalculatedSchedule`, and leg geometry metadata. The files and coordinates were not copied into the repository.
-- Standards research found CIRM's published schema page lists RTZ 1.0 and 1.2 files; IEC PAS 61174-1:2021 introduces 1.2 while retaining 1.0; RTZ 1.1 is associated with an STM development schema and needs compatibility investigation before support is promised.
-- GPX 1.1 models a route as an ordered list of route points. Windy's public uploader accepts GPX, but Route Planner import behavior still needs an empirical acceptance test.
-- User-approved V1 interaction: launch from Shortcuts, Dock, keyboard shortcut, or Finder Quick Action; use native file selection when no Finder input is passed; offer all three modes with explicit confirmations; save through native UI; show success/errors; offer Reveal in Finder; remain offline.
-- Apple documentation confirms Dock, keyboard, Finder Quick Action, and local `.shortcut` file import paths. Safe argument passing from a Shortcut into a self-contained CLI and an offline clean-user installation still require implementation-stage verification.
+## Gate 1 corrections applied
 
-## Approved product direction and carried-forward proposals
+- RTZ 1.0 and 1.2 are mandatory V1 targets subject to schema-backed qualification. RTZ 1.1 is conditional and not a release blocker. Unsupported versions/dialects must fail clearly. The plan makes no claim that a version is implemented or verified before qualification testing.
+- RTZP containers are OUT OF SCOPE for V1 and may be reconsidered after V1 release. No RTZP implementation stage is added.
+- Distance calculations are advisory diagnostics only and must never automatically select or modify the intended route. The documented convention and Stage 1 independent test-vector review remain. No ECDIS geometry equivalence is claimed.
+- The approved seven-stage roadmap and Shortcuts-first Stage 7 requirements are retained.
+- The master plan, this report, and the progress ledger are synchronized to Gate 1 PASS, Gate 2 READY FOR DETAILED PLANNING, and implementation NOT AUTHORIZED.
 
-- V1's primary UI is a reproducibly installable macOS Shortcut on Apple Silicon, backed by a local automation-grade CLI; use offline, local-only processing with no telemetry.
-- Treat RTZ 1.0 and 1.2 as schema-backed candidate inputs; treat 1.1 as provisional until its schema lineage and fixtures are verified.
-- Export ordered GPX 1.1 `<rte>/<rtept>` points, preserve waypoint names where present, disclose losses, and never imply ECDIS equivalence.
-- Implement Full Route, From Waypoint, and From Current Position only after explicit user choices. Current Position must use manually entered coordinates and an explicit route-leg/next-waypoint confirmation, with direct-to-waypoint versus join-selected-leg behavior shown to the user.
-- Keep real routes and derived routes out of Git. Use sanitized synthetic fixtures for public tests.
-- No standalone GUI framework; Finder Quick Action reuses the same Shortcut.
-- Do not require Homebrew or target-machine Python unless the user explicitly approves a deviation. Evaluate a self-contained CLI plus reproducibly installable Shortcut.
+## Remaining Stage 1 / detailed-planning questions
 
-## Unresolved issues
+- Qualify schema provenance, dialect matching, positive/negative fixtures, and offline schema use for mandatory 1.0 and 1.2; establish whether a specific 1.1 dialect qualifies. Do not advertise support before evidence passes.
+- Complete the independent review of distance test vectors and define whether/when a discrepancy warning is useful; estimates remain advisory only.
+- Confirm the minimum macOS version and self-contained package, signing, installation, update, and removal approach.
+- Verify safe Shortcuts-to-CLI argument/result handoff, Finder file input, save-directory permissions, cancellations, offline installation, and fresh-user installation procedure.
+- Confirm the final GPX metadata mapping and any direct CLI/batch documentation beyond the automation interface.
+- Perform the Windy Route Planner acceptance test with synthetic data, without publishing or sharing it.
 
-- Approve or revise the master plan and its proposed stage boundaries.
-- Confirm whether RTZP containers and multiple GPX routes belong in scope.
-- Confirm the intended minimum macOS version and self-contained release path.
-- Verify safe CLI invocation/argument passing, output/error handoff, Finder file input, source-directory save permissions, and offline Shortcut installation across supported macOS versions.
-- Select the exact CLI packaging and Shortcut installation/update/removal procedure after feasibility research.
-- Decide how much source metadata should be copied into GPX versus reported as dropped.
-- Define acceptance thresholds for distance discrepancies and duplicate/discontinuous waypoint warnings.
-- Complete the Windy Route Planner empirical import test with synthetic or explicitly approved anonymized data.
-- Obtain a vetted 1.1 schema source and compare schema variants, including 1.1 leg extensions.
+## Verification and privacy
 
-## Verification
-
-- Planning evidence only: standards and vendor documentation reviewed and two conversation-supplied RTZ files inspected read-only.
-- No application tests were run; no code or test suite exists yet.
-- No live Windy import was performed.
-- No real RTZ or GPX route was committed.
+- Planning-only review: the full documentation diff is limited to `docs/RTZ-GPX-PLAN.md`, `REPORT.md`, and `PROGRESS.md`; tracked-file review found no real RTZ/GPX routes, vessel coordinate datasets, or credentials.
+- No application code, scripts, Shortcut artifacts, implementation plans, or tests were created. No tests were run.
+- No real route or derived route has been committed. The previously pushed branch is updated by this Gate 1 documentation commit; remote verification is recorded in the task handoff.
 
 ## Repository state
 
 - Branch: `docs/master-plan`
-- Planning commit: `d3d98f7bad2944eb0805e21fd54f3d1310f2f626` on `docs/master-plan`.
-- Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git` is configured by the clone. Push status: **not pushed**; explicit push authorization is still required by the supplied governance instructions.
+- Gate 1 finalization commit: this documentation-only revision; exact SHA is recorded in the Git history and task handoff.
+- Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`
+- Push status: pushed without force; remote `docs/master-plan` was verified to match local HEAD.
 
 ## Next requested decision
 
-Review the updated `docs/RTZ-GPX-PLAN.md` architecturally. Once the complete master plan is approved, authorize the separate task to produce detailed implementation plans for every stage. No implementation should begin before the complete plan set is cross-checked and explicit implementation authorization is given.
+Gate 2 is ready. Await the separate authorization to generate detailed implementation plans for Stages 1–7 and cross-check the complete plan set. Implementation remains unauthorized until the later explicit Gate 4 approval.
