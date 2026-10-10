@@ -1,0 +1,20 @@
+# macOS / Finder
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode / Swift build output (when implementation is authorized)
+.build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# Real voyage routes are confidential and must not enter Git by default.
+*.rtz
+*.rtzp
+*.gpx
+!tests/fixtures/synthetic/*.gpx
+
+# Local private route material and generated exports
+/private-routes/
+/route-exports/
