@@ -2,29 +2,29 @@
 
 ## Current gate activity
 
-**IP-1 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK**
+**IP-2 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW — GATE 2 PLANNING ONLY**
 
 - Gate 1: **APPROVED / PASS**.
-- IP-1 execution: **NOT AUTHORIZED**; no execution PASS is claimed.
+- IP-1 plan: **APPROVED / READY FOR GATE 3 CROSS-CHECK**; IP-1 execution **NOT AUTHORIZED**.
+- IP-2 execution: **NOT AUTHORIZED**; no execution PASS is claimed.
 - Overall implementation: **NOT AUTHORIZED**.
-- Evidence: R1 review conditions addressed in the IP-1 plan; approved Master Plan and IP-1A–IP-1G decomposition retained.
-- Tests: none run. No implementation, probes, schemas, fixtures, dependencies, CLI or Shortcut artifacts created.
-- Remaining execution gates: separate legal/runtime validation decision; evidence-based Shortcuts transport selection; independently reviewed geometry oracles; explicit semantic/byte-determinism decision; actual macOS compatibility verification. See IP-1 plan for owners and closure points.
-- Next action: Gate 3 cross-check the complete detailed-plan set when all authorized plans are available. Do not begin IP-1 execution or implementation.
-- Branch: `docs/ip-1-standards-fixtures-integration`.
-- Correction commit and remote verification: see Git history and task handoff; pushed without force, remote HEAD verified equal to local HEAD.
+- IP-2 plan uses approved IP-1 planning commit `6ed649d3995f70fa2421e08cb027c07d19b4cad4` as baseline.
+- Resource limits/API behavior are proposals pending authorized evidence and architectural review. Schema qualification, legal offline validator strategy and fixture catalog remain upstream dependencies.
+- No tests run. No code, model, parser, fixture, probe, schema, dependency, CLI, Shortcut or package created.
+- Next action: architectural review of IP-2 plan. Do not begin IP-2 execution or generate IP-3–IP-7 plans from this task.
+- Branch: `docs/ip-2-safe-input-model-parser`; see task handoff for commit SHA and remote verification.
 
 ## Stage ledger
 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
-| 0. Discovery and master plan | PASS | Gate 1 approved; review conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | PLANNED | Plan approved for Gate 3 cross-check. Execution remains unauthorized and requires separate approval plus all IP-1 PASS evidence. | — |
-| 2. Core model and safe parsing (IP-2) | PLANNED | Detailed plan and later implementation satisfy approved contracts. | — |
-| 3. Route modes and geometry (IP-3) | PLANNED | Three explicit modes; distance advisory only, no automatic route change or ECDIS equivalence claim. | — |
-| 4. GPX serialization and loss report (IP-4) | PLANNED | Valid GPX 1.1 with clear loss disclosure. | — |
-| 5. Stable local CLI and self-contained runtime (IP-5) | PLANNED | Stable automation contract; no target Homebrew/Python. | — |
-| 6. Windy Route Planner acceptance (IP-6) | PLANNED | Synthetic-only acceptance; Uploader and Planner outcomes distinguished. | — |
-| 7. V1 Shortcuts experience, installation, and release (IP-7) | PLANNED | Working primary Shortcut, approved launch paths/modes, reproducible install and end-to-end verification. | — |
+| 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | PLANNED | Plan ready for Gate 3 cross-check; execution unauthorized. | — |
+| 2. Safe input model and parser (IP-2) | PLAN REVIEW | Detailed plan submitted; execution unauthorized pending complete Gate 3/Gate 4 process. | — |
+| 3. Route modes and geometry (IP-3) | PLANNED | Detailed plan not created in this task. | — |
+| 4. GPX serialization and loss report (IP-4) | PLANNED | Detailed plan not created in this task. | — |
+| 5. Stable local CLI and self-contained runtime (IP-5) | PLANNED | Detailed plan not created in this task. | — |
+| 6. Windy Route Planner acceptance (IP-6) | PLANNED | Detailed plan not created in this task. | — |
+| 7. V1 Shortcuts release (IP-7) | PLANNED | Detailed plan not created in this task. | — |
 
-Detailed plans live under `docs/implementation/`. Plan approval is not stage execution PASS. RTZP is OUT OF SCOPE for V1 and has no roadmap stage.
+Plan review is not execution PASS. RTZP remains OUT OF SCOPE for V1.
