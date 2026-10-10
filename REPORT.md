@@ -2,14 +2,16 @@
 
 ## IP-3 planning handoff
 
-- **IP-3 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2).**
+- **IP-3 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK.**
 - **IP-3 EXECUTION: NOT AUTHORIZED.**
 - **OVERALL IMPLEMENTATION: NOT AUTHORIZED.**
 - Planning branch is based on corrected IP-2 commit `8011d3f0c4baf62cb15194ab9308f4e312269615`; no upstream execution PASS is implied.
 
-Created `docs/implementation/IP-3-ROUTE-MODES-GEOMETRY-PLAN.md`. It specifies Full Route, From Waypoint, Current Position / Direct to Next WP, and Current Position / Join Selected Route Leg; immutable source-order transforms; scoped ordinal waypoint/leg references; incoming-leg ownership; synthetic-point and source-leg provenance; preview-bound explicit confirmation; privacy-safe diagnostics; metadata losses; advisory-only distance; and IP-4/IP-5/IP-7 handoffs. The proposed great-circle finite-arc projection and rhumb finite-leg global-minimum approach are qualification-gated, not claimed verified. If reliable rhumb root enumeration cannot be established, IP-3E remains blocked for architectural decision; no fallback or silent scope downgrade is permitted.
+Created `docs/implementation/IP-3-ROUTE-MODES-GEOMETRY-PLAN.md` and applied all four R1 architectural corrections in §§4.2, 5.1–5.3, 7–8, 10–14, and 15. The plan specifies Full Route, From Waypoint, Current Position / Direct to Next WP, and Current Position / Join Selected Route Leg; immutable source-order transforms; scoped ordinal waypoint/leg references; incoming-leg ownership; synthetic-point and source-leg provenance; domain preview/confirmation contracts separated from IP-5 transport and IP-7 UI; privacy-safe diagnostics; metadata losses; advisory-only distance; and IP-4/IP-5/IP-7 handoffs.
 
-Remaining decisions/evidence include IP-1 qualified schema/geometry literals and independent distance oracles/tolerances; IP-2 implemented model and ID semantics; exact output minimum/duplicate-coordinate policy; great-circle degeneracy thresholds; rhumb global-minimum reliability; field-by-field split-leg metadata applicability; and IP-4/IP-5/IP-7 interface contracts. IP-1 and IP-2 are plan-approved but their execution evidence is pending. Gate 3 remains pending the complete detailed-plan set and cross-check.
+R1 corrections: (1) one-point neutral transformations are valid with an INSUFFICIENT_OUTPUT_POINTS advisory; no point is fabricated or result discarded; GPX exportability is left to IP-4 and empirical Windy compatibility to IP-6, without pre-approving one-point GPX. (2) Join endpoints reuse the corresponding original source waypoint reference only when classified coincident under a still-provisional numerical/identity tolerance; coordinate deduplication never removes a synthetic join, distinct source identities are never merged, and the current-position point retains distinct provenance. (3) The Loxodrome closest-point metric is an **UNRESOLVED ARCHITECTURAL DECISION**. Authalic-sphere great-circle separation remains only a candidate; metric review/approval must precede any minimizer qualification, and global root completeness remains a hard gate. (4) IP-3 domain creates previews/candidates and validates confirmed commands; IP-5 owns transport/binding; IP-7 presents the preview and collects consent. Revisions/tokens are transient contract proposals, not presumed durable identifiers or cryptographic protections.
+
+Remaining execution blockers include IP-1 qualified schema/geometry literals and independent distance oracles/tolerances; IP-2 implemented model and ID semantics; great-circle degeneracy and join-endpoint tolerance qualification; architectural selection of the Loxodrome closest-point metric followed by global-minimum/root-completeness evidence; field-by-field split-leg metadata applicability; IP-4 one-point export policy and IP-6 empirical Windy acceptance; and final IP-4/IP-5/IP-7 interface contracts. IP-1 and IP-2 are plan-approved but their execution evidence is pending. Gate 3 remains pending the complete detailed-plan set and cross-check.
 
 No implementation code, tests, fixtures, probes, schemas, dependencies, CLI, GPX, or Shortcuts were created or run. No real routes, derived vessel coordinates, credentials, or full source-route digest were added.
 
@@ -18,8 +20,8 @@ No implementation code, tests, fixtures, probes, schemas, dependencies, CLI, GPX
 - Branch: `docs/ip-3-route-modes-geometry`
 - Base: `8011d3f0c4baf62cb15194ab9308f4e312269615`
 - Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`
-- IP-3 plan commit: `9a5db3525b986a3e13e3239274dcc6ae6957d6e5`; pushed without force. At publication, `origin/docs/ip-3-route-modes-geometry` matched that local commit. This status synchronization is a separate documentation-only commit on the same branch.
-- Final branch tip after status synchronization is reported in the task handoff.
+- IP-3 plan commit: `9a5db3525b986a3e13e3239274dcc6ae6957d6e5`.
+- R1 correction commit and final remote-head verification are recorded in this task handoff.
 - Next action: architectural review of IP-3 plan. Do not execute IP-3 or begin IP-4.
 
 ## Status

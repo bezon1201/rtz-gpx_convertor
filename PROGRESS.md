@@ -2,18 +2,18 @@
 
 ## Current gate activity
 
-**IP-3 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2)**
+**IP-3 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK**
 
 - Gate 1: **APPROVED / PASS**.
 - IP-1 plan: **APPROVED / READY FOR GATE 3 CROSS-CHECK**; IP-1 execution **NOT AUTHORIZED**.
 - IP-2 plan: **APPROVED / READY FOR GATE 3 CROSS-CHECK**; IP-2 execution **NOT AUTHORIZED**.
 - IP-3 execution: **NOT AUTHORIZED**; overall implementation: **NOT AUTHORIZED**.
 - Branch: `docs/ip-3-route-modes-geometry`, based on corrected IP-2 baseline `8011d3f0c4baf62cb15194ab9308f4e312269615`.
-- IP-3 defines all three modes and explicit Current Position variants, immutable source-order output/provenance, confirmation, losses, diagnostics, advisory-only distance, and IP-4 handoff. Join math remains qualification-gated; unreliable rhumb global minimization blocks IP-3E pending architectural decision.
-- Open dependencies: IP-1 schema/geometry qualification and independent distance oracles; IP-2 execution/model evidence and identifier semantics; minimum-point/duplicate-coordinate policy; split-leg metadata semantics; IP-4/IP-5/IP-7 contracts. No upstream execution PASS is assumed.
+- IP-3 R1 conditions closed: one-point neutral transforms are valid with an advisory; GPX exportability remains with IP-4 and Windy consumer acceptance with IP-6. Endpoint coincidence reuses the source point reference only under provisional tolerance; distinct source identities and synthetic current-position provenance are never merged. The Loxodrome closest-point metric is unresolved; candidate metric approval must precede any minimizer qualification, with global root completeness still required. Confirmation responsibilities are divided between IP-3 domain, IP-5 transport, and IP-7 UI.
+- Open dependencies: IP-1 schema/geometry qualification and independent distance oracles; IP-2 execution/model evidence and identifier semantics; join-endpoint tolerance and great-circle degeneracy qualification; approved Loxodrome metric and global-minimum evidence; split-leg metadata semantics; IP-4/IP-5/IP-7 interfaces; IP-4/IP-6 one-point GPX policy/acceptance. No upstream execution PASS is assumed.
 - No application code, tests, fixtures, probes, schemas, dependencies, CLI, GPX or Shortcuts created; no tests run.
-- Next: architectural review of IP-3 plan, then Gate 3 cross-check after all detailed plans are separately authorized and available. Do not execute IP-3 or begin IP-4.
-- IP-3 plan commit `9a5db3525b986a3e13e3239274dcc6ae6957d6e5` was pushed without force; the remote branch matched local HEAD at publication. Final branch tip after this status synchronization is in the task handoff.
+- Next: Gate 3 cross-check after the complete detailed-plan set is available. IP-3 execution and overall implementation remain unauthorized.
+- IP-3 plan commit `9a5db3525b986a3e13e3239274dcc6ae6957d6e5` was pushed without force; R1 corrections are the current documentation update. The final R1 commit and remote-head verification are reported in the task handoff.
 
 ### Preserved IP-2 status and evidence
 
@@ -34,7 +34,7 @@
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
 | 1. Standards, fixtures, integration/packaging discovery (IP-1) | PLANNED | Plan ready for Gate 3 cross-check; execution unauthorized. | — |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check. Execution unauthorized. | — |
-| 3. Route modes and geometry (IP-3) | PLAN SUBMITTED FOR REVIEW | Detailed transformation plan created; join algorithms remain qualification-gated; execution unauthorized. | `9a5db35` |
+| 3. Route modes and geometry (IP-3) | PLAN APPROVED | R1 corrections closed; ready for Gate 3 cross-check; execution unauthorized. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLANNED | Detailed plan not created in this task. | — |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLANNED | Detailed plan not created in this task. | — |
 | 6. Windy Route Planner acceptance (IP-6) | PLANNED | Detailed plan not created in this task. | — |
