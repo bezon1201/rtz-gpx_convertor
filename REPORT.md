@@ -18,7 +18,8 @@ No implementation code, tests, fixtures, probes, schemas, dependencies, CLI, GPX
 - Branch: `docs/ip-3-route-modes-geometry`
 - Base: `8011d3f0c4baf62cb15194ab9308f4e312269615`
 - Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`
-- Commit and remote-head verification: to be recorded after the focused planning commit.
+- IP-3 plan commit: `9a5db3525b986a3e13e3239274dcc6ae6957d6e5`; pushed without force. At publication, `origin/docs/ip-3-route-modes-geometry` matched that local commit. This status synchronization is a separate documentation-only commit on the same branch.
+- Final branch tip after status synchronization is reported in the task handoff.
 - Next action: architectural review of IP-3 plan. Do not execute IP-3 or begin IP-4.
 
 ## Status
