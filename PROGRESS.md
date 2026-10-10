@@ -2,6 +2,20 @@
 
 ## Current gate activity
 
+**IP-4 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2)**
+
+- Gate 1: **APPROVED / PASS**.
+- IP-1 plan: **APPROVED / READY FOR GATE 3 CROSS-CHECK**; execution **NOT AUTHORIZED**.
+- IP-2 plan: **APPROVED / READY FOR GATE 3 CROSS-CHECK**; execution **NOT AUTHORIZED**.
+- IP-3 plan: **APPROVED / READY FOR GATE 3 CROSS-CHECK**; execution **NOT AUTHORIZED**.
+- IP-4 execution and overall implementation: **NOT AUTHORIZED**.
+- Branch: `docs/ip-4-gpx-serialization-loss-report`, based on approved IP-3 R1 `8e35edff864de87278aa7c61c7376e49845c3d74`.
+- IP-4 plan covers GPX 1.1 construction, exact decimal round-trip and validation, one-point warning/eligibility recommendation, loss inventory, privacy, safe local save boundaries, and IP-5/IP-6/IP-7 handoffs. The one-point export recommendation may broaden the Master Plan’s “minimum useful point count” check and requires architectural approval; schema validity does not imply Windy compatibility.
+- Open decisions/evidence: IP-1 XSD hash/license/offline validator; IP-2 exact decimal representation; +180 longitude conflict; one-point policy approval and Windy acceptance; naming; atomic writes/permissions/provider behavior; and save/reference/confirmation contracts with IP-5/IP-7.
+- No application code, GPX, fixtures, tests, probes, schemas, dependencies, CLI or Shortcuts created; no tests run.
+- Next: architectural review of IP-4 plan. Gate 3 only after the complete plan set is available and cross-checked.
+- Correction commit and remote status are reported in the final task handoff.
+
 **IP-3 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK**
 
 - Gate 1: **APPROVED / PASS**.
@@ -35,7 +49,7 @@
 | 1. Standards, fixtures, integration/packaging discovery (IP-1) | PLANNED | Plan ready for Gate 3 cross-check; execution unauthorized. | — |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check. Execution unauthorized. | — |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | R1 corrections closed; ready for Gate 3 cross-check; execution unauthorized. | R1 commit in task handoff |
-| 4. GPX serialization and loss report (IP-4) | PLANNED | Detailed plan not created in this task. | — |
+| 4. GPX serialization and loss report (IP-4) | PLAN SUBMITTED FOR REVIEW | Detailed GPX/loss-report contract created; execution unauthorized. | pending |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLANNED | Detailed plan not created in this task. | — |
 | 6. Windy Route Planner acceptance (IP-6) | PLANNED | Detailed plan not created in this task. | — |
 | 7. V1 Shortcuts release (IP-7) | PLANNED | Detailed plan not created in this task. | — |

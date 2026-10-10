@@ -1,5 +1,28 @@
 # Architect review handoff
 
+## IP-4 planning handoff
+
+- **IP-4 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2).**
+- **IP-4 EXECUTION: NOT AUTHORIZED.**
+- **OVERALL IMPLEMENTATION: NOT AUTHORIZED.**
+- Branch: `docs/ip-4-gpx-serialization-loss-report`, based on approved IP-3 R1 commit `8e35edff864de87278aa7c61c7376e49845c3d74`.
+
+Created `docs/implementation/IP-4-GPX-SERIALIZATION-LOSS-REPORT-PLAN.md`. It defines a GPX 1.1 core contract with one ordered `rte`, exact decimal coordinate round-trip, offline schema validation, typed loss inventory and privacy-safe summary, export eligibility, and separate local save responsibilities for IP-4/IP-5/IP-7. It separates schema validity from export eligibility and empirical Windy compatibility.
+
+The plan proposes allowing a one-point GPX with an explicit insufficient-points warning and user acknowledgement because the GPX 1.1 schema permits zero or more `rtept`; this may broaden the Master Plan’s “minimum useful point count” check, so it requires explicit architectural approval before the policy freezes. It does not establish Windy support; IP-6 must test a synthetic one-point file. The plan also identifies the GPX longitude +180 exclusive-bound conflict: proposed behavior is fail closed without normalization. This and exact decimal-model support require cross-stage review. No schema was downloaded or bundled, and no implementation evidence is claimed.
+
+IP-4A–IP-4F cover schema/serialization contract, serializer, loss report, eligibility/validation, safe artifact handoff, and synthetic acceptance/IP-6 handoff. Remaining blockers include IP-1’s exact XSD hash/license/offline validator strategy; IP-2’s decimal representation/presence model; IP-3/IP-5/IP-7 confirmation and save-reference contracts; +180 handling; atomicity/permissions on target filesystems; and IP-6 empirical acceptance. Gate 3 remains pending the complete plan set and cross-check.
+
+No application code, GPX, fixtures, tests, probes, schemas, dependencies, CLI, or Shortcuts were created or run. No confidential routes, coordinates, credentials, or route-derived artifacts were added.
+
+## IP-4 repository state
+
+- Branch: `docs/ip-4-gpx-serialization-loss-report`
+- Base: `8e35edff864de87278aa7c61c7376e49845c3d74`
+- Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`
+- Commit and remote verification: recorded in the final task handoff after publication.
+- Next: architectural review of the IP-4 plan. Do not execute IP-4 or begin IP-5.
+
 ## IP-3 planning handoff
 
 - **IP-3 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK.**
