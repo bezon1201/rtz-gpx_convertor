@@ -1,10 +1,10 @@
 # RTZ-GPX-Converter
 
-A proposed offline macOS Apple Silicon utility for converting maritime RTZ route plans into GPX 1.1 routes for personal weather assessment in Windy. It is not an ECDIS replacement or an approved navigation system.
+A proposed offline macOS Apple Silicon utility for converting maritime RTZ route plans into GPX 1.1 routes for personal weather assessment in Windy. V1's approved direction is a macOS Shortcut invoking a self-contained local CLI. It is not an ECDIS replacement or an approved navigation system.
 
 ## Project status
 
-**Planning only.** The repository currently contains governance and planning documents; there is no application code, conversion script, GUI, Finder action, package, or test suite.
+**Planning only.** The repository currently contains governance and planning documents; there is no application code, CLI, Shortcut package, Finder Quick Action, release package, or test suite.
 
 Read [the master plan](docs/RTZ-GPX-PLAN.md), then [REPORT.md](REPORT.md) and [PROGRESS.md](PROGRESS.md). The master plan is awaiting review and approval.
 
