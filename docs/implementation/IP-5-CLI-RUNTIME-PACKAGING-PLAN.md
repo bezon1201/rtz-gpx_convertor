@@ -1,6 +1,6 @@
 # IP-5 — Stable Local Swift CLI and Self-contained Runtime: Detailed Implementation Plan
 
-**Plan status:** Submitted for architectural review (Gate 2).
+**Plan status:** Approved Gate 2 plan; Gate 3 R1 reconciliation applied, pending independent architecture review. Gate 3 PASS is not declared.
 **IP-5 execution:** NOT AUTHORIZED.
 **Overall implementation:** NOT AUTHORIZED.
 **Planning branch:** `docs/ip-5-cli-runtime-packaging`.
@@ -24,7 +24,7 @@ V1 constraints:
 Status constraints inherited from approved plans:
 
 - IP-1/IP-2/IP-3/IP-4 plans are approved for Gate 3 cross-check; none has execution PASS evidence.
-- IP-4 R1 leaves one-point GPX policy unresolved between ALLOW_WITH_WARNING and REFUSE_EXPORT; IP-5 transports the selected behavior and does not decide it. Route-name override is also unresolved; IP-5 transports only the naming input approved at Gate 3.
+- G3-001 approves an export-only GPX route-name override or explicit omission; G3-004 approves one-point GPX export with warning and explicit confirmation. IP-5 transports and enforces these decisions but does not change source route data.
 - No mandatory RTZ dialect is advertised as supported until IP-1 qualification evidence exists. RTZP remains out of scope.
 - Never treat a Finder, Shortcuts or CLI file reference as trusted. Paths and content remain untrusted until IP-2 securely opens and validates them.
 
@@ -66,11 +66,15 @@ Proposed response/request envelope fields (exact schema is to be frozen only aft
 - `input_reference`: opaque reference object supplied by the approved bridge; no raw path is an authority.
 - `mode`: `full_route`, `from_waypoint`, `current_direct`, or `current_join` where applicable.
 - `selection`: explicit source-order waypoint/leg reference; current-position entered latitude/longitude; explicit next waypoint; explicit qualified connector geometry; and any approved export naming choice.
-- `preview_binding`: transient correlation/revision data for confirmation, never proof by itself.
+- `effective_gpx_route_name`: valid source name, explicit validated override, or explicit omission; independent from output filename.
+- `route_confirmation`: explicit affirmative approval bound to source state, mode/selections/manual coordinates, connector geometry, resulting ordered route, effective GPX route name, warnings and metadata-loss disclosures.
+- `preview_binding`: transient correlation/revision data for equivalence checks, never proof of source identity, content continuity or user approval by itself.
 - `destination_reference`: separately authorized output capability, not a string pathname.
-- `overwrite_authorization`: explicit IP-7 consent tied to the selected target identity; absence means no replacement.
+- `publication_consent`: separate affirmative approval bound to the exact confirmed GPX output and destination/filename/target identity/state; `overwrite_authorization` is exact-target permission within this separate boundary. Absence means no publication/replacement.
 
 Response fields: `protocol_version`, `request_id`, `outcome`, `phase`, `capabilities` where requested, safe `diagnostics`, `preview` where requested, IP-4 `validation` and `loss_report`, and separate `save_result` when writing was attempted. User-facing preview/result data may contain coordinates/names required to display the selected transformation; these values must not be copied to logs or generic diagnostics. A successful save may return a display-only output reference/name for IP-7 to show or reveal; never include full paths in default diagnostics or logs.
+
+G3-007 requires route confirmation and publication consent to remain distinct protocol concepts. A changed effective route name, geometry, source state, selection, coordinate, resulting route or material warning invalidates route confirmation and dependent publication consent. Destination/filename-only changes renew publication consent only; changed target identity/state renews publication consent. A stale/replayed token or button event cannot authorize either boundary. One-point export is allowed only with the IP-7 warning and affirmative confirmation represented in the confirmed request.
 
 #### `inspect` action contract
 
@@ -228,7 +232,7 @@ Preserve upstream IP-2/IP-3/IP-4 codes when stable; otherwise map to versioned p
 - Protocol: `REQUEST_INVALID`, `PROTOCOL_VERSION_UNSUPPORTED`, `CAPABILITY_UNAVAILABLE`, `REQUEST_TOO_LARGE`.
 - Input: `INPUT_REFERENCE_UNAVAILABLE`, `INPUT_ACCESS_DENIED`, `INPUT_IDENTITY_UNVERIFIED`, `INPUT_CHANGED`, `INPUT_NOT_REGULAR_FILE`, `INPUT_TOO_LARGE`, `RTZ_XML_INVALID`, `RTZ_DIALECT_UNSUPPORTED`, `RTZ_SCHEMA_UNAVAILABLE`, `RTZ_SCHEMA_INVALID`.
 - Selection/domain: `WAYPOINT_SELECTION_REQUIRED`, `WAYPOINT_SELECTION_AMBIGUOUS`, `LEG_SELECTION_REQUIRED`, `GEOMETRY_UNSUPPORTED`, `JOIN_CANDIDATE_UNAVAILABLE`, `PREVIEW_STALE`, `PREVIEW_BINDING_MISMATCH`, `CONFIRMATION_REQUIRED`, `TRANSFORMATION_REJECTED`.
-- GPX/eligibility: `GPX_EXPORT_NOT_ELIGIBLE`, `ONE_POINT_POLICY_BLOCKED` (actual stable code per IP-4 Gate 3 decision), `GPX_SERIALIZATION_FAILED`, `GPX_SCHEMA_VALIDATION_FAILED`, `GPX_SEMANTIC_VALIDATION_FAILED`, `GPX_COORDINATE_UNREPRESENTABLE`.
+- GPX/eligibility: `GPX_EXPORT_NOT_ELIGIBLE`, `ONE_POINT_WARNING_ACK_REQUIRED` (provisional code for the G3-004 explicit warning confirmation), `GPX_SERIALIZATION_FAILED`, `GPX_SCHEMA_VALIDATION_FAILED`, `GPX_SEMANTIC_VALIDATION_FAILED`, `GPX_COORDINATE_UNREPRESENTABLE`.
 - Output/lifecycle: `DESTINATION_REFERENCE_UNAVAILABLE`, `DESTINATION_PERMISSION_DENIED`, `DESTINATION_PROVIDER_UNSUPPORTED`, `DESTINATION_NOT_LOCAL`, `OUTPUT_ALREADY_EXISTS`, `OVERWRITE_CONSENT_REQUIRED`, `OUTPUT_IDENTITY_CHANGED`, `OUTPUT_VALIDATION_FAILED`, `OUTPUT_WRITE_FAILED`, `OUTPUT_PUBLISHED_BEFORE_CANCEL`, `SIDECAR_SAVE_FAILED`, `CANCELLED`, `INTERNAL_ERROR`.
 
 Codes and severities are proposals until reconciled with upstream catalogs. Each diagnostic contains code, severity, bounded user-safe message, phase and optional non-sensitive category/count. Preserve source-stage provenance code in a separate field only if it is itself privacy-safe. No raw parser error, XML line excerpt or filesystem exception string is passed through by default.
@@ -243,7 +247,7 @@ Codes and severities are proposals until reconciled with upstream catalogs. Each
 
 ### 9.3 Offline behavior
 
-No network client, updater, telemetry, remote schema fetch, runtime package download, DNS lookup, service endpoint or cloud conversion. Schema/resources, if lawfully bundled, are local and hash-verified against release manifest. If mandatory schema rights/runtime validation remain unresolved, block packaging/implementation rather than fetch at runtime or weaken validation. Offline qualification tests must run with network unavailable and verify no attempted connections. File Provider hydration is not an allowed conversion network dependency; only already-local material may be processed.
+No network client, updater, telemetry, remote schema fetch, runtime package download, DNS lookup, service endpoint or cloud conversion. Schema/resources, if lawfully bundled, are local and hash-verified against release manifest. If mandatory schema rights/runtime validation remain unresolved, block packaging/implementation rather than fetch at runtime or weaken validation. Offline qualification tests must run with network unavailable and verify no attempted connections. The converter must not independently initiate File Provider/cloud downloads; process only authorized, available content and fail clearly without indefinite waiting when unavailable. macOS/provider activity outside converter control is documented separately and does not weaken the mandatory fully-local offline guarantee.
 
 ## 10. Shortcuts integration boundary (IP-7-owned UX)
 
@@ -266,7 +270,7 @@ Do not create a Shortcut or rely on a “Run Shell Script”, direct executable 
 
 ## 11. Self-contained build, packaging and installation
 
-### 11.1 Candidate models
+### 11.1 Approved architecture direction and candidate models
 
 | Model | Advantages | Risks / qualification |
 |---|---|---|
@@ -274,7 +278,7 @@ Do not create a Shortcut or rely on a “Run Shell Script”, direct executable 
 | Signed `.app` bundle containing CLI and approved resources | Stable bundle layout for executable/resources/version/manifest; signs as a coherent deliverable; can be invoked by fixed internal executable path without a GUI. | Must verify direct nested CLI execution, bundle signing/notarization, Gatekeeper/quarantine, Launch Services behavior, file access and Shortcuts invocation. Do not assume the wrapper solves sandbox/security-scope transport. |
 | Installer/flat package | Can place files and register components; deterministic install/update. | May require admin or installer privileges, adds privileged deployment complexity and uninstall risk. No need identified for V1; not recommended absent a demonstrated requirement. |
 
-**Proposed V1 direction:** signed/notarized `.app` bundle containing the arm64 CLI executable and only approved local resources, distributed in a signed/notarized drag-install disk image (DMG) with the exported Shortcut and concise installation/uninstall/update instructions. This is a planning recommendation, not a qualified package. Place the bundle in a user-level stable location (provisionally `~/Applications/RTZ-GPX-Converter.app`) so ordinary use requires no administrator privileges. The installed CLI location is a documented fixed path inside that bundle; Shortcuts must not depend on a developer checkout, shell PATH, Homebrew, Python or Node.js. IP-1E/IP-7 must test path handling, package copy, Shortcut import, Gatekeeper and updates. If direct invocation of the bundled CLI is not supported safely, Gate 3 review is required before adding a launcher or installer.
+**G3-010 approved V1 architecture direction:** signed/notarized `.app` bundle containing the arm64 CLI executable and only approved local resources, distributed in a signed/notarized drag-install disk image (DMG) with the exported Shortcut and concise installation/uninstall/update instructions. This is not a qualified package or a feasibility claim. Place the bundle in a user-level stable location (provisionally `~/Applications/RTZ-GPX-Converter.app`) so ordinary use requires no administrator privileges. The installed CLI location is a documented fixed path inside that bundle; Shortcuts must not depend on a developer checkout, shell PATH, Homebrew, Python or Node.js. IP-1E/IP-7 must qualify path handling, package copy, Shortcut import, Gatekeeper and updates. If direct invocation of the bundled CLI is not supported safely, stop and return for architectural review; do not silently change the approved package direction.
 
 The package is self-contained in the product sense: it includes the project executable and legally redistributable required resources. It may use macOS system frameworks/runtime components available on the qualified OS; it does not install a language runtime or developer toolchain on the target Mac. Exact linkage/resource policy depends on IP-1 qualification. No schema is included unless rights clear; no runtime schema download.
 
@@ -360,7 +364,7 @@ These are future work packages only, not implementation instructions or authoriz
 - **Scope:** preview/confirm request and result lifecycle across candidate invocation models; separate-invocation/stateless operation is not promised until qualified. No geometry algorithms/UI implementation.
 - **Exclusions:** no trusted token-only decision, full source digest, persistent DB, daemon, implicit confirmation or selection changes.
 - **Proposed files:** `Sources/RTZCLI/PreviewBinding.swift`, `ConfirmationRequest.swift`, response-model tests/docs.
-- **Dependencies:** IP-3 confirmed-command contract; IP-7 UX/consent; IP-5B protocol, IP-5C reference/identity; IP-4 one-point/naming Gate 3 decisions; Gate 4 authorization.
+- **Dependencies:** IP-3 confirmed-command contract; IP-7 route/publication approvals; IP-5B protocol, IP-5C reference/identity; IP-4 G3-001 naming and G3-004 one-point contracts; Gate 4 authorization.
 - **Sequence:** inspect/recompute preview → return display payload → collect user consent in Shortcut → new invocation obtains newly authorized input reference or separately qualified reusable capability → fresh IP-2 open/validation and IP-3 recomputation → verify source-object identity and source-content state separately, plus selections and preview semantic equivalence → IP-3 validates confirmed command → only then IP-4/export.
 - **Synthetic tests/evidence:** stale/replayed/mismatched preview, changed bytes with stable file identity, changed object with same path/name/timestamp, changed selections/model/algorithm revision, all current-position variants, explicit route leg/next-WP, cancellation, user-editable token tampering, capability/reference lifetime, continuity failure and fail-closed response.
 - **Acceptance:** no export from preview alone; changed source content/options require re-preview; continuity established under the jointly approved IP-2/IP-5 identity contract; no navigation choice inferred; token/revision treated as correlation only; user consent is distinct and explicit. If continuity cannot be demonstrated, IP-5D does not PASS and Current Position remains not implemented/accepted/release-ready.
@@ -409,14 +413,14 @@ These are future work packages only, not implementation instructions or authoriz
 | IP-2 model/error/limits | IP-2 owns parse/model; IP-5 dispatches/maps only | **APPROVED AS PLAN; EXECUTION PENDING** | Exact interfaces/limits/dialects, immutable model and diagnostics from authorized IP-2 evidence. |
 | IP-3 route selections/preview/confirmation | IP-3 domain; IP-5 transport/binding; IP-7 consent | **APPROVED AS PLAN; CONTRACT PROVISIONAL** | Explicit waypoint/leg, connector geometry, stale confirmation and no automatic decisions; numerical geometry decisions remain upstream. |
 | Cross-invocation source continuity | IP-2 identity contract; IP-5D binding; IP-7 capability/UI | **UNRESOLVED; IP-5D BLOCKING** | Newly authorized reference or qualified reusable capability; object identity and content state separately proven; no default private digest; fail closed if unavailable. |
-| IP-4 validated artifact/eligibility/loss | IP-4 creates immutable validated bytes; IP-5 writes | **APPROVED AS PLAN; EXECUTION PENDING** | GPX/schema/value semantics and loss report; Gate 3 chooses one-point policy and route-name override; no IP-5 override. |
+| IP-4 validated artifact/eligibility/loss | IP-4 creates immutable validated bytes; IP-5 writes | **APPROVED AS PLAN; EXECUTION PENDING** | G3-001 export name and G3-004 one-point ALLOW_WITH_WARNING are approved; exact schema/name qualification and loss behavior remain pending. |
 | Writer/destination/overwrite | IP-5 writer; IP-7 destination/consent | **OWNER BOUNDARY APPROVED; IMPLEMENTATION UNQUALIFIED** | Same-object protection, atomic/no-replace/replace, provider matrix, evidence-based permissions/ACL/metadata for creation and replacement, cancellation and cleanup. |
 | IP-5D / IP-5F release gate | IP-5D continuity; IP-5F integration/release | **MANDATORY; NOT QUALIFIED** | IP-5D must PASS; if it fails, IP-5F cannot pass by omitting Current Position absent separate governance approval for scope change. |
 | IP-6 Windy acceptance | IP-6 only | **UNRESOLVED** | Synthetic empirical Route Planner results. These inform compatibility, not IP-4 product policy. |
 | IP-7 UI/install | IP-7 user interaction, Shortcut artifact and installation docs | **UNRESOLVED** | Actual file picker/Quick Action/Dock/keyboard/preview/confirmation/save/reveal end-to-end test. |
 | Privacy/offline | All stages; IP-5 process protocol/runtime | **APPROVED REQUIREMENT; EXECUTION UNVERIFIED** | No logs/data persistence/network, private reference lifetime, offline run and privacy review. |
 
-No upstream execution PASS is claimed. IP-5 must not freeze a transport, file-reference encoding, minimum OS, package path, schema resource set, numeric tolerance, one-point policy, name policy or atomic filesystem implementation before its named owner’s evidence and required architectural review.
+No upstream execution PASS is claimed. IP-5 must not freeze a transport, file-reference encoding, minimum OS, package path, schema resource set, numeric tolerance or atomic filesystem implementation before its named owner’s evidence and required architectural review. Apply the approved one-point/name contracts without inventing qualification results.
 
 ## 15. Risks and unresolved decisions
 
@@ -426,7 +430,7 @@ No upstream execution PASS is claimed. IP-5 must not freeze a transport, file-re
 4. **Protocol exposure:** stdout preview necessarily contains user-facing route data; keep ephemeral and distinct from logs. No sensitive values in argv or stderr.
 5. **Preview binding:** no token proves consent. Fresh IP-2/IP-3 recomputation and distinct Shortcut confirmation are required; identity/content continuity remains unresolved; no full source digest by default.
 6. **IP-5D failure:** inability to establish secure source continuity is a mandatory-capability failure; IP-5D and dependent IP-5F do not PASS. Partial Current Position support or unilateral scope reduction cannot satisfy the approved V1 gate.
-7. **IP-4 unresolved decisions:** one-point export and route-name override must be settled at Gate 3; IP-5 cannot assume either policy.
+7. **IP-4 policy:** G3-001 route naming and G3-004 one-point export are resolved; IP-5 transports/enforces them and cannot alter their product semantics.
 8. **Writer atomicity and permissions:** filesystem/provider replacement primitives, modes, ACLs, extended attributes and security scopes differ. Supported behavior requires IP-5E evidence; unsupported semantics fail safely.
 9. **Schema redistribution/runtime:** IP-1 legal/technical decisions may block self-contained offline validation; no download-at-runtime workaround.
 10. **Packaging/security:** code signing, notarization, Gatekeeper, app-bundle invocation and a stable install path are not qualified. No bypass instructions.
@@ -470,4 +474,4 @@ Research checked 2026-10-11. Platform documentation can change; recheck at IP-1/
 
 ## Approval request
 
-Please review the conditional JSON stdio recommendation, secure `inspect` contract, file-reference carrier and cross-process scope policy, unresolved source identity/content continuity for preview/confirmation, evidence-gated writer permissions, signed app-bundle/DMG direction, launch/input boundaries and IP-5A–IP-5F decomposition. Gate 3 must reconcile these plans with IP-1D/IP-1E and settle IP-4 one-point and naming policy before implementation or freezing dependent behavior. Do not begin IP-5 execution or IP-6 planning without separate explicit authorization.
+The Gate 3 reconciled architecture retains conditional JSON stdio, secure `inspect`, unqualified file-reference carrier and cross-process scope, unresolved IP-5D source identity/content continuity, evidence-gated writer permissions, approved signed app-bundle/DMG direction, and IP-5A–IP-5F decomposition. The approved name/one-point/geometry/consent policies are inputs, not IP-5 choices. Do not begin IP-5 execution without independent Gate 3 review and separate explicit Gate 4 authorization.

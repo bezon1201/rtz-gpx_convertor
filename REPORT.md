@@ -1,5 +1,16 @@
 # Architect review handoff
 
+## Current handoff — Gate 3 R1 documentation reconciliation
+
+- **Status: RECONCILIATION COMPLETE / PENDING INDEPENDENT ARCHITECTURE REVIEW. Gate 3 PASS is not declared. Gate 4 and implementation are NOT AUTHORIZED.**
+- Branch: `docs/gate-3-reconciliation`; approved IP-7 parent: `482c8b585635138174dbf64d309cc3f308e3dcd9`. The approved Master/IP-1–IP-7 baseline provenance and G3-001–G3-011 decision ledger are recorded in [GATE-3-RECONCILIATION-R1.md](docs/implementation/GATE-3-RECONCILIATION-R1.md).
+- Reconciled the Master Plan and all seven detailed plans for export-only route naming, explicit Current Position geometry, source continuity, one-point warning/export, +180° fail-closed qualification, rhumb closest-point objective, separate route/publication consent, mandatory Windy multi-point PASS, fully local offline behavior, signed app/DMG architecture, and Gate 3/Gate 4 governance.
+- Preserved all stage decompositions and documented remaining technical qualification owners and stop conditions. No feasibility, consumer acceptance, implementation, or Gate 3 PASS is claimed.
+- Changed files are the Master Plan; IP-1–IP-7 plans; this report; `PROGRESS.md`; and the new Gate 3 reconciliation report. Documentation-only diff; no implementation or test artifacts.
+- The final commit SHA and ordinary push/remote-head verification are reported in this task handoff; no self-referential commit hash is embedded in the commit itself.
+
+## Historical handoffs
+
 ## IP-7 detailed plan handoff
 
 - **IP-7 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK (R1 corrections applied).**

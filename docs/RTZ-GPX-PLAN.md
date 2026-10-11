@@ -60,7 +60,7 @@ For Current Position, never infer the next waypoint from the nearest point or si
 - The V1 primary user interface is a reproducibly installable macOS Shortcut, not a standalone GUI.
 - The Shortcut can be launched from Shortcuts, the Dock, and a keyboard shortcut; it also supports Finder Quick Action invocation using the selected RTZ file, reusing the same Shortcut flow.
 - When run without a Finder file input, offer a native macOS file picker. When run from Finder, use the selected RTZ and clearly show which file was received.
-- Offer Full Route, From Waypoint, and From Current Position. From Waypoint must show/select the starting waypoint. From Current Position must request latitude, longitude, next waypoint, and route-joining method, with an explicit route-leg confirmation when joining a segment. Before conversion, present a textual geometry summary containing the entered start position, selected waypoint/leg endpoints, any computed join point, and resulting route order.
+- Offer Full Route, From Waypoint, and From Current Position. From Waypoint must show/select the starting waypoint. From Current Position must request latitude, longitude, next waypoint, and route-joining method, with an explicit route-leg confirmation when joining a segment. Both Current Position modes require the user to choose Rhumb Line (Loxodrome) or Great Circle (Orthodrome) for the new connector; there is no default or automatic fallback. For Join Selected Route Leg, this connector choice is distinct from the selected source leg geometry used to calculate the join point. Before conversion, present a textual geometry summary containing the entered start position, selected waypoint/leg endpoints, both relevant geometries where applicable, any computed join point, and resulting route order.
 - Invoke the local RTZ-GPX CLI without requiring Terminal interaction. The CLI has a stable, documented automation interface, with explicit inputs, predictable exit/error behavior, and machine-readable results suitable for Shortcuts.
 - Save GPX through a user-selected destination. Default the save panel to the source RTZ directory when permitted; if that directory is unavailable or not writable, let the user choose another location.
 - Show success with the saved output path and actionable errors. After success, offer to reveal the GPX in Finder.
@@ -70,13 +70,14 @@ For Current Position, never infer the next waypoint from the nearest point or si
 - Preserve waypoint order exactly. Preserve waypoint names where present; do not invent names for unnamed points.
 - Offer Full Route, From Waypoint, and From Current Position as defined above.
 - Keep the original RTZ unchanged. Write a new GPX using a save panel or an explicitly chosen output path; never silently overwrite an existing output.
-- Validate coordinates, numeric attributes used, selected waypoint/leg, route order, minimum useful point count, XML/schema shape, and serialized GPX before reporting success.
+- Validate coordinates, numeric attributes used, selected waypoint/leg, route order, XML/schema shape, and serialized GPX before reporting success. A valid one-point transformation may be exported with a prominent no-navigable-leg warning and explicit confirmation; never fabricate another point.
 - Present a loss summary for every recognized source property that is not carried into GPX. Unknown extension data must be counted/reported as dropped or unsupported, never silently interpreted.
 - Give actionable errors and warnings without exposing raw route content in logs.
 
 ### Nonfunctional requirements
 
 - Run conversion, parsing, validation, and distance estimation with networking disabled. No cloud conversion, telemetry, analytics, route upload, or network dependency at runtime.
+- Fully local inputs and destinations must work offline. File Provider/cloud-backed items are conditional on user-authorized availability and provider-specific qualification; the converter must not initiate cloud downloads or wait indefinitely for unavailable placeholders. Distinguish OS/provider activity from converter-controlled network activity.
 - Deterministic results for identical input and choices. Preserve source precision unless a documented GPX serialization rule requires a change.
 - Responsiveness for realistic route sizes; impose and document bounded input size, XML depth, waypoint count, and processing time limits.
 - Accessibility and plain-language labels; units and coordinate formats must be explicit.
@@ -95,9 +96,11 @@ For Current Position, never infer the next waypoint from the nearest point or si
 ### GPX 1.1 output
 
 - Root `<gpx>` in `http://www.topografix.com/GPX/1/1`, required `version="1.1"` and truthful `creator` value.
-- One `<rte>` with an output route name that the user can preview, edit, or remove; ordered `<rtept lat="…" lon="…">` children, and `<name>` only for source waypoint names that exist. Do not silently copy vessel metadata into GPX.
+- One `<rte>` with a route name defaulted from the valid source RTZ route name when present; the user may provide an export-only override or explicitly export without a route name. Show the effective name in preview and serialize that exact confirmed value to `<rte><name>`. Keep it independent of the output filename. Invalid values are rejected, never silently removed, truncated, normalized without approval, or replaced by vessel identity or filename. Ordered `<rtept lat="…" lon="…">` children use `<name>` only for source waypoint names that exist. Do not silently copy vessel metadata into GPX.
 - No `<trk>` is emitted for a route conversion. Do not flatten or densify the route to make a map polyline look like ECDIS geometry.
 - Coordinates remain decimal degrees in WGS84. Serialization precision, XML escaping, optional metadata, and schema validation are fixed in the detailed plan.
+- Preserve a validated numeric `+180°` longitude value when both the qualified RTZ dialect and GPX 1.1 schema can represent it exactly. Never wrap it to `-180°`; if exact semantic representation or schema validity is not established, fail closed. Numeric-value preservation does not promise preservation of source decimal spelling.
+- One-point GPX export is allowed with warning and explicit confirmation; Windy compatibility is evaluated separately and cannot change this export policy.
 - Output defaults to a collision-safe filename derived from the source, but the user confirms location and replacement. Atomic write and failure cleanup prevent partial files.
 
 ## 6. Field mapping and loss policy
@@ -139,7 +142,7 @@ Technology proposal: native Swift and Foundation XML APIs for the local CLI to m
 
 Hard errors: unreadable file; malformed XML; unsafe or prohibited DTD/entity; unsupported/mismatched version and namespace; schema failure for a supported dialect; no route or no usable waypoints; missing/invalid/out-of-range/nonfinite coordinate; invalid selected waypoint or leg; ambiguous or unconfirmed Current Position choice; invalid GPX serialization; output write failure.
 
-Warnings requiring user review: duplicate consecutive coordinates; repeated IDs; unnamed route or waypoint; non-monotonic IDs; large jumps/discontinuities; unsupported metadata/extensions; highly unusual radii/XTD; distance divergence between geometry interpretation and straight-line comparison; high latitudes; antimeridian crossing; a route that reduces to fewer than two points.
+Warnings requiring user review: duplicate consecutive coordinates; repeated IDs; unnamed route or waypoint; non-monotonic IDs; large jumps/discontinuities; unsupported metadata/extensions; highly unusual radii/XTD; distance divergence between geometry interpretation and straight-line comparison; high latitudes; antimeridian crossing; a valid one-point route (no navigable legs; explicit confirmation required).
 
 No XML external entity expansion, schema retrieval over the network, arbitrary URL access, script execution, route uploads, or silent overwrites. If RTZP support is later approved, enforce compressed and uncompressed limits, a single expected RTZ member, path traversal defenses, compression-ratio limits, and no extraction to arbitrary paths.
 
@@ -147,7 +150,7 @@ No XML external entity expansion, schema retrieval over the network, arbitrary U
 
 - Distance calculations are advisory diagnostics only. They must never automatically select, infer, move, or otherwise modify the intended route.
 - Compute distance only as an explanatory estimate and show the selected method and units.
-- Proposed convention: use the WGS84 authalic sphere (radius 6,371,007.1809 m) and calculate each source leg according to its declared `geometryType` (rhumb for `Loxodrome`, great-circle/orthodrome for `Orthodrome`); convert metres to nautical miles using exactly 1 NM = 1,852 m. This is an application-level estimate, not a claim to reproduce ECDIS geometry. Stage 1 must approve this convention and independently reviewed test vectors before implementation.
+- Approved advisory convention: use the WGS84 authalic sphere (radius 6,371,007.1809 m) and calculate each qualified source leg according to its declared `geometryType` (rhumb for `Loxodrome`, great-circle/orthodrome for `Orthodrome`); convert metres to nautical miles using exactly 1 NM = 1,852 m. Stage 1 must independently qualify the implementation, test vectors and tolerances before implementation. For Join Selected Route Leg on a Loxodrome, the join point is defined by minimizing spherical geodesic distance over the finite selected rhumb segment; algorithm, numerical bounds and edge cases remain subject to IP-3 qualification.
 - Normalize longitude deltas across the antimeridian. Explicitly test high latitudes and document that RTZ guidance warns that high-latitude and long-leg geometry can differ between systems.
 - For Current Position, show the exact coordinate, selected next waypoint/leg, proposed join location, and added segment(s). A join point is a geometric construction only; it does not account for chart hazards, traffic separation schemes, safety contours, vessel handling, weather, or ECDIS settings.
 - GPX's ordered route-point list does not encode the RTZ choice of orthodrome/loxodrome, turn arcs, wheel-over positions, or cross-track limits. Windy may render segments differently. Never use map appearance or route total distance as proof of navigational equivalence.
@@ -162,7 +165,7 @@ No XML external entity expansion, schema retrieval over the network, arbitrary U
 - If no file is passed by Finder, use a native Shortcuts file-selection action. When Finder supplies a selected file, use it as the input without asking the user to reselect. Use native save UI; default its location to the source directory where access permits, and handle access-denied/cancelled cases with a clear retry path.
 - The Shortcut calls the bundled local CLI using a supported noninteractive Shortcuts action. Confirm whether Shortcuts' shell/command invocation can pass file paths as discrete arguments and return structured results without opening Terminal; do not build a shell command by concatenating untrusted filenames. If the action cannot meet safe argument passing and error reporting, resolve that before approving the detailed design.
 - No administrator/root requirement; no modifications to ECDIS/ship systems or files. No Homebrew or Python runtime dependency on the target Mac without explicit user approval.
-- Evaluate self-contained packaging: candidate is an arm64 native CLI bundled with an exported `.shortcut` file and a repeatable, user-level install procedure. Assess whether a signed/notarized app bundle, signed executable bundle, or another self-contained artifact provides a stable CLI path, Gatekeeper compatibility, and Shortcut-to-CLI access without a standalone GUI. Include installation, update, and removal instructions. Do not assume an iCloud shortcut link is required; Apple documents importing a `.shortcut` file locally.
+- Approved package architecture direction: a signed and notarized arm64 `.app` containing the local CLI, distributed inside a `.dmg`, with an exported `.shortcut` and repeatable user-level install procedure. This is a product architecture decision, not a claim of feasibility; IP-1/IP-5/IP-7 must qualify bundle layout, signing/notarization, Gatekeeper, CLI discovery, Shortcut registration, updates, rollback, removal, permissions and supported macOS floor. Do not assume an iCloud shortcut link is required; Apple documents importing a `.shortcut` file locally.
 - Compare local ZIP/DMG installation with Mac App Store distribution only if relevant to file access and signing requirements. Homebrew is not the default. Installation may require network access to download a release, but the installed Shortcut and CLI must convert completely offline.
 
 ### Threat and privacy model
@@ -177,11 +180,11 @@ Controls: offline runtime and no network APIs; secure XML parser settings; stric
 
 The macOS Shortcut is the primary user interface. It is available in the Shortcuts app, can be added to the Dock, assigned a keyboard shortcut, and enabled in Finder as a Quick Action. Finder passes the selected RTZ into the same Shortcut; launches without an input file present the native file picker.
 
-Proposed interaction sequence: inspect the chosen RTZ with the CLI; present route/version and loss summary; let the user choose a mode; populate From Waypoint with the ordered waypoint list; for Current Position ask for latitude, longitude, explicit next waypoint, and direct-to-waypoint versus join-selected-leg method; show a textual confirmation with entered position, selected leg and endpoints, any computed join point, and resulting ordered route; select output destination; invoke conversion; report success/error and offer Reveal in Finder. Do not depend on a custom map UI.
+Proposed interaction sequence: inspect the chosen RTZ with the CLI; present route/version and loss summary; let the user choose a mode; populate From Waypoint with the ordered waypoint list; for Current Position ask for latitude, longitude, explicit next waypoint, Direct or Join method, and explicit connector geometry (Rhumb Line/Loxodrome or Great Circle/Orthodrome); show the effective GPX route name or explicit omission, entered position, selected leg and endpoints, distinct source-leg and connector geometries where applicable, any computed join point, and resulting ordered route; require route confirmation; select output destination and filename separately; collect publication consent; invoke conversion; report success/error and offer Reveal in Finder. Do not depend on a custom map UI.
 
 Apple documents import of a local `.shortcut` file by double-click or drag into Shortcuts, as well as launch from the Dock, keyboard shortcut, and Finder Quick Actions. The release must include a versioned Shortcut artifact and repeatable installation/uninstallation instructions. A fresh-user installation procedure must be tested offline. Test that the Finder Quick Action supplies an RTZ input and that a normal Shortcut launch opens the native file picker.
 
-No standalone GUI framework is in V1. To decide in discovery/detailed planning: exact Shortcuts action sequence; whether shell invocation is supported and safe for structured CLI results; output naming and initial save-panel directory behavior; local install path; signature/notarization form; and whether route names may be edited or removed. Keep GPX metadata to the approved minimum and warnings visible before saving.
+No standalone GUI framework is in V1. Technical qualification remains for exact Shortcuts action sequence; safe structured CLI transport; output filename and initial save-panel directory behavior; local install path; signing/notarization; and supported macOS floor. Route-name policy is resolved: valid source name by default, export-only override, or explicit omission; the internal GPX name is independent of the output filename.
 
 ## 12. Verification strategy (planned, not run)
 
@@ -276,18 +279,24 @@ These are manageable stage boundaries, not detailed implementation plans. Each s
 1. **Approve the master plan** (this Gate 1 document).
 2. **Generate detailed implementation plans for every approved stage**, one per stage under `docs/implementation/`, with file-level changes, interfaces, dependencies, test cases, rollback, and exit criteria.
 3. **Cross-check the complete plan set** for format fidelity, stage dependencies, UX, errors, security/privacy, offline behavior, packaging, and scope. Record findings and resolve blockers before implementation.
-4. **Obtain explicit authorization to implement.** Then implement one stage at a time, updating `REPORT.md` and `PROGRESS.md` with each stage completion and its evidence.
+4. **Obtain Gate 3 independent architectural review.** Gate 3 PASS, if granted, confirms only cross-stage planning consistency and qualification gates; it does not authorize implementation.
+5. **Obtain separate explicit Gate 4 authorization** naming the first implementation stage and any probes/schema/dependency acquisition. Then implement one stage at a time, updating `REPORT.md` and `PROGRESS.md` with evidence.
 
-No implementation begins before the complete plans are reviewed and explicit authorization is given.
+No implementation begins before independent Gate 3 review and separate explicit Gate 4 authorization.
 
-## 15. Unresolved decisions for review
+## 15. Decisions and remaining qualifications
 
-1. Confirm the minimum macOS release and self-contained release path (e.g. local ZIP/DMG with `.shortcut` and bundled arm64 CLI; App Store only if sandbox requirements align).
-2. Confirm the exact Shortcuts-to-CLI argument/result contract and whether direct end-user command-line/batch use is documented (default: automation interface only; no Terminal workflow in V1).
-3. Complete schema lineage and dialect qualification for mandatory 1.0/1.2 targets; determine whether any specific 1.1 dialect qualifies. Unsupported versions/dialects must fail clearly; no support claim precedes evidence.
-4. Stage 1 independently reviews test vectors for the documented WGS84-derived advisory distance convention and defines any discrepancy warning threshold. Distance remains diagnostic only and never drives route choices or edits; no ECDIS geometry equivalence is claimed.
-5. Confirm the GPX metadata mapping: route name and existing waypoint names only; report notes, IDs, radii, XTD, schedules, vessel data, and extensions as lost.
-6. Confirm Windy acceptance testing can use synthetic test routes in the user's Windy account, without publishing/sharing.
+1. **Approved architecture, unqualified:** signed/notarized arm64 `.app` containing the CLI inside a `.dmg`, exported Shortcut, no Homebrew/Python/Terminal for ordinary use. IP-1/IP-5/IP-7 must qualify package/signing, permissions, Shortcut registration, OS floor, install/update/rollback/removal; do not claim feasibility before evidence.
+2. **Unqualified:** Shortcuts-to-CLI transport, authority/reference transfer, cancellation and structured results. IP-1D/IP-5/IP-7 own evidence; no user-value shell interpolation.
+3. **Unqualified:** schema lineage, licensing and offline validation for mandatory RTZ 1.0/1.2; conditional 1.1 dialects. Unsupported versions/dialects fail clearly and no support claim precedes evidence.
+4. **Approved convention, evidence pending:** WGS84 authalic sphere (`R=6,371,007.1809 m`), 1 NM = 1,852 m. IP-1 independently qualifies vectors, implementation and tolerances. Distances remain advisory only; no ECDIS geometry equivalence.
+5. **Resolved product policy:** GPX route name uses valid source name by default, explicit export-only override, or explicit omission; one-point GPX is ALLOW_WITH_WARNING plus explicit confirmation; connector geometry in both Current Position modes is explicit with no fallback; source RTZ is unchanged; numeric +180° is preserved only if qualified exact GPX schema/semantic representation accepts it, otherwise fail closed.
+6. **Resolved geometry objective, algorithm unqualified:** Join on a rhumb source leg minimizes spherical geodesic distance over the finite selected segment using the approved spherical model. IP-3 qualifies global minimization, ties, degeneracy, polar limits and tolerances.
+7. **Resolved security principle, mechanism unqualified:** reacquire authorized source access, securely reopen/revalidate, recompute with all confirmed parameters and verify preview equivalence; path/token alone are insufficient; fail closed if continuity is unproven; no full digest by default.
+8. **Resolved publication contract, protocol qualification pending:** separate route confirmation (including geometry and effective route name) from publication consent (exact output/target). Destination/filename-only changes renew publication consent only.
+9. **Resolved Windy release policy, empirical evidence pending:** IP-6 consumer acceptance PASS for mandatory multi-point cases in the exact Route Planner workflow is required for V1 release. Test one-point separately and disclose refusal as a specific limitation without revoking converter export capability.
+10. **Resolved offline policy, platform qualification pending:** fully local input/destination must work offline; File Provider support is conditional on authorized availability and provider-specific qualification. Converter does not initiate cloud downloads or wait indefinitely for placeholders.
+11. Confirm Windy acceptance testing can use synthetic test routes without publishing/sharing. Product/architecture choices G3-001–G3-011 and their technical gates are itemized in the Gate 3 reconciliation report; that report does not declare Gate 3 PASS.
 
 RTZP containers are explicitly OUT OF SCOPE for V1 and may be reconsidered after V1 release. They have no implementation stage in the approved roadmap.
 

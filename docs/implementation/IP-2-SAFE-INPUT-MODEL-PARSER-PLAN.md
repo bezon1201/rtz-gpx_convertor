@@ -1,6 +1,6 @@
 # IP-2 — Safe Input Model and Parser: Detailed Implementation Plan
 
-**Status:** Gate 2 planning only; submitted for architectural review.
+**Status:** Approved Gate 2 plan; Gate 3 R1 reconciliation applied, pending independent architecture review. Gate 3 PASS is not declared; Gate 4 is not authorized.
 
 **IP-2 execution:** NOT AUTHORIZED. **Overall implementation:** NOT AUTHORIZED.
 **Baseline:** Gate 1 d57d0935c7885eb25eb14542e7996839644e96e2; approved IP-1 plan 6ed649d3995f70fa2421e08cb027c07d19b4cad4.
@@ -29,7 +29,7 @@ The approved Master Plan is primary. IP-1 is the upstream contract, but its exec
 | Field semantics | IP-1A field matrix/spec evidence; Master Plan incoming-leg rule | Partly specified | Unresolved semantics block model freeze. |
 | CLI and UI handoff | Future IP-5/IP-7 plans | Not frozen | Parser/model remain independent; no consumer implementation here. |
 
-No Master Plan/IP-1 conflict is identified. Schema qualification, licensing/runtime, and fixture outcomes are explicit blockers. A Gate 3 conflict returns for review; do not silently choose.
+Schema qualification, licensing/runtime, fixture outcomes, coordinate boundary qualification, and source-reference continuity are explicit blockers. The approved Gate 3 decisions are recorded in this plan’s reconciliation section; do not silently select an implementation mechanism.
 
 ## 3. File ingestion and threat controls
 
@@ -46,6 +46,8 @@ Production accepts one selected local file reference only; no URL, archive, mult
 7. Validate using that pair’s exact local schema and closed dependency set.
 8. Perform separate semantic validation. Build a model only if no fatal errors exist.
 9. Return immutable model plus warnings, or errors with no partial route.
+
+For G3-003, the final export invocation must reacquire authorized file-reference access, securely reopen the RTZ and rerun this exact validation pipeline before recomputation. A path or confirmation token alone cannot establish identity or content continuity. IP-2A/IP-5D/IP-7 jointly qualify a privacy-preserving comparison of filesystem identity and material route-content state; no full RTZ digest is calculated by default. If continuity cannot be established, fail closed and require a fresh preview and route confirmation. This requirement does not select or claim a proven macOS mechanism.
 
 ### Threat controls
 
@@ -116,7 +118,7 @@ Proposed domain concepts, not frozen Swift signatures:
 
 Use immutable value types/collections; construction restricted to validated builder. No parser, serializer, CLI or UI types escape. Waypoint order is XML order and independent of IDs; never sort by ID. Required/unique ID rules come from qualified dialect; never invent IDs. Preserve absent names distinctly. Coordinates are a pair; a missing component is fatal; never clamp, wrap, round or infer datum. A leg belongs to its destination waypoint as incoming leg under the Master Plan; the first normally has none, with schema evidence controlling exceptions. Never shift or synthesize. Optional absence is not zero/default geometry/assumed unit. GeometryKind.UnknownLiteral is preserved only as uninterpreted source metadata; it must never drive navigation, distance, selection, or transformation. IP-3 may use only explicitly qualified geometry types. If the qualified dialect/schema prohibits the literal, parsing fails closed; never fall back to Loxodrome or Orthodrome. Recognized metadata is limited to IP-1’s field matrix; unknown extensions become bounded summaries, not opaque XML. Provenance excludes full paths/payload. Decimal representation must preserve precision; exact wrapper remains open.
 
-Source-file digest calculation is opt-in, not default provenance. By default, do not calculate or persist a full RTZ digest and never expose a source hash in diagnostics, logs, CLI output, or Shortcut messages. IP-2A may propose digest use only for a documented technical need, privacy review, and explicit approval. Mandatory schema-artifact hashes used for qualification are separate and unaffected.
+Source-file digest calculation is opt-in, not default provenance. By default, do not calculate or persist a full RTZ digest and never expose a source hash in diagnostics, logs, CLI output, or Shortcut messages. IP-2A may propose digest use only for a documented technical need, privacy review, and explicit approval. Mandatory schema-artifact hashes used for qualification are separate and unaffected. Under G3-005 preserve numeric +180° if the qualified RTZ dialect accepts it; never wrap it. GPX representation remains an IP-4 qualification and must fail closed if exact valid serialization cannot be established.
 
 ## 7. Semantic validation
 
@@ -128,7 +130,7 @@ Rules must derive from qualified schema/spec or Master Plan; undocumented behavi
 | Missing component, malformed or nonfinite coordinate | Fatal; schema and semantic layer distinguished. |
 | Duplicate waypoint ID | Fatal only if qualified rule requires uniqueness; otherwise unresolved. |
 | Consecutive duplicate positions | Warning, preserve both; equality semantics need review. |
-| Fewer than two points | Provisional fatal for conversion-useful route; reconcile Master Plan/schema minimum before freeze. |
+| One valid point | Valid parsed model; no parser-level minimum-useful-route failure. G3-004 permits GPX export with warning and explicit confirmation; IP-4 owns serialization eligibility, IP-7 owns user confirmation, and IP-6 tests Windy compatibility separately. |
 | Missing/invalid geometry | Fatal if required; otherwise warning/explicit absent or unknown; no default. |
 | Invalid optional radius/XTD/speed/schedule | Schema fatal for XSD violation; semantic fatal only with reviewed rule; otherwise warning and invalid/loss state. Never silently drop recognized bad metadata. |
 | Unexpected waypoint/leg relation | Fatal per qualified content model; never reorder/synthesize. |

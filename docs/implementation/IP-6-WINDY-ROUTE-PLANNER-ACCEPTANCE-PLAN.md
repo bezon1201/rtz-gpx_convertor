@@ -1,6 +1,6 @@
 # IP-6 — Windy Route Planner Empirical Acceptance: Detailed Implementation Plan
 
-**IP-6 PLAN:** APPROVED / READY FOR GATE 3 CROSS-CHECK (R1 conditions closed).
+**IP-6 PLAN:** Approved Gate 2 plan; Gate 3 R1 reconciliation applied, pending independent architecture review. Gate 3 PASS is not declared.
 
 **IP-6 execution:** NOT AUTHORIZED.
 
@@ -19,7 +19,7 @@ This is a documentation-only plan for future, manually executed, synthetic-data 
 
 IP-6 determines whether output produced by the approved converter contract is usable in the intended Windy Route Planner workflow. It evaluates actual consumer behavior after IP-4 serialization and IP-5 delivery; GPX 1.1 schema validity alone is insufficient.
 
-IP-6 owns consumer workflow discovery, controlled synthetic cases, manual import observations, compatibility classification, and an evidence-based verdict. It does not own RTZ parsing, route transformations, GPX serialization, Windy internals, navigation decisions, or product policy. It must not change a GPX route into a track, add points, alter geometry, or weaken an upstream contract to make Windy accept a file. IP-6 evidence can inform Gate 3 decisions but cannot resolve IP-4's one-point or route-name policy.
+IP-6 owns consumer workflow discovery, controlled synthetic cases, manual import observations, compatibility classification, and an evidence-based verdict. It does not own RTZ parsing, route transformations, GPX serialization, Windy internals, navigation decisions, or product policy. It must not change a GPX route into a track, add points, alter geometry, or weaken an upstream contract to make Windy accept a file. G3-001 and G3-004 product policies are fixed; IP-6 records evidence and limitations without changing them.
 
 The converter remains completely offline. Windy is an external online consumer; future Windy testing may require internet access and may transfer synthetic GPX data to Windy. No real route or vessel position may be uploaded. No user route is tested without separate explicit authorization and privacy review.
 
@@ -76,7 +76,7 @@ Official Windy.com editorial material and Windy Staff posts are discovery eviden
 
 ## 4. Consumer compatibility contract
 
-The converter's approved GPX output contract is one GPX 1.1 document with the Topografix GPX 1.1 namespace, one `<rte>`, and ordered `<rtept>` children; preserve available original waypoint names and only the route-name behavior approved at Gate 3. Do not emit a `<trk>` in place of the route. Do not fabricate points, reorder points, or imply that unsupported RTZ navigation semantics have been preserved.
+The converter's approved GPX output contract is one GPX 1.1 document with the Topografix GPX 1.1 namespace, one `<rte>`, and ordered `<rtept>` children; preserve available original waypoint names and apply approved G3-001 route-name semantics. Do not emit a `<trk>` in place of the route. Do not fabricate points, reorder points, or imply that unsupported RTZ navigation semantics have been preserved.
 
 For every converter-produced acceptance case, test whether Windy:
 
@@ -108,9 +108,9 @@ No corpus artifacts are created in this planning task. After separate execution 
 | `IP6-UNICODE` | Unicode route and waypoint names; XML-special characters | Expected decoded text at each ordinal where Windy exposes labels. |
 | `IP6-COORD` | Positive/negative latitudes and longitudes; near-equator and near-prime-meridian points | Exact ordinal-by-ordinal coordinate oracle using approved numeric representation policy. |
 | `IP6-HIGHLAT` | High latitudes inside approved model bounds | Coordinate fidelity and rendering observation without extrapolating beyond tested bounds. |
-| `IP6-DATELINE` | Antimeridian-adjacent coordinates and approved longitude boundaries | Values compared numerically, with map-wrap/rendering treated separately. Unsupported `+180` is excluded unless Gate 3 approves it. |
+| `IP6-DATELINE` | Antimeridian-adjacent coordinates and approved longitude boundaries | Preserve numeric +180° only when IP-1/IP-4 establish exact GPX 1.1 schema validity; never wrap it to -180°. If representation is not established, fail closed and record the qualification limitation. |
 | `IP6-FULL` | Full Route mode | All selected source-order points, with no omitted or inserted point. |
-| `IP6-WAYPOINT` | From Waypoint suffix from first, middle and final selected source waypoint where eligible | Selected waypoint is ordinal 1 and only the approved forward suffix follows. One-point suffix follows the unresolved IP-4 policy. |
+| `IP6-WAYPOINT` | From Waypoint suffix from first, middle and final selected source waypoint where eligible | Selected waypoint is ordinal 1 and only the approved forward suffix follows. The final one-point suffix is exported under G3-004; test its Windy behavior separately and report a limitation if unsupported. |
 | `IP6-CURRENT-DIRECT` | Current Position — Direct to Next WP | Manually entered position and explicitly confirmed next waypoint lead the exact approved sequence. |
 | `IP6-CURRENT-JOIN` | Current Position — Join Selected Route Leg | Approved synthetic join point, selected leg endpoints, connector points and remaining route appear in the IP-3-approved order. Windy must not choose a join or nearest leg. |
 | `IP6-ONE` | Schema-valid one-point reference GPX | Separately characterize accept/reject/object/marker/error. Does not select IP-4 policy. |
@@ -179,13 +179,13 @@ IP-6 tests consumer interpretation of the finalized GPX only. Any question about
 
 ## 9. One-point GPX decision support
 
-IP-4 R1 leaves product policy unresolved: `ALLOW_WITH_WARNING` or `REFUSE_EXPORT`. IP-6 may evaluate a schema-valid synthetic one-point GPX reference artifact after execution authorization, even if the eventual converter policy refuses to produce one.
+G3-004 approves `ALLOW_WITH_WARNING`: the converter exports a valid one-point GPX after explicit confirmation. IP-6 must test this synthetic special case separately. If Windy refuses it, report that limitation; do not change converter eligibility or fabricate another point.
 
-Record separately whether Windy accepts it; creates a Route Planner route, a marker, another object, or nothing; drops the point; or gives an identifiable error. A single marker does not prove a useful route. This evidence is advisory to Gate 3 only. IP-6 must not choose the policy, change IP-4 eligibility, or make other route-mode PASS contingent on one-point behavior unless Gate 3 explicitly says so.
+Record separately whether Windy accepts it; creates a Route Planner route, a marker, another object, or nothing; drops the point; or gives an identifiable error. A single marker does not prove a useful route. G3-008 requires a separate one-point compatibility case. If Windy refuses the single-point route, disclose that limitation; keep G3-004 converter export capability. Do not fabricate a point or change IP-4 eligibility.
 
 ## 10. Route names and metadata
 
-Use authorized synthetic cases for source route name present/absent, Unicode route name, duplicate waypoint names, absent waypoint names, long valid names, and XML-special characters. Include an export-only route-name override only if Gate 3 approves that capability before fixture generation.
+Use authorized synthetic cases for valid source route name default, missing/invalid source name with explicit override or omission, export-only override, Unicode and XML-special characters, bounded long names, duplicate/absent waypoint names, and filename/name independence. Source RTZ and route model remain unchanged.
 
 Separate:
 
@@ -193,7 +193,7 @@ Separate:
 - Whether Windy imports and retains the semantic string.
 - Whether Windy's UI truncates, normalizes, hides, or otherwise limits display.
 
-Do not add name editing to V1 through an IP-6 workaround. Do not derive names from a filename, vessel identifier, or unrelated metadata. GPX extensions and RTZ metadata are not presumed to survive or be supported by Windy; record only observed behavior and do not turn it into a preservation promise.
+Do not add name editing through an IP-6 workaround; G3-001 assigns that UI to IP-7. Do not derive names from a filename, vessel identifier, or unrelated metadata. GPX extensions and RTZ metadata are not presumed to survive or be supported by Windy; record only observed behavior and do not turn it into a preservation promise.
 
 ## 11. Numeric precision and coordinate fidelity
 
@@ -202,7 +202,7 @@ For each positive consumer case, preserve an independent expected coordinate tab
 - Use decimal equality only where the approved IP-2/IP-4 model/serializer contract requires mathematical decimal equality.
 - Use a binary floating-point round-trip tolerance only if IP-2/IP-4 explicitly qualified and approved it. Carry the documented source-decimal-to-model error analysis into evidence.
 - Do not invent an IP-6 tolerance. A consumer's rounding rule requires its own evidence and approval; report raw exposed values and differences before applying any allowed threshold.
-- Test antimeridian-adjacent values and longitude limits supported by the approved upstream contract. `+180` remains excluded unless separately approved.
+- Test antimeridian-adjacent values and longitude limits supported by the approved upstream contract. Include +180° only if exact GPX schema and semantic representation are qualified; never normalize to -180°.
 - Screenshots, map cursor positions and line placement are not numeric coordinate evidence.
 - If Windy does not expose exact point coordinates or an exportable/user-accessible route object suitable for comparison, mark consumer coordinate fidelity `INCONCLUSIVE`, even if the drawn route appears correct.
 
@@ -252,7 +252,7 @@ Each required criterion uses exactly one state:
 
 ### Aggregate rule
 
-The IP-6 consumer verdict is **PASS** only when every mandatory Full Route, From Waypoint, Current Position — Direct, and Current Position — Join case passes in the qualified target workflow; imports yield the required route interpretation; all required point counts and order are verified; exact coordinates are verified by supported evidence under the already-approved numeric policy; required names behave as specified; no unapproved imported route-data mutation is observed; and no semantics-changing automatic routing is observed. Required cases with FAIL, BLOCKED or INCONCLUSIVE prevent consumer PASS. A GPX upload or plausible-looking map line alone cannot pass any hidden-data criterion.
+Under G3-008, V1 release requires **IP-6 consumer acceptance PASS** for mandatory cases in the exact intended Windy.com Route Planner workflow. This requires successful qualified cases covering Full Route, From Waypoint, Current Position — Direct, and Current Position — Join; required route-object interpretation, point counts/order, numeric coordinates, names (including the approved route-name override), no unapproved route-data mutation, and no semantics-changing automatic routing. Any mandatory case with FAIL, BLOCKED, INCONCLUSIVE or NOT TESTED prevents consumer PASS. Upload success or a plausible-looking line is insufficient. Test one-point GPX as a separate compatibility case; a Windy refusal is documented as a one-point limitation and does not revoke G3-004 converter export capability. Keep that exception explicit in the result; it cannot excuse a non-PASS mandatory multi-point case.
 
 Display-only rendering differences do not fail the consumer verdict when supported evidence establishes that imported route data and route semantics remain unchanged. If a visual effect cannot be distinguished from route-data mutation or automatic routing using supported evidence, the affected mandatory criterion is INCONCLUSIVE and aggregate consumer acceptance cannot PASS. No mandatory criterion may be downgraded to reach PASS.
 
@@ -348,10 +348,10 @@ All sub-stages below are future execution work, require separate Gate 4/IP-6 aut
 | IP-1 | GPX/RTZ standards; schema evidence; Windy discovery and test protocol | **APPROVED AS PLAN; EXECUTION EVIDENCE PENDING** | IP-1 identifies synthetic-only Route Planner testing; IP-6A requalifies current workflow; IP-6 cannot report IP-1 execution PASS. |
 | IP-2 | Synthetic source model and coordinate representation | **APPROVED AS PLAN; EXECUTION EVIDENCE PENDING** | Supplies approved synthetic model/identity and numeric representation; IP-6 does not define parser tolerances. |
 | IP-3 | Full Route, From Waypoint, both Current Position transforms and qualified geometry | **APPROVED AS PLAN; EXECUTION EVIDENCE PENDING** | Supplies final point order, provenance and connector geometry; IP-6 observes consumption only and never selects a leg/join. |
-| IP-4 | GPX 1.1 route serialization, names, one-point policy and immutable validated artifact | **APPROVED AS PLAN; EXECUTION EVIDENCE PENDING** | GPX schema/serializer conformance is a separate gate; one-point and route-name override remain Gate 3 unresolved. |
+| IP-4 | GPX 1.1 route serialization, names, one-point policy and immutable validated artifact | **APPROVED AS PLAN; EXECUTION EVIDENCE PENDING** | G3-001 route-name override and G3-004 one-point ALLOW_WITH_WARNING are approved product policy; schema/serializer conformance remains unqualified. |
 | IP-5 | Local runtime orchestration and safe output writing | **APPROVED AS PLAN; EXECUTION EVIDENCE PENDING** | IP-5 execution and IP-5D/IP-5F qualification are pending; IP-6 may consume an approved IP-4 artifact without claiming CLI/write acceptance. |
-| IP-6 | Windy consumer workflow acceptance | **PLAN APPROVED / READY FOR GATE 3; CONSUMER ACCEPTANCE NOT TESTED** | Owns external consumer evidence and independent aggregate verdict under this plan; execution not authorized. |
-| IP-7 | Shortcut export/import instructions, user feedback and release workflow | **UNRESOLVED / FUTURE PLAN** | IP-6 provides validated consumer instructions/limitations; IP-6 cannot begin IP-7 planning or authorize UI claims. |
+| IP-6 | Windy consumer workflow acceptance | **PLAN APPROVED; CONSUMER ACCEPTANCE NOT TESTED** | Owns external consumer evidence and independent aggregate verdict under this plan; execution not authorized. |
+| IP-7 | Shortcut export/import instructions, user feedback and release workflow | **APPROVED PLAN; EXECUTION EVIDENCE PENDING** | IP-7 may document only IP-6A-verified Windy instructions and must gate release on G3-008 consumer PASS. |
 
 Cross-stage rule: IP-6 consumes independently approved upstream outputs and records their status as known at test time. It cannot claim that IP-1 through IP-5 implementation tests passed merely because Windy displayed a file. Product compatibility cannot override GPX schema correctness, IP-3 transformation policy, IP-4 one-point/name decisions, IP-5 security controls, or Gate 3 governance.
 
@@ -359,7 +359,7 @@ Cross-stage rule: IP-6 consumes independently approved upstream outputs and reco
 
 Gate 2 planning acceptance requires: exact Windy.com Route Planner target and documented uncertainty; a layered consumer contract; synthetic case catalog and provenance method; repeatable manual procedure; independent route-mode matrix; geometry/metadata and coordinate-fidelity evidence strategy; one-point decision support; negative-control classification; evidence schema and strict aggregate verdict; separate report-completion and consumer-verdict statuses; IP-6A–IP-6E sub-stage plans; cross-stage dependency/status matrix; and no unsupported compatibility claim.
 
-The current status model is **IP-6 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK; IP-6 CONSUMER ACCEPTANCE: NOT TESTED; IP-6 EXECUTION: NOT AUTHORIZED**. In future execution, **IP-6E REPORT COMPLETE** means the reviewed analysis is complete regardless of the consumer verdict. **IP-6 CONSUMER ACCEPTANCE PASS** is a separate verdict requiring actual, date-bounded evidence from the intended Windy.com Route Planner workflow with approved synthetic data and every mandatory criterion passed under §13. GPX schema PASS, file upload success, visual plausibility, or optional metadata display is never a substitute for route-object, order and coordinate-fidelity evidence. Any mandatory unobservable property leaves consumer acceptance INCONCLUSIVE or BLOCKED. Do not label a completed report `IP-6 PASS` when consumer acceptance has not passed.
+The current status model is **IP-6 PLAN: APPROVED; Gate 3 R1 reconciliation applied, pending independent architecture review; IP-6 CONSUMER ACCEPTANCE: NOT TESTED; IP-6 EXECUTION: NOT AUTHORIZED**. In future execution, **IP-6E REPORT COMPLETE** means the reviewed analysis is complete regardless of the consumer verdict. **IP-6 CONSUMER ACCEPTANCE PASS** is a separate verdict requiring actual, date-bounded evidence from the intended Windy.com Route Planner workflow with approved synthetic data and every mandatory criterion passed under §13. GPX schema PASS, file upload success, visual plausibility, or optional metadata display is never a substitute for route-object, order and coordinate-fidelity evidence. Any mandatory unobservable property leaves consumer acceptance INCONCLUSIVE or BLOCKED. Do not label a completed report `IP-6 PASS` when consumer acceptance has not passed.
 
 ## 18. Primary Windy references
 
