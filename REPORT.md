@@ -1,5 +1,17 @@
 # Architect review handoff
 
+## IP-7 detailed plan handoff
+
+- **IP-7 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2).**
+- **IP-7 EXECUTION: NOT AUTHORIZED. GATE 3 CROSS-CHECK: NOT AUTHORIZED. OVERALL IMPLEMENTATION: NOT AUTHORIZED.**
+- Branch: `docs/ip-7-macos-shortcuts-ux-install-release`, based on verified IP-6 R1 `8688880058c489d14d2ec26c1d624106506d26e5`.
+- Added `docs/implementation/IP-7-MACOS-SHORTCUTS-UX-INSTALL-RELEASE-PLAN.md` defining the Shortcut-first UX; Finder and standalone journeys; four route modes; native interaction candidates; preview/confirmation continuity; safe save/overwrite; transport and permissions qualification; privacy/offline, accessibility, package/install/update/removal; synthetic acceptance matrix; IP-7A–IP-7F; dependencies, Gate 3 decisions and release gate.
+- The signed/notarized `.app` container with bundled arm64 Swift CLI distributed as DMG remains a candidate only. No Shortcuts action, API, process transport, security scope, macOS floor, package, signing/Gatekeeper path or Windy instruction is claimed qualified. IP-5D source identity/content continuity and IP-1D/IP-1E dependencies remain blockers.
+- IP-4 one-point and route-name decisions, IP-3 Loxodrome metric, joint alias/security-scope policy, IP-5E output permissions/provider behavior, transport/package selection, and IP-6 consumer status remain unresolved for Gate 3 or their owning stage.
+- No application code, tests, fixtures, scripts, schemas, binaries, packages, Shortcuts or platform probes were created or run. No real route, derived coordinates, credentials or source digest were added.
+- Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`. Planning commit and remote-head verification are reported in the final task handoff.
+- **Review request:** review the IP-7 user journeys, transport/authority boundary, preview/consent, safe-save behavior, distribution candidate, acceptance gates and IP-7A–IP-7F outline. Do not execute IP-7 or Gate 3 without separate authorization.
+
 ## IP-6 R1 correction handoff
 
 - **IP-6 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK.** (Two architectural corrections applied.)
