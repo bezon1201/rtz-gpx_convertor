@@ -2,15 +2,18 @@
 
 ## IP-7 detailed plan handoff
 
-- **IP-7 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2).**
-- **IP-7 EXECUTION: NOT AUTHORIZED. GATE 3 CROSS-CHECK: NOT AUTHORIZED. OVERALL IMPLEMENTATION: NOT AUTHORIZED.**
-- Branch: `docs/ip-7-macos-shortcuts-ux-install-release`, based on verified IP-6 R1 `8688880058c489d14d2ec26c1d624106506d26e5`.
+- **IP-7 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK (R1 corrections applied).**
+- **IP-7 EXECUTION: NOT AUTHORIZED. GATE 3 CROSS-CHECK: NOT AUTHORIZED. OVERALL IMPLEMENTATION: NOT AUTHORIZED.** Gate 1 and IP-1–IP-6 approvals/statuses are preserved; no platform qualification or release readiness is claimed.
+- Branch: `docs/ip-7-macos-shortcuts-ux-install-release`, R1 baseline `e593201e833bc1cba04523c036acc037dda9b2c8`.
 - Added `docs/implementation/IP-7-MACOS-SHORTCUTS-UX-INSTALL-RELEASE-PLAN.md` defining the Shortcut-first UX; Finder and standalone journeys; four route modes; native interaction candidates; preview/confirmation continuity; safe save/overwrite; transport and permissions qualification; privacy/offline, accessibility, package/install/update/removal; synthetic acceptance matrix; IP-7A–IP-7F; dependencies, Gate 3 decisions and release gate.
-- The signed/notarized `.app` container with bundled arm64 Swift CLI distributed as DMG remains a candidate only. No Shortcuts action, API, process transport, security scope, macOS floor, package, signing/Gatekeeper path or Windy instruction is claimed qualified. IP-5D source identity/content continuity and IP-1D/IP-1E dependencies remain blockers.
+- R1 Correction 1 separates **route confirmation** (source/content state, mode/selections, manual position, qualified geometry, resulting ordered points and metadata-loss warnings) from **publication consent** (exact destination/name, target state, destination warnings and exact overwrite authorization). A destination-only change renews publication consent but preserves still-valid route confirmation. Source or transformation change invalidates route confirmation and consent bound to the old output. Target-state changes invalidate publication consent. IP-5 must revalidate source/preview continuity and target before safe publication; failures require the relevant renewed approval. IP-5D's cross-invocation continuity mechanism remains unresolved.
+- R1 Correction 2 makes **Mandatory Offline PASS** apply to fully local available inputs and local destinations across all modes and Finder/standalone flows with networking disabled. File Provider/cloud-backed behavior is conditional and separately qualified for hydration, authority, provider permissions, save/replacement, publication guarantees, metadata, cancellation and network-dependent behavior. Converter-controlled network activity is distinguished from OS/provider activity; unavailable cloud-only items are safe conditional limitations, not failures of the local offline guarantee.
+- IP-7A–IP-7F decomposition is preserved. No Shortcuts/CLI transport, API, security-scope solution, macOS floor, package, signing/Gatekeeper path, provider behavior or Windy compatibility is claimed qualified.
+- The signed/notarized `.app` container with bundled arm64 Swift CLI distributed as DMG remains a candidate only. No Shortcuts action/API, process transport, security-scope solution, macOS floor, package, signing/Gatekeeper path, provider behavior or Windy instruction is claimed qualified. IP-5D source identity/content continuity and IP-1D/IP-1E dependencies remain blockers.
 - IP-4 one-point and route-name decisions, IP-3 Loxodrome metric, joint alias/security-scope policy, IP-5E output permissions/provider behavior, transport/package selection, and IP-6 consumer status remain unresolved for Gate 3 or their owning stage.
 - No application code, tests, fixtures, scripts, schemas, binaries, packages, Shortcuts or platform probes were created or run. No real route, derived coordinates, credentials or source digest were added.
 - Remote: `https://github.com/bezon1201/rtz-gpx_convertor.git`. Planning commit and remote-head verification are reported in the final task handoff.
-- **Review request:** review the IP-7 user journeys, transport/authority boundary, preview/consent, safe-save behavior, distribution candidate, acceptance gates and IP-7A–IP-7F outline. Do not execute IP-7 or Gate 3 without separate authorization.
+- **Next:** Gate 3 cross-check when separately authorized. IP-7 execution remains unauthorized. Review the R1 approval boundaries, offline/provider split, and preserved Gate 3 decisions before cross-check.
 
 ## IP-6 R1 correction handoff
 

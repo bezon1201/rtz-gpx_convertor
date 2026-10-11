@@ -2,17 +2,19 @@
 
 ## Current gate activity — IP-7
 
-**IP-7 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2)**
+**IP-7 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK (R1 corrections applied)**
 
 - Gate 1: **APPROVED / PASS**.
 - IP-1 through IP-6 plan statuses and IP-6 consumer status are unchanged; see entries below. IP-6 consumer acceptance remains **NOT TESTED** and IP-6E report **NOT STARTED**.
-- IP-7 execution: **NOT AUTHORIZED**. Gate 3 cross-check: **NOT AUTHORIZED**. Overall implementation: **NOT AUTHORIZED**.
-- Branch: `docs/ip-7-macos-shortcuts-ux-install-release`, based on verified IP-6 R1 `8688880058c489d14d2ec26c1d624106506d26e5`.
+- IP-7 execution: **NOT AUTHORIZED**. Gate 3 cross-check: **NOT AUTHORIZED**. Overall implementation: **NOT AUTHORIZED**. Gate 1 and IP-1–IP-6 statuses are preserved.
+- Branch: `docs/ip-7-macos-shortcuts-ux-install-release`, R1 baseline `e593201e833bc1cba04523c036acc037dda9b2c8`.
 - Plan path: `docs/implementation/IP-7-MACOS-SHORTCUTS-UX-INSTALL-RELEASE-PLAN.md`.
-- The plan specifies Finder and standalone Shortcut journeys, four modes, native-interaction candidates requiring platform qualification, explicit preview/confirmation and unresolved IP-5D continuity, safe destination/overwrite behavior, transport/authority evaluation, diagnostics, offline/privacy and accessibility requirements, candidate `.app`/DMG distribution, onboarding/update/removal, synthetic acceptance matrix, IP-7A–IP-7F, dependencies and release gate.
+- R1 separates route confirmation from publication consent. Destination-only changes invalidate publication consent but preserve still-valid route confirmation; source/semantic changes invalidate route confirmation and publication consent bound to its output; target-state changes invalidate publication consent. IP-5 revalidates source/preview continuity and target before publication. IP-5D continuity remains unresolved.
+- Mandatory offline acceptance now covers fully local, available inputs and local destinations across all four modes and both entry paths. File Provider/cloud-backed states are conditional, provider-specific qualification; safe unavailable-state handling does not weaken the local offline guarantee or claim OS/provider-wide network inactivity.
+- The plan specifies Finder and standalone Shortcut journeys, native-interaction candidates requiring platform qualification, safe destination/overwrite behavior, transport/authority evaluation, diagnostics, privacy/accessibility, candidate `.app`/DMG distribution, onboarding/update/removal, synthetic acceptance matrix, IP-7A–IP-7F, dependencies and release gate.
 - Remaining cross-stage blockers are preserved: IP-4 one-point/name policy; IP-3 closest-point metric; IP-2/IP-5/IP-7 aliases and file-reference authority; IP-5D source continuity; IP-5E output permissions/provider/atomicity; IP-1D transport; IP-1E packaging/OS matrix; IP-6 consumer verdict.
 - No implementation, fixtures, tests, schemas, dependencies, CLI, Shortcuts, package or platform probes created or run. Planning commit and remote verification are in the final task handoff.
-- Next: architectural review of IP-7 plan. Do not execute IP-7 or Gate 3 cross-check without separate authorization.
+- Next: Gate 3 cross-check only after separate authorization. IP-7 execution remains unauthorized.
 
 ## Prior gate activity — IP-6
 
@@ -95,6 +97,6 @@
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check; execution unauthorized. | R1 correction commit in task handoff |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check; execution unauthorized. | R1 commit in task handoff |
 | 6. Windy Route Planner acceptance (IP-6) | PLAN APPROVED | R1 corrections closed; ready for Gate 3 cross-check. Consumer acceptance not tested; IP-6E report not started; execution unauthorized. | R1 task handoff |
-| 7. V1 Shortcuts release (IP-7) | PLAN SUBMITTED FOR REVIEW | Gate 2 plan submitted; IP-7 execution and Gate 3 cross-check unauthorized. | Commit in task handoff |
+| 7. V1 Shortcuts release (IP-7) | PLAN APPROVED | R1 corrections applied; ready for Gate 3 cross-check, which remains unauthorized. IP-7 execution unauthorized. | R1 commit in task handoff |
 
 Plan review is not execution PASS. RTZP remains OUT OF SCOPE for V1.
