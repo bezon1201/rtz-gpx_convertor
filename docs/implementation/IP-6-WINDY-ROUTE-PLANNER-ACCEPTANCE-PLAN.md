@@ -1,6 +1,6 @@
 # IP-6 — Windy Route Planner Empirical Acceptance: Detailed Implementation Plan
 
-**IP-6 PLAN:** Approved Gate 2 plan; Gate 3 R1 reconciliation applied, pending independent architecture review. Gate 3 PASS is not declared.
+**IP-6 PLAN:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4 and IP-6 execution: NOT AUTHORIZED.
 
 **IP-6 execution:** NOT AUTHORIZED.
 
@@ -217,7 +217,7 @@ Negative controls are independent inputs used to characterize consumer handling;
 Classification rules:
 
 - A negative control rejected by Windy is expected negative-control behavior unless it contradicts an explicit converter requirement; it is not automatically a converter defect.
-- A converter-produced, IP-4-validated required case rejected by the exact intended workflow is a Windy consumer compatibility **FAIL** for that case, not a GPX serializer defect. Route the evidence to IP-4/IP-5/Gate 3 for disposition without silently changing the output contract.
+- A converter-produced, IP-4-validated required case rejected by the exact intended workflow is a Windy consumer compatibility **FAIL** for that case, not a GPX serializer defect. Route the evidence to IP-4/IP-5 and the Architect for disposition without silently changing the output contract.
 - If a user interface changes or a required action is unavailable, mark the case BLOCKED until IP-6A requalifies the workflow. Do not rewrite historical evidence as current.
 - If import succeeds but object type, point sequence, or numeric coordinates cannot be observed, use INCONCLUSIVE for the relevant criterion; upload success is never an overall PASS.
 - If Windy changes order, drops/adds/merges route points, changes coordinates beyond an already-approved tolerance, or substitutes a track/overlay for the required route object, classify the affected mandatory criterion FAIL and escalate.
@@ -260,7 +260,7 @@ If Windy cannot expose exact coordinates or point order using supported means, t
 
 ## 14. Failure handling and product consequences
 
-Escalate to the architect/Gate 3 review if:
+Escalate to the Architect for review if:
 
 - Windy rejects the required `<rte>` contract but accepts `<trk>`.
 - Windy reorders, drops, inserts, merges, snaps, or changes required route points/coordinates.
@@ -330,10 +330,10 @@ All sub-stages below are future execution work, require separate Gate 4/IP-6 aut
 
 ### IP-6E — Product Compatibility Verdict
 
-- **Objective:** consolidate the matrix, assign core and optional verdicts, identify product blockers and return evidence for Gate 3 decisions.
+- **Objective:** consolidate the matrix, assign core and optional verdicts, identify product blockers and return evidence to the Architect and owning stages.
 - **Scope/exclusions:** report and recommendation only; no change to converter behavior, IP-4 policy, Windy target, or V1 scope.
 - **Proposed files:** `docs/research/IP-6/CONSUMER-ACCEPTANCE-REPORT.md`, final evidence matrix, `REPORT.md`, `PROGRESS.md`.
-- **Dependencies:** IP-6A–IP-6D evidence; IP-1–IP-5 status reconciliation; Gate 3 architect review.
+- **Dependencies:** IP-6A–IP-6D evidence; IP-1–IP-5 status reconciliation; accepted Gate 3 architecture and owning-stage review.
 - **Sequence:** audit required case coverage → apply §13 aggregate rule → separate import/object/order/coordinate/rendering results → classify failures → list exact blocker/decision owner → independent review.
 - **Tests/evidence:** trace each verdict to raw privacy-safe observations and approved expected semantic oracle; verify no required `BLOCKED`/`INCONCLUSIVE` is hidden by aggregate wording.
 - **Acceptance:** report is reviewed, all required evidence is classified, and limitations/failures/blockers are explicit. It may record aggregate consumer verdict PASS, FAIL, BLOCKED or INCONCLUSIVE; `IP-6E REPORT COMPLETE` is a report-completion state only and never implies consumer acceptance PASS.
@@ -359,7 +359,7 @@ Cross-stage rule: IP-6 consumes independently approved upstream outputs and reco
 
 Gate 2 planning acceptance requires: exact Windy.com Route Planner target and documented uncertainty; a layered consumer contract; synthetic case catalog and provenance method; repeatable manual procedure; independent route-mode matrix; geometry/metadata and coordinate-fidelity evidence strategy; one-point decision support; negative-control classification; evidence schema and strict aggregate verdict; separate report-completion and consumer-verdict statuses; IP-6A–IP-6E sub-stage plans; cross-stage dependency/status matrix; and no unsupported compatibility claim.
 
-The current status model is **IP-6 PLAN: APPROVED; Gate 3 R1 reconciliation applied, pending independent architecture review; IP-6 CONSUMER ACCEPTANCE: NOT TESTED; IP-6 EXECUTION: NOT AUTHORIZED**. In future execution, **IP-6E REPORT COMPLETE** means the reviewed analysis is complete regardless of the consumer verdict. **IP-6 CONSUMER ACCEPTANCE PASS** is a separate verdict requiring actual, date-bounded evidence from the intended Windy.com Route Planner workflow with approved synthetic data and every mandatory criterion passed under §13. GPX schema PASS, file upload success, visual plausibility, or optional metadata display is never a substitute for route-object, order and coordinate-fidelity evidence. Any mandatory unobservable property leaves consumer acceptance INCONCLUSIVE or BLOCKED. Do not label a completed report `IP-6 PASS` when consumer acceptance has not passed.
+The current status model is **IP-6 PLAN: APPROVED; effective Gate 3: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; Gate 4: NOT AUTHORIZED; IP-6 CONSUMER ACCEPTANCE: NOT TESTED; IP-6 EXECUTION: NOT AUTHORIZED; overall implementation: NOT AUTHORIZED**. In future execution, **IP-6E REPORT COMPLETE** means the reviewed analysis is complete regardless of the consumer verdict. **IP-6 CONSUMER ACCEPTANCE PASS** is a separate verdict requiring actual, date-bounded evidence from the intended Windy.com Route Planner workflow with approved synthetic data and every mandatory criterion passed under §13. GPX schema PASS, file upload success, visual plausibility, or optional metadata display is never a substitute for route-object, order and coordinate-fidelity evidence. Any mandatory unobservable property leaves consumer acceptance INCONCLUSIVE or BLOCKED. Do not label a completed report `IP-6 PASS` when consumer acceptance has not passed.
 
 ## 18. Primary Windy references
 
@@ -372,4 +372,4 @@ Research checked 2026-10-11. Recheck during authorized IP-6A because web product
 
 ## Approval request
 
-Please review the exact Windy.com Route Planner target, its evidence limits, synthetic corpus, manual protocol, aggregate acceptance rule and IP-6A–IP-6E execution decomposition. Confirm any needed changes before Gate 3 cross-check. Do not execute IP-6 or begin IP-7 planning without separate explicit authorization.
+Please review the exact Windy.com Route Planner target, its evidence limits, synthetic corpus, manual protocol, aggregate acceptance rule and IP-6A–IP-6E execution decomposition. Final independent Gate 3 review remains pending. Do not execute IP-6 or begin IP-7 planning without separate explicit Gate 4 authorization.

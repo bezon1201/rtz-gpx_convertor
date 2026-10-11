@@ -1,6 +1,6 @@
 # IP-5 — Stable Local Swift CLI and Self-contained Runtime: Detailed Implementation Plan
 
-**Plan status:** Approved Gate 2 plan; Gate 3 R1 reconciliation applied, pending independent architecture review. Gate 3 PASS is not declared.
+**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4, IP-5 execution, and overall implementation: NOT AUTHORIZED.
 **IP-5 execution:** NOT AUTHORIZED.
 **Overall implementation:** NOT AUTHORIZED.
 **Planning branch:** `docs/ip-5-cli-runtime-packaging`.
@@ -23,7 +23,7 @@ V1 constraints:
 
 Status constraints inherited from approved plans:
 
-- IP-1/IP-2/IP-3/IP-4 plans are approved for Gate 3 cross-check; none has execution PASS evidence.
+- The remote Gate 3 acceptance declaration is historical and superseded for current authorization; final independent review is pending. None of IP-1–IP-4 has execution PASS evidence.
 - G3-001 approves an export-only GPX route-name override or explicit omission; G3-004 approves one-point GPX export with warning and explicit confirmation. IP-5 transports and enforces these decisions but does not change source route data.
 - No mandatory RTZ dialect is advertised as supported until IP-1 qualification evidence exists. RTZP remains out of scope.
 - Never treat a Finder, Shortcuts or CLI file reference as trusted. Paths and content remain untrusted until IP-2 securely opens and validates them.
@@ -458,7 +458,7 @@ No upstream execution PASS is claimed. IP-5 must not freeze a transport, file-re
 
 ### Future IP-5 execution PASS
 
-Only after Gate 3 cross-check, resolution of blocking decisions, and explicit Gate 4/IP-5 authorization: stable protocol is tested through the qualified Shortcut transport; input is securely referenced/opened and IP-2 validates it; `inspect` shares that same secure/schema-qualified boundary; explicit IP-3 preview/confirmation cannot be bypassed or become stale and IP-5D passes the jointly approved source identity/content-continuity contract; IP-4 returns a valid immutable artifact; IP-5 writer passes identity/collision/atomicity/permissions/ACL/metadata/cancellation/concurrency and sidecar tests on every claimed filesystem; offline/no-telemetry/privacy checks pass; signed/notarized package installs on the declared Apple Silicon macOS matrix without developer tools/admin; all approved V1 modes and Shortcuts entry points work; update/rollback/uninstall preserve user data; and independent review accepts evidence. If IP-5D does not PASS, overall IP-5/IP-5F cannot pass through partial mode support; any V1 scope change requires separate explicit governance approval. No execution PASS or platform support claim is implied by this plan.
+Only after Gate 3 acceptance, resolution of stage-specific blockers, and explicit Gate 4/IP-5 authorization: stable protocol is tested through the qualified Shortcut transport; input is securely referenced/opened and IP-2 validates it; `inspect` shares that same secure/schema-qualified boundary; explicit IP-3 preview/confirmation cannot be bypassed or become stale and IP-5D passes the jointly approved source identity/content-continuity contract; IP-4 returns a valid immutable artifact; IP-5 writer passes identity/collision/atomicity/permissions/ACL/metadata/cancellation/concurrency and sidecar tests on every claimed filesystem; offline/no-telemetry/privacy checks pass; signed/notarized package installs on the declared Apple Silicon macOS matrix without developer tools/admin; all approved V1 modes and Shortcuts entry points work; update/rollback/uninstall preserve user data; and independent review accepts evidence. If IP-5D does not PASS, overall IP-5/IP-5F cannot pass through partial mode support; any V1 scope change requires separate explicit governance approval. No execution PASS or platform support claim is implied by this plan.
 
 ## 17. Primary platform references
 
@@ -474,4 +474,4 @@ Research checked 2026-10-11. Platform documentation can change; recheck at IP-1/
 
 ## Approval request
 
-The Gate 3 reconciled architecture retains conditional JSON stdio, secure `inspect`, unqualified file-reference carrier and cross-process scope, unresolved IP-5D source identity/content continuity, evidence-gated writer permissions, approved signed app-bundle/DMG direction, and IP-5A–IP-5F decomposition. The approved name/one-point/geometry/consent policies are inputs, not IP-5 choices. Do not begin IP-5 execution without independent Gate 3 review and separate explicit Gate 4 authorization.
+The reconciled architecture retains conditional JSON stdio, secure `inspect`, unqualified file-reference carrier and cross-process scope, unresolved IP-5D source identity/content continuity, evidence-gated writer permissions, approved signed app-bundle/DMG direction, and IP-5A–IP-5F decomposition. The approved name/one-point/geometry/consent policies are inputs, not IP-5 choices. Final independent Gate 3 review remains pending; do not begin IP-5 execution without separate explicit Gate 4 authorization.

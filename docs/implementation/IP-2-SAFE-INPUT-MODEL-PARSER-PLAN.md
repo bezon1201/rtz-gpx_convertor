@@ -1,6 +1,6 @@
 # IP-2 — Safe Input Model and Parser: Detailed Implementation Plan
 
-**Status:** Approved Gate 2 plan; Gate 3 R1 reconciliation applied, pending independent architecture review. Gate 3 PASS is not declared; Gate 4 is not authorized.
+**Status:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4, stage execution, and overall implementation: NOT AUTHORIZED.
 
 **IP-2 execution:** NOT AUTHORIZED. **Overall implementation:** NOT AUTHORIZED.
 **Baseline:** Gate 1 d57d0935c7885eb25eb14542e7996839644e96e2; approved IP-1 plan 6ed649d3995f70fa2421e08cb027c07d19b4cad4.
@@ -299,7 +299,7 @@ Paths are proposals against the current documentation-only tree; none exists.
 
 Only this plan, REPORT.md and PROGRESS.md may change. Do not edit AGENTS.md, Master Plan, or IP-1. Do not create IP-3–IP-7 plans or execute IP-2.
 
-After review: address IP-2 findings; separately authorize remaining detailed plans and cross-check all at Gate 3; resolve findings; obtain explicit Gate 4 authorization naming stage and any probe/schema/dependency acquisition; then execute one stage at a time. Plan approval authorizes no code, tests or probes.
+The remote Gate 3 acceptance declaration is historical and superseded for current authorization; final independent review is pending. Address any IP-2 review findings through the owning review process; obtain explicit Gate 4 authorization naming the stage and any probe/schema/dependency acquisition; then execute one stage at a time. Plan approval authorizes no code, tests or probes.
 
 ## 16. References and evidence
 

@@ -1,6 +1,6 @@
 # IP-4 — GPX Serialization and Loss Report: Detailed Implementation Plan
 
-**Plan status:** Approved Gate 2 plan; Gate 3 R1 reconciliation applied, pending independent architecture review. Gate 3 PASS is not declared.
+**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4, IP-4 execution, and overall implementation: NOT AUTHORIZED.
 **IP-4 execution:** NOT AUTHORIZED.
 **Overall implementation:** NOT AUTHORIZED.
 **Planning baseline:** Gate 1 `d57d0935c7885eb25eb14542e7996839644e96e2`; IP-1 `6ed649d3995f70fa2421e08cb027c07d19b4cad4`; IP-2 `8011d3f0c4baf62cb15194ab9308f4e312269615`; IP-3 R1 `8e35edff864de87278aa7c61c7376e49845c3d74`.
@@ -18,7 +18,7 @@ IP-4 does not parse RTZ, compute or modify route geometry, decide navigation int
 | Upstream/downstream | Required contract | State at this planning baseline |
 |---|---|---|
 | Master Plan | GPX 1.1, one ordered rte, exact selected route order, source unchanged, collision-safe save, no silent overwrite, offline schema validation, loss reporting | Approved. |
-| IP-1 | GPX XSD provenance/hash/license and offline validation strategy; coordinate formatting and semantic determinism decisions; qualified source field matrix; sanitized fixture plan | Plan approved for Gate 3 cross-check; execution evidence and exact artifact/license decisions remain pending. Do not bundle or download an XSD based on this plan. |
+| IP-1 | GPX XSD provenance/hash/license and offline validation strategy; coordinate formatting and semantic determinism decisions; qualified source field matrix; sanitized fixture plan | Final independent Gate 3 review and execution evidence remain pending; exact artifact/license decisions remain open. Do not bundle or download an XSD based on this plan. |
 | IP-2 | Validated immutable model precision, optional field presence, qualified meanings, bounded unsupported-content summaries | Plan approved; execution evidence pending. No raw XML/payload crosses into IP-4. |
 | IP-3 R1 | Finalized TransformedRoute; point and leg provenance; effective GPX route-name metadata separate from source model; synthetic labels/provenance; one-point neutral result with warning; explicit connector geometry | Plan approved; execution evidence pending. G3-006 selects the rhumb closest-point objective; numerical qualification remains unverified and is not represented as execution PASS. |
 | IP-5 | Stable CLI result/error interface, save transport, file permissions/reference binding, output path handling | Approved plan; protocol and platform qualification pending. |
@@ -195,7 +195,7 @@ Conceptual typed interfaces; exact language signatures wait for IP-5/runtime dec
 
 Suggested diagnostics, to reconcile with IP-2/IP-3/IP-5 before freeze. One-point eligibility uses the approved warning/confirmation policy:
 
-**IP-4 blocking diagnostics:** INVALID_TRANSFORMED_ROUTE, UNCONFIRMED_TRANSFORMATION, INVALID_GPX_COORDINATE, GPX_COORDINATE_UNREPRESENTABLE, INVALID_XML_CHARACTER, GPX_SCHEMA_UNAVAILABLE, GPX_SCHEMA_VALIDATION_FAILED, GPX_EXPORT_NOT_ELIGIBLE. `ONE_POINT_ACKNOWLEDGEMENT_REQUIRED` applies only if Gate 3 selects Option A; Option B uses GPX_EXPORT_NOT_ELIGIBLE / INSUFFICIENT_OUTPUT_POINTS. Filesystem diagnostics (OUTPUT_ALREADY_EXISTS, OVERWRITE_CONFIRMATION_REQUIRED, OUTPUT_WRITE_FAILED, DESTINATION_PERMISSION_DENIED, DESTINATION_UNAVAILABLE, CANCELLED) and staged-byte writer validation are owned by IP-5; IP-7 presents consent/cancellation/errors. Reconcile shared interface identifiers before freeze.
+**IP-4 blocking diagnostics:** INVALID_TRANSFORMED_ROUTE, UNCONFIRMED_TRANSFORMATION, INVALID_GPX_COORDINATE, GPX_COORDINATE_UNREPRESENTABLE, INVALID_XML_CHARACTER, GPX_SCHEMA_UNAVAILABLE, GPX_SCHEMA_VALIDATION_FAILED, GPX_EXPORT_NOT_ELIGIBLE. Under G3-004, a one-point route is eligible only with an explicit warning acknowledgement; if acknowledgement is absent, return a clear blocking diagnostic. Filesystem diagnostics (OUTPUT_ALREADY_EXISTS, OVERWRITE_CONFIRMATION_REQUIRED, OUTPUT_WRITE_FAILED, DESTINATION_PERMISSION_DENIED, DESTINATION_UNAVAILABLE, CANCELLED) and staged-byte writer validation are owned by IP-5; IP-7 presents consent/cancellation/errors. Reconcile shared interface identifiers before freeze.
 
 **Advisory/loss:** INSUFFICIENT_OUTPUT_POINTS, METADATA_NOT_REPRESENTABLE, SOURCE_WAYPOINT_EXCLUDED, SOURCE_LEG_EXCLUDED, SOURCE_LEG_SUPERSEDED, SOURCE_LEG_PORTIONED, UNKNOWN_METADATA_UNQUALIFIED, GEOMETRY_UNAVAILABLE, DISTANCE_UNAVAILABLE, SYNTHETIC_CONNECTION_UNCONSTRAINED, ZERO_LENGTH_CONNECTION, WINDY_COMPATIBILITY_UNVERIFIED.
 
@@ -206,7 +206,7 @@ These identifiers are proposals only. Reconcile diagnostic identity/severity and
 No synthetic file, GPX, test, or fixture is created in this planning task. After authorization, consume the reviewed synthetic fixture catalog from IP-1/IP-2/IP-3. Required cases:
 
 - Full Route, From Waypoint first/middle/last, both Current Position variants; exact output point order/provenance.
-- Empty transformed route rejection; one-point neutral transform preserved; verify both export policy branches (ALLOW_WITH_WARNING requires warning/ack and output; REFUSE_EXPORT returns a clear diagnostic and no file); two identical-coordinate points retained with warning; IP-6 consumer behavior recorded independently.
+- Empty transformed route rejection; one-point neutral transform preserved; G3-004 ALLOW_WITH_WARNING requires affirmative warning acknowledgement and output; absent acknowledgement returns a clear diagnostic and no file; two identical-coordinate points retained with warning; IP-6 consumer behavior recorded independently.
 - Every GPX coordinate bound, including +180 longitude refusal without normalization; negative zero; very small/high-precision decimals; malformed/nonfinite values; exact-decimal equality or binary shortest-round-trip equality as appropriate; source-decimal-to-model error measured under approved synthetic tolerance; no locale-dependent formatting.
 - Unicode composed/decomposed strings preserved without normalization; XML metacharacters escaped; forbidden XML 1.0 controls rejected; duplicate/missing source names; repeated synthetic labels and collisions without identity merging.
 - Valid source route name default; explicit valid export-only override; explicit omission when source name is missing/invalid; Unicode and filename/XML-special text; invalid characters and length-bound rejection; exact confirmed `<rte><name>`; output filename changes do not change route name; name never becomes a path, changes RTZ/IP-3 source identity, or becomes creator identity. Keep waypoint names unchanged, including duplicates.
@@ -244,7 +244,7 @@ These are future authorized stages, not execution instructions for this task. Pr
 - **Proposed files:** `docs/research/IP-4/GPX-QUALIFICATION.md`, `docs/research/IP-4/GPX-SERIALIZATION-DECISIONS.md`.
 - **Dependencies:** IP-1 GPX schema/legal decisions; IP-2 numeric representation and source-error evidence; IP-3 R1 finalized route and approved G3-001/G3-004 name and one-point contracts; Gate 4 authorization.
 - **Sequence:** inspect only approved schema artifact → decide license/offline validation → reconcile IP-1 serializer notes → qualify +180 coordinate representation and semantic determinism under G3-005 → implement G3-001 name and G3-004 one-point policy → close representation-specific precision/error/tolerance and hint decisions → review.
-- **Synthetic tests/evidence:** later planned cases for schema facts, exact-decimal and binary shortest-round-trip behavior/error analysis, both name alternatives, both one-point policy branches; independently reviewed schema/hash/license record.
+- **Synthetic tests/evidence:** later planned cases for schema facts, exact-decimal and binary shortest-round-trip behavior/error analysis, both name alternatives, the approved one-point warning/acknowledgement path and missing-acknowledgement refusal path; independently reviewed schema/hash/license record.
 - **Acceptance:** documented GPX contract; no unsupported fields; approved G3-001 naming and G3-004 one-point contracts honored; representation-aware precision/error contract supported by IP-2 evidence; IP-6 obligations explicit.
 - **Risks:** schema redistribution, longitude +180 conflict, model lexical precision unavailable, numeric representation unable to support stated semantic preservation.
 - **Rollback/PASS:** revert only IP-4A-owned decision files; PASS after architect and IP-1 review, no schema bundled unless rights cleared.
@@ -280,7 +280,7 @@ These are future authorized stages, not execution instructions for this task. Pr
 - **Proposed files:** `Sources/RTZCore/GPX/GPXExportEligibility.swift`, `GPXValidator.swift`; synthetic tests in `GPXValidationTests.swift`.
 - **Dependencies:** IP-1 approved GPX XSD/license/runtime; IP-4A/B/C; IP-2 numeric representation evidence; IP-3 confirmation status.
 - **Sequence:** require finalized route → validate coordinates/names/count → construct document → offline XSD validation → independent reparse/exact compare → return separate statuses/warnings.
-- **Synthetic tests:** all invalid/valid schema pairs; both one-point policy branches; +180 refusal; exact-decimal and binary shortest-round-trip/error analysis; no network.
+- **Synthetic tests:** all invalid/valid schema pairs; the approved one-point warning/acknowledgement path and missing-acknowledgement refusal path; +180 refusal; exact-decimal and binary shortest-round-trip/error analysis; no network.
 - **Acceptance:** schema and app semantics distinct; no unconfirmed preview accepted; Gate 3 one-point policy implemented as approved; representation-specific precision/tolerance verified; validator offline and traceable.
 - **Risks:** schema license or validator not shippable; downstream behavior not implied.
 - **Rollback/PASS:** fail closed if validator unavailable; PASS only with hash-bound XSD/oracle evidence and no network.
@@ -357,7 +357,7 @@ All IP-1/IP-2/IP-3 implementation evidence is pending. Their approved plans are 
 
 ### Future IP-4 execution PASS
 
-Only after Gate 3 decisions and explicit Gate 4 authorization: finalized route maps to one valid GPX 1.1 rte; output validates against approved offline schema; point order and representation-specific coordinate values round-trip under independently verified rules; loss categories match qualified source presence and IP-3 provenance; selected one-point and name policies are implemented as approved; IP-4 returns immutable validated bytes; IP-5’s separately verified writer saves complete output without silent overwrite/partial success and IP-7 reports accurately; no source RTZ change or network dependency occurs; independent review accepts evidence. Windy compatibility remains IP-6 evidence and does not independently choose product policy.
+Only after Gate 3 acceptance, closure of prerequisite technical blockers, and explicit Gate 4 authorization: finalized route maps to one valid GPX 1.1 rte; output validates against approved offline schema; point order and representation-specific coordinate values round-trip under independently verified rules; loss categories match qualified source presence and IP-3 provenance; selected one-point and name policies are implemented as approved; IP-4 returns immutable validated bytes; IP-5’s separately verified writer saves complete output without silent overwrite/partial success and IP-7 reports accurately; no source RTZ change or network dependency occurs; independent review accepts evidence. Windy compatibility remains IP-6 evidence and does not independently choose product policy.
 
 ## 16. Sources and research boundary
 

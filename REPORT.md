@@ -1,14 +1,14 @@
 # Architect review handoff
 
-## Current handoff — Gate 3 R1 documentation reconciliation
+## Current handoff — Gate 3 recovery merge
 
-- **Status: RECONCILIATION COMPLETE / PENDING INDEPENDENT ARCHITECTURE REVIEW. Gate 3 PASS is not declared. Gate 4 and implementation are NOT AUTHORIZED.**
-- R2 minor consistency corrections: replaced the stale Master Plan route-name fallback with the approved G3-001 contract and corrected stale IP-4/IP-5 acceptance statements that still treated the one-point policy as undecided. Other matches were either explicit technical qualifications or pre-reconciliation statements under the explicitly labeled historical handoffs.
+- **Effective status: Gate 3 PENDING FINAL INDEPENDENT ARCHITECT REVIEW.** The remote `Gate 3 PASS / ARCHITECT ACCEPTED` declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is preserved as a historical event and is superseded for current authorization purposes. Gate 4, stage execution, and implementation are **NOT AUTHORIZED**.
+- R2 corrections remain: the Master Plan route-name field mapping follows G3-001; IP-4/IP-5 reflect the approved G3-004 one-point policy.
 - Branch: `docs/gate-3-reconciliation`; approved IP-7 parent: `482c8b585635138174dbf64d309cc3f308e3dcd9`. The approved Master/IP-1–IP-7 baseline provenance and G3-001–G3-011 decision ledger are recorded in [GATE-3-RECONCILIATION-R1.md](docs/implementation/GATE-3-RECONCILIATION-R1.md).
-- Reconciled the Master Plan and all seven detailed plans for export-only route naming, explicit Current Position geometry, source continuity, one-point warning/export, +180° fail-closed qualification, rhumb closest-point objective, separate route/publication consent, mandatory Windy multi-point PASS, fully local offline behavior, signed app/DMG architecture, and Gate 3/Gate 4 governance.
-- Preserved all stage decompositions and documented remaining technical qualification owners and stop conditions. No feasibility, consumer acceptance, implementation, or Gate 3 PASS is claimed.
-- Changed files are the Master Plan; IP-1–IP-7 plans; this report; `PROGRESS.md`; and the new Gate 3 reconciliation report. Documentation-only diff; no implementation or test artifacts.
-- The final commit SHA and ordinary push/remote-head verification are reported in this task handoff; no self-referential commit hash is embedded in the commit itself.
+- The reviewed reconciliation records the accepted export-only route naming, explicit Current Position geometry, source continuity, one-point warning/export, +180° fail-closed qualification, rhumb closest-point objective, separate route/publication consent, mandatory Windy multi-point PASS, fully local offline behavior, signed app/DMG architecture, and Gate 3/Gate 4 governance.
+- Preserved all stage decompositions and documented remaining technical qualification owners and stop conditions. No feasibility, consumer acceptance, implementation PASS, or effective Gate 3 PASS is claimed.
+- This closure updates status/governance wording only in the Master Plan, IP-1–IP-7 plans, this report, `PROGRESS.md`, and the reconciliation report. No implementation, test, fixture, schema, dependency, CLI, Shortcut, build, Windy-import or platform-probe artifact is created or run.
+- This local recovery merge reconciles both documentation histories without publishing them. It does not declare Gate 3 PASS or authorize Gate 4.
 
 ## Historical handoffs
 
@@ -173,3 +173,10 @@ Documentation-only changes. No application code, parser, model, fixture, test, s
 ## Review request and next process
 
 Please review the IP-2 architecture, proposed limits, security behavior, semantic classifications, model semantics, and upstream blockers. After IP-2 review and separate authorization for the remaining detailed plans, cross-check the full plan set at Gate 3, resolve findings, then obtain explicit Gate 4 authorization before any implementation. Stop after this planning commit.
+
+
+## Historical remote Gate 3 Architecture Review Closure — superseded for current authorization
+
+Historical remote disposition: **GATE 3 — PASS / ARCHITECT ACCEPTED**. Reviewed reconciliation commit: f98f43618ad69c347fc8a071d741b9719714b934; its parent is 482c8b585635138174dbf64d309cc3f308e3dcd9. Findings and residual qualification boundaries are recorded in docs/implementation/GATE-3-RECONCILIATION-R1.md. No pending technical qualification is converted to PASS.
+
+**Gate 4: NOT AUTHORIZED. Stage execution: NOT AUTHORIZED. Overall implementation: NOT AUTHORIZED.** Gate 4 requires separate explicit product-owner authorization. The historical handoffs above retain the statuses recorded when written.
