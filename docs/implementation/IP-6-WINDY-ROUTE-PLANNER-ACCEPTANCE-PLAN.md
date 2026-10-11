@@ -1,15 +1,19 @@
 # IP-6 — Windy Route Planner Empirical Acceptance: Detailed Implementation Plan
 
-**Plan status:** Submitted for architectural review (Gate 2).
+**IP-6 PLAN:** APPROVED / READY FOR GATE 3 CROSS-CHECK (R1 conditions closed).
 
 **IP-6 execution:** NOT AUTHORIZED.
+
+**IP-6 consumer acceptance:** NOT TESTED.
+
+**IP-7 planning:** NOT STARTED.
 
 **Overall implementation:** NOT AUTHORIZED.
 
 **Planning branch:** `docs/ip-6-windy-route-planner-acceptance`.
 **Planning baseline:** IP-5 R1 `7d24aadcdc0e0b8bf0429e3f639696e9bafa68b7`.
 
-This is a documentation-only plan for future, manually executed, synthetic-data consumer acceptance. No Windy import, browser automation, fixture, test, script, GPX, RTZ, probe, credential, or implementation artifact is created by this plan. Planning approval is not consumer compatibility evidence or an execution PASS.
+This is a documentation-only plan for future, manually executed, synthetic-data consumer acceptance. No Windy import, browser automation, fixture, test, script, GPX, RTZ, probe, credential, or implementation artifact is created by this plan. Plan approval is not empirical consumer compatibility evidence or an execution PASS. Completing the future IP-6E report is a separate status from passing consumer acceptance (§§13, 15, 17).
 
 ## 1. Objective, scope and authority
 
@@ -28,7 +32,7 @@ Keep these evidence layers separate in every case:
 3. **Windy file-import acceptance:** the identified Windy interface accepts or rejects that file.
 4. **Windy route-object interpretation:** the imported result is observable as a Route Planner route, track, marker, upload layer, or another object.
 5. **Waypoint order and coordinate fidelity:** observable values are compared point-by-point to the expected GPX sequence; a map image alone is not numerical evidence.
-6. **Rendered geometry and visible behavior:** map line, point markers, labels, warnings and any observed consumer changes are recorded separately from internal route data.
+6. **Rendered geometry and visible behavior:** map line, point markers, labels, warnings and display-only interpolation are recorded separately from imported route data and semantics-changing automatic routing.
 7. **Overall product acceptance:** the intended workflow meets every mandatory criterion under the aggregate rule in §13.
 
 Use only evidence captured during authorized future IP-6 execution. Record unknowns as `UNRESOLVED`, `BLOCKED`, or `INCONCLUSIVE`; do not fill gaps using screenshots, assumptions, a different Windy product, public Uploader behavior, or reverse-engineered/private APIs. Evidence is date-, interface-, browser-, and platform-bounded; a later UI change can invalidate the workflow procedure.
@@ -77,15 +81,17 @@ The converter's approved GPX output contract is one GPX 1.1 document with the To
 For every converter-produced acceptance case, test whether Windy:
 
 - Accepts the `<rte>`-based file directly in the intended Route Planner workflow.
-- Produces an identifiable route object and not merely a generic uploaded overlay or silently substituted track.
+- Produces an identifiable Route Planner route object and not a generic upload layer or silently substituted track; object substitution is a mandatory semantic failure.
 - Retains the same number and ordinal sequence of route points.
 - Retains every coordinate at the strongest precision observable through supported UI or user-accessible export.
 - Retains waypoint names and approved route name, including absent names and Unicode cases.
-- Adds, removes, reorders, merges, simplifies, interpolates, snaps, or otherwise modifies points or metadata.
+- Mutates imported route data by adding/removing/reordering/merging route points, changing coordinates/names, or substituting a track/overlay for the intended route object.
+- Changes only visual line rendering/interpolation while the imported route-point sequence and stored route semantics remain unchanged.
+- Performs automatic routing, snapping, relocation, or adds navigation vertices that change route semantics.
 - Displays the expected line and markers, warnings, route-leg controls, or any automatic-routing behavior.
 - Reports import errors in an identifiable, reproducible way.
 
-Maintain separate **internal-data** and **rendered-map** observations. If Windy does not expose exact coordinates, point order, or object semantics through supported user-visible functionality, record the corresponding criterion INCONCLUSIVE. Never infer numeric fidelity from screenshots or geometric fidelity from a plausible-looking map line.
+Maintain separate **imported-data**, **automatic-routing**, and **rendered-map** observations. Visual line interpolation between unchanged imported points, including projection or antimeridian wrapping, is recorded as rendering behavior and is not by itself a route-data compatibility failure. If supported UI cannot distinguish rendering from inserted, moved, snapped, or otherwise changed route points, classify the affected criterion INCONCLUSIVE. If Windy does not expose exact coordinates, point order, or object semantics through supported user-visible functionality, record the corresponding criterion INCONCLUSIVE. Never infer numeric fidelity from screenshots or a plausible-looking map line.
 
 ## 5. Synthetic acceptance corpus specification
 
@@ -130,7 +136,7 @@ Browser automation and Windy interaction are prohibited during planning. After e
 6. Compare coordinates only if the consumer exposes exact numeric values in supported UI or a documented user-facing export. Compare each ordinal to the approved independent expected-coordinate oracle. Do not inspect private APIs, internal browser state, network payloads, undocumented storage or reverse-engineered endpoints.
 7. Compare names and route name separately from XML correctness. Record absent names, Unicode, duplicate names and display truncation/normalization.
 8. Inspect rendered line/markers and route controls. Record apparent straight/geodesic/rhumb/automatic routing behavior as an observation only; do not infer an algorithm from appearance.
-9. Record any point insertion/removal/reordering, coordinate changes, snapping, simplification, interpolation, warnings, route-type change or automatic route modification. Preserve the original synthetic file and capture consumer output only through supported means.
+9. Record any point insertion/removal/reordering, coordinate changes, snapping, simplification, warnings, route-type change or automatic route modification as imported-data or route-semantics evidence. Record display interpolation separately; if its effect cannot be distinguished from route-data mutation, mark the criterion INCONCLUSIVE. Preserve the original synthetic file and capture consumer output only through supported means.
 10. Capture screenshots or equivalent evidence only for synthetic data. Crop/redact account/profile/weather-location details and unrelated browser content. Store evidence in the approved non-sensitive evidence location; do not commit screenshots with personal/account information.
 11. Assign exactly one case verdict (`PASS`, `FAIL`, `BLOCKED`, `INCONCLUSIVE`) with evidence references and a second reviewer. Do not repeat imports until behavior is reproducible or the reason for variation is recorded.
 12. If account authentication is needed, obtain an authorized generic test account outside the repository. Never request, store, paste, or commit credentials. Do not bypass access controls, paywalls, rate limits, or privacy settings.
@@ -139,6 +145,14 @@ The Windy test environment may require internet for Windy itself, map tiles, wea
 
 ## 7. Geometry interpretation and limits
 
+Classify consumer behavior on three independent axes:
+
+**A. Imported route-data mutation.** Added, removed, reordered or merged route points; changed coordinates or names; or silent substitution of the required route object with a track/generic overlay are mandatory compatibility failures unless an explicit upstream architecture decision changes the contract.
+
+**B. Visual rendering or interpolation.** A line drawn between unchanged points, display-only interpolation, map projection or antimeridian wrapping is not automatically a compatibility failure. Record it separately from route-data fidelity. Do not infer Windy's mathematics from appearance or claim that visual interpolation preserves RTZ leg geometry or ECDIS semantics.
+
+**C. Automatic routing that changes semantics.** Network-based routing, silent snapping/relocation, inserted navigation vertices, or replacement of the approved sequence requires explicit classification and architectural review. If supported evidence cannot distinguish it from display-only rendering/interpolation, mark the affected criterion INCONCLUSIVE; do not assume PASS or FAIL.
+
 Use four distinct geometry layers:
 
 1. Original RTZ legs, turns, XTD, speed/safety constraints and other source navigation metadata.
@@ -146,7 +160,7 @@ Use four distinct geometry layers:
 3. GPX's ordered route-point sequence (`rtept`) and serializer-defined coordinate representation.
 4. Windy's own imported object, line rendering, interpolation, automatic routing or display behavior.
 
-GPX route vertices do not encode all RTZ leg/turn semantics. Windy may draw straight visual segments, interpolate geodesically or rhumb-wise, snap, auto-route, simplify, or display a polyline without exposing its internal interpretation. Test observable differences with synthetic short/long, high-latitude, antimeridian and sparse/dense route cases where the interface permits. A visual appearance is evidence only of appearance; it cannot establish the rendering algorithm or numerical coordinate preservation.
+GPX route vertices do not encode all RTZ leg/turn semantics. Windy may draw straight visual segments, interpolate geodesically or rhumb-wise, snap, auto-route, simplify, or display a polyline without exposing its internal interpretation. Test observable differences with synthetic short/long, high-latitude, antimeridian and sparse/dense route cases where the interface permits. Record whether a difference is imported-data mutation, semantics-changing automatic routing, or display-only rendering. If supported evidence cannot distinguish those classes, use INCONCLUSIVE. A visual appearance is evidence only of appearance; it cannot establish the rendering algorithm or numerical coordinate preservation.
 
 Record any indication of automatic routing and route-leg mode. If the interface does not disclose interpolation/automatic-routing rules, say so. Never claim ECDIS geometry equivalence, route safety, navigational validity, or preservation of operational constraints.
 
@@ -161,7 +175,7 @@ Each mode is a separate required acceptance group; success in one mode does not 
 | Current Position — Direct to Next WP | Manually entered synthetic current position appears first; explicitly confirmed next waypoint follows; exact remaining route order is preserved. |
 | Current Position — Join Selected Route Leg | IP-3-selected leg and finalized connector points are represented in approved order; Windy does not select a nearest leg, compute a replacement join, or silently route between points. |
 
-IP-6 tests consumer interpretation of the finalized GPX only. Any question about route transformation, selected leg, join point, coordinate math or point provenance is returned to IP-3/IP-4, not recomputed or adjudicated by IP-6.
+IP-6 tests consumer interpretation of the finalized GPX only. Any question about route transformation, selected leg, join point, coordinate math or point provenance is returned to IP-3/IP-4, not recomputed or adjudicated by IP-6. A rendered connector that looks different is not automatically a mutation; verify whether imported points or route semantics changed.
 
 ## 9. One-point GPX decision support
 
@@ -206,11 +220,13 @@ Classification rules:
 - A converter-produced, IP-4-validated required case rejected by the exact intended workflow is a Windy consumer compatibility **FAIL** for that case, not a GPX serializer defect. Route the evidence to IP-4/IP-5/Gate 3 for disposition without silently changing the output contract.
 - If a user interface changes or a required action is unavailable, mark the case BLOCKED until IP-6A requalifies the workflow. Do not rewrite historical evidence as current.
 - If import succeeds but object type, point sequence, or numeric coordinates cannot be observed, use INCONCLUSIVE for the relevant criterion; upload success is never an overall PASS.
-- If Windy changes order, drops/adds points, changes coordinates beyond an already-approved tolerance, silently auto-routes, or substitutes a track/other object for the required route, classify the affected mandatory criterion FAIL and escalate.
+- If Windy changes order, drops/adds/merges route points, changes coordinates beyond an already-approved tolerance, or substitutes a track/overlay for the required route object, classify the affected mandatory criterion FAIL and escalate.
+- Display-only line rendering, interpolation, projection, or wrapping with unchanged imported route data is recorded separately and is not automatically a failure.
+- If apparent snapping, inserted points or route recalculation may be visual-only and supported evidence cannot distinguish that from semantic mutation, classify the affected criterion INCONCLUSIVE and escalate; do not silently accept it as harmless rendering.
 
 ## 13. Evidence matrix and aggregate acceptance
 
-Maintain one row per case and one evidence link per criterion. Required fields:
+Maintain one row per case and one evidence link per criterion. Track two independent status axes: **IP-6E report state** (`NOT STARTED`, `IN PROGRESS`, `REPORT COMPLETE`) and **IP-6 consumer verdict** (`NOT TESTED`, `PASS`, `FAIL`, `BLOCKED`, `INCONCLUSIVE`). Completing the analysis/report may record any aggregate consumer verdict; report completion never implies compatibility PASS. Required fields:
 
 | Field | Content |
 |---|---|
@@ -223,6 +239,7 @@ Maintain one row per case and one evidence link per criterion. Required fields:
 | Count and order | Expected vs observed count and ordinal sequence; `UNOBSERVABLE` explicitly allowed. |
 | Coordinate fidelity | Method, exposed values, per-ordinal differences, approved comparison rule or `UNOBSERVABLE`. |
 | Names and geometry | Expected/observed labels; rendered behavior; modifications, interpolation or auto-routing observations. |
+| Behavior classification | Imported route-data mutation / display-only rendering / semantics-changing automatic routing / unable to distinguish; evidence and affected criterion. |
 | Evidence/privacy | Screenshot or supported equivalent path; synthetic-only confirmation and redaction status. |
 | Limitations / verdict / reviewer | Constraints, one of four verdicts, reviewer/date. |
 
@@ -235,7 +252,9 @@ Each required criterion uses exactly one state:
 
 ### Aggregate rule
 
-The IP-6 core consumer gate passes only when every mandatory Full Route, From Waypoint, Current Position — Direct, and Current Position — Join case passes in the qualified target workflow; imports yield the required route interpretation; all required point counts and order are verified; exact coordinates are verified by supported evidence under the already-approved numeric policy; required names behave as specified; and no unapproved point/coordinate/route modification or automatic navigation is observed. Required cases with FAIL, BLOCKED or INCONCLUSIVE prevent aggregate PASS. A GPX upload or plausible-looking map line alone cannot pass any hidden-data criterion.
+The IP-6 consumer verdict is **PASS** only when every mandatory Full Route, From Waypoint, Current Position — Direct, and Current Position — Join case passes in the qualified target workflow; imports yield the required route interpretation; all required point counts and order are verified; exact coordinates are verified by supported evidence under the already-approved numeric policy; required names behave as specified; no unapproved imported route-data mutation is observed; and no semantics-changing automatic routing is observed. Required cases with FAIL, BLOCKED or INCONCLUSIVE prevent consumer PASS. A GPX upload or plausible-looking map line alone cannot pass any hidden-data criterion.
+
+Display-only rendering differences do not fail the consumer verdict when supported evidence establishes that imported route data and route semantics remain unchanged. If a visual effect cannot be distinguished from route-data mutation or automatic routing using supported evidence, the affected mandatory criterion is INCONCLUSIVE and aggregate consumer acceptance cannot PASS. No mandatory criterion may be downgraded to reach PASS.
 
 If Windy cannot expose exact coordinates or point order using supported means, the report must say consumer fidelity is unverified and the aggregate remains INCONCLUSIVE/BLOCKED. It may present separate sub-results (for example import acceptance PASS, coordinate fidelity INCONCLUSIVE), but cannot collapse them into overall PASS. Optional display metadata, unsupported Windy features, and one-point behavior are reported separately and do not silently alter product policy. A qualified result applies only to the recorded Windy interface and environment; future interface changes require requalification.
 
@@ -245,12 +264,13 @@ Escalate to the architect/Gate 3 review if:
 
 - Windy rejects the required `<rte>` contract but accepts `<trk>`.
 - Windy reorders, drops, inserts, merges, snaps, or changes required route points/coordinates.
-- Windy silently performs automatic routing or transforms the approved ordered sequence.
+- Windy performs automatic routing that changes route semantics, snaps/relocates points, inserts navigation vertices, or replaces the approved sequence.
+- Apparent visual interpolation/rendering cannot be distinguished from a semantics-changing route modification using supported evidence.
 - The object is a track/overlay rather than the intended Route Planner route.
 - The target workflow cannot expose enough evidence to verify a mandatory criterion.
 - The only workable import is outside the approved Windy.com Route Planner workflow, requires prohibited behavior, or differs from the specified product.
 
-Do not silently switch output to `<trk>`, densify, interpolate, modify route geometry, add Windy-specific extensions, or relax point/coordinate criteria. Such a change requires separate architecture/product approval and coordinated IP-3/IP-4/IP-5 review. If the approved GPX contract is not consumable, classify a product-compatibility blocker and request Gate 3 reconsideration. IP-6 cannot authorize release by weakening the target or by reclassifying an unknown property as correct.
+Do not silently switch output to `<trk>`, densify, interpolate, modify route geometry, add Windy-specific extensions, or relax point/coordinate criteria. Such a change requires separate architecture/product approval and coordinated IP-3/IP-4/IP-5 review. A display-only rendering difference alone does not establish that the approved GPX contract is unconsumable. If imported route data is mutated or semantics-changing automatic routing occurs, classify a product-compatibility failure; if mutation versus rendering cannot be distinguished, classify it INCONCLUSIVE. IP-6 cannot authorize release by weakening the target or by reclassifying an unknown property as correct.
 
 ## 15. Future IP-6 execution sub-stages
 
@@ -303,10 +323,10 @@ All sub-stages below are future execution work, require separate Gate 4/IP-6 aut
 - **Dependencies:** IP-6A qualified observables; IP-6B expected semantic tables; IP-6C import results; IP-2/IP-4 approved numeric policy.
 - **Sequence:** compare ordinal lists → compare supported exact coordinate exposure → compare names → inspect line/markers → classify interpolation/automatic-routing observations and unknowns → reviewer checks every claim against evidence.
 - **Tests/evidence:** Full Route, suffix and both Current Position modes; duplicate coordinates/names; high-latitude and dateline rendering cases; one-point separate support case.
-- **Acceptance:** each observable property is compared to its oracle; every unsupported inference is labeled unknown; no ECDIS-equivalence statement or unapproved tolerance.
+- **Acceptance:** imported data, semantics-changing automatic routing and display-only rendering are classified separately; observable route-data properties are compared to their oracle; indistinguishable behavior is INCONCLUSIVE; every unsupported inference is labeled unknown; no ECDIS-equivalence statement or unapproved tolerance.
 - **Risks:** limited UI exposes only rendered geometry; display rounding; feature subscription differences.
 - **Rollback/stop:** if data cannot be observed safely, classify INCONCLUSIVE and stop that criterion; do not use undocumented access.
-- **PASS:** all required observable comparisons have adequate evidence and all limitations are explicit; numerical fidelity may remain a separate blocker if unobservable.
+- **PASS:** the IP-6D assessment is complete when available observations and limitations are classified and reviewed; display-only rendering is not mislabeled as data mutation, and indistinguishable behavior remains INCONCLUSIVE. IP-6D sub-stage completion does not itself pass the consumer verdict; unobservable mandatory numerical fidelity remains a consumer blocker.
 
 ### IP-6E — Product Compatibility Verdict
 
@@ -316,10 +336,10 @@ All sub-stages below are future execution work, require separate Gate 4/IP-6 aut
 - **Dependencies:** IP-6A–IP-6D evidence; IP-1–IP-5 status reconciliation; Gate 3 architect review.
 - **Sequence:** audit required case coverage → apply §13 aggregate rule → separate import/object/order/coordinate/rendering results → classify failures → list exact blocker/decision owner → independent review.
 - **Tests/evidence:** trace each verdict to raw privacy-safe observations and approved expected semantic oracle; verify no required `BLOCKED`/`INCONCLUSIVE` is hidden by aggregate wording.
-- **Acceptance:** report distinguishes consumer compatibility from GPX validity, converter correctness and product policy; no unsupported claim; all open issues have owner and disposition path.
+- **Acceptance:** report is reviewed, all required evidence is classified, and limitations/failures/blockers are explicit. It may record aggregate consumer verdict PASS, FAIL, BLOCKED or INCONCLUSIVE; `IP-6E REPORT COMPLETE` is a report-completion state only and never implies consumer acceptance PASS.
 - **Risks:** overclaim from partial acceptance, version drift, uncertain coordinate visibility.
 - **Rollback/stop:** withdraw any report with unsupported PASS claims and return affected cases to review; no product-scope shortcut.
-- **PASS:** aggregate criteria are met or IP-6 is explicitly BLOCKED/INCONCLUSIVE with an architectural disposition; only a fully evidenced aggregate is called consumer acceptance PASS.
+- **IP-6E REPORT COMPLETE (sub-stage exit):** report review and evidence classification are complete for any aggregate consumer verdict (PASS, FAIL, BLOCKED or INCONCLUSIVE). Report completion must not be labeled `IP-6 PASS` unless the independent consumer verdict is PASS under §13. A completed report with a non-PASS verdict is useful evidence but does not authorize release.
 
 ## 16. Cross-stage dependencies
 
@@ -330,16 +350,16 @@ All sub-stages below are future execution work, require separate Gate 4/IP-6 aut
 | IP-3 | Full Route, From Waypoint, both Current Position transforms and qualified geometry | **APPROVED AS PLAN; EXECUTION EVIDENCE PENDING** | Supplies final point order, provenance and connector geometry; IP-6 observes consumption only and never selects a leg/join. |
 | IP-4 | GPX 1.1 route serialization, names, one-point policy and immutable validated artifact | **APPROVED AS PLAN; EXECUTION EVIDENCE PENDING** | GPX schema/serializer conformance is a separate gate; one-point and route-name override remain Gate 3 unresolved. |
 | IP-5 | Local runtime orchestration and safe output writing | **APPROVED AS PLAN; EXECUTION EVIDENCE PENDING** | IP-5 execution and IP-5D/IP-5F qualification are pending; IP-6 may consume an approved IP-4 artifact without claiming CLI/write acceptance. |
-| IP-6 | Windy consumer workflow acceptance | **PLAN SUBMITTED; EXECUTION NOT AUTHORIZED** | Owns external consumer evidence and aggregate verdict under this plan. |
+| IP-6 | Windy consumer workflow acceptance | **PLAN APPROVED / READY FOR GATE 3; CONSUMER ACCEPTANCE NOT TESTED** | Owns external consumer evidence and independent aggregate verdict under this plan; execution not authorized. |
 | IP-7 | Shortcut export/import instructions, user feedback and release workflow | **UNRESOLVED / FUTURE PLAN** | IP-6 provides validated consumer instructions/limitations; IP-6 cannot begin IP-7 planning or authorize UI claims. |
 
 Cross-stage rule: IP-6 consumes independently approved upstream outputs and records their status as known at test time. It cannot claim that IP-1 through IP-5 implementation tests passed merely because Windy displayed a file. Product compatibility cannot override GPX schema correctness, IP-3 transformation policy, IP-4 one-point/name decisions, IP-5 security controls, or Gate 3 governance.
 
 ## 17. Planning acceptance and future execution PASS
 
-Gate 2 planning acceptance requires: exact Windy.com Route Planner target and documented uncertainty; a layered consumer contract; synthetic case catalog and provenance method; repeatable manual procedure; independent route-mode matrix; geometry/metadata and coordinate-fidelity evidence strategy; one-point decision support; negative-control classification; evidence schema and strict aggregate verdict; IP-6A–IP-6E sub-stage plans; cross-stage dependency/status matrix; and no unsupported compatibility claim.
+Gate 2 planning acceptance requires: exact Windy.com Route Planner target and documented uncertainty; a layered consumer contract; synthetic case catalog and provenance method; repeatable manual procedure; independent route-mode matrix; geometry/metadata and coordinate-fidelity evidence strategy; one-point decision support; negative-control classification; evidence schema and strict aggregate verdict; separate report-completion and consumer-verdict statuses; IP-6A–IP-6E sub-stage plans; cross-stage dependency/status matrix; and no unsupported compatibility claim.
 
-Future IP-6 execution PASS requires actual, date-bounded evidence from the intended Windy.com Route Planner workflow with approved synthetic data. It requires every mandatory consumer criterion to pass under §13. GPX schema PASS, file upload success, visual plausibility or optional metadata display is never a substitute for route-object, order and coordinate-fidelity evidence. Any mandatory unobservable property leaves aggregate acceptance INCONCLUSIVE or BLOCKED.
+The current status model is **IP-6 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK; IP-6 CONSUMER ACCEPTANCE: NOT TESTED; IP-6 EXECUTION: NOT AUTHORIZED**. In future execution, **IP-6E REPORT COMPLETE** means the reviewed analysis is complete regardless of the consumer verdict. **IP-6 CONSUMER ACCEPTANCE PASS** is a separate verdict requiring actual, date-bounded evidence from the intended Windy.com Route Planner workflow with approved synthetic data and every mandatory criterion passed under §13. GPX schema PASS, file upload success, visual plausibility, or optional metadata display is never a substitute for route-object, order and coordinate-fidelity evidence. Any mandatory unobservable property leaves consumer acceptance INCONCLUSIVE or BLOCKED. Do not label a completed report `IP-6 PASS` when consumer acceptance has not passed.
 
 ## 18. Primary Windy references
 

@@ -2,14 +2,15 @@
 
 ## Current gate activity
 
-**IP-6 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2)**
+**IP-6 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK** (R1 corrections closed)
 
 - Gate 1: **APPROVED / PASS**.
 - IP-1 through IP-5 plans: **APPROVED / READY FOR GATE 3 CROSS-CHECK**; no upstream implementation PASS is claimed.
-- IP-6 execution: **NOT AUTHORIZED**; IP-7 planning: **NOT STARTED**; overall implementation: **NOT AUTHORIZED**.
-- Branch: `docs/ip-6-windy-route-planner-acceptance`, based on IP-5 R1 `7d24aadcdc0e0b8bf0429e3f639696e9bafa68b7`.
+- IP-6 consumer acceptance: **NOT TESTED**; IP-6E report: **NOT STARTED**; IP-6 execution: **NOT AUTHORIZED**; IP-7 planning: **NOT STARTED**; overall implementation: **NOT AUTHORIZED**.
+- Branch: `docs/ip-6-windy-route-planner-acceptance`, reviewed baseline `eca79b4dbba9019d3651c74a603d46bd52960e0a`.
 - Target: Windy.com desktop browser, Distance & Planning / Route Planner. Official discovery material documents GPX import and a candidate `More options → Import GPX` path; current UI, route-object type, editability, point/coordinate observability, auth/persistence and browser/OS matrix remain to be manually qualified in IP-6A.
-- Plan distinguishes format validity, serialization, import, object interpretation, order/coordinate fidelity, rendering and overall acceptance. It defines synthetic-only traceable cases, separate coverage for all four route modes, one-point evidence that does not decide IP-4 policy, negative controls, and a strict aggregate PASS rule. No successful upload alone can pass IP-6.
+- **Status separation:** future `IP-6E REPORT COMPLETE` means the reviewed evidence analysis is complete for any consumer verdict. It does not mean consumer acceptance passed. Only the independent aggregate consumer verdict may be **IP-6 CONSUMER ACCEPTANCE PASS**.
+- Plan distinguishes format validity, serialization, import, object interpretation, order/coordinate fidelity, rendering and overall acceptance. R1 separately classifies imported route-data mutation, display-only rendering/interpolation, and semantics-changing automatic routing. Ambiguous cases are INCONCLUSIVE; only unchanged route data plus non-semantic rendering is not automatically a failure. It defines synthetic-only traceable cases, separate coverage for all four route modes, one-point evidence that does not decide IP-4 policy, negative controls, and a strict aggregate PASS rule. No successful upload alone can pass IP-6.
 - Future sub-stages IP-6A–IP-6E: workflow qualification; synthetic corpus; manual import; geometry/metadata assessment; compatibility verdict. No execution artifacts created.
 - No application code, scripts, tests, browser automation, import probes, GPX/RTZ fixtures, schemas, dependencies, binaries, packages or Shortcuts created; no Windy interaction or empirical testing occurred; no route uploaded.
 - Open questions: current target workflow and environment; account requirements and persistence; imported object type/editability; supported way to inspect order and exact coordinates; upstream synthetic/output evidence; IP-4 one-point and route-name decisions. IP-7 planning remains unauthorized.
@@ -79,7 +80,7 @@
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | R1 corrections closed; ready for Gate 3 cross-check; execution unauthorized. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check; execution unauthorized. | R1 correction commit in task handoff |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check; execution unauthorized. | R1 commit in task handoff |
-| 6. Windy Route Planner acceptance (IP-6) | PLAN SUBMITTED FOR REVIEW | Target is Windy.com browser Route Planner; current workflow and consumer behavior remain unqualified. Execution unauthorized. | task handoff |
+| 6. Windy Route Planner acceptance (IP-6) | PLAN APPROVED | R1 corrections closed; ready for Gate 3 cross-check. Consumer acceptance not tested; IP-6E report not started; execution unauthorized. | R1 task handoff |
 | 7. V1 Shortcuts release (IP-7) | PLANNED | Detailed plan not created in this task. | — |
 
 Plan review is not execution PASS. RTZP remains OUT OF SCOPE for V1.

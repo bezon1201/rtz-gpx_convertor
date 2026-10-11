@@ -1,18 +1,20 @@
 # Architect review handoff
 
-## IP-6 planning handoff
+## IP-6 R1 correction handoff
 
-- **IP-6 PLAN: SUBMITTED FOR ARCHITECTURAL REVIEW (Gate 2).**
+- **IP-6 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK.** (Two architectural corrections applied.)
+- **IP-6 CONSUMER ACCEPTANCE: NOT TESTED.**
+- **IP-6E REPORT: NOT STARTED.**
 - **IP-6 EXECUTION: NOT AUTHORIZED.**
 - **IP-7 PLANNING: NOT STARTED.**
 - **OVERALL IMPLEMENTATION: NOT AUTHORIZED.**
-- Branch: `docs/ip-6-windy-route-planner-acceptance`, based on IP-5 R1 `7d24aadcdc0e0b8bf0429e3f639696e9bafa68b7`.
+- Branch: `docs/ip-6-windy-route-planner-acceptance`, reviewed baseline `eca79b4dbba9019d3651c74a603d46bd52960e0a`.
 
-Created `docs/implementation/IP-6-WINDY-ROUTE-PLANNER-ACCEPTANCE-PLAN.md`. The exact target is Windy.com in a desktop browser, specifically its Distance & Planning / Route Planner workflow. Official Windy material and Windy Staff community posts document GPX import and a candidate `More options → Import GPX` path. These are discovery references only: the live interface, resulting object type/editability, point-list and numeric coordinate observability, authentication, persistence, and supported browser/OS matrix still require authorized manual qualification in IP-6A. No Windy interaction occurred during planning.
+Updated `docs/implementation/IP-6-WINDY-ROUTE-PLANNER-ACCEPTANCE-PLAN.md` to close both R1 conditions. **Report completion is independent from consumer acceptance:** a future `IP-6E REPORT COMPLETE` may document aggregate PASS, FAIL, BLOCKED or INCONCLUSIVE; it does not itself mean `IP-6 CONSUMER ACCEPTANCE PASS`. The current IP-6E empirical report is not started, and consumer acceptance remains NOT TESTED.
 
-The plan separates GPX schema compliance, converter serialization, import acceptance, route-object interpretation, order/coordinate fidelity, rendering, and aggregate product acceptance. It specifies a synthetic-only corpus and traceability to approved IP-1B/IP-2/IP-3/IP-4 semantic outputs; independent cases for Full Route, From Waypoint, Current Position — Direct, Current Position — Join; one-point evidence without choosing IP-4 policy; negative controls; an observable-evidence matrix; and a strict aggregate rule. Unknown coordinate/order behavior remains INCONCLUSIVE/BLOCKED; successful upload or a plausible screenshot cannot produce overall PASS. Proposed future execution stages IP-6A–IP-6E are qualification, corpus, manual import, geometry/metadata assessment, and compatibility verdict.
+R1 also separates **imported route-data mutation** (mandatory failure for changes to required point/object semantics), **display-only rendering/interpolation** (not automatically a failure when route data is unchanged), and **semantics-changing automatic routing** (requires explicit classification/review). If supported evidence cannot distinguish rendering from route mutation or automatic routing, the affected criterion is INCONCLUSIVE. Numerical coordinate/order unknowns remain blocking for consumer PASS; upload success and plausible screenshots are insufficient.
 
-Remaining blockers include live Windy workflow/version confirmation, exact Route Planner object interpretation and supported point/coordinate inspection, authentication/persistence requirements, interface/platform matrix, and the approved synthetic corpus plus upstream implementation evidence. IP-1 through IP-5 plans remain approved for Gate 3 cross-check; their implementations are not claimed as passed. IP-4 one-point and route-name policy remain unresolved. IP-7 planning has not begun.
+Remaining blockers include live Windy workflow/version confirmation, exact Route Planner object interpretation and supported point/coordinate inspection, authentication/persistence requirements, interface/platform matrix, and approved synthetic corpus plus upstream implementation evidence. IP-1 through IP-5 planning approvals are preserved; no upstream implementation PASS is claimed. IP-4 one-point and route-name policies remain unresolved. IP-7 planning has not begun.
 
 No code, scripts, tests, browser automation, probes, GPX/RTZ fixtures, schemas, binaries, Shortcuts, dependencies or packages were created. No route was uploaded to Windy; no tests or empirical checks were run. No credentials or real route data were added.
 
