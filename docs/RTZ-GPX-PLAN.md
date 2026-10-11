@@ -107,7 +107,7 @@ For Current Position, never infer the next waypoint from the nearest point or si
 
 | RTZ data | Planned GPX treatment |
 |---|---|
-| Route name | GPX `<rte><name>` if present and safe; otherwise use a neutral UI fallback, without changing the source. |
+| Route name | Use the valid source RTZ route name by default; allow an explicit export-only override or explicit omission. An invalid source name requires an explicit override or omission. Never invent or silently substitute a name, or derive the GPX route name from vessel identity, source/output filename, or path. Do not modify the source RTZ or source route model. |
 | Ordered waypoint positions | GPX ordered `<rtept>` coordinates. This preserves vertices, not the ECDIS leg/turn construction. |
 | Waypoint names | GPX routepoint `<name>` when present; unnamed points stay unnamed. |
 | Waypoint IDs/revisions | Not represented in GPX core; report as dropped. |

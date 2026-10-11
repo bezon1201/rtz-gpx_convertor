@@ -454,7 +454,7 @@ No upstream execution PASS is claimed. IP-5 must not freeze a transport, file-re
 - Self-contained packaging options are compared with a V1 direction and explicit signing/notarization/OS/path qualification gates.
 - Diagnostics, cancellation, concurrency, recovery, privacy, offline guarantees and synthetic verification are covered.
 - IP-5A–IP-5F stages each contain objective, scope/exclusions, files, dependencies, sequence, future tests, acceptance/evidence, risks, rollback and PASS conditions.
-- Cross-stage matrix marks approved/provisional/unresolved items; unresolved IP-4 product choices remain unresolved.
+- Cross-stage matrix marks approved/provisional/unresolved items; approved G3-001 naming and G3-004 one-point product policies remain fixed, while schema, serialization, numeric representation, and evidence qualifications remain unresolved.
 
 ### Future IP-5 execution PASS
 

@@ -4,6 +4,7 @@
 
 **GATE 3 RECONCILIATION: COMPLETE / PENDING INDEPENDENT ARCHITECTURE REVIEW. GATE 3 PASS: NOT DECLARED.**
 
+- R2 applied: corrected the stale Master Plan route-name mapping and stale IP-4/IP-5 one-point decision statements; Gate 3 remains pending independent architecture review.
 - Gate 1: **APPROVED / PASS**. IP-1–IP-7 plans remain approved; reconciliation edits do not authorize their execution.
 - Gate 4: **NOT AUTHORIZED**. Overall implementation: **NOT AUTHORIZED**. IP-6 consumer acceptance: **NOT TESTED**.
 - Branch: `docs/gate-3-reconciliation`, based on approved IP-7 HEAD `482c8b585635138174dbf64d309cc3f308e3dcd9`.

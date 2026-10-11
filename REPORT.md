@@ -3,6 +3,7 @@
 ## Current handoff — Gate 3 R1 documentation reconciliation
 
 - **Status: RECONCILIATION COMPLETE / PENDING INDEPENDENT ARCHITECTURE REVIEW. Gate 3 PASS is not declared. Gate 4 and implementation are NOT AUTHORIZED.**
+- R2 minor consistency corrections: replaced the stale Master Plan route-name fallback with the approved G3-001 contract and corrected stale IP-4/IP-5 acceptance statements that still treated the one-point policy as undecided. Other matches were either explicit technical qualifications or pre-reconciliation statements under the explicitly labeled historical handoffs.
 - Branch: `docs/gate-3-reconciliation`; approved IP-7 parent: `482c8b585635138174dbf64d309cc3f308e3dcd9`. The approved Master/IP-1–IP-7 baseline provenance and G3-001–G3-011 decision ledger are recorded in [GATE-3-RECONCILIATION-R1.md](docs/implementation/GATE-3-RECONCILIATION-R1.md).
 - Reconciled the Master Plan and all seven detailed plans for export-only route naming, explicit Current Position geometry, source continuity, one-point warning/export, +180° fail-closed qualification, rhumb closest-point objective, separate route/publication consent, mandatory Windy multi-point PASS, fully local offline behavior, signed app/DMG architecture, and Gate 3/Gate 4 governance.
 - Preserved all stage decompositions and documented remaining technical qualification owners and stop conditions. No feasibility, consumer acceptance, implementation, or Gate 3 PASS is claimed.

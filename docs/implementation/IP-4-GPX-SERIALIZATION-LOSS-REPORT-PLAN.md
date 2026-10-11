@@ -347,7 +347,7 @@ All IP-1/IP-2/IP-3 implementation evidence is pending. Their approved plans are 
 
 - Complete GPX 1.1 core mapping, XML/encoding/namespace/root/name/point-order contract.
 - Representation-aware semantic coordinate preservation, deterministic formatting, independent round-trip verification, source-decimal error analysis and explicit +180 limitation.
-- One-point ADR compares ALLOW_WITH_WARNING and REFUSE_EXPORT; neither is selected, and Gate 3 approval is required before IP-4A implementation.
+- G3-004 resolves the one-point export policy as ALLOW_WITH_WARNING with explicit confirmation; IP-4A must implement that policy after Gate 4 authorization. Windy compatibility remains separate IP-6 evidence.
 - Structured deterministic loss report distinguishes present, absent, excluded, transformed, unsupported, and unrepresentable data.
 - Human summary, optional sidecar, privacy boundary, and no-extension default defined.
 - IP-4 immutable-byte/validation handoff is separated from IP-5 filesystem writer and IP-7 destination/consent/feedback responsibilities; safe-save invariants remain specified.
