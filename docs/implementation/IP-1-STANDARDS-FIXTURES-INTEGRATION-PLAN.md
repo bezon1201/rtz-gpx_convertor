@@ -1,6 +1,6 @@
 # IP-1 — Standards, Fixtures, and Integration/Packaging Discovery
 
-**Plan status:** Approved Gate 2 plan; Gate 3 R1 reconciliation applied, pending independent architecture review. **Implementation:** NOT AUTHORIZED. **Gate 3 PASS:** NOT DECLARED. **Gate 4:** NOT AUTHORIZED. This plan-authoring task created no probes, fixtures, tests, software, schemas, packages or Shortcuts. **Baseline:** `docs/master-plan` at `d57d0935c7885eb25eb14542e7996839644e96e2`. The approved Master Plan is authoritative; this document plans Stage 1 only and does not alter it or start IP-2 through IP-7.
+**Plan status:** Approved Gate 2 plan; Gate 3: PASS / ARCHITECT ACCEPTED at reviewed reconciliation commit f98f43618ad69c347fc8a071d741b9719714b934. Gate 4: NOT AUTHORIZED. Stage execution: NOT AUTHORIZED. Implementation: NOT AUTHORIZED. This plan-authoring task created no probes, fixtures, tests, software, schemas, packages or Shortcuts. **Baseline:** `docs/master-plan` at `d57d0935c7885eb25eb14542e7996839644e96e2`. The approved Master Plan is authoritative; this document plans Stage 1 only and does not alter it or start IP-2 through IP-7.
 
 ## 1. Objective and boundaries
 
@@ -10,7 +10,7 @@ IP-1 must turn the approved Stage 1 outline into evidence-backed decisions and d
 
 **Out of scope:** product code, parser/converter/CLI/GUI, schemas, packages, dependency installation, Shortcuts/Quick Actions, executable fixture generators, tests, or Windy upload during this task. Static synthetic XML fixture data may be authored only during separately authorized IP-1 execution; executable parser/serializer tests are downstream work. No real route, derived coordinate, vessel position/identity, operational note, or user-specific path. RTZP remains OUT OF SCOPE for V1, may be reconsidered after V1, and has no implementation stage.
 
-Plan approval is not IP-1 execution PASS and does not authorize probes or implementation. The complete Gate 2 plan set must first pass Gate 3 cross-check, then the user must explicitly authorize Gate 4 execution.
+Plan approval and Gate 3 acceptance do not constitute IP-1 execution PASS or authorize probes/implementation. Gate 3 review is complete; explicit Gate 4 authorization remains required.
 
 ## 2. Fixed decisions and evidence rules
 
@@ -152,7 +152,7 @@ Record UTC date, platform/browser/app version, generic test-account context only
 
 ## 10. IP-1 execution sub-stages
 
-All work below is future work after Gate 3 and explicit Gate 4 authorization. Each sub-stage returns evidence; planning approval is not PASS.
+All work below is future work after Gate 3 acceptance and explicit Gate 4 authorization. Each sub-stage returns evidence; planning approval is not PASS.
 
 ### IP-1A — Schema provenance and qualification
 
@@ -191,7 +191,7 @@ All work below is future work after Gate 3 and explicit Gate 4 authorization. Ea
 
 - **Objective:** select the Shortcuts-to-CLI transport from reproducible evidence, through documentation or, only if needed, a separately authorized inert probe; no forced shell preference.
 - **Artifacts:** `docs/research/IP-1/SHORTCUTS-FEASIBILITY.md`; redacted evidence; no product Shortcut/helper.
-- **Dependencies/interface:** Gate 3 and probe-specific Gate 4 authorization; IP-5 gets transport/error, IP-7 gets launch/input/output/OS.
+- **Dependencies/interface:** accepted Gate 3 review and probe-specific Gate 4 authorization; IP-5 gets transport/error, IP-7 gets launch/input/output/OS.
 - **Sequence:** source mapping, action input review, compare options, request/run bounded probe if needed, record result/recommendation.
 - **Future cases:** full §7 matrix on candidate OSes; stdout, stderr, exit status, cancellation, Unicode/special paths, permissions, save and offline behavior documented; transport preserves discrete argv or another demonstrated unambiguous protocol without interpolating user values into commands.
 - **Risks/mitigations:** action changes, permissions, flattened input; test oldest/current, static script, discrete argv/stdin, fail closed.
@@ -269,7 +269,7 @@ This task changes only this plan plus REPORT/PROGRESS. Leave `AGENTS.md` and app
 
 ## 15. Execution sequence after authorization
 
-1. Complete Gate 3 cross-check of all IP-1–IP-7 plans and resolve findings.
+1. Gate 3 cross-check of IP-1–IP-7 is accepted at f98f43618ad69c347fc8a071d741b9719714b934.
 2. Obtain explicit Gate 4 authorization, naming any probe/schema/tool acquisition.
 3. IP-1A qualification; stop on unresolved mandatory rights/schema.
 4. IP-1B static synthetic cases after schemas settle.

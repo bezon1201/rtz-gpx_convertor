@@ -1,18 +1,20 @@
 # Progress ledger
 
-## Current gate activity — Gate 3 R1 reconciliation
+## Current gate activity — Gate 3 independent review closure
 
-**GATE 3 RECONCILIATION: COMPLETE / PENDING INDEPENDENT ARCHITECTURE REVIEW. GATE 3 PASS: NOT DECLARED.**
+**GATE 3: PASS / ARCHITECT ACCEPTED.** Reviewed reconciliation commit: f98f43618ad69c347fc8a071d741b9719714b934; parent: 482c8b585635138174dbf64d309cc3f308e3dcd9.
 
 - Gate 1: **APPROVED / PASS**. IP-1–IP-7 plans remain approved; reconciliation edits do not authorize their execution.
-- Gate 4: **NOT AUTHORIZED**. Overall implementation: **NOT AUTHORIZED**. IP-6 consumer acceptance: **NOT TESTED**.
+- Gate 4: **NOT AUTHORIZED**. Stage execution: **NOT AUTHORIZED**. Overall implementation: **NOT AUTHORIZED**. IP-6 consumer acceptance: **NOT TESTED**.
 - Branch: `docs/gate-3-reconciliation`, based on approved IP-7 HEAD `482c8b585635138174dbf64d309cc3f308e3dcd9`.
-- Reconciled the Master Plan and all seven stage plans with approved decisions G3-001–G3-011. Full decision ledger, verified baseline, ownership, residual technical qualifications and stop conditions: `docs/implementation/GATE-3-RECONCILIATION-R1.md`.
+- The accepted R1 reconciliation records approved decisions G3-001–G3-011. Full decision ledger, verified baseline, ownership, residual technical qualifications and stop conditions: `docs/implementation/GATE-3-RECONCILIATION-R1.md`.
 - Stage decompositions and the seven-stage roadmap are unchanged. Route confirmation and publication consent remain distinct. No package, source identity mechanism, numerical geometry behavior, Windy compatibility or platform behavior is claimed qualified.
-- Changed files are documentation only: Master Plan, IP-1–IP-7, `REPORT.md`, this ledger and the reconciliation report. No implementation, tests, fixtures, schemas, dependencies, runtime probes or Shortcuts were created or run.
+- This closure changes only status/governance wording in the Master Plan, IP-1–IP-7 plans, `REPORT.md`, this ledger and the reconciliation report. No implementation, tests, fixtures, schemas, dependencies, runtime probes or Shortcuts were created or run.
 - Commit and remote verification will be added to the handoff after publication.
 
-## Prior gate activity — IP-7 (before Gate 3 R1 reconciliation)
+## Historical gate activity — prior stage handoffs (before Gate 3 review closure)
+
+### IP-7 (before Gate 3 R1 reconciliation)
 
 **IP-7 PLAN: APPROVED / READY FOR GATE 3 CROSS-CHECK (R1 corrections applied)**
 
@@ -103,12 +105,12 @@
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | PLANNED | Plan ready for Gate 3 cross-check; execution unauthorized. | — |
-| 2. Safe input model and parser (IP-2) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check. Execution unauthorized. | — |
-| 3. Route modes and geometry (IP-3) | PLAN APPROVED | R1 corrections closed; ready for Gate 3 cross-check; execution unauthorized. | R1 commit in task handoff |
-| 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check; execution unauthorized. | R1 correction commit in task handoff |
-| 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | R1 conditions closed; ready for Gate 3 cross-check; execution unauthorized. | R1 commit in task handoff |
-| 6. Windy Route Planner acceptance (IP-6) | PLAN APPROVED | R1 corrections closed; ready for Gate 3 cross-check. Consumer acceptance not tested; IP-6E report not started; execution unauthorized. | R1 task handoff |
-| 7. V1 Shortcuts release (IP-7) | PLAN APPROVED | R1 corrections applied; ready for Gate 3 cross-check, which remains unauthorized. IP-7 execution unauthorized. | R1 commit in task handoff |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | PLANNED | Gate 3 PASS / ARCHITECT ACCEPTED; stage execution NOT AUTHORIZED. | — |
+| 2. Safe input model and parser (IP-2) | PLAN APPROVED | Gate 3 PASS / ARCHITECT ACCEPTED; stage execution NOT AUTHORIZED. | — |
+| 3. Route modes and geometry (IP-3) | PLAN APPROVED | Gate 3 PASS / ARCHITECT ACCEPTED; stage execution NOT AUTHORIZED. | R1 commit in task handoff |
+| 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Gate 3 PASS / ARCHITECT ACCEPTED; stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
+| 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | Gate 3 PASS / ARCHITECT ACCEPTED; stage execution NOT AUTHORIZED. | R1 commit in task handoff |
+| 6. Windy Route Planner acceptance (IP-6) | PLAN APPROVED | Gate 3 PASS / ARCHITECT ACCEPTED; consumer acceptance NOT TESTED; IP-6E report not started; stage execution NOT AUTHORIZED. | R1 task handoff |
+| 7. V1 Shortcuts release (IP-7) | PLAN APPROVED | Gate 3 PASS / ARCHITECT ACCEPTED; IP-7 execution NOT AUTHORIZED. | R1 commit in task handoff |
 
 Plan review is not execution PASS. RTZP remains OUT OF SCOPE for V1.

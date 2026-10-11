@@ -1,13 +1,14 @@
 # Architect review handoff
 
-## Current handoff — Gate 3 R1 documentation reconciliation
+## Current handoff — Gate 3 independent review closure
 
-- **Status: RECONCILIATION COMPLETE / PENDING INDEPENDENT ARCHITECTURE REVIEW. Gate 3 PASS is not declared. Gate 4 and implementation are NOT AUTHORIZED.**
+- **Gate 3: PASS / ARCHITECT ACCEPTED.** Reviewed reconciliation commit: f98f43618ad69c347fc8a071d741b9719714b934; parent: 482c8b585635138174dbf64d309cc3f308e3dcd9.
+- **Gate 4: NOT AUTHORIZED. Stage execution: NOT AUTHORIZED. Overall implementation: NOT AUTHORIZED.**
 - Branch: `docs/gate-3-reconciliation`; approved IP-7 parent: `482c8b585635138174dbf64d309cc3f308e3dcd9`. The approved Master/IP-1–IP-7 baseline provenance and G3-001–G3-011 decision ledger are recorded in [GATE-3-RECONCILIATION-R1.md](docs/implementation/GATE-3-RECONCILIATION-R1.md).
-- Reconciled the Master Plan and all seven detailed plans for export-only route naming, explicit Current Position geometry, source continuity, one-point warning/export, +180° fail-closed qualification, rhumb closest-point objective, separate route/publication consent, mandatory Windy multi-point PASS, fully local offline behavior, signed app/DMG architecture, and Gate 3/Gate 4 governance.
-- Preserved all stage decompositions and documented remaining technical qualification owners and stop conditions. No feasibility, consumer acceptance, implementation, or Gate 3 PASS is claimed.
-- Changed files are the Master Plan; IP-1–IP-7 plans; this report; `PROGRESS.md`; and the new Gate 3 reconciliation report. Documentation-only diff; no implementation or test artifacts.
-- The final commit SHA and ordinary push/remote-head verification are reported in this task handoff; no self-referential commit hash is embedded in the commit itself.
+- The reviewed reconciliation records the accepted export-only route naming, explicit Current Position geometry, source continuity, one-point warning/export, +180° fail-closed qualification, rhumb closest-point objective, separate route/publication consent, mandatory Windy multi-point PASS, fully local offline behavior, signed app/DMG architecture, and Gate 3/Gate 4 governance.
+- Preserved all stage decompositions and documented remaining technical qualification owners and stop conditions. No feasibility, consumer acceptance, or implementation PASS is claimed; Gate 3 is PASS / ARCHITECT ACCEPTED.
+- This closure updates status/governance wording only in the Master Plan, IP-1–IP-7 plans, this report, `PROGRESS.md`, and the reconciliation report. No implementation, test, fixture, schema, dependency, CLI, Shortcut, build, Windy-import or platform-probe artifact is created or run.
+- This closure commit records only the independent Gate 3 disposition; it is not the reviewed reconciliation baseline. Its SHA and remote verification are reported in the task handoff.
 
 ## Historical handoffs
 
@@ -172,3 +173,10 @@ Documentation-only changes. No application code, parser, model, fixture, test, s
 ## Review request and next process
 
 Please review the IP-2 architecture, proposed limits, security behavior, semantic classifications, model semantics, and upstream blockers. After IP-2 review and separate authorization for the remaining detailed plans, cross-check the full plan set at Gate 3, resolve findings, then obtain explicit Gate 4 authorization before any implementation. Stop after this planning commit.
+
+
+## Gate 3 Independent Architecture Review Closure
+
+Architect disposition: **GATE 3 — PASS / ARCHITECT ACCEPTED**. Reviewed reconciliation commit: f98f43618ad69c347fc8a071d741b9719714b934; its parent is 482c8b585635138174dbf64d309cc3f308e3dcd9. Findings and residual qualification boundaries are recorded in docs/implementation/GATE-3-RECONCILIATION-R1.md. No pending technical qualification is converted to PASS.
+
+**Gate 4: NOT AUTHORIZED. Stage execution: NOT AUTHORIZED. Overall implementation: NOT AUTHORIZED.** Gate 4 requires separate explicit product-owner authorization. The historical handoffs above retain the statuses recorded when written.

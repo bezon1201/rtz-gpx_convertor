@@ -1,6 +1,6 @@
 # Gate 3 Cross-Stage Reconciliation R1
 
-**Status: RECONCILIATION COMPLETE / PENDING INDEPENDENT ARCHITECTURE REVIEW.** Gate 3 PASS is not declared. Gate 4 and all implementation remain NOT AUTHORIZED.
+**Historical status at R1 publication:** Reconciliation complete / pending independent architecture review; Gate 3 PASS not declared. Gate 4 and all implementation were NOT AUTHORIZED. The independent review disposition is appended below.
 
 ## Baseline provenance
 
@@ -47,4 +47,13 @@ Optional loss-report sidecar format/save/privacy remains a technical/product-sco
 
 The reconciliation edits only `docs/RTZ-GPX-PLAN.md`, IP-1 through IP-7 plans, `REPORT.md`, `PROGRESS.md`, and this report. The pre-commit scope check found only these documentation paths; all seven plan files remain present; a consistency search found no live unresolved wording for the decided route-name, one-point, or package policies; `git diff --check` is clean. Tracked-path inspection found no RTZ/RTZP/GPX route files or certificate/key container files. No application code or implementation artifacts were added. No tests, builds, scripts, fixtures, schemas, probes, Windy imports, or platform experiments were run.
 
-**Final governance state for this report:** Gate 3 reconciliation complete and awaiting independent architecture review; Gate 3 PASS not declared; Gate 4 and implementation NOT AUTHORIZED.
+**Historical final governance state at R1 publication:** Gate 3 reconciliation complete and awaiting independent architecture review; Gate 3 PASS not declared; Gate 4 and implementation NOT AUTHORIZED.
+
+
+## Independent Architecture Review Closure
+
+Architect independently reviewed and accepted the R1 reconciliation at commit f98f43618ad69c347fc8a071d741b9719714b934. The review found G3-001 through G3-011 cross-stage consistent; the seven-stage roadmap intact; product/architecture decisions distinct from unresolved technical qualification; every remaining technical qualification assigned an owning stage and stop condition; no open HIGH cross-stage contradiction; and export-only route naming consistent across transformation, serialization, transport and UX.
+
+The accepted findings preserve all technical qualification boundaries and blockers in the original decision ledger. Source identity/content continuity; Shortcuts-to-CLI authority and safe transport; security-scoped/file-reference/File Provider behavior; atomic publication and target races; geometry algorithms/bounds/tolerances; RTZ/GPX schemas, licensing and offline validation; +180° representation; mandatory empirical Windy acceptance; signing/notarization/Gatekeeper/macOS support; and privacy-safe diagnostics/evidence remain unqualified. The optional loss-report sidecar remains subject to explicit product-scope disposition before any sidecar implementation. No pending qualification is promoted to PASS.
+
+**Current governance:** Gate 3: PASS / ARCHITECT ACCEPTED. Gate 4: NOT AUTHORIZED. Stage execution: NOT AUTHORIZED. Overall implementation: NOT AUTHORIZED. Gate 3 acceptance does not authorize Gate 4; that requires separate explicit product-owner authorization.
