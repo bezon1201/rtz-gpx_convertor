@@ -1,8 +1,18 @@
 # Progress ledger
 
-## Current gate activity — IP-1B only
+## Current gate activity — IP-1C only
 
-**GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1B only by the current task.** IP-1C onward, IP-2–IP-7 execution, parser/application implementation and release remain **NOT AUTHORIZED**.
+**GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1C only by the current task.** IP-1D onward, IP-2–IP-7 execution, production geometry, parser/application implementation and release remain **NOT AUTHORIZED**.
+
+- **IP-1C: PARTIAL.** Added geometry reference vectors and the GPX 1.1 contract. GeographicLib Python 2.1 was configured to the approved authalic sphere and cross-checked against an independent unit-vector calculation. Seventeen numeric outputs and two unavailable-domain classifications were generated twice with identical output SHA-256 `2cdad3e6bcd6d2ca76eb1feb32ca320ae8e3334efaa4460be69c6557200f0919`. Spherical rhumb formula outputs were cross-checked against Simpson line-element integration (2048 intervals; max difference `1.40e-9 m`); execution of the official `RhumbSolve` oracle and independent reviewer reproduction remain outstanding.
+- The vector set covers ordinary, north/south, east/west, antimeridian, high latitude, near/coincident endpoints, near-antipodal behavior, degenerate/tie classifications, GC/rhumb divergence, and finite-rhumb closest-point exact cases with global proofs. The general G3-006 minimizer is still unqualified; no global root-completeness method or general numerical error bound is claimed. Affected general joins remain fail-closed.
+- GPX 1.1 local schema check: Topografix XSD SHA-256 `9e4d1988b862edbe556305b130f8f6f1b29864fefd0dc02d5dab04ccdd1f34d6`; `xmllint`/libxml2 2.9.13 accepted synthetic one-point output and rejected `+180` longitude. The XSD and temporary documents are not committed. GPX XSD rights remain conditional; no redistribution clearance or runtime validator qualification is claimed.
+- Byte-level determinism is not required; semantic determinism is mandatory. One-point output remains allowed with warning and affirmative route confirmation. No GPX serializer, production geometry, fixtures, schemas, dependencies, runtime code or Windy test was created/run.
+- **IP-1A remains PARTIAL; IP-1B remains PASS.** RTZ XSD rights, exact RTZ 1.2 IEC artifact lineage, GPX XSD rights and offline runtime validation strategy remain unresolved. No IP-1 PASS is implied.
+- Branch: `implementation/ip-1c-geometry-gpx-contract`, based on IP-1B commit `aa97b3e445d2edb85ad6795952b06ca28019dbfb`. The unrelated `AGENTS.md` user edit is preserved and excluded from this stage commit.
+- Next: independent Architect review of IP-1C PARTIAL evidence. IP-1D and later work remain unauthorized.
+
+### Historical IP-1B activity
 
 - **IP-1B: PASS — static synthetic fixture corpus and qualification matrix complete.** This is not an IP-1 PASS, RTZ support claim, or parser result.
 - 35 project-authored fixtures are indexed by stable ID in `tests/fixtures/rtz/synthetic/manifest.json`. Results: 19 XSD-valid, 13 XSD-invalid, one malformed XML, one unsupported version with no schema selected, and one security-sensitive DOCTYPE/entity case deliberately not XSD-validated. Validation used temporary schemas and `xmllint --nonet`; no application parser/tests were run.
@@ -120,7 +130,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS | RTZ schema rights not cleared; external confirmations and offline runtime qualification remain open. IP-1C onward NOT AUTHORIZED. | IP-1B commit in task handoff |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL | RTZ/GPX schema rights and offline validation remain open; general G3-006 minimizer and independent rhumb review remain unqualified. IP-1D onward NOT AUTHORIZED. | IP-1C commit in task handoff |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | — |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
