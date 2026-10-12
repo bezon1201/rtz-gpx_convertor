@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route xmlns="http://www.cirm.org/RTZ/1/2" version="1.2"><routeInfo routeName="SYN-HIGH-LAT"/><waypoints><waypoint id="1" revision="0"><position lat="84.9" lon="23"/></waypoint><waypoint id="2" revision="0"><position lat="85.1" lon="24"/></waypoint></waypoints></route>

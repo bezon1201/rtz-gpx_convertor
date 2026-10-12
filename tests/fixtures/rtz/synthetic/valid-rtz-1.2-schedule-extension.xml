@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route xmlns="http://www.cirm.org/RTZ/1/2" xmlns:syn="urn:example:synthetic-extension" version="1.2">
+  <routeInfo routeName="SYN-Schedule-12"/>
+  <waypoints>
+    <waypoint id="1" revision="0" name="SYN-A"><position lat="12.25" lon="23.5"/><leg geometryType="Loxodrome"><extensions><extension manufacturer="SYNTHETIC" name="test-extension"><syn:marker>fixture-only</syn:marker></extension></extensions></leg></waypoint>
+    <waypoint id="2" revision="0" name="SYN-B"><position lat="12.5" lon="23.75"/></waypoint>
+  </waypoints>
+  <schedules><schedule id="1" name="SYN-schedule"><manual><scheduleElement waypointId="1" etd="2030-01-01T00:00:00Z"/><scheduleElement waypointId="2" eta="2030-01-01T01:00:00Z"/></manual></schedule></schedules>
+</route>

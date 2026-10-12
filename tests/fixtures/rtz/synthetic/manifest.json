@@ -1,0 +1,657 @@
+{
+  "manifest_version": 1,
+  "title": "RTZ synthetic fixture qualification matrix",
+  "scope": "IP-1B static synthetic fixtures only; no parser/application test results",
+  "schema_sources": {
+    "1.0": {
+      "source": "CIRM published artifact, documented in docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md",
+      "namespace": "http://www.cirm.org/RTZ/1/0",
+      "sha256": "c63f002fe9ffa55a45d770cc642b62de7f4a8ef30e87f92a5540e1e5ad332072",
+      "rights": "NOT CLEARED for redistribution/bundling"
+    },
+    "1.2": {
+      "source": "CIRM published artifact, documented in docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md",
+      "namespace": "http://www.cirm.org/RTZ/1/2",
+      "sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "rights": "NOT CLEARED for redistribution/bundling; exact IEC artifact lineage REQUIRES EXTERNAL CONFIRMATION"
+    }
+  },
+  "validation_tool": {
+    "tool": "xmllint (libxml2 2.9.13)",
+    "command": "xmllint --nonet --noout --schema <temporary-matching-RTZ-XSD> <fixture>",
+    "schemas": "temporary local copies only; no XSD committed",
+    "network_note": "--nonet used; not a platform-wide network isolation claim"
+  },
+  "coverage_notes": [
+    "RTZ 1.1 is not enabled in this matrix.",
+    "Semantic outcomes are expectations for future authorized parser work, not observed behavior.",
+    "Geometry point inputs have no computed distance or geometry result; geometry work remains IP-1C.",
+    "DOCTYPE/entity fixture was not passed to XSD validation.",
+    "excessive-depth.xml is a stress candidate; exact bounds belong to IP-2.",
+    "No third-party schema or sample is included."
+  ],
+  "fixtures": [
+    {
+      "id": "rtz-malformed-xml",
+      "file": "malformed-not-well-formed.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "not_applicable",
+      "actual_validation_outcome": "MALFORMED",
+      "expected_semantic_or_processing_outcome": "syntax parsing fails before schema validation",
+      "expected_diagnostic_category": "malformed_xml",
+      "purpose": "deliberately unclosed elements",
+      "route_order": null,
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "cf21929d580ffadda2c24e465bec8bb5da2f5379f0ed18855971976de24f48f2",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout tests/fixtures/rtz/synthetic/malformed-not-well-formed.xml"
+    },
+    {
+      "id": "rtz-mismatch-v10-ns12",
+      "file": "mismatch-version-1.0-namespace-1.2.xml",
+      "declared_rtz_version": "1.0",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "reject exact pair before schema selection; declared-version XSD also rejects",
+      "expected_diagnostic_category": "version_namespace_mismatch",
+      "purpose": "version 1.0 with RTZ 1.2 namespace",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "a1fae737e78c643ae2fd2be4261201345fdc50e7e71d5987e44955e7fd6c66d1",
+      "schema_artifact_sha256": "c63f002fe9ffa55a45d770cc642b62de7f4a8ef30e87f92a5540e1e5ad332072",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.0.xsd tests/fixtures/rtz/synthetic/mismatch-version-1.0-namespace-1.2.xml"
+    },
+    {
+      "id": "rtz-mismatch-v12-ns10",
+      "file": "mismatch-version-1.2-namespace-1.0.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "reject exact pair before schema selection; declared-version XSD also rejects",
+      "expected_diagnostic_category": "version_namespace_mismatch",
+      "purpose": "version 1.2 with RTZ 1.0 namespace",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "7988572642cc67aa1ddf80216d7d15dd3fd0ac26a41da1453e0506e336f458f6",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/mismatch-version-1.2-namespace-1.0.xml"
+    },
+    {
+      "id": "rtz-security-doctype-entity",
+      "file": "unsafe-doctype-entity.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "not_run_security_sensitive",
+      "actual_validation_outcome": "NOT_RUN",
+      "expected_semantic_or_processing_outcome": "later parser must reject/disable DTD and never expand entity",
+      "expected_diagnostic_category": "doctype_forbidden_entity_not_resolved",
+      "purpose": "internal entity sentinel; XSD command intentionally not run",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "6772bdec40fc4f1a0f7b1c2800a8c7a0f6a0f885776a19a390bc8213ed256ff0",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "not run: security-sensitive DOCTYPE/entity"
+    },
+    {
+      "id": "rtz-unsupported-v99",
+      "file": "unsupported-version-9.9.xml",
+      "declared_rtz_version": "9.9",
+      "expected_schema_outcome": "not_applicable",
+      "actual_validation_outcome": "NO_SCHEMA_SELECTED",
+      "expected_semantic_or_processing_outcome": "reject before schema selection; no fallback",
+      "expected_diagnostic_category": "unsupported_version",
+      "purpose": "unknown version and namespace",
+      "route_order": null,
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "b792f6fc6d0febda43ded2aa33ae00b76ee1a3232aa9ba13bec6e054726fc4f9",
+      "validation_command": "not run: unsupported version has no schema selected"
+    },
+    {
+      "id": "rtz-v10-coordinate-boundaries",
+      "file": "coordinate-boundaries-rtz-1.0.xml",
+      "declared_rtz_version": "1.0",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "boundary input only; no navigational interpretation",
+      "expected_diagnostic_category": null,
+      "purpose": "latitude -90/+90; longitude -180/near +180",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "37b956d262ad8d4a7c239ced8748193d7c58ee9715c48f8e09be12f480014491",
+      "schema_artifact_sha256": "c63f002fe9ffa55a45d770cc642b62de7f4a8ef30e87f92a5540e1e5ad332072",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.0.xsd tests/fixtures/rtz/synthetic/coordinate-boundaries-rtz-1.0.xml"
+    },
+    {
+      "id": "rtz-v10-minimal-route",
+      "file": "valid-rtz-1.0-minimal.xml",
+      "declared_rtz_version": "1.0",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "schema-valid minimal two-waypoint input",
+      "expected_diagnostic_category": null,
+      "purpose": "routeInfo/name, IDs, positions",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "51a70b9857aabdd0db4504b94af3df76141447475a89dcc01e42baad0713ac32",
+      "schema_artifact_sha256": "c63f002fe9ffa55a45d770cc642b62de7f4a8ef30e87f92a5540e1e5ad332072",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.0.xsd tests/fixtures/rtz/synthetic/valid-rtz-1.0-minimal.xml"
+    },
+    {
+      "id": "rtz-v10-ordered-fields",
+      "file": "valid-rtz-1.0-fields.xml",
+      "declared_rtz_version": "1.0",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "schema-valid ordered input only; no transformation behavior claimed",
+      "expected_diagnostic_category": null,
+      "purpose": "route attributes, 3 points, IDs, optional revisions/names, both geometries, radius/XTD/safety",
+      "route_order": [
+        10,
+        20,
+        30
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "39b39537a7d71645e3cf724edb905fe2319d51c28ccc6f313cec8d61f6915526",
+      "schema_artifact_sha256": "c63f002fe9ffa55a45d770cc642b62de7f4a8ef30e87f92a5540e1e5ad332072",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.0.xsd tests/fixtures/rtz/synthetic/valid-rtz-1.0-fields.xml"
+    },
+    {
+      "id": "rtz-v10-schedule-and-extension",
+      "file": "schedule-and-extension.xml",
+      "declared_rtz_version": "1.0",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "observed XSD spelling is `sheduleElement`; semantic handling unassigned",
+      "expected_diagnostic_category": null,
+      "purpose": "schedule and foreign namespace route extension",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "c72b9c7475ee9b747576052e31c308b0e1b5adde6787f4a025780fc9cbb7f1d4",
+      "schema_artifact_sha256": "c63f002fe9ffa55a45d770cc642b62de7f4a8ef30e87f92a5540e1e5ad332072",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.0.xsd tests/fixtures/rtz/synthetic/schedule-and-extension.xml"
+    },
+    {
+      "id": "rtz-v10-wrong-namespace",
+      "file": "wrong-namespace-rtz-1.0.xml",
+      "declared_rtz_version": "1.0",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "reject namespace unsupported for version before schema selection",
+      "expected_diagnostic_category": "unsupported_namespace_pair",
+      "purpose": "wrong namespace for version 1.0",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "8751c63452b2153fdff00d2503ad6d777019fb374bcb361526f50b4166a66257",
+      "schema_artifact_sha256": "c63f002fe9ffa55a45d770cc642b62de7f4a8ef30e87f92a5540e1e5ad332072",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.0.xsd tests/fixtures/rtz/synthetic/wrong-namespace-rtz-1.0.xml"
+    },
+    {
+      "id": "rtz-v12-antimeridian-input",
+      "file": "antimeridian-crossing.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "input only; order retained; geometry deferred to IP-1C",
+      "expected_diagnostic_category": null,
+      "purpose": "synthetic antimeridian endpoints; no distance asserted",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "776c82f444882318aacc203e4b17ef3e24b37452885022b81ec8a6f6dde928fa",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/antimeridian-crossing.xml"
+    },
+    {
+      "id": "rtz-v12-coordinate-boundaries",
+      "file": "coordinate-boundaries-rtz-1.2.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "boundary input only; no navigational interpretation",
+      "expected_diagnostic_category": null,
+      "purpose": "latitude -90/+90; longitude -180/near +180",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "c88912151cdff73b00d25691c21e4aa7d4962fe227cf7acd3837fd7329c5b026",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/coordinate-boundaries-rtz-1.2.xml"
+    },
+    {
+      "id": "rtz-v12-depth-stress-candidate",
+      "file": "excessive-depth.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "stress input only; exact resource bounds deferred to IP-2",
+      "expected_diagnostic_category": "resource_limit_deferred_to_IP-2",
+      "purpose": "128 nested synthetic extension elements",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "23c455109967d2d19c8e5943de54ccf5acb85eb60209684e461a6e46dc89eb41",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/excessive-depth.xml"
+    },
+    {
+      "id": "rtz-v12-discontinuity-candidate",
+      "file": "discontinuity-warning.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "candidate only; warning threshold deferred; never repair points",
+      "expected_diagnostic_category": "discontinuity_review_deferred",
+      "purpose": "synthetic separated endpoints",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "ff79e17e8b82df2b56a39d4b65aa0c4f8ced07cbb30be32f35fe751d4d25e381",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/discontinuity-warning.xml"
+    },
+    {
+      "id": "rtz-v12-duplicate-consecutive-points",
+      "file": "duplicate-consecutive-points.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "later semantic policy only; preserve both points",
+      "expected_diagnostic_category": "duplicate_point_review_deferred",
+      "purpose": "equal consecutive coordinates with distinct IDs",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "d7b2016414e85c929eb61936f29ce4096e0b9e872d25490148e6393b9e8c2e88",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/duplicate-consecutive-points.xml"
+    },
+    {
+      "id": "rtz-v12-duplicate-waypoint-ids",
+      "file": "duplicate-waypoint-id.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "semantic duplicate-ID case; checked XSD does not enforce uniqueness",
+      "expected_diagnostic_category": "duplicate_waypoint_id",
+      "purpose": "same ID on two ordered waypoints",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "ee865d9c94ec056f52ed69b891ae88c21558448d6618c14c231a8b958053b50e",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/duplicate-waypoint-id.xml"
+    },
+    {
+      "id": "rtz-v12-filename-name-observation",
+      "file": "route-filename-name-mismatch.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "XSD-valid observation only; no application policy assigned",
+      "expected_diagnostic_category": "observation_only_unassigned",
+      "purpose": "routeName intentionally differs from fixture filename",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "abd79e40e4245d61c8cac59a04cf621cd9c2211bef49d4010adf49d5d05175bf",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/route-filename-name-mismatch.xml"
+    },
+    {
+      "id": "rtz-v12-high-latitude-input",
+      "file": "high-latitude.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "input only; order retained; calculations deferred to IP-1C",
+      "expected_diagnostic_category": null,
+      "purpose": "high-latitude endpoints; no distance asserted",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "88cfa57ace3a05a233ea4e91b80ede07599b3f64c7ac048be12c67c0666ba5df",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/high-latitude.xml"
+    },
+    {
+      "id": "rtz-v12-latitude-out-of-range",
+      "file": "out-of-range-latitude.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "matching XSD rejects latitude above +90",
+      "expected_diagnostic_category": "schema_invalid",
+      "purpose": "latitude 90.0001",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "27aa0a63eef5b2df52e8738fd8851dd6f9a42b0618c3d8854e35ec2a65e872dc",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/out-of-range-latitude.xml"
+    },
+    {
+      "id": "rtz-v12-longitude-out-of-range",
+      "file": "out-of-range-longitude.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "matching XSD rejects longitude above +180",
+      "expected_diagnostic_category": "schema_invalid",
+      "purpose": "longitude 180.0001",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "7d120d2b2c49c19ebea0cce5e2baf51faa2b1b5cf8798487fbe39ae96053cb1e",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/out-of-range-longitude.xml"
+    },
+    {
+      "id": "rtz-v12-minimal-route",
+      "file": "valid-rtz-1.2-minimal.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "schema-valid minimal two-waypoint input",
+      "expected_diagnostic_category": null,
+      "purpose": "routeInfo/name, IDs/revisions, positions",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "87b163fd8d5904e1272be2791bfd03a51d4e2e5eb13c89b2f6f48306dffee51f",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/valid-rtz-1.2-minimal.xml"
+    },
+    {
+      "id": "rtz-v12-missing-coordinate",
+      "file": "missing-coordinate.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "required position coordinate absent; matching XSD rejects",
+      "expected_diagnostic_category": "schema_invalid",
+      "purpose": "position lacks longitude",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "b5e4cf587e0c1098be8d1bc1b7ce5bf7300583497069776ecd7b6af8e6de7770",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/missing-coordinate.xml"
+    },
+    {
+      "id": "rtz-v12-missing-route-name",
+      "file": "missing-route-name.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "required routeName absent; no fabricated fallback",
+      "expected_diagnostic_category": "schema_invalid",
+      "purpose": "routeInfo without required routeName",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "e6fee6bf291a1e688916529776d92574e93b0d46b6a25c31dd77cceb787a2ddb",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/missing-route-name.xml"
+    },
+    {
+      "id": "rtz-v12-missing-routeinfo",
+      "file": "missing-routeInfo.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "required routeInfo absent; matching XSD rejects",
+      "expected_diagnostic_category": "schema_invalid",
+      "purpose": "root sequence omits routeInfo",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "370b771ce89f9896d67af0e6ffe0d87e2235226fd2ef95c76d8737afc8f28df7",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/missing-routeInfo.xml"
+    },
+    {
+      "id": "rtz-v12-missing-waypoint-id",
+      "file": "missing-waypoint-id.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "required ID absent; matching XSD rejects",
+      "expected_diagnostic_category": "schema_invalid",
+      "purpose": "waypoint without required ID",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "cdebbc5186ab75764f417794cd3bc36394df5dbf615178c234fca10b80831dff",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/missing-waypoint-id.xml"
+    },
+    {
+      "id": "rtz-v12-missing-waypoints",
+      "file": "missing-waypoints.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "required waypoints container absent; matching XSD rejects",
+      "expected_diagnostic_category": "schema_invalid",
+      "purpose": "root omits waypoints",
+      "route_order": null,
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "20d0144ecf38912a0411aafb460f118f194e7ba24127c80dede413ad4bba73ff",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/missing-waypoints.xml"
+    },
+    {
+      "id": "rtz-v12-mixed-incoming-leg-types",
+      "file": "mixed-leg-geometries.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "preserve order and destination-owned incoming-leg metadata; calculations deferred IP-1C",
+      "expected_diagnostic_category": null,
+      "purpose": "incoming legs on waypoint IDs 20 then 30",
+      "route_order": [
+        10,
+        20,
+        30
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "17805e276a32c639192da4d795a37c9c5c903ede9ccb795195e4beb9bbdbe92a",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/mixed-leg-geometries.xml"
+    },
+    {
+      "id": "rtz-v12-one-waypoint",
+      "file": "fewer-than-two-waypoints.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "matching XSD rejects below minimum waypoint cardinality",
+      "expected_diagnostic_category": "schema_invalid",
+      "purpose": "single waypoint",
+      "route_order": [
+        1
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "54a2e80dc053ae0c20ed7a8b4a79ffc9c188a6383bea18eedb49d0367f1c48c8",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/fewer-than-two-waypoints.xml"
+    },
+    {
+      "id": "rtz-v12-ordered-fields",
+      "file": "valid-rtz-1.2-fields.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "schema-valid ordered input only; no transformation behavior claimed",
+      "expected_diagnostic_category": null,
+      "purpose": "route attributes, 3 points, IDs/revisions/names, both geometries, radius/XTD/safety",
+      "route_order": [
+        10,
+        20,
+        30
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "379727d95ebc75fb321f075a9553562fe5b4f19bf31e06ffb1cb4db52a01b527",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/valid-rtz-1.2-fields.xml"
+    },
+    {
+      "id": "rtz-v12-positive-180-longitude",
+      "file": "longitude-180-rejected.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "matching XSD rejects +180; no normalization/substitution",
+      "expected_diagnostic_category": "schema_invalid",
+      "purpose": "longitude exactly +180",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "3c77f6429053764e9733be8206f3a9478c3389098a3cec4cdd1bdd6c97e91ee5",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/longitude-180-rejected.xml"
+    },
+    {
+      "id": "rtz-v12-radius-xtd-fields",
+      "file": "radius-and-xtd.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "input metadata only; future mapping/loss accounting; no transformation claim",
+      "expected_diagnostic_category": null,
+      "purpose": "radius, geometry, port/starboard XTD, safety fields",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "0eae93cc08661f19ae45eec01fc6826beae49ad2736a412d8b43e41bd0932864",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/radius-and-xtd.xml"
+    },
+    {
+      "id": "rtz-v12-schedule-extension",
+      "file": "valid-rtz-1.2-schedule-extension.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "schema-valid schedule and opaque synthetic extension input only",
+      "expected_diagnostic_category": null,
+      "purpose": "ETD/ETA scheduleElement and foreign namespace leg Extension",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "2b129294a72b38afe4bda954840ca2f94d91690bcee53b6d00036ca1f8e12917",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/valid-rtz-1.2-schedule-extension.xml"
+    },
+    {
+      "id": "rtz-v12-unicode-text",
+      "file": "unicode-route-waypoint-text.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "Unicode input only; normalization behavior unassigned",
+      "expected_diagnostic_category": null,
+      "purpose": "Unicode route and waypoint names",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "6b5ff0ba4631c46700664f56a10b9b3ba6a6e56f8acd263805f1e19be6319ba8",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/unicode-route-waypoint-text.xml"
+    },
+    {
+      "id": "rtz-v12-unknown-geometry-literal",
+      "file": "invalid-geometry-literal.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "invalid",
+      "actual_validation_outcome": "XSD_INVALID",
+      "expected_semantic_or_processing_outcome": "matching XSD enum rejects; no geometry fallback",
+      "expected_diagnostic_category": "schema_invalid",
+      "purpose": "geometryType=GuessLine",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "f8c5fc83202fdaa57bd670d29ed32347468a253db5b736326f5ef22ef106ed4d",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/invalid-geometry-literal.xml"
+    },
+    {
+      "id": "rtz-v12-unnamed-waypoint",
+      "file": "unnamed-waypoint.xml",
+      "declared_rtz_version": "1.2",
+      "expected_schema_outcome": "valid",
+      "actual_validation_outcome": "XSD_VALID",
+      "expected_semantic_or_processing_outcome": "preserve unnamed state; never fabricate name",
+      "expected_diagnostic_category": null,
+      "purpose": "waypoint with no name",
+      "route_order": [
+        1,
+        2
+      ],
+      "provenance": "Project-authored original synthetic data; arbitrary test decimals; no copied or anonymized operational route.",
+      "sha256": "effab5d413c7433d9f7277c4a963ac1721139f0c2399a75c05bcae1952bb7000",
+      "schema_artifact_sha256": "ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff",
+      "validation_command": "xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/rtz-1.2.xsd tests/fixtures/rtz/synthetic/unnamed-waypoint.xml"
+    }
+  ]
+}

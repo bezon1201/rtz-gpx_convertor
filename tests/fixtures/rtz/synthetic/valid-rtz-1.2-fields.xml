@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route xmlns="http://www.cirm.org/RTZ/1/2" version="1.2">
+  <routeInfo routeName="SYN-Fields-12" routeAuthor="SYNTHETIC" routeStatus="test-only"/>
+  <waypoints>
+    <defaultWaypoint radius="0.5"><leg geometryType="Loxodrome"/></defaultWaypoint>
+    <waypoint id="10" revision="0" name="SYN-A"><position lat="12.25" lon="23.5"/><leg geometryType="Loxodrome" portsideXTD="0.4" starboardXTD="0.6" safetyDepth="10"/></waypoint>
+    <waypoint id="20" revision="1" name="SYN-B"><position lat="12.5" lon="23.75"/><leg geometryType="Orthodrome"/></waypoint>
+    <waypoint id="30" revision="0" name="SYN-C"><position lat="12.75" lon="24"/></waypoint>
+  </waypoints>
+</route>

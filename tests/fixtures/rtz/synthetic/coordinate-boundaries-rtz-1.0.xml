@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route xmlns="http://www.cirm.org/RTZ/1/0" version="1.0"><routeInfo routeName="SYN-BOUNDARIES-10"/><waypoints><waypoint id="1"><position lat="-90" lon="-180"/></waypoint><waypoint id="2"><position lat="90" lon="179.999999"/></waypoint></waypoints></route>

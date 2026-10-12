@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route xmlns="http://www.cirm.org/RTZ/1/2" version="1.2"><routeInfo routeName="SYN-MIXED-LEGS"/><waypoints>
+  <waypoint id="10" revision="0" name="SYN-A"><position lat="12" lon="23"/></waypoint>
+  <waypoint id="20" revision="0" name="SYN-B"><position lat="12.1" lon="23.1"/><leg geometryType="Loxodrome"/></waypoint>
+  <waypoint id="30" revision="0" name="SYN-C"><position lat="12.2" lon="23.2"/><leg geometryType="Orthodrome"/></waypoint>
+</waypoints></route>

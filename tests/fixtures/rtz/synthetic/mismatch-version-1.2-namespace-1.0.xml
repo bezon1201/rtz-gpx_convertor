@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route xmlns="http://www.cirm.org/RTZ/1/0" version="1.2"><routeInfo routeName="SYN-MISMATCH"/><waypoints><waypoint id="1"><position lat="12" lon="23"/></waypoint><waypoint id="2"><position lat="13" lon="24"/></waypoint></waypoints></route>

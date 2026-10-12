@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route xmlns="http://www.cirm.org/RTZ/1/2" version="1.2"><routeInfo routeName="SYN-DUP-ID"/><waypoints><waypoint id="7" revision="0" name="SYN-A"><position lat="12" lon="23"/></waypoint><waypoint id="7" revision="0" name="SYN-B"><position lat="13" lon="24"/></waypoint></waypoints></route>

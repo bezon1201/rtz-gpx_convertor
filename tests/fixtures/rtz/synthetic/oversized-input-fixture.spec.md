@@ -1,0 +1,3 @@
+# Oversized input fixture recipe (not a stored fixture)
+
+Do not generate this artifact until IP-2 has approved exact byte and resource limits. For a later authorized test, start from an authored valid synthetic RTZ document and deterministically repeat a harmless optional XML text or waypoint structure until the input exceeds the approved byte bound. Keep the generated file in temporary storage, record the approved limit and exact generator procedure in that later test evidence, and delete it afterward. Do not commit the generated file. This recipe does not choose a size limit or assert parser behavior.

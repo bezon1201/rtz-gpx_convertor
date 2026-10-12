@@ -1,6 +1,18 @@
 # Architect review handoff
 
-## Current handoff — IP-1A schema qualification execution
+## Current handoff — IP-1B synthetic fixture corpus
+
+- **IP-1B: PASS — static corpus and qualification matrix complete.** This verdict is limited to the IP-1B fixture-corpus deliverables; it is not an IP-1 PASS or RTZ support/implementation claim.
+- **Authorization boundary:** only IP-1B was authorized by this task. IP-1C and later substages, IP-2–IP-7 execution, parser/application implementation and release remain **NOT AUTHORIZED**. Gate 3 remains owner-confirmed PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; the IP-1B branch is based on reviewed commit `8e94ae0875ef914fec0f5ddc40ca3d3fe6f920bc`.
+- **Branch/baseline:** `implementation/ip-1b-synthetic-fixture-corpus`, based directly on reviewed commit `8e94ae0875ef914fec0f5ddc40ca3d3fe6f920bc`. The pre-existing `AGENTS.md` edit is preserved and excluded from this stage commit.
+- Added 35 original synthetic RTZ XML fixtures, a stable-ID `manifest.json`, corpus README and a temporary-generation recipe for oversized input. Coverage includes RTZ 1.0/1.2 minimal and field cases; required/range-invalid structures; version/namespace errors; metadata, Unicode, duplicate IDs, missing names, schedules/extensions; coordinate boundaries and geometry-oriented input cases. RTZ 1.1 is not enabled.
+- **Schema evidence:** using local temporary CIRM XSD copies with `xmllint`/libxml2 2.9.13 and `--nonet`, 19 fixtures validated and 13 expected-invalid fixtures failed schema validation. One malformed document failed XML parsing; unsupported 9.9 had no schema selected. The DTD/entity fixture was intentionally not sent to XSD validation. No parser/application tests were run.
+- Fixture SHA-256 values, exact schema hashes, expected versus actual XSD outcomes, anticipated processing categories, route order, purpose and provenance are in `tests/fixtures/rtz/synthetic/manifest.json`. The temporary schemas are not committed. RTZ 1.0/1.2 redistribution remains **NOT CLEARED**; RTZ 1.2 exact IEC file lineage remains **REQUIRES EXTERNAL CONFIRMATION**. IP-1A remains **PARTIAL**.
+- No CIRM/IEC/STM/vendor/sample RTZ, operational route, private coordinate, vessel identifier, or source data was committed. The fixture coordinates are project-authored synthetic decimals and are not navigational guidance. No 1.1 fixtures, parser, geometry implementation, serializer, CLI, Shortcut, dependency or package was created.
+- Checks: schema validation and fixture-hash/manifest consistency; privacy/scope review; `git diff --check`. The final commit and remote verification are provided in the task handoff.
+- **Next:** independent Architect review of IP-1B. Do not start IP-1C or later work without separate authorization.
+
+## Historical handoff — IP-1A schema qualification execution
 
 - **R2 update:** CIRM’s publication of the exact RTZ 1.2 bytes is verified (document 64; document 65 is byte-identical). The association with IEC PAS 61174-1:2021 is supported generally by CIRM/IEC descriptions, but exact-file identity remains unconfirmed because the XSD says `IEC PAS 6XXXX`.
 - **Rights status:** RTZ 1.0/1.2 redistribution is **BLOCKED / NOT CLEARED** pending written CIRM/IEC terms. GPX 1.1 is **CONDITIONAL**: Topografix calls the overview page text public domain, but has not expressly confirmed the raw XSD. No schema was bundled and no inquiry was sent. Ready-to-send drafts are in the qualification record.
@@ -13,7 +25,7 @@
 - Branch: `implementation/ip-1a-standards-schema-baseline`, based on `2a779f3b1e309ff652911c3dc7c78017ea0ebb1c`. Commit and remote-head verification will be reported in the task handoff.
 - **Next:** independent Architect review of this PARTIAL IP-1A evidence. Do not begin IP-1B or any later work without separate authorization.
 
-## Current handoff — Gate 3 recovery merge
+## Historical handoff — Gate 3 recovery merge (status superseded by owner acceptance)
 
 Historical record; superseded by the IP-1A execution status above.
 

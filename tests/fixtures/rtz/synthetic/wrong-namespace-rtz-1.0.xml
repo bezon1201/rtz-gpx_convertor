@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route xmlns="urn:example:wrong-rtz-namespace" version="1.0"><routeInfo routeName="SYN-WRONG-NS"/><waypoints><waypoint id="1"><position lat="12" lon="23"/></waypoint><waypoint id="2"><position lat="13" lon="24"/></waypoint></waypoints></route>

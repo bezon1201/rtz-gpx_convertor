@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route xmlns="http://www.cirm.org/RTZ/1/2" version="1.2">
+  <routeInfo routeName="SYN-MIN-12"/>
+  <waypoints>
+    <waypoint id="1" revision="0"><position lat="12.25" lon="23.5"/></waypoint>
+    <waypoint id="2" revision="0"><position lat="12.5" lon="23.75"/></waypoint>
+  </waypoints>
+</route>

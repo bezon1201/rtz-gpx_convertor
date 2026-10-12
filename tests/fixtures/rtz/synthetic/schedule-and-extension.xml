@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<route xmlns="http://www.cirm.org/RTZ/1/0" xmlns:syn="urn:example:synthetic-extension" version="1.0"><routeInfo routeName="SYN-SCHEDULE-EXT"/><waypoints><waypoint id="1"><position lat="12" lon="23"/></waypoint><waypoint id="2"><position lat="13" lon="24"/></waypoint></waypoints><schedules><schedule id="1" name="SYN-SCHED"><manual><sheduleElement waypointId="1" etd="2030-01-01T00:00:00Z"/></manual></schedule></schedules><extensions><syn:marker>fixture-only</syn:marker></extensions></route>

@@ -1,21 +1,20 @@
 # Progress ledger
 
-## Current gate activity — IP-1A only
+## Current gate activity — IP-1B only
 
-**GATE 3: PASS / ARCHITECT ACCEPTED** at reviewed baseline `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`, as explicitly confirmed by the project owner. **Gate 4 is authorized for IP-1A only.** IP-1B onward, IP-2–IP-7, product implementation and release remain **NOT AUTHORIZED**.
+**GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1B only by the current task.** IP-1C onward, IP-2–IP-7 execution, parser/application implementation and release remain **NOT AUTHORIZED**.
 
-- **IP-1A: PARTIAL.** Publisher schemas and provenance were inspected and hashed; offline schema syntax and representative positive/negative RTZ/GPX validation evidence is recorded in `docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md`.
-- **R2 rights/provenance:** CIRM’s RTZ 1.2 publication bytes are verified; exact IEC artifact lineage remains externally unconfirmed. RTZ schema redistribution is **BLOCKED / NOT CLEARED**; GPX XSD scope is **CONDITIONAL** pending Topografix confirmation. No inquiries were sent.
-- **R2 runtime recommendation:** conditionally prefer locally pinned, rights-cleared schemas with statically linked libxml2 in the signed CLI. Rights, legal review, target-macOS/API, security, build, and signing qualification are still open; no implementation or package was built.
-- RTZ 1.0 and 1.2 are not yet qualified for V1 support or bundling. RTZ 1.1 remains conditional/non-blocking. Legal/runtime schema-validation strategy and independent sign-off remain open.
-- No persistent fixtures were created; the approved plan assigns the static fixture corpus to IP-1B. Temporary standards-validation inputs remained outside Git.
-- Branch: `implementation/ip-1a-standards-schema-baseline`; baseline/parent `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Final execution commit and remote HEAD are recorded in the task handoff.
-- The pre-existing `AGENTS.md` user change remains untouched and uncommitted.
-- Next: independent Architect review of IP-1A PARTIAL evidence. Do not start IP-1B without separate authorization.
+- **IP-1B: PASS — static synthetic fixture corpus and qualification matrix complete.** This is not an IP-1 PASS, RTZ support claim, or parser result.
+- 35 project-authored fixtures are indexed by stable ID in `tests/fixtures/rtz/synthetic/manifest.json`. Results: 19 XSD-valid, 13 XSD-invalid, one malformed XML, one unsupported version with no schema selected, and one security-sensitive DOCTYPE/entity case deliberately not XSD-validated. Validation used temporary schemas and `xmllint --nonet`; no application parser/tests were run.
+- Corpus README, coverage matrix, fixture hashes, exact schema hashes, actual results, negative-case intent and synthetic provenance are recorded under `tests/fixtures/rtz/synthetic/`.
+- **IP-1A remains PARTIAL.** RTZ 1.0/1.2 redistribution remains **NOT CLEARED**; exact RTZ 1.2 IEC artifact linkage remains externally unconfirmed; GPX XSD scope remains conditional; offline runtime validation/legal strategy and independent sign-off remain open. RTZ 1.1 remains conditional/non-blocking.
+- No third-party XSD or sample was committed. No source route, vessel identity, private coordinates, parser, geometry implementation, GPX serializer, CLI, Shortcut, dependency, or package was added.
+- Branch: `implementation/ip-1b-synthetic-fixture-corpus`; parent: reviewed baseline `8e94ae0875ef914fec0f5ddc40ca3d3fe6f920bc`. The pre-existing `AGENTS.md` modification remains untouched and uncommitted. Final commit and remote HEAD are recorded in the handoff.
+- Next: independent Architect review of IP-1B. IP-1C and all later work remain unauthorized.
 
-## Current gate activity — Gate 3 final independent review pending
+## Historical gate activity — Gate 3 final independent review pending (superseded by owner acceptance)
 
-Historical reconciliation status, superseded by the current owner authorization and IP-1A handoff above.
+Historical reconciliation status, superseded by the current owner authorization and IP-1B handoff above.
 
 **EFFECTIVE GATE 3 STATUS: PENDING FINAL INDEPENDENT ARCHITECT REVIEW.** The remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is retained as historical, superseded for current authorization.
 
@@ -121,7 +120,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL | R1 validation evidence plus R2 rights/provenance research. RTZ schema rights not cleared; external confirmations and offline runtime qualification remain open. IP-1B onward NOT AUTHORIZED. | R2 commit in task handoff |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS | RTZ schema rights not cleared; external confirmations and offline runtime qualification remain open. IP-1C onward NOT AUTHORIZED. | IP-1B commit in task handoff |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | — |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
