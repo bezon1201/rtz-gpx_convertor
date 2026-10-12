@@ -1,6 +1,19 @@
 # Architect review handoff
 
+## Current handoff — IP-1A schema qualification execution
+
+- **Authorization:** Gate 3 PASS / ARCHITECT ACCEPTED at approved baseline `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is authorized for IP-1A only. IP-1B onward, IP-2–IP-7, application implementation and release remain **NOT AUTHORIZED**.
+- **IP-1A verdict: PARTIAL.** RTZ 1.0/1.2 and GPX 1.1 schemas were downloaded from publisher sources, hashed, inspected and syntax-checked. CIRM RTZ samples plus bounded temporary synthetic GPX/negative inputs received offline `xmllint --nonet` schema validation. No runtime, parser or serializer was implemented or exercised.
+- Qualification evidence and provenance: [RTZ-SCHEMA-QUALIFICATION.md](docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md). Key blockers: CIRM rights for RTZ schema/test redistribution are unresolved; the RTZ 1.2 XSD has the source-comment placeholder `IEC PAS 6XXXX`; GPX XSD-specific rights/notice confirmation is pending; the legally cleared offline runtime schema-validation strategy is undecided; independent sign-off and full IP-1A matrix remain outstanding.
+- RTZ 1.1 remains conditional and non-blocking; the inspected STM materials do not establish a canonical, rights-cleared lineage. No RTZ schema was committed or cleared for bundling. No persistent fixtures were created because their approved plan ownership is IP-1B.
+- **Unrelated local change:** pre-existing user edit in `AGENTS.md` remains untouched and uncommitted. The execution commit will include only the IP-1A qualification record and these reports.
+- Branch: `implementation/ip-1a-standards-schema-baseline`, based on `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Push and remote-head verification are performed after local review; exact resulting commit/remote SHA will be reported in the task handoff.
+- **Next:** independent Architect review of this PARTIAL IP-1A evidence. Do not begin IP-1B or any later work without separate authorization.
+
 ## Current handoff — Gate 3 recovery merge
+
+Historical record; superseded by the IP-1A execution status above.
+
 
 - **Effective status: Gate 3 PENDING FINAL INDEPENDENT ARCHITECT REVIEW.** The remote `Gate 3 PASS / ARCHITECT ACCEPTED` declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is preserved as a historical event and is superseded for current authorization purposes. Gate 4, stage execution, and implementation are **NOT AUTHORIZED**.
 - R2 corrections remain: the Master Plan route-name field mapping follows G3-001; IP-4/IP-5 reflect the approved G3-004 one-point policy.

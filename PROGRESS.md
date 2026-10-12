@@ -1,6 +1,19 @@
 # Progress ledger
 
+## Current gate activity — IP-1A only
+
+**GATE 3: PASS / ARCHITECT ACCEPTED** at reviewed baseline `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`, as explicitly confirmed by the project owner. **Gate 4 is authorized for IP-1A only.** IP-1B onward, IP-2–IP-7, product implementation and release remain **NOT AUTHORIZED**.
+
+- **IP-1A: PARTIAL.** Publisher schemas and provenance were inspected and hashed; offline schema syntax and representative positive/negative RTZ/GPX validation evidence is recorded in `docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md`.
+- RTZ 1.0 and 1.2 are not yet qualified for V1 support or bundling. RTZ 1.1 remains conditional/non-blocking. Legal/runtime schema-validation strategy and independent sign-off remain open.
+- No persistent fixtures were created; the approved plan assigns the static fixture corpus to IP-1B. Temporary standards-validation inputs remained outside Git.
+- Branch: `implementation/ip-1a-standards-schema-baseline`; baseline/parent `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Final execution commit and remote HEAD are recorded in the task handoff.
+- The pre-existing `AGENTS.md` user change remains untouched and uncommitted.
+- Next: independent Architect review of IP-1A PARTIAL evidence. Do not start IP-1B without separate authorization.
+
 ## Current gate activity — Gate 3 final independent review pending
+
+Historical reconciliation status, superseded by the current owner authorization and IP-1A handoff above.
 
 **EFFECTIVE GATE 3 STATUS: PENDING FINAL INDEPENDENT ARCHITECT REVIEW.** The remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is retained as historical, superseded for current authorization.
 
