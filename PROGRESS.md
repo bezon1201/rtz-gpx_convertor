@@ -112,6 +112,6 @@
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 6. Windy Route Planner acceptance (IP-6) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); consumer acceptance NOT TESTED; IP-6E report not started; stage execution NOT AUTHORIZED. | R1 task handoff |
-| 7. V1 Shortcuts release (IP-7) | PLAN APPROVED | Gate 3 PASS / ARCHITECT ACCEPTED; IP-7 execution NOT AUTHORIZED. | R1 commit in task handoff |
+| 7. V1 Shortcuts release (IP-7) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); IP-7 execution NOT AUTHORIZED. | R1 commit in task handoff |
 
 Plan review is not execution PASS. RTZP remains OUT OF SCOPE for V1.
