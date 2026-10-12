@@ -2,12 +2,15 @@
 
 ## Current handoff — IP-1A schema qualification execution
 
+- **R2 update:** CIRM’s publication of the exact RTZ 1.2 bytes is verified (document 64; document 65 is byte-identical). The association with IEC PAS 61174-1:2021 is supported generally by CIRM/IEC descriptions, but exact-file identity remains unconfirmed because the XSD says `IEC PAS 6XXXX`.
+- **Rights status:** RTZ 1.0/1.2 redistribution is **BLOCKED / NOT CLEARED** pending written CIRM/IEC terms. GPX 1.1 is **CONDITIONAL**: Topografix calls the overview page text public domain, but has not expressly confirmed the raw XSD. No schema was bundled and no inquiry was sent. Ready-to-send drafts are in the qualification record.
+- **Offline strategy:** preferred technical candidate is permitted, pinned XSD resources plus statically linked, pinned libxml2 inside the signed CLI. This remains conditional on rights, legal review, notices, target-macOS/API and security qualification; no build was done. A system libxml2 option and separately licensed user-supplied schemas are documented alternatives. Partial custom checks and runtime network fetch are not acceptable substitutes.
 - **Authorization:** Gate 3 PASS / ARCHITECT ACCEPTED at approved baseline `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is authorized for IP-1A only. IP-1B onward, IP-2–IP-7, application implementation and release remain **NOT AUTHORIZED**.
-- **IP-1A verdict: PARTIAL.** RTZ 1.0/1.2 and GPX 1.1 schemas were downloaded from publisher sources, hashed, inspected and syntax-checked. CIRM RTZ samples plus bounded temporary synthetic GPX/negative inputs received offline `xmllint --nonet` schema validation. No runtime, parser or serializer was implemented or exercised.
-- Qualification evidence and provenance: [RTZ-SCHEMA-QUALIFICATION.md](docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md). Key blockers: CIRM rights for RTZ schema/test redistribution are unresolved; the RTZ 1.2 XSD has the source-comment placeholder `IEC PAS 6XXXX`; GPX XSD-specific rights/notice confirmation is pending; the legally cleared offline runtime schema-validation strategy is undecided; independent sign-off and full IP-1A matrix remain outstanding.
+- **IP-1A verdict: PARTIAL.** R1’s validation evidence is unchanged and not repeated in R2. No runtime, parser, serializer, dependency installation, or package was built or exercised.
+- Full evidence, sources, strategy comparison, external questions, and closure criteria: [RTZ-SCHEMA-QUALIFICATION.md](docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md). External rights, final provenance confirmation, legal/runtime review, full IP-1A matrix, and independent sign-off remain open.
 - RTZ 1.1 remains conditional and non-blocking; the inspected STM materials do not establish a canonical, rights-cleared lineage. No RTZ schema was committed or cleared for bundling. No persistent fixtures were created because their approved plan ownership is IP-1B.
-- **Unrelated local change:** pre-existing user edit in `AGENTS.md` remains untouched and uncommitted. The execution commit will include only the IP-1A qualification record and these reports.
-- Branch: `implementation/ip-1a-standards-schema-baseline`, based on `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Push and remote-head verification are performed after local review; exact resulting commit/remote SHA will be reported in the task handoff.
+- **Unrelated local change:** pre-existing user edit in `AGENTS.md` remains untouched and uncommitted. Only the qualification record, this report, and `PROGRESS.md` are authorized for the R2 commit.
+- Branch: `implementation/ip-1a-standards-schema-baseline`, based on `2a779f3b1e309ff652911c3dc7c78017ea0ebb1c`. Commit and remote-head verification will be reported in the task handoff.
 - **Next:** independent Architect review of this PARTIAL IP-1A evidence. Do not begin IP-1B or any later work without separate authorization.
 
 ## Current handoff — Gate 3 recovery merge

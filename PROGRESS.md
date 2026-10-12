@@ -5,6 +5,8 @@
 **GATE 3: PASS / ARCHITECT ACCEPTED** at reviewed baseline `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`, as explicitly confirmed by the project owner. **Gate 4 is authorized for IP-1A only.** IP-1B onward, IP-2–IP-7, product implementation and release remain **NOT AUTHORIZED**.
 
 - **IP-1A: PARTIAL.** Publisher schemas and provenance were inspected and hashed; offline schema syntax and representative positive/negative RTZ/GPX validation evidence is recorded in `docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md`.
+- **R2 rights/provenance:** CIRM’s RTZ 1.2 publication bytes are verified; exact IEC artifact lineage remains externally unconfirmed. RTZ schema redistribution is **BLOCKED / NOT CLEARED**; GPX XSD scope is **CONDITIONAL** pending Topografix confirmation. No inquiries were sent.
+- **R2 runtime recommendation:** conditionally prefer locally pinned, rights-cleared schemas with statically linked libxml2 in the signed CLI. Rights, legal review, target-macOS/API, security, build, and signing qualification are still open; no implementation or package was built.
 - RTZ 1.0 and 1.2 are not yet qualified for V1 support or bundling. RTZ 1.1 remains conditional/non-blocking. Legal/runtime schema-validation strategy and independent sign-off remain open.
 - No persistent fixtures were created; the approved plan assigns the static fixture corpus to IP-1B. Temporary standards-validation inputs remained outside Git.
 - Branch: `implementation/ip-1a-standards-schema-baseline`; baseline/parent `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Final execution commit and remote HEAD are recorded in the task handoff.
@@ -119,7 +121,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | PLANNED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | — |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL | R1 validation evidence plus R2 rights/provenance research. RTZ schema rights not cleared; external confirmations and offline runtime qualification remain open. IP-1B onward NOT AUTHORIZED. | R2 commit in task handoff |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | — |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
