@@ -1,6 +1,6 @@
 # IP-3 — Route Modes and Geometry: Detailed Implementation Plan
 
-**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4, IP-3 execution, and overall implementation: NOT AUTHORIZED.
+**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 authorization is stage-specific and never blanket authorization. IP-3 execution and overall implementation remain NOT AUTHORIZED.
 
 **IP-3 execution:** NOT AUTHORIZED.
 
@@ -21,14 +21,14 @@ IP-3 does not parse XML, qualify schemas, serialize GPX, render a map, optimize 
 | Input | Required contract/evidence | Status at this planning baseline |
 |---|---|---|
 | Master Plan | Modes; offline scope; geometry and distance convention; non-navigation boundary | Approved. Distance convention is advisory only. |
-| IP-1 | Qualified exact RTZ dialect/schema/field matrix; geometry literal semantics; synthetic fixtures; independently reviewed distance oracles and tolerances | Reconciled plans are pending final independent Gate 3 review; execution evidence is pending. Do not infer a dialect or literal is qualified. |
-| IP-2 | Immutable ordered RouteDocument; point identities/coordinates/names; incoming leg ownership; qualified geometry or uninterpreted UnknownLiteral; safe diagnostics | Reconciled plans are pending final independent Gate 3 review; execution evidence is pending. |
+| IP-1 | Qualified exact RTZ dialect/schema/field matrix; geometry literal semantics; synthetic fixtures; independently reviewed distance oracles and tolerances | Gate 3 review passed; execution evidence remains pending. Do not infer a dialect or literal is qualified. |
+| IP-2 | Immutable ordered RouteDocument; point identities/coordinates/names; incoming leg ownership; qualified geometry or uninterpreted UnknownLiteral; safe diagnostics | Gate 3 review passed; execution evidence remains pending. |
 | IP-4 | GPX 1.1 mapping and loss-report consumer contract | Approved plan; execution pending. G3-001/G3-004 policies fixed; schema and exact-name qualification pending. |
 | IP-5 | Stable CLI mode/selection/confirmation inputs and diagnostic contract | Approved plan; execution pending. G3-003 continuity mechanism and G3-007 consent protocol qualification pending. |
 | IP-6 | Windy import acceptance using synthetic routes | Indirect dependency through IP-4 output; no Windy behavior is assumed here. |
 | IP-7 | Shortcut preview, explicit confirmation, manual position entry and errors | Approved plan; execution pending. G3-001/G3-002 UI contracts fixed; platform/transport qualification pending. |
 
-Planning can establish a proposed interface, but no IP-3 implementation may begin until Gate 4 is explicitly authorized. Final independent Gate 3 review remains pending. IP-1/IP-2 plan approval is not evidence that schemas, models, or calculations have been implemented or tested.
+Planning can establish a proposed interface, but no IP-3 implementation may begin until IP-3 is explicitly authorized under the stage-specific Gate 4 process. Gate 3 is PASS / ARCHITECT ACCEPTED at the approved baseline. IP-1/IP-2 plan approval is not evidence that schemas, models, or calculations have been implemented or tested.
 
 ## 3. Transformation invariants
 

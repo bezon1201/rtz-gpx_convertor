@@ -1,15 +1,25 @@
 # Architect review handoff
 
-## Current handoff — IP-1G integration and closeout
+## Current governance status — reconciliation R1
 
-- **IP-1G status: REVIEW.** `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md` integrates IP-1A–IP-1F evidence, traces Gate 3 and product requirements to owners/gates/status, classifies blockers, checks cross-plan consistency, and assesses bounded IP-2 readiness. Independent Architect acceptance is pending, as required by the approved IP-1 plan.
+- **Governance reconciliation: PASS.** Effective Gate 3 is **PASS / ARCHITECT ACCEPTED** at approved baseline `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`.
+- **Gate 4 authorization is stage-specific and never blanket authorization.** This status-only task authorizes no implementation stage. IP-1A R3 and IP-2–IP-7 execution remain **NOT AUTHORIZED**; overall IP-1 remains **PARTIAL / NOT PASS**.
+- **IP-1 verdicts:** IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation decision); IP-1F PASS (protocol); IP-1G PASS (independently accepted). IP-1G PASS does not upgrade overall IP-1.
+- **IP-7:** plan APPROVED; execution NOT AUTHORIZED. IP-6 consumer acceptance remains NOT TESTED.
+- **IP1-B15:** CLOSED by this status-only reconciliation. Other blockers and all technical qualifications remain open and unchanged.
+- **Scope:** current-status wording in the Master Plan and IP-1–IP-7, IP1-B15 disposition in `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md`, and this report/`PROGRESS.md`. No product requirement, architecture, technical criterion, historical event, or test result changed. The pre-existing `AGENTS.md` modification is preserved and uncommitted.
+- **Baseline:** `2d4a1b5d75e1cadfb2ba758c52168f6efef757d8`; current branch/commit/push verification are reported below.
+
+## Historical handoff — IP-1G integration and closeout before acceptance (superseded)
+
+- **At that handoff, IP-1G status was REVIEW.** `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md` integrated IP-1A–IP-1F evidence, traced Gate 3 and product requirements to owners/gates/status, classified blockers, checked cross-plan consistency, and assessed bounded IP-2 readiness. Independent acceptance was then pending.
 - **Overall IP-1 recommendation: PARTIAL / NOT PASS.** IP-1A PARTIAL; IP-1B PASS (static synthetic corpus only); IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol only); IP-1G REVIEW. No parser, geometry, serializer, CLI or consumer compatibility implementation is established.
 - **Open blocker register: 15 items** across immediate security/provenance/governance, downstream technical acceptance and release qualification. Critical unresolved items include RTZ/GPX schema rights and lawful offline schema validation, source-file reference/continuity, and stale status statements in approved plans. G3-006 general rhumb minimization, Shortcuts/Finder transport, package verification and empirical Windy acceptance also remain open.
 - **IP-2 readiness:** no parser implementation is ready. A narrowly bounded, documentation-only IP-2A investigation could be considered only under separate explicit authorization and would remain PARTIAL/BLOCKED. The recommended next gate is independent Architect review, then a focused IP-1A rights/provenance/runtime resolution. No IP-2 scope is authorized here.
-- **Material status inconsistencies:** the Master Plan and several approved plan headers still say Gate 3 is pending; IP-6 says IP-7 planning has not started although its approved plan exists. They are recorded with exact locations and proposed status-only resolutions. No approved plan was changed.
+- **At that handoff, material status inconsistencies** remained in approved plan headers and the IP-6 IP-7-planning statement. This reconciliation resolves IP1-B15; those statements are retained here only as a historical snapshot.
 - **Authorization:** this task authorized IP-1G only. IP-2–IP-7 execution, implementation, schema redistribution, Windy uploads, packaging, signing and release remain **NOT AUTHORIZED**. No IP-1 PASS is claimed.
 - **Git:** branch `implementation/ip-1g-integration-closeout`, from reviewed baseline `b964b51584c79fde7af06100809ccca1f54333df`. Pre-existing unrelated `AGENTS.md` modification remains untouched and excluded. Commit and remote verification are recorded after completion.
-- **Next:** independent Architect review of IP-1G; stop before IP-1A R3 or IP-2 absent separate authorization.
+- **Next at that handoff:** independent Architect review of IP-1G; stop before IP-1A R3 or IP-2 absent separate authorization. The owner has since recorded IP-1G PASS; this historical handoff does not supersede the current governance status above.
 
 ## Historical handoff — IP-1F Windy acceptance protocol
 
@@ -78,7 +88,7 @@
 - Branch: `implementation/ip-1a-standards-schema-baseline`, based on `2a779f3b1e309ff652911c3dc7c78017ea0ebb1c`. Commit and remote-head verification will be reported in the task handoff.
 - **Next:** independent Architect review of this PARTIAL IP-1A evidence. Do not begin IP-1B or any later work without separate authorization.
 
-## Historical handoff — Gate 3 recovery merge (status superseded by owner acceptance)
+## Historical handoff — Gate 3 recovery merge (status superseded by owner acceptance and current reconciliation)
 
 Historical record; superseded by the IP-1A execution status above.
 
@@ -114,7 +124,7 @@ Historical record; superseded by the IP-1A execution status above.
 - **IP-6 CONSUMER ACCEPTANCE: NOT TESTED.**
 - **IP-6E REPORT: NOT STARTED.**
 - **IP-6 EXECUTION: NOT AUTHORIZED.**
-- **IP-7 PLANNING: NOT STARTED.**
+- **IP-7 PLANNING: NOT STARTED at that historical handoff.** The approved IP-7 plan was created later; current status is stated above.
 - **OVERALL IMPLEMENTATION: NOT AUTHORIZED.**
 - Branch: `docs/ip-6-windy-route-planner-acceptance`, reviewed baseline `eca79b4dbba9019d3651c74a603d46bd52960e0a`.
 
@@ -122,7 +132,7 @@ Updated `docs/implementation/IP-6-WINDY-ROUTE-PLANNER-ACCEPTANCE-PLAN.md` to clo
 
 R1 also separates **imported route-data mutation** (mandatory failure for changes to required point/object semantics), **display-only rendering/interpolation** (not automatically a failure when route data is unchanged), and **semantics-changing automatic routing** (requires explicit classification/review). If supported evidence cannot distinguish rendering from route mutation or automatic routing, the affected criterion is INCONCLUSIVE. Numerical coordinate/order unknowns remain blocking for consumer PASS; upload success and plausible screenshots are insufficient.
 
-Remaining blockers include live Windy workflow/version confirmation, exact Route Planner object interpretation and supported point/coordinate inspection, authentication/persistence requirements, interface/platform matrix, and approved synthetic corpus plus upstream implementation evidence. IP-1 through IP-5 planning approvals are preserved; no upstream implementation PASS is claimed. IP-4 one-point and route-name policies remain unresolved. IP-7 planning has not begun.
+At that historical IP-6 handoff, remaining blockers included live Windy workflow/version confirmation, exact Route Planner object interpretation and supported point/coordinate inspection, authentication/persistence requirements, interface/platform matrix, and approved synthetic corpus plus upstream implementation evidence. IP-4 one-point and route-name policies were then recorded as unresolved; the approved IP-7 plan did not yet exist. Current status is stated at the top of this report.
 
 No code, scripts, tests, browser automation, probes, GPX/RTZ fixtures, schemas, binaries, Shortcuts, dependencies or packages were created. No route was uploaded to Windy; no tests or empirical checks were run. No credentials or real route data were added.
 
@@ -187,7 +197,7 @@ Created `docs/implementation/IP-3-ROUTE-MODES-GEOMETRY-PLAN.md` and applied all 
 
 R1 corrections: (1) one-point neutral transformations are valid with an INSUFFICIENT_OUTPUT_POINTS advisory; no point is fabricated or result discarded; GPX exportability is left to IP-4 and empirical Windy compatibility to IP-6, without pre-approving one-point GPX. (2) Join endpoints reuse the corresponding original source waypoint reference only when classified coincident under a still-provisional numerical/identity tolerance; coordinate deduplication never removes a synthetic join, distinct source identities are never merged, and the current-position point retains distinct provenance. (3) The Loxodrome closest-point metric is an **UNRESOLVED ARCHITECTURAL DECISION**. Authalic-sphere great-circle separation remains only a candidate; metric review/approval must precede any minimizer qualification, and global root completeness remains a hard gate. (4) IP-3 domain creates previews/candidates and validates confirmed commands; IP-5 owns transport/binding; IP-7 presents the preview and collects consent. Revisions/tokens are transient contract proposals, not presumed durable identifiers or cryptographic protections.
 
-Remaining execution blockers include IP-1 qualified schema/geometry literals and independent distance oracles/tolerances; IP-2 implemented model and ID semantics; great-circle degeneracy and join-endpoint tolerance qualification; architectural selection of the Loxodrome closest-point metric followed by global-minimum/root-completeness evidence; field-by-field split-leg metadata applicability; IP-4 one-point export policy and IP-6 empirical Windy acceptance; and final IP-4/IP-5/IP-7 interface contracts. IP-1 and IP-2 are plan-approved but their execution evidence is pending. Gate 3 remains pending the complete detailed-plan set and cross-check.
+At that historical IP-3 handoff, execution blockers included IP-1 qualified schema/geometry literals and independent distance oracles/tolerances; IP-2 implemented model and ID semantics; great-circle degeneracy and join-endpoint tolerance qualification; architectural selection of the Loxodrome closest-point metric followed by global-minimum/root-completeness evidence; field-by-field split-leg metadata applicability; IP-4 one-point export policy and IP-6 empirical Windy acceptance; and final IP-4/IP-5/IP-7 interface contracts. Those technical qualifications remain open where owned; the Gate 3 pending statement records only the status at that historical handoff.
 
 No implementation code, tests, fixtures, probes, schemas, dependencies, CLI, GPX, or Shortcuts were created or run. No real routes, derived vessel coordinates, credentials, or full source-route digest were added.
 
@@ -260,4 +270,4 @@ Please review the IP-2 architecture, proposed limits, security behavior, semanti
 
 Historical remote disposition: **GATE 3 — PASS / ARCHITECT ACCEPTED**. Reviewed reconciliation commit: f98f43618ad69c347fc8a071d741b9719714b934; its parent is 482c8b585635138174dbf64d309cc3f308e3dcd9. Findings and residual qualification boundaries are recorded in docs/implementation/GATE-3-RECONCILIATION-R1.md. No pending technical qualification is converted to PASS.
 
-**Gate 4: NOT AUTHORIZED. Stage execution: NOT AUTHORIZED. Overall implementation: NOT AUTHORIZED.** Gate 4 requires separate explicit product-owner authorization. The historical handoffs above retain the statuses recorded when written.
+**Gate 4 authorization is stage-specific and never blanket authorization.** This governance reconciliation authorizes no implementation stage. IP-2–IP-7 execution and overall implementation remain **NOT AUTHORIZED**. Gate 4 requires separate explicit product-owner authorization naming each stage and any associated probes. Historical handoffs above retain their statuses as recorded at the time.

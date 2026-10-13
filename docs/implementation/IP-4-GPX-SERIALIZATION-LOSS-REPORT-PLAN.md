@@ -1,6 +1,6 @@
 # IP-4 — GPX Serialization and Loss Report: Detailed Implementation Plan
 
-**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4, IP-4 execution, and overall implementation: NOT AUTHORIZED.
+**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 authorization is stage-specific and never blanket authorization. IP-4 execution and overall implementation remain NOT AUTHORIZED.
 **IP-4 execution:** NOT AUTHORIZED.
 **Overall implementation:** NOT AUTHORIZED.
 **Planning baseline:** Gate 1 `d57d0935c7885eb25eb14542e7996839644e96e2`; IP-1 `6ed649d3995f70fa2421e08cb027c07d19b4cad4`; IP-2 `8011d3f0c4baf62cb15194ab9308f4e312269615`; IP-3 R1 `8e35edff864de87278aa7c61c7376e49845c3d74`.
@@ -18,7 +18,7 @@ IP-4 does not parse RTZ, compute or modify route geometry, decide navigation int
 | Upstream/downstream | Required contract | State at this planning baseline |
 |---|---|---|
 | Master Plan | GPX 1.1, one ordered rte, exact selected route order, source unchanged, collision-safe save, no silent overwrite, offline schema validation, loss reporting | Approved. |
-| IP-1 | GPX XSD provenance/hash/license and offline validation strategy; coordinate formatting and semantic determinism decisions; qualified source field matrix; sanitized fixture plan | Final independent Gate 3 review and execution evidence remain pending; exact artifact/license decisions remain open. Do not bundle or download an XSD based on this plan. |
+| IP-1 | GPX XSD provenance/hash/license and offline validation strategy; coordinate formatting and semantic determinism decisions; qualified source field matrix; sanitized fixture plan | Gate 3 review passed; execution evidence and exact artifact/license decisions remain open. Do not bundle or download an XSD based on this plan. |
 | IP-2 | Validated immutable model precision, optional field presence, qualified meanings, bounded unsupported-content summaries | Plan approved; execution evidence pending. No raw XML/payload crosses into IP-4. |
 | IP-3 R1 | Finalized TransformedRoute; point and leg provenance; effective GPX route-name metadata separate from source model; synthetic labels/provenance; one-point neutral result with warning; explicit connector geometry | Plan approved; execution evidence pending. G3-006 selects the rhumb closest-point objective; numerical qualification remains unverified and is not represented as execution PASS. |
 | IP-5 | Stable CLI result/error interface, save transport, file permissions/reference binding, output path handling | Approved plan; protocol and platform qualification pending. |

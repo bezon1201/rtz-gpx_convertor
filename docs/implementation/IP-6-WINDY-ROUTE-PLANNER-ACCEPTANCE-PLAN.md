@@ -1,12 +1,12 @@
 # IP-6 — Windy Route Planner Empirical Acceptance: Detailed Implementation Plan
 
-**IP-6 PLAN:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4 and IP-6 execution: NOT AUTHORIZED.
+**IP-6 PLAN:** Approved Gate 2 plan. Effective Gate 3 status: PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 authorization is stage-specific and never blanket authorization; IP-6 execution remains NOT AUTHORIZED.
 
 **IP-6 execution:** NOT AUTHORIZED.
 
 **IP-6 consumer acceptance:** NOT TESTED.
 
-**IP-7 planning:** NOT STARTED.
+**IP-7 PLAN:** APPROVED. **IP-7 EXECUTION:** NOT AUTHORIZED.
 
 **Overall implementation:** NOT AUTHORIZED.
 
@@ -359,7 +359,7 @@ Cross-stage rule: IP-6 consumes independently approved upstream outputs and reco
 
 Gate 2 planning acceptance requires: exact Windy.com Route Planner target and documented uncertainty; a layered consumer contract; synthetic case catalog and provenance method; repeatable manual procedure; independent route-mode matrix; geometry/metadata and coordinate-fidelity evidence strategy; one-point decision support; negative-control classification; evidence schema and strict aggregate verdict; separate report-completion and consumer-verdict statuses; IP-6A–IP-6E sub-stage plans; cross-stage dependency/status matrix; and no unsupported compatibility claim.
 
-The current status model is **IP-6 PLAN: APPROVED; effective Gate 3: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; Gate 4: NOT AUTHORIZED; IP-6 CONSUMER ACCEPTANCE: NOT TESTED; IP-6 EXECUTION: NOT AUTHORIZED; overall implementation: NOT AUTHORIZED**. In future execution, **IP-6E REPORT COMPLETE** means the reviewed analysis is complete regardless of the consumer verdict. **IP-6 CONSUMER ACCEPTANCE PASS** is a separate verdict requiring actual, date-bounded evidence from the intended Windy.com Route Planner workflow with approved synthetic data and every mandatory criterion passed under §13. GPX schema PASS, file upload success, visual plausibility, or optional metadata display is never a substitute for route-object, order and coordinate-fidelity evidence. Any mandatory unobservable property leaves consumer acceptance INCONCLUSIVE or BLOCKED. Do not label a completed report `IP-6 PASS` when consumer acceptance has not passed.
+The current status model is **IP-6 PLAN: APPROVED; effective Gate 3: PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 authorization: stage-specific; IP-6 CONSUMER ACCEPTANCE: NOT TESTED; IP-6 EXECUTION: NOT AUTHORIZED; IP-7 PLAN: APPROVED; IP-7 EXECUTION: NOT AUTHORIZED; overall implementation: NOT AUTHORIZED**. In future execution, **IP-6E REPORT COMPLETE** means the reviewed analysis is complete regardless of the consumer verdict. **IP-6 CONSUMER ACCEPTANCE PASS** is a separate verdict requiring actual, date-bounded evidence from the intended Windy.com Route Planner workflow with approved synthetic data and every mandatory criterion passed under §13. GPX schema PASS, file upload success, visual plausibility, or optional metadata display is never a substitute for route-object, order and coordinate-fidelity evidence. Any mandatory unobservable property leaves consumer acceptance INCONCLUSIVE or BLOCKED. Do not label a completed report `IP-6 PASS` when consumer acceptance has not passed.
 
 ## 18. Primary Windy references
 
@@ -372,4 +372,4 @@ Research checked 2026-10-11. Recheck during authorized IP-6A because web product
 
 ## Approval request
 
-Please review the exact Windy.com Route Planner target, its evidence limits, synthetic corpus, manual protocol, aggregate acceptance rule and IP-6A–IP-6E execution decomposition. Final independent Gate 3 review remains pending. Do not execute IP-6 or begin IP-7 planning without separate explicit Gate 4 authorization.
+Please review the exact Windy.com Route Planner target, its evidence limits, synthetic corpus, manual protocol, aggregate acceptance rule and IP-6A–IP-6E execution decomposition. Gate 3 is PASS / ARCHITECT ACCEPTED at the approved baseline. IP-6 execution remains unauthorized; IP-7 planning is approved and IP-7 execution remains unauthorized. Any stage execution requires separate explicit Gate 4 authorization naming that stage.

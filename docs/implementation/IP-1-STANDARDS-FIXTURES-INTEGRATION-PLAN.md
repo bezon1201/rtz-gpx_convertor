@@ -1,6 +1,6 @@
 # IP-1 — Standards, Fixtures, and Integration/Packaging Discovery
 
-**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4, stage execution, and implementation: NOT AUTHORIZED. This plan-authoring task created no probes, fixtures, tests, software, schemas, packages or Shortcuts. **Baseline:** `docs/master-plan` at `d57d0935c7885eb25eb14542e7996839644e96e2`. The approved Master Plan is authoritative; this document plans Stage 1 only and does not alter it or start IP-2 through IP-7.
+**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 authorization is stage-specific and never blanket authorization; IP-1A–IP-1G verdicts are PARTIAL, PASS, PARTIAL, PARTIAL, PASS (documentation decision), PASS (protocol), PASS, with overall IP-1 PARTIAL / NOT PASS. No IP-1A R3 or IP-2–IP-7 execution is authorized by this status correction. This plan-authoring task created no probes, fixtures, tests, software, schemas, packages or Shortcuts. **Baseline:** `docs/master-plan` at `d57d0935c7885eb25eb14542e7996839644e96e2`. The approved Master Plan is authoritative; this document plans Stage 1 only and does not alter it or start IP-2 through IP-7.
 
 ## 1. Objective and boundaries
 
@@ -10,7 +10,7 @@ IP-1 must turn the approved Stage 1 outline into evidence-backed decisions and d
 
 **Out of scope:** product code, parser/converter/CLI/GUI, schemas, packages, dependency installation, Shortcuts/Quick Actions, executable fixture generators, tests, or Windy upload during this task. Static synthetic XML fixture data may be authored only during separately authorized IP-1 execution; executable parser/serializer tests are downstream work. No real route, derived coordinate, vessel position/identity, operational note, or user-specific path. RTZP remains OUT OF SCOPE for V1, may be reconsidered after V1, and has no implementation stage.
 
-Plan approval does not constitute IP-1 execution PASS or authorize probes/implementation. Final independent Gate 3 review remains pending; explicit Gate 4 authorization remains required.
+Plan approval does not constitute IP-1 execution PASS or authorize probes/implementation. Gate 3 is PASS / ARCHITECT ACCEPTED at the approved baseline above. Gate 4 authorization remains stage-specific; this status correction does not authorize IP-1A R3 or any later stage.
 
 ## 2. Fixed decisions and evidence rules
 
@@ -152,7 +152,7 @@ Record UTC date, platform/browser/app version, generic test-account context only
 
 ## 10. IP-1 execution sub-stages
 
-All work below is future work after Gate 3 acceptance and explicit Gate 4 authorization. Each sub-stage returns evidence; planning approval is not PASS.
+Gate 3 acceptance is complete. Any future sub-stage work below still requires separate explicit Gate 4 authorization naming that sub-stage and any probes/acquisitions; authorization of one sub-stage does not authorize another. Each sub-stage returns evidence; planning approval is not PASS.
 
 ### IP-1A — Schema provenance and qualification
 
@@ -269,7 +269,7 @@ This task changes only this plan plus REPORT/PROGRESS. Leave `AGENTS.md` and app
 
 ## 15. Execution sequence after authorization
 
-1. The remote Gate 3 acceptance declaration is historical and superseded for current authorization. Final independent Architect review is pending.
+1. The remote Gate 3 acceptance declaration is a historical event. Effective Gate 3 is PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 remains stage-specific and requires separate explicit owner authorization for each stage.
 2. Obtain explicit Gate 4 authorization, naming any probe/schema/tool acquisition.
 3. IP-1A qualification; stop on unresolved mandatory rights/schema.
 4. IP-1B static synthetic cases after schemas settle.

@@ -1,6 +1,6 @@
 # IP-5 — Stable Local Swift CLI and Self-contained Runtime: Detailed Implementation Plan
 
-**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4, IP-5 execution, and overall implementation: NOT AUTHORIZED.
+**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 authorization is stage-specific and never blanket authorization. IP-5 execution and overall implementation remain NOT AUTHORIZED.
 **IP-5 execution:** NOT AUTHORIZED.
 **Overall implementation:** NOT AUTHORIZED.
 **Planning branch:** `docs/ip-5-cli-runtime-packaging`.
@@ -23,7 +23,7 @@ V1 constraints:
 
 Status constraints inherited from approved plans:
 
-- The remote Gate 3 acceptance declaration is historical and superseded for current authorization; final independent review is pending. None of IP-1–IP-4 has execution PASS evidence.
+- The earlier remote Gate 3 acceptance declaration is historical; effective Gate 3 is PASS / ARCHITECT ACCEPTED at the approved baseline. None of IP-1–IP-4 has execution PASS evidence.
 - G3-001 approves an export-only GPX route-name override or explicit omission; G3-004 approves one-point GPX export with warning and explicit confirmation. IP-5 transports and enforces these decisions but does not change source route data.
 - No mandatory RTZ dialect is advertised as supported until IP-1 qualification evidence exists. RTZP remains out of scope.
 - Never treat a Finder, Shortcuts or CLI file reference as trusted. Paths and content remain untrusted until IP-2 securely opens and validates them.
@@ -474,4 +474,4 @@ Research checked 2026-10-11. Platform documentation can change; recheck at IP-1/
 
 ## Approval request
 
-The reconciled architecture retains conditional JSON stdio, secure `inspect`, unqualified file-reference carrier and cross-process scope, unresolved IP-5D source identity/content continuity, evidence-gated writer permissions, approved signed app-bundle/DMG direction, and IP-5A–IP-5F decomposition. The approved name/one-point/geometry/consent policies are inputs, not IP-5 choices. Final independent Gate 3 review remains pending; do not begin IP-5 execution without separate explicit Gate 4 authorization.
+The reconciled architecture retains conditional JSON stdio, secure `inspect`, unqualified file-reference carrier and cross-process scope, unresolved IP-5D source identity/content continuity, evidence-gated writer permissions, approved signed app-bundle/DMG direction, and IP-5A–IP-5F decomposition. The approved name/one-point/geometry/consent policies are inputs, not IP-5 choices. Gate 3 is PASS / ARCHITECT ACCEPTED at the approved baseline; do not begin IP-5 execution without separate explicit Gate 4 authorization naming IP-5.

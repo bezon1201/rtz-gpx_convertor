@@ -1,6 +1,6 @@
 # IP-7 — macOS Shortcuts UX, Installation, Distribution & Release
 
-**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4, IP-7 execution, and overall implementation: NOT AUTHORIZED. This is a planning document; no product artifacts were created or run.
+**Plan status:** Approved Gate 2 plan. Effective Gate 3 status: PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 authorization is stage-specific and never blanket authorization; IP-7 execution and overall implementation remain NOT AUTHORIZED. This is a planning document; no product artifacts were created or run.
 
 ## 1. Objective, scope, and evidence rules
 
@@ -253,7 +253,7 @@ Each sub-stage below is a plan-level outline, not a detailed execution checklist
 | IP-4 | GPX 1.1 route, naming, one-point policy, serialization and loss report | Plan approved; execution pending. G3-001 export-only naming and G3-004 one-point ALLOW_WITH_WARNING are approved; schema/name qualification remains pending. |
 | IP-5 | Stable CLI, protocol, source continuity/route-confirmation enforcement, safe filesystem writer/publication | Plan approved; execution pending. IP-5D stateless continuity mechanism and IP-5E permissions/provider/atomicity remain unqualified; IP-7 distinguishes route and publication approvals and separates local offline guarantees from conditional provider support. |
 | IP-6 | Windy Route Planner empirical consumer verdict | Plan approved; consumer acceptance NOT TESTED and IP-6E report NOT STARTED. IP-7 documentation may use only IP-6A-verified instructions. |
-| IP-7 | User interaction, Shortcuts/Finder, install/update/docs, accessibility and release UX | Final independent Gate 3 review pending; IP-7 execution remains NOT AUTHORIZED. |
+| IP-7 | User interaction, Shortcuts/Finder, install/update/docs, accessibility and release UX | Gate 3 review passed; IP-7 execution remains NOT AUTHORIZED. |
 
 Interface owners: IP-1D/IP-5/IP-7 transport; IP-1E/IP-5/IP-7 packaging; IP-2/IP-5/IP-7 source-reference continuity; IP-3/IP-5/IP-7 route-preview semantics and route confirmation; IP-4/IP-5/IP-7 naming/save; IP-5/IP-7 publication consent, output permissions/replacement; IP-6/IP-7 Windy instructions. Mandatory local offline behavior remains separate from conditional provider qualifications. These are dependencies, not decisions made by IP-7.
 
@@ -267,4 +267,4 @@ Approved Gate 3 policy decisions G3-001 through G3-011 are recorded in the recon
 
 Gate 2 IP-7 planning is reviewable when this document defines complete Finder/standalone journeys; four mode contracts; native interaction candidates and qualification evidence; privacy-bounded preview and separate route/publication approvals; Shortcuts transport/authority evaluation; safe save/overwrite/cancel behavior; diagnostics; mandatory local-offline and conditional File Provider policies; package/onboarding/update/removal strategy; accessibility requirements; synthetic acceptance matrix; IP-7A–IP-7F outline; cross-stage ownership; release gate; and unresolved decisions. This plan satisfies no implementation, platform test, or release criterion by itself.
 
-**Next process:** obtain final independent Architect review of the reconciled Gate 3 documentation. Gate 4, IP-7 execution, tests and platform probes remain NOT AUTHORIZED. Any future stage requires separate explicit Gate 4 authorization naming the stage and any probes; execute one authorized stage at a time.
+**Next process:** Gate 3 is PASS / ARCHITECT ACCEPTED at the approved baseline. IP-7 execution, tests and platform probes remain NOT AUTHORIZED. Any future stage requires separate explicit Gate 4 authorization naming the stage and any probes; execute one authorized stage at a time.

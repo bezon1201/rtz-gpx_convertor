@@ -1,6 +1,6 @@
 # IP-2 — Safe Input Model and Parser: Detailed Implementation Plan
 
-**Status:** Approved Gate 2 plan. Effective Gate 3 status: PENDING FINAL INDEPENDENT ARCHITECT REVIEW; the remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. Gate 4, stage execution, and overall implementation: NOT AUTHORIZED.
+**Status:** Approved Gate 2 plan. Effective Gate 3 status: PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 authorization is stage-specific and never blanket authorization. IP-2 execution and overall implementation remain NOT AUTHORIZED.
 
 **IP-2 execution:** NOT AUTHORIZED. **Overall implementation:** NOT AUTHORIZED.
 **Baseline:** Gate 1 d57d0935c7885eb25eb14542e7996839644e96e2; approved IP-1 plan 6ed649d3995f70fa2421e08cb027c07d19b4cad4.
@@ -299,7 +299,7 @@ Paths are proposals against the current documentation-only tree; none exists.
 
 Only this plan, REPORT.md and PROGRESS.md may change. Do not edit AGENTS.md, Master Plan, or IP-1. Do not create IP-3–IP-7 plans or execute IP-2.
 
-The remote Gate 3 acceptance declaration is historical and superseded for current authorization; final independent review is pending. Address any IP-2 review findings through the owning review process; obtain explicit Gate 4 authorization naming the stage and any probe/schema/dependency acquisition; then execute one stage at a time. Plan approval authorizes no code, tests or probes.
+The earlier remote Gate 3 acceptance declaration is historical; effective Gate 3 is PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Address any IP-2 review findings through the owning review process; obtain explicit Gate 4 authorization naming the stage and any probe/schema/dependency acquisition; then execute one stage at a time. IP-2 execution remains NOT AUTHORIZED. Plan approval authorizes no code, tests or probes.
 
 ## 16. References and evidence
 

@@ -1,6 +1,6 @@
 # RTZ-GPX-Converter — Master Plan
 
-**Gate 1:** APPROVED / PASS (architectural review: approved with minor conditions; conditions closed here). **Gate 2:** COMPLETE (IP-1–IP-7 detailed plans approved). **Effective Gate 3:** PENDING FINAL INDEPENDENT ARCHITECT REVIEW. The remote PASS declaration at `d9f723ba91091c682c9676f41dc168da31a252f1` is historical and superseded for current authorization. **Gate 4:** NOT AUTHORIZED. **Stage execution:** NOT AUTHORIZED. **Implementation:** NOT AUTHORIZED. This document sets project direction; it is not an implementation plan. No application code, conversion scripts, tests, CLI executable, Shortcut package, Finder Quick Action, or release package are part of this stage.
+**Gate 1:** APPROVED / PASS (architectural review: approved with minor conditions; conditions closed here). **Gate 2:** COMPLETE (IP-1–IP-7 detailed plans approved). **Effective Gate 3:** PASS / ARCHITECT ACCEPTED at approved baseline `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 authorization is stage-specific and never blanket authorization.** IP-1A–IP-1G verdicts: PARTIAL, PASS, PARTIAL, PARTIAL, PASS (documentation decision), PASS (protocol), PASS; **overall IP-1: PARTIAL / NOT PASS**. Those named IP-1 authorizations are completed historical grants, not standing authority. This status correction authorizes no stage; IP-2–IP-7 execution and overall implementation remain NOT AUTHORIZED. This document sets project direction; it is not an implementation plan. No application code, conversion scripts, tests, CLI executable, Shortcut package, Finder Quick Action, or release package are part of this stage.
 
 ## 1. Purpose and boundaries
 
@@ -276,10 +276,10 @@ These are manageable stage boundaries, not detailed implementation plans. Each s
 
 ## 14. Approval gates and next process
 
-1. **Approve the master plan** (this Gate 1 document).
-2. **Generate detailed implementation plans for every approved stage**, one per stage under `docs/implementation/`, with file-level changes, interfaces, dependencies, test cases, rollback, and exit criteria.
-3. **Cross-check the complete plan set** for format fidelity, stage dependencies, UX, errors, security/privacy, offline behavior, packaging, and scope. Record findings and resolve blockers before implementation.
-4. **Historical remote event:** Gate 3 PASS / ARCHITECT ACCEPTED was recorded at `d9f723ba91091c682c9676f41dc168da31a252f1`. Per the current owner decision, this historical declaration is superseded for authorization; effective Gate 3 status is PENDING FINAL INDEPENDENT ARCHITECT REVIEW.
+1. **Gate 1 — Master Plan:** APPROVED / PASS.
+2. **Gate 2 — detailed plans:** COMPLETE; IP-1–IP-7 plans are approved.
+3. **Gate 3 — cross-check:** PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Remaining technical qualifications stay open at their owning stages and do not alter the Gate 3 disposition.
+4. **Historical remote event:** Gate 3 PASS / ARCHITECT ACCEPTED was recorded at `d9f723ba91091c682c9676f41dc168da31a252f1`. That declaration remains historical; the effective Gate 3 status is PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`.
 5. **Obtain separate explicit Gate 4 authorization** naming the first implementation stage and any probes/schema/dependency acquisition. Then implement one stage at a time, updating `REPORT.md` and `PROGRESS.md` with evidence.
 
 No implementation begins before separate explicit Gate 4 authorization. Gate 3 acceptance does not grant that authorization.
@@ -296,7 +296,7 @@ No implementation begins before separate explicit Gate 4 authorization. Gate 3 a
 8. **Resolved publication contract, protocol qualification pending:** separate route confirmation (including geometry and effective route name) from publication consent (exact output/target). Destination/filename-only changes renew publication consent only.
 9. **Resolved Windy release policy, empirical evidence pending:** IP-6 consumer acceptance PASS for mandatory multi-point cases in the exact Route Planner workflow is required for V1 release. Test one-point separately and disclose refusal as a specific limitation without revoking converter export capability.
 10. **Resolved offline policy, platform qualification pending:** fully local input/destination must work offline; File Provider support is conditional on authorized availability and provider-specific qualification. Converter does not initiate cloud downloads or wait indefinitely for placeholders.
-11. Confirm Windy acceptance testing can use synthetic test routes without publishing/sharing. Product/architecture choices G3-001–G3-011 and their remaining technical qualification gates are itemized in the Gate 3 reconciliation report; the remote PASS declaration is historical; effective Gate 3 remains pending final independent Architect review.
+11. Confirm Windy acceptance testing can use synthetic test routes without publishing/sharing. Product/architecture choices G3-001–G3-011 and their remaining technical qualification gates are itemized in the Gate 3 reconciliation report; the remote declaration is historical and the effective Gate 3 PASS baseline is `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`.
 
 RTZP containers are explicitly OUT OF SCOPE for V1 and may be reconsidered after V1 release. They have no implementation stage in the approved roadmap.
 
