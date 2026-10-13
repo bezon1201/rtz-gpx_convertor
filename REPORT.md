@@ -1,13 +1,23 @@
 # Architect review handoff
 
-## Current handoff — IP-1D Shortcuts/Finder transport qualification
+## Current handoff — IP-1E packaging decision
+
+- **IP-1E verdict: PASS (documentation-level only).** The approved signed/notarized arm64 `.app` + self-contained local CLI + stapled `.dmg` + exported `.shortcut` direction is retained. Recommended consumer install location is `~/Applications`; `/Applications` remains optional only where write permissions are preconfigured. Candidate OS floor is macOS Sequoia 15.8; Tahoe 26.7.1 and Golden Gate 27 (initial release) are matrix candidates, not declared supported.
+- The clean-user procedure covers standard-user install, Gatekeeper/offline launch, importing/enabling the Shortcut and Finder Quick Action, Dock/keyboard launch, offline synthetic run, update/rollback, and removal while preserving source/output files. No app, DMG, shortcut package, signing, notarization, or installation was produced or run.
+- Apple references and signing/cost prerequisites are documented in `docs/research/IP-1/PACKAGING-DECISION.md`. Developer ID membership/account access is unverified; Apple's current listed membership price and qualified fee-waiver path are recorded. No account or purchase was used.
+- **Open blockers:** IP-1D Finder transport and CLI discovery; IP-2/IP-5/IP-7 file-reference/security-scope/source-continuity; cancellation/error mapping; all OS/package/Gatekeeper tests; legal clearance and offline schema validator from IP-1A; future IP-7 UI acceptance. The 15.8 floor is only a candidate. IP-1A remains PARTIAL; IP-1B PASS; IP-1C and IP-1D PARTIAL; no IP-1 PASS is implied.
+- **Authorization:** Gate 4 authorized IP-1E only. IP-1F onward, IP-2–IP-7 execution, product implementation and release remain **NOT AUTHORIZED**. The temporary IP-1D Shortcut remains in the Shortcuts library because deletion would propagate across iCloud devices; its status is recorded in the IP-1D report.
+- **Git:** branch `implementation/ip-1e-packaging-decision`, from reviewed baseline/parent `767e1a1791202969122db8a98f7459a98201cab8`. The unrelated `AGENTS.md` change remains untouched and excluded. Commit and remote verification are recorded after completion.
+- **Next:** independent Architect review of this documentation-level IP-1E PASS. Do not start IP-1F or implementation without a separate authorization.
+
+## Historical handoff — IP-1D Shortcuts/Finder transport qualification
 
 - **IP-1D verdict: PARTIAL.** On macOS 26.6.2 (25G83, arm64; Shortcuts 7.0 build 4711), an inert local helper observed exact UTF-8 stdin forwarding for a 51-byte Unicode/metacharacter payload and a 262,144-byte payload. Shortcuts displayed JSON stdout, surfaced a deliberate stderr marker on exit 7, and its Stop control interrupted a 60-second inert action.
 - **Unqualified:** Shortcuts “as arguments” produced `argc=0` for the Text-action setup; Finder Quick Action launched but its actual input representation/result was not observable. Multiple files, malformed/oversized requests, output bounds, child-process cancellation guarantees, picker/save/Reveal/permissions, network-disabled operation, other macOS versions, and security-scoped access were not qualified. No minimum OS or final transport is selected.
 - **Recommendation:** retain JSON stdin as a candidate only; do not settle the stable IP-5 protocol or Finder file-reference contract from this one-machine probe. IP-5 owns protocol/error mapping; IP-2/IP-5/IP-7 jointly own secure file acquisition and continuity; IP-7 owns end-to-end UI qualification. IP-1D remains PARTIAL pending matrix completion.
 - **Files:** `docs/research/IP-1/SHORTCUTS-FEASIBILITY.md`, `REPORT.md`, `PROGRESS.md`. The inert arm64 probe and synthetic temporary files were removed after testing. The temporary Shortcut remains in the Shortcuts library because its Delete confirmation stated removal would propagate to all iCloud devices; no such deletion was confirmed. It is not a product Shortcut or repository artifact. No real route or coordinates were used.
 - **Git:** branch `implementation/ip-1d-shortcuts-transport`, baseline/parent `85956a226980691eb74cbf9ac56c1258aa90c2c1`; commit and remote verification are recorded in this handoff after completion. The pre-existing `AGENTS.md` user change remains untouched and excluded.
-- **Authorization:** Gate 4 was authorized for IP-1D only. IP-1E onward, IP-2–IP-7 execution, production parser/converter/CLI, product Shortcut, app, packaging and release remain **NOT AUTHORIZED**. IP-1A remains PARTIAL; IP-1B PASS; IP-1C PARTIAL. No IP-1 PASS is implied.
+- **Historical authorization at IP-1D completion:** Gate 4 was authorized for IP-1D only. At that handoff, IP-1E onward, IP-2–IP-7 execution, production parser/converter/CLI, product Shortcut, app, packaging and release were **NOT AUTHORIZED**. The present IP-1E authorization is recorded above. IP-1A remains PARTIAL; IP-1B PASS; IP-1C PARTIAL. No IP-1 PASS is implied.
 - **Next:** independent Architect review of this PARTIAL IP-1D evidence. Do not begin IP-1E or later work without separate authorization.
 
 ## Historical handoff — IP-1C geometry references and GPX contract

@@ -1,6 +1,17 @@
 # Progress ledger
 
-## Current gate activity — IP-1D only
+## Current gate activity — IP-1E only
+
+**GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1E only by the current owner task.** IP-1F onward, IP-2–IP-7 execution, production implementation, packaging/release execution and release remain **NOT AUTHORIZED**.
+
+- **IP-1E: PASS (documentation-level).** Recommends the approved arm64 `.app` + self-contained local CLI + signed/notarized/stapled `.dmg` + exported `.shortcut`; defaults install to `~/Applications` for standard-user permissions. Bundle layout, signing, hardened runtime, nested signing, notarization, ticket stapling, Gatekeeper/offline test, Shortcut/Finder enablement, update/rollback/removal, Developer ID account/pricing requirements and clean-user procedure are documented.
+- Candidate floor: macOS Sequoia 15.8. Concrete unqualified matrix: Sequoia 15.8, Tahoe 26.7.1 and Golden Gate 27 (initial release) on Apple Silicon; no OS version is declared supported. Previous IP-1D observation on Tahoe 26.6.2 is transport-only and is not packaging evidence.
+- **Outstanding blockers:** IP-1D Finder file representation/CLI discovery; joint IP-2/IP-5/IP-7 security-scoped reference, identity and continuity policy; cancellation/error mapping; real clean-user signing/notarization/Gatekeeper/offline matrix; IP-1A schema rights/offline validator; IP-7 UI acceptance. See `docs/research/IP-1/PACKAGING-DECISION.md`.
+- No app, DMG, Shortcut artifact, executable, signing, notarization, install, OS/network configuration or implementation was created/run. The existing temporary IP-1D Shortcut remains in the Shortcuts library because deletion was explicitly shown to sync across all iCloud devices; no delete action was confirmed.
+- Branch `implementation/ip-1e-packaging-decision`, parent baseline `767e1a1791202969122db8a98f7459a98201cab8`. Unrelated pre-existing `AGENTS.md` remains untouched and uncommitted. Commit/remote SHA will be recorded in the final handoff.
+- **Next:** independent Architect review of IP-1E documentation-level PASS. IP-1F and implementation remain unauthorized.
+
+### Historical handoff — IP-1D only
 
 **GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1D only by the current owner task.** IP-1E onward, IP-2–IP-7 execution, production parser/converter/CLI, product Shortcut, application implementation, packaging and release remain **NOT AUTHORIZED**.
 
@@ -139,7 +150,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL | IP-1D confirms limited Shortcuts stdin/error/Stop behavior on one Mac; Finder file representation and other matrix items remain unqualified. IP-1E onward NOT AUTHORIZED. | IP-1D commit in task handoff |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only) | IP-1E defines the package candidate and exact OS/clean-user matrix; signing, installation, offline Gatekeeper, Finder transport and OS compatibility remain untested. IP-1F onward NOT AUTHORIZED. | IP-1E commit in task handoff |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | — |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
