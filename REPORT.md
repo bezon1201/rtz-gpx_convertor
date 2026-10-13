@@ -1,6 +1,16 @@
 # Architect review handoff
 
-## Current handoff — IP-1C geometry references and GPX contract
+## Current handoff — IP-1D Shortcuts/Finder transport qualification
+
+- **IP-1D verdict: PARTIAL.** On macOS 26.6.2 (25G83, arm64; Shortcuts 7.0 build 4711), an inert local helper observed exact UTF-8 stdin forwarding for a 51-byte Unicode/metacharacter payload and a 262,144-byte payload. Shortcuts displayed JSON stdout, surfaced a deliberate stderr marker on exit 7, and its Stop control interrupted a 60-second inert action.
+- **Unqualified:** Shortcuts “as arguments” produced `argc=0` for the Text-action setup; Finder Quick Action launched but its actual input representation/result was not observable. Multiple files, malformed/oversized requests, output bounds, child-process cancellation guarantees, picker/save/Reveal/permissions, network-disabled operation, other macOS versions, and security-scoped access were not qualified. No minimum OS or final transport is selected.
+- **Recommendation:** retain JSON stdin as a candidate only; do not settle the stable IP-5 protocol or Finder file-reference contract from this one-machine probe. IP-5 owns protocol/error mapping; IP-2/IP-5/IP-7 jointly own secure file acquisition and continuity; IP-7 owns end-to-end UI qualification. IP-1D remains PARTIAL pending matrix completion.
+- **Files:** `docs/research/IP-1/SHORTCUTS-FEASIBILITY.md`, `REPORT.md`, `PROGRESS.md`. The inert arm64 probe and synthetic temporary files were removed after testing. The temporary Shortcut remains in the Shortcuts library because its Delete confirmation stated removal would propagate to all iCloud devices; no such deletion was confirmed. It is not a product Shortcut or repository artifact. No real route or coordinates were used.
+- **Git:** branch `implementation/ip-1d-shortcuts-transport`, baseline/parent `85956a226980691eb74cbf9ac56c1258aa90c2c1`; commit and remote verification are recorded in this handoff after completion. The pre-existing `AGENTS.md` user change remains untouched and excluded.
+- **Authorization:** Gate 4 was authorized for IP-1D only. IP-1E onward, IP-2–IP-7 execution, production parser/converter/CLI, product Shortcut, app, packaging and release remain **NOT AUTHORIZED**. IP-1A remains PARTIAL; IP-1B PASS; IP-1C PARTIAL. No IP-1 PASS is implied.
+- **Next:** independent Architect review of this PARTIAL IP-1D evidence. Do not begin IP-1E or later work without separate authorization.
+
+## Historical handoff — IP-1C geometry references and GPX contract
 
 - **IP-1C verdict: PARTIAL.** Synthetic advisory-distance vectors, source/formula descriptions, proposed numeric tolerances, finite-rhumb closest-point exact cases and GPX 1.1 output contract are documented. IP-1C is not an IP-1 PASS, implementation claim, navigational accuracy claim or ECDIS-equivalence claim.
 - **Authorization:** Gate 4 is authorized for IP-1C only by the current owner task. IP-1D onward, IP-2–IP-7 execution, production geometry, parser/converter/serializer/CLI/application/Shortcut, packaging and release remain **NOT AUTHORIZED**. Gate 3 is owner-confirmed PASS / ARCHITECT ACCEPTED at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`.

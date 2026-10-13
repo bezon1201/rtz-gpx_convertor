@@ -1,8 +1,17 @@
 # Progress ledger
 
-## Current gate activity — IP-1C only
+## Current gate activity — IP-1D only
 
-**GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1C only by the current task.** IP-1D onward, IP-2–IP-7 execution, production geometry, parser/application implementation and release remain **NOT AUTHORIZED**.
+**GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1D only by the current owner task.** IP-1E onward, IP-2–IP-7 execution, production parser/converter/CLI, product Shortcut, application implementation, packaging and release remain **NOT AUTHORIZED**.
+
+- **IP-1D: PARTIAL.** On macOS 26.6.2 build 25G83 / arm64 with Shortcuts 7.0 build 4711, synthetic stdin arrived byte-exactly at 51 bytes (Unicode/metacharacters) and 262,144 bytes; success JSON appeared in Shortcuts. Deliberate exit 7 produced an alert containing the fixed stderr marker; a separate numeric exit status was not exposed. Stop interrupted the inert 60-second action.
+- Shortcuts “as arguments” yielded `argc=0` in the tested Text-action setup. Finder Quick Action invocation was confirmed, but its input representation and result were not observable. Multiple-file transport, malformed/oversized input, response bounds, child-process cancellation guarantees, picker/save/Reveal/permissions, offline with networking disabled, other macOS versions and security-scoped access remain unqualified. No transport selection, minimum-OS support, or system-wide offline claim is made.
+- Full matrix/evidence and closure owners: `docs/research/IP-1/SHORTCUTS-FEASIBILITY.md`. JSON stdin remains a candidate only; IP-5 owns protocol/error mapping, IP-2/IP-5/IP-7 jointly own file acquisition/continuity, and IP-7 owns UI acceptance.
+- No production code, product Shortcut, RTZ/GPX fixture, schema, dependency, package, or runtime artifact was committed. The inert probe, temporary Shortcut and synthetic temporary files are excluded from Git.
+- Branch `implementation/ip-1d-shortcuts-transport`, parent baseline `85956a226980691eb74cbf9ac56c1258aa90c2c1`. Unrelated pre-existing `AGENTS.md` change is preserved and excluded. Commit and remote verification will be reported in the task handoff.
+- **Next:** independent Architect review of IP-1D PARTIAL. IP-1E and all later work remain unauthorized.
+
+### Historical handoff — IP-1C only
 
 - **IP-1C: PARTIAL.** Added geometry reference vectors and the GPX 1.1 contract. GeographicLib Python 2.1 was configured to the approved authalic sphere and cross-checked against an independent unit-vector calculation. Seventeen numeric outputs and two unavailable-domain classifications were generated twice with identical output SHA-256 `2cdad3e6bcd6d2ca76eb1feb32ca320ae8e3334efaa4460be69c6557200f0919`. Spherical rhumb formula outputs were cross-checked against Simpson line-element integration (2048 intervals; max difference `1.40e-9 m`); execution of the official `RhumbSolve` oracle and independent reviewer reproduction remain outstanding.
 - The vector set covers ordinary, north/south, east/west, antimeridian, high latitude, near/coincident endpoints, near-antipodal behavior, degenerate/tie classifications, GC/rhumb divergence, and finite-rhumb closest-point exact cases with global proofs. The general G3-006 minimizer is still unqualified; no global root-completeness method or general numerical error bound is claimed. Affected general joins remain fail-closed.
@@ -130,7 +139,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL | RTZ/GPX schema rights and offline validation remain open; general G3-006 minimizer and independent rhumb review remain unqualified. IP-1D onward NOT AUTHORIZED. | IP-1C commit in task handoff |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL | IP-1D confirms limited Shortcuts stdin/error/Stop behavior on one Mac; Finder file representation and other matrix items remain unqualified. IP-1E onward NOT AUTHORIZED. | IP-1D commit in task handoff |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | — |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
