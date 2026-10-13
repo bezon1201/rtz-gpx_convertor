@@ -1,6 +1,18 @@
 # Progress ledger
 
-## Current gate activity — IP-1F only
+## Current gate activity — IP-1G only
+
+**GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1G only by the current owner task.** IP-2–IP-7 execution, production implementation, Windy uploads, schema redistribution, packaging/signing and release remain **NOT AUTHORIZED**.
+
+- **IP-1G: REVIEW — integration and closeout package prepared; independent Architect acceptance pending.** See `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md` for the evidence inventory, full traceability matrix, 15-item blocker register, contradictions and readiness recommendation.
+- **Overall IP-1: PARTIAL / NOT PASS.** IP-1A PARTIAL; IP-1B PASS (static fixtures only); IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol only). IP-1G cannot be marked PASS until independent Architect acceptance.
+- Do not start IP-2B/IP-2C parser implementation. A limited IP-2A documentation-only investigation is only a candidate for a separate explicit authorization and could not pass while schema rights/runtime, dialect, and joint file-reference requirements remain open. Recommended next gate: independent review, then focused IP-1A rights/provenance/runtime resolution.
+- Material status inconsistencies are recorded: Master Plan and approved plan headers retain stale Gate 3 pending wording; IP-6 says IP-7 planning is not started despite an approved IP-7 plan. No approved architecture/plan was edited.
+- No code, tests, probes, fixtures, schemas, dependencies, Windy imports, runtime files, Shortcuts, packages, signing or installation were performed/created. Existing `AGENTS.md` modification remains untouched and uncommitted.
+- Branch `implementation/ip-1g-integration-closeout`, baseline `b964b51584c79fde7af06100809ccca1f54333df`; commit/remote SHA will be reported in handoff.
+- **Next:** independent Architect review. No IP-2–IP-7 execution or implementation is authorized.
+
+### Historical handoff — IP-1F only
 
 **GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1F only by the current owner task.** IP-1G, IP-2–IP-7 execution, production conversion, Windy empirical testing, implementation and release remain **NOT AUTHORIZED**.
 
@@ -161,7 +173,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only) | IP-1F separates Uploader and Route Planner acceptance, but no Windy import or compatibility evidence exists; IP-1G onward NOT AUTHORIZED. | IP-1F commit in task handoff |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G REVIEW | IP-1G integrates evidence and blockers; independent Architect acceptance pending. IP-1 overall remains PARTIAL; IP-2 onward NOT AUTHORIZED. | IP-1G commit in task handoff |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | — |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |

@@ -1,11 +1,22 @@
 # Architect review handoff
 
-## Current handoff — IP-1F Windy acceptance protocol
+## Current handoff — IP-1G integration and closeout
+
+- **IP-1G status: REVIEW.** `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md` integrates IP-1A–IP-1F evidence, traces Gate 3 and product requirements to owners/gates/status, classifies blockers, checks cross-plan consistency, and assesses bounded IP-2 readiness. Independent Architect acceptance is pending, as required by the approved IP-1 plan.
+- **Overall IP-1 recommendation: PARTIAL / NOT PASS.** IP-1A PARTIAL; IP-1B PASS (static synthetic corpus only); IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol only); IP-1G REVIEW. No parser, geometry, serializer, CLI or consumer compatibility implementation is established.
+- **Open blocker register: 15 items** across immediate security/provenance/governance, downstream technical acceptance and release qualification. Critical unresolved items include RTZ/GPX schema rights and lawful offline schema validation, source-file reference/continuity, and stale status statements in approved plans. G3-006 general rhumb minimization, Shortcuts/Finder transport, package verification and empirical Windy acceptance also remain open.
+- **IP-2 readiness:** no parser implementation is ready. A narrowly bounded, documentation-only IP-2A investigation could be considered only under separate explicit authorization and would remain PARTIAL/BLOCKED. The recommended next gate is independent Architect review, then a focused IP-1A rights/provenance/runtime resolution. No IP-2 scope is authorized here.
+- **Material status inconsistencies:** the Master Plan and several approved plan headers still say Gate 3 is pending; IP-6 says IP-7 planning has not started although its approved plan exists. They are recorded with exact locations and proposed status-only resolutions. No approved plan was changed.
+- **Authorization:** this task authorized IP-1G only. IP-2–IP-7 execution, implementation, schema redistribution, Windy uploads, packaging, signing and release remain **NOT AUTHORIZED**. No IP-1 PASS is claimed.
+- **Git:** branch `implementation/ip-1g-integration-closeout`, from reviewed baseline `b964b51584c79fde7af06100809ccca1f54333df`. Pre-existing unrelated `AGENTS.md` modification remains untouched and excluded. Commit and remote verification are recorded after completion.
+- **Next:** independent Architect review of IP-1G; stop before IP-1A R3 or IP-2 absent separate authorization.
+
+## Historical handoff — IP-1F Windy acceptance protocol
 
 - **IP-1F verdict: PASS (protocol design only).** Added `docs/research/IP-1/WINDY-ACCEPTANCE-PROTOCOL.md`, with separate ordinary Uploader and Route Planner procedures, ten synthetic acceptance profiles plus mandatory coverage across all four route modes and both explicit Current Position connector geometries, observation/verdict rules, a reusable record, and privacy/publication boundaries. No GPX was produced or uploaded; Windy compatibility remains NOT TESTED.
 - The current exact Route Planner import entry point is **TO VERIFY DURING IP-6**. The current Windy editorial confirms general GPX import/display but does not establish a current Route Planner menu path or object inspection; the Staff post with paths is historical and must be rechecked manually.
 - Mandatory future Route Planner cases cover a two-point baseline, multiple ordered points, names, source-name default, explicit override and omission, antimeridian, Unicode/XML escaping, and decimal precision, across all four route modes and both explicit Current Position connector geometries. One-point is a required separate informative observation, non-release-gating, and cannot overturn G3-004 `ALLOW_WITH_WARNING`. Uploader PASS cannot substitute for Route Planner PASS.
-- **Authorization:** Gate 4 was authorized for IP-1F only by the current task. IP-1G, IP-2–IP-7 execution, production conversion, Windy empirical testing, implementation and release remain **NOT AUTHORIZED**. IP-1 is not declared PASS. No Windy interaction, production GPX, code, fixtures, tests or runtime artifacts were created.
+- **Historical authorization at IP-1F completion:** Gate 4 was authorized for IP-1F only by that task. At that handoff, IP-1G and IP-2–IP-7 execution, production conversion, Windy empirical testing, implementation and release were **NOT AUTHORIZED**. The current IP-1G authorization is recorded above. No Windy interaction, production GPX, code, fixtures, tests or runtime artifacts were created.
 - **Git:** branch `implementation/ip-1f-windy-acceptance-protocol`, from reviewed baseline `debf177a979027323890bed31369303645d2bcbd`. The pre-existing unrelated `AGENTS.md` change remains untouched and excluded. Commit and remote verification are recorded after completion.
 - **Next:** independent Architect review before IP-1G.
 
