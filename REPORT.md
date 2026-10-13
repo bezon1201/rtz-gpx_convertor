@@ -1,12 +1,21 @@
 # Architect review handoff
 
-## Current handoff — IP-1E packaging decision
+## Current handoff — IP-1F Windy acceptance protocol
+
+- **IP-1F verdict: PASS (protocol design only).** Added `docs/research/IP-1/WINDY-ACCEPTANCE-PROTOCOL.md`, with separate ordinary Uploader and Route Planner procedures, ten synthetic acceptance profiles plus mandatory coverage across all four route modes and both explicit Current Position connector geometries, observation/verdict rules, a reusable record, and privacy/publication boundaries. No GPX was produced or uploaded; Windy compatibility remains NOT TESTED.
+- The current exact Route Planner import entry point is **TO VERIFY DURING IP-6**. The current Windy editorial confirms general GPX import/display but does not establish a current Route Planner menu path or object inspection; the Staff post with paths is historical and must be rechecked manually.
+- Mandatory future Route Planner cases cover a two-point baseline, multiple ordered points, names, source-name default, explicit override and omission, antimeridian, Unicode/XML escaping, and decimal precision, across all four route modes and both explicit Current Position connector geometries. One-point is a required separate informative observation, non-release-gating, and cannot overturn G3-004 `ALLOW_WITH_WARNING`. Uploader PASS cannot substitute for Route Planner PASS.
+- **Authorization:** Gate 4 was authorized for IP-1F only by the current task. IP-1G, IP-2–IP-7 execution, production conversion, Windy empirical testing, implementation and release remain **NOT AUTHORIZED**. IP-1 is not declared PASS. No Windy interaction, production GPX, code, fixtures, tests or runtime artifacts were created.
+- **Git:** branch `implementation/ip-1f-windy-acceptance-protocol`, from reviewed baseline `debf177a979027323890bed31369303645d2bcbd`. The pre-existing unrelated `AGENTS.md` change remains untouched and excluded. Commit and remote verification are recorded after completion.
+- **Next:** independent Architect review before IP-1G.
+
+## Historical handoff — IP-1E packaging decision
 
 - **IP-1E verdict: PASS (documentation-level only).** The approved signed/notarized arm64 `.app` + self-contained local CLI + stapled `.dmg` + exported `.shortcut` direction is retained. Recommended consumer install location is `~/Applications`; `/Applications` remains optional only where write permissions are preconfigured. Candidate OS floor is macOS Sequoia 15.8; Tahoe 26.7.1 and Golden Gate 27 (initial release) are matrix candidates, not declared supported.
 - The clean-user procedure covers standard-user install, Gatekeeper/offline launch, importing/enabling the Shortcut and Finder Quick Action, Dock/keyboard launch, offline synthetic run, update/rollback, and removal while preserving source/output files. No app, DMG, shortcut package, signing, notarization, or installation was produced or run.
 - Apple references and signing/cost prerequisites are documented in `docs/research/IP-1/PACKAGING-DECISION.md`. Developer ID membership/account access is unverified; Apple's current listed membership price and qualified fee-waiver path are recorded. No account or purchase was used.
 - **Open blockers:** IP-1D Finder transport and CLI discovery; IP-2/IP-5/IP-7 file-reference/security-scope/source-continuity; cancellation/error mapping; all OS/package/Gatekeeper tests; legal clearance and offline schema validator from IP-1A; future IP-7 UI acceptance. The 15.8 floor is only a candidate. IP-1A remains PARTIAL; IP-1B PASS; IP-1C and IP-1D PARTIAL; no IP-1 PASS is implied.
-- **Authorization:** Gate 4 authorized IP-1E only. IP-1F onward, IP-2–IP-7 execution, product implementation and release remain **NOT AUTHORIZED**. The temporary IP-1D Shortcut remains in the Shortcuts library because deletion would propagate across iCloud devices; its status is recorded in the IP-1D report.
+- **Historical authorization at IP-1E completion:** Gate 4 was authorized for IP-1E only. At that handoff, IP-1F onward, IP-2–IP-7 execution, product implementation and release were **NOT AUTHORIZED**. The current IP-1F authorization is recorded above. The temporary IP-1D Shortcut remains in the Shortcuts library because deletion would propagate across iCloud devices; its status is recorded in the IP-1D report.
 - **Git:** branch `implementation/ip-1e-packaging-decision`, from reviewed baseline/parent `767e1a1791202969122db8a98f7459a98201cab8`. The unrelated `AGENTS.md` change remains untouched and excluded. Commit and remote verification are recorded after completion.
 - **Next:** independent Architect review of this documentation-level IP-1E PASS. Do not start IP-1F or implementation without a separate authorization.
 

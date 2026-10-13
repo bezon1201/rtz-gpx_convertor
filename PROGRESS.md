@@ -1,6 +1,17 @@
 # Progress ledger
 
-## Current gate activity — IP-1E only
+## Current gate activity — IP-1F only
+
+**GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1F only by the current owner task.** IP-1G, IP-2–IP-7 execution, production conversion, Windy empirical testing, implementation and release remain **NOT AUTHORIZED**.
+
+- **IP-1F: PASS (protocol design only).** Added a separate synthetic-only ordinary Uploader and Route Planner protocol, ten acceptance profiles plus all four route modes and both explicit Current Position connector geometries, strict outcome and aggregate rules, order/coordinate evidence requirements, publication/privacy boundaries and a reusable test record. No Windy import/upload or compatibility test was performed; consumer status remains NOT TESTED.
+- Current Route Planner import entry point: **TO VERIFY DURING IP-6**. Historical Windy Staff workflow steps are not treated as current instructions; the current editorial confirms general GPX import/display only.
+- Mandatory multi-point Route Planner cases: two-point, multiple ordered points, route/waypoint names, source route-name default, explicit override, explicit omission, antimeridian, Unicode/XML escaping and decimal precision, across all four modes and both explicit Current Position connector geometries. One-point is a required separate informative observation and does not gate or change G3-004 export policy. Generic Uploader PASS cannot replace Route Planner PASS.
+- **No Windy interaction, GPX generation, fixtures, application code, tests, CLI, Shortcut, package, schema, dependency or runtime artifact was created or executed.** IP-1G and implementation remain unauthorized.
+- Branch `implementation/ip-1f-windy-acceptance-protocol`, baseline `debf177a979027323890bed31369303645d2bcbd`. Pre-existing `AGENTS.md` modification remains untouched and uncommitted. Commit/remote SHA will be reported in handoff.
+- **Next:** independent Architect review before IP-1G.
+
+### Historical handoff — IP-1E only
 
 **GATE 3: PASS / ARCHITECT ACCEPTED** at owner-confirmed commit `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Gate 4 is authorized for IP-1E only by the current owner task.** IP-1F onward, IP-2–IP-7 execution, production implementation, packaging/release execution and release remain **NOT AUTHORIZED**.
 
@@ -150,7 +161,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only) | IP-1E defines the package candidate and exact OS/clean-user matrix; signing, installation, offline Gatekeeper, Finder transport and OS compatibility remain untested. IP-1F onward NOT AUTHORIZED. | IP-1E commit in task handoff |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only) | IP-1F separates Uploader and Route Planner acceptance, but no Windy import or compatibility evidence exists; IP-1G onward NOT AUTHORIZED. | IP-1F commit in task handoff |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | — |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
