@@ -1,16 +1,17 @@
 # Progress ledger
 
-## Current gate activity — governance status reconciliation R1
+## Current gate activity — IP-1A R3 rights, provenance and offline validation
 
-**Governance reconciliation: PASS. Effective Gate 3: PASS / ARCHITECT ACCEPTED** at approved baseline `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 authorization is stage-specific and never blanket authorization. This documentation task authorizes no implementation stage; IP-1A R3 and IP-2–IP-7 execution remain **NOT AUTHORIZED**.
+**Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific and never blanket authorization. The current task authorizes **IP-1A R3 only**. IP-2–IP-7 execution and implementation remain **NOT AUTHORIZED**.
 
-- IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation decision); IP-1F PASS (protocol); IP-1G PASS (independently accepted). **Overall IP-1: PARTIAL / NOT PASS.**
-- IP-7 plan: APPROVED; IP-7 execution: NOT AUTHORIZED. IP-6 consumer acceptance: NOT TESTED.
-- **IP1-B15: CLOSED** by correcting live Gate 3, Gate 4 and IP-7 planning status statements. No other blocker or technical qualification was closed.
-- Corrected locations: Master Plan status and approval-gate section; IP-1–IP-7 status headers and current Gate 3 references; IP-6 IP-7 planning status; IP1-B15 disposition in `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md`; this ledger and `REPORT.md`. Historical handoffs remain historical and retain their meaning.
-- No implementation, tests, fixtures, schemas, dependencies, probes, Shortcuts, packages or runtime artifacts were created or run. The unrelated pre-existing `AGENTS.md` modification remains untouched and uncommitted.
-- Baseline: `2d4a1b5d75e1cadfb2ba758c52168f6efef757d8`; branch/commit/push verification are in the final handoff.
-- **Next:** independent Architect review of this governance-only reconciliation. No IP-1A R3 or IP-2–IP-7 execution is authorized here.
+- IP-1A R3: **PARTIAL**. IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation-level); IP-1F PASS (protocol-design only); IP-1G PASS / ARCHITECT ACCEPTED. **Overall IP-1: PARTIAL / NOT PASS.**
+- RTZ 1.2 exact artifact provenance: **REQUIRES EXTERNAL CONFIRMATION** (`IEC PAS 6XXXX` unresolved; no authoritative exact-byte mapping). RTZ schema copying, bundling, local installation and redistribution: **BLOCKED / NOT CLEARED**. GPX raw-XSD rights: **CONDITIONAL / NOT CLEARED**. No lawful offline schema validator is approved.
+- IP1-B01 remains REQUIRES EXTERNAL CONFIRMATION; IP1-B02 remains BLOCKED / NOT CLEARED; IP1-B03 remains OPEN / NOT QUALIFIED. No unrelated blocker is closed.
+- Readiness only: IP-2A **PARTIAL** (documentation investigation could be separately authorized); IP-2B **BLOCKED**; IP-2C **BLOCKED**; IP-4 schema-backed validation **BLOCKED**. No downstream stage is authorized here.
+- Candidate A (pinned static libxml2 plus licensed local XSDs) is the leading conditional technical direction, not selected or qualified. Account for CVE-2026-6732, security patch ownership, exact resource resolution and target-macOS behavior. No probe or dependency installation was performed.
+- Inquiry drafts remain unsent. Existing schema hashes and R1/R2 validation observations are preserved; no tests were rerun. No code, fixtures, schema, dependencies, Shortcut, package or runtime artifact created.
+- Branch: `implementation/ip-1a-r3-rights-provenance-runtime`; reviewed baseline `ddd17bf1306e5140ffcd86e61e9a12a6e9008673`; commit SHA, parent and remote HEAD are provided in the final handoff. Pre-existing `AGENTS.md` change remains untouched and uncommitted.
+- **Next:** independent Architect review of IP-1A R3; stop before IP-2–IP-7 or implementation.
 
 ### Historical handoff — IP-1G before independent acceptance (superseded)
 
@@ -185,7 +186,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G REVIEW | IP-1G integrates evidence and blockers; independent Architect acceptance pending. IP-1 overall remains PARTIAL; IP-2 onward NOT AUTHORIZED. | IP-1G commit in task handoff |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A R3 PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G PASS / ARCHITECT ACCEPTED | Overall IP-1 remains PARTIAL / NOT PASS. IP1-B01/B02/B03 remain open as recorded above. IP-2–IP-7 NOT AUTHORIZED. | IP-1A R3 commit in task handoff |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | — |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |

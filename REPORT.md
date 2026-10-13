@@ -1,14 +1,15 @@
 # Architect review handoff
 
-## Current governance status — reconciliation R1
+## Current handoff — IP-1A R3 rights, provenance and offline validation
 
-- **Governance reconciliation: PASS.** Effective Gate 3 is **PASS / ARCHITECT ACCEPTED** at approved baseline `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`.
-- **Gate 4 authorization is stage-specific and never blanket authorization.** This status-only task authorizes no implementation stage. IP-1A R3 and IP-2–IP-7 execution remain **NOT AUTHORIZED**; overall IP-1 remains **PARTIAL / NOT PASS**.
-- **IP-1 verdicts:** IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation decision); IP-1F PASS (protocol); IP-1G PASS (independently accepted). IP-1G PASS does not upgrade overall IP-1.
-- **IP-7:** plan APPROVED; execution NOT AUTHORIZED. IP-6 consumer acceptance remains NOT TESTED.
-- **IP1-B15:** CLOSED by this status-only reconciliation. Other blockers and all technical qualifications remain open and unchanged.
-- **Scope:** current-status wording in the Master Plan and IP-1–IP-7, IP1-B15 disposition in `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md`, and this report/`PROGRESS.md`. No product requirement, architecture, technical criterion, historical event, or test result changed. The pre-existing `AGENTS.md` modification is preserved and uncommitted.
-- **Baseline:** `2d4a1b5d75e1cadfb2ba758c52168f6efef757d8`; current branch/commit/push verification are reported below.
+- **Authorization:** this task authorized IP-1A R3 only. IP-1B–IP-1G retain their already accepted verdicts; IP-2–IP-7 execution, production implementation, schema vendoring, Windy testing, packaging/signing and release are **NOT AUTHORIZED**. Gate 4 remains stage-specific, never blanket authorization.
+- **Governance:** Gate 3 is **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. IP-1G and Governance Status Reconciliation are PASS / ARCHITECT ACCEPTED. **Overall IP-1 remains PARTIAL / NOT PASS.**
+- **IP-1A R3 verdict: PARTIAL.** Exact RTZ 1.2 byte-level provenance still requires CIRM/IEC confirmation. RTZ 1.0/1.2 copying, bundling, local installation, offline runtime use and redistribution remain NOT CLEARED. GPX 1.1 raw-XSD rights remain CONDITIONAL / NOT CLEARED. No validator/runtime is approved; Candidate A (fixed, pinned static libxml2 plus permitted local schemas) is only the leading conditional technical direction and must address CVE-2026-6732, patch ownership, resolver restrictions, offline behavior and target-macOS verification.
+- **Readiness only:** IP-2A is PARTIAL (a bounded documentary investigation could be separately authorized); IP-2B, IP-2C and IP-4 schema-backed acceptance are BLOCKED by unresolved security, provenance, rights and runtime qualifications. This report does not authorize those stages.
+- **Blockers:** IP1-B01 REQUIRES EXTERNAL CONFIRMATION; IP1-B02 BLOCKED / NOT CLEARED; IP1-B03 OPEN / NOT QUALIFIED. No unrelated blocker is closed. Inquiry drafts are ready but **no email or external message was sent**.
+- **Scope:** updated `docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md`, `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md`, this report and `PROGRESS.md`. Prior hashes and empirical schema-validation observations were preserved; no tests or probes were repeated. No schema, fixture, dependency, implementation or runtime artifact was created. The pre-existing `AGENTS.md` modification remains untouched and uncommitted.
+- **Baseline:** reviewed commit `ddd17bf1306e5140ffcd86e61e9a12a6e9008673`; branch `implementation/ip-1a-r3-rights-provenance-runtime`. Commit SHA, parent and remote HEAD will be provided in the final handoff.
+- **Next:** independent Architect review of IP-1A R3. Stop before any IP-2–IP-7 or product implementation activity.
 
 ## Historical handoff — IP-1G integration and closeout before acceptance (superseded)
 

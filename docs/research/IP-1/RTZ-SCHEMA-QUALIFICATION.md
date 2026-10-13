@@ -1,15 +1,26 @@
 # IP-1A — RTZ and GPX Schema Qualification Record
 
-**Execution status: PARTIAL — R2 rights/provenance research recorded; external confirmations outstanding.** This record is not an IP-1 PASS, version support claim, legal opinion, implementation authorization, or independent sign-off. RTZ 1.0 and 1.2 remain mandatory qualification targets; RTZ 1.1 remains conditional and non-blocking. No schema is included in the repository or approved for application bundling.
+**Current execution status: PARTIAL — R3 public-source review completed; required publisher/legal confirmations and runtime qualification remain outstanding.** This record is not an IP-1 PASS, version support claim, legal opinion, implementation authorization, or independent sign-off. RTZ 1.0 and 1.2 remain mandatory qualification targets; RTZ 1.1 remains conditional and non-blocking. No schema is included in the repository or approved for application bundling.
 
 **Repository baseline:** `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`
 
 **Execution branch:** `implementation/ip-1a-standards-schema-baseline`
 
-**Research/validation date:** 2026-10-12
-**Validation tool:** `xmllint` (libxml2), using `--nonet`; no application parser/runtime was exercised.
+**Prior schema research/validation date:** 2026-10-12. **R3 public-source review date:** 2026-10-13.
+**Prior validation tool:** `xmllint` (libxml2), using `--nonet`; no application parser/runtime was exercised. R3 did not rerun those checks.
 
-## IP-1A R2 status summary
+## IP-1A R3 status summary (2026-10-13)
+
+| Topic | R3 status | Finding |
+|---|---|---|
+| Exact RTZ 1.2 provenance | **PARTIAL / REQUIRES EXTERNAL CONFIRMATION** | IEC confirms PAS 61174-1:2021 defines revised RTZ 1.2, and CIRM publishes the recorded 1.2 artifact. No authoritative checksum or byte-level mapping ties the exact CIRM bytes (`ba569510…81ceff`) to the IEC PAS. The `IEC PAS 6XXXX` placeholder remains unresolved. Do not infer exact provenance from name, namespace, date, or description. |
+| RTZ 1.0/1.2 access, local use, repository copying and redistribution | **BLOCKED / NOT CLEARED** | Public CIRM downloads do not establish a license. IEC terms require written permission for reproduction/use of IEC publication material and restrict copying, modification, publication, distribution and derivative works from IEC Products absent written permission. No written CIRM/IEC grant for repository copies, app inclusion, user-local installation, offline validation, or unchanged redistribution was found. Access to a download is not permission for those acts. |
+| GPX 1.1 raw XSD | **CONDITIONAL / NOT CLEARED** | Topografix calls the GPX overview-page text public domain and links the official XSD, but the wording does not clearly license the separate raw `.xsd` artifact. Keep its existing digest and test observations; obtain artifact-specific terms/confirmation before copying or bundling. |
+| Offline schema validation | **BLOCKED / NO APPROVED RUNTIME** | Candidate A (pinned static libxml2 plus permitted schemas) is technically plausible but needs vulnerability/version qualification, security controls, schema rights, and package verification. Apple facilities and alternative validators have material constraints (see §5). No probe was necessary to distinguish these documented issues; no runtime candidate is qualified. |
+| Publisher/legal confirmation | **REQUIRES EXTERNAL CONFIRMATION** | Ready-to-send CIRM, IEC and Topografix inquiries appear in §6. None was sent. Written rights-holder evidence and legal review are still required. |
+| **IP-1A R3 verdict** | **PARTIAL** | R3 documents the remaining blockers and candidate limits; it closes no mandatory IP-1A legal/provenance/runtime dependency. Overall IP-1 remains **PARTIAL / NOT PASS**. |
+
+## Historical IP-1A R2 status summary (superseded by R3)
 
 | Topic | Status | Finding |
 |---|---|---|
@@ -39,6 +50,17 @@
 - The schemas differ beyond the namespace/version and header. Structural inspection found changes in `RouteInfo`, `Route`, `Leg`, `Waypoint`, `RadiusType`, `Calculated`, `Manual`, schedule-related types and extension types; RTZ 1.2 adds `Extension` and `NonEmptyString`, adds `Leg` extensions, changes the schedule element spelling to `scheduleElement`, and constrains radius to 0 through 5 inclusive (1.0 permits 0 through less than 10). The 1.0 waypoint `revision` attribute is optional; 1.2 requires it. Detailed field-by-field semantic mapping remains open for IP-1B/IP-2 and must be checked against normative text before implementation.
 - CIRM’s 1.2 test archive includes cases named “Error” that are XSD-valid (duplicate waypoint IDs and route-name/filename mismatch). These observed results show that XSD validity is not semantic conformance; future validation must distinguish schema checks from semantic/application checks.
 - **No rights clearance is granted here.** CIRM RTZ XSD redistribution/bundling terms were not found; RTZ 1.0 and 1.2 are **NOT CLEARED FOR BUNDLING**. IEC text/schema use requires written rights confirmation unless CIRM confirms it holds and can grant the needed redistribution rights. GPX 1.1’s public-domain wording covers “all text on this Web page”; the raw XSD is linked as the official schema but is a separate artifact, so its scope and any notice requirements need confirmation. No schema or test archive may be distributed based solely on the fact it is publicly downloadable.
+
+### Rights by act (R3)
+
+| Act | RTZ 1.0/1.2 XSDs | GPX 1.1 XSD |
+|---|---|---|
+| Access/download from publisher | **VERIFIED as publicly accessible publisher downloads** in prior evidence; this establishes access to those endpoints only. | **VERIFIED as publicly linked/downloadable** from Topografix; this establishes access only. |
+| Local examination or use | **REQUIRES EXTERNAL CONFIRMATION.** No applicable terms were found establishing whether downloaded XSDs may be used for local validation or retained as local copies. IEC publication terms may apply if the artifacts contain IEC publication material; the exact rights holder and scope need confirmation. | **CONDITIONAL.** Public-domain wording covers page text but does not clearly cover the raw XSD. Obtain artifact-level confirmation before retaining/using it as an app resource. |
+| Copy into this repository, application bundle, or local product installation; redistribute unchanged | **BLOCKED / NOT CLEARED.** No written permission or applicable license found for any of these acts, free/private or commercial distribution, or app updates/backups. | **CONDITIONAL / NOT CLEARED.** No raw-XSD license/notice establishing these permissions was located. |
+| Modify, normalize, or create derivative schema copies | **NOT CLEARED.** IEC terms restrict modification of IEC Products absent written permission; CIRM authority over exact files is unconfirmed. | **NOT ESTABLISHED.** No artifact-level terms found. |
+
+These are evidence dispositions, not legal conclusions. No written permission was obtained, and no schema copy is authorized by this research.
 
 ## 2. Artifact provenance and identity
 
@@ -100,7 +122,7 @@ xmllint --nonet --noout --schema /tmp/rtz-ip1a-schemas/gpx-1.1.xsd /tmp/rtz-ip1a
 
 Negative cases were run with the same schema-validation form; each returned nonzero with the facet diagnostic described above. No test command invokes project application code.
 
-## 4. IP-1A qualification verdict
+## 4. Historical R2 qualification verdict (superseded by R3)
 
 **IP-1A: PARTIAL.** There is reproducible positive and negative XSD evidence for the downloaded artifacts. This is not the approved plan’s full PASS evidence:
 
@@ -122,29 +144,30 @@ Negative cases were run with the same schema-validation form; each returned nonz
 | Independent review/sign-off of artifact hashes, field matrix, legal status, and validation evidence | Independent Architect; before declaring the applicable qualification PASS |
 | Validate exact version/namespace dispatch and fail-closed parser behavior | IP-2; not tested here |
 
-## 5. Offline runtime validation strategy (R2)
+## 5. Offline runtime validation strategy (R3)
 
-The approved requirement is full schema-backed validation while the converter is offline. None of these candidates closes legal clearance or implementation qualification by itself.
+The approved requirement remains full schema-backed validation while the converter is offline. No candidate is approved or qualified. This is a technical comparison, not a legal opinion; permissions for each exact XSD remain separate from validator licensing.
 
-| Candidate | Rights status | Runtime/distribution characteristics | Assessment |
+| Candidate | Technical feasibility and XSD 1.0 support | Security, offline behavior and versioning | License/distribution and assessment |
 |---|---|---|---|
-| **A. Authorized XSD resources in the signed app; system-provided libxml2** | **BLOCKED** until written permission covers each schema and its application distribution/use | Smaller package and no separately shipped XML engine. libxml2 exposes XSD validation APIs; however, public API availability, XSD support, supported macOS range, and behavior across OS versions have not been verified for this project. System updates may change engine behavior. | Viable only if target macOS versions provide the needed API and this is verified later. Not qualified here. |
-| **B. Authorized XSD resources plus pinned, statically linked libxml2 in the signed CLI** | XSD rights **BLOCKED**; libxml2’s upstream project states MIT license. Include its license/notice and dependency inventory. | Self-contained and engine-version-pinned; avoids Homebrew/Python and runtime network. Requires controlled source/build and architecture/deployment-target qualification, security patch ownership, and accurate third-party notices. Static linking does not resolve schema rights. Apple documents a nested command-line tool in a macOS app and distribution-signing/notarization workflows. | **Preferred technical candidate**, conditional on rights and later build, signing, offline, and supported-OS verification. No build was performed. |
-| **C. User-supplied or separately acquired schema under a license allowing local use** | **CONDITIONAL** on an applicable license authorizing the user’s acquisition and this application’s validation use | Can avoid project redistribution only if the user lawfully obtains the schema separately and supplies/installs it locally. Offline use can follow setup. Adds difficult setup, source/hash verification, exact version/namespace pairing, and support burden; weakens self-contained first-run usability. A separate schema download shipped by the project remains redistribution. | Contingency only if owner accepts the setup cost and written license permits it. Not approved. |
-| **D. Custom checks or partial schema reimplementation** | **UNRESOLVED**; derivative-rights analysis needed if based on protected schema/spec text | A partial checker can omit ordering, cardinality, datatype, wildcard, and namespace constraints, so it is not equivalent to full XSD validation. A clean-room equivalent implementation would require rights-cleared source material and extensive conformance evidence. | **Not an acceptable current substitute** for the approved schema-backed requirement. Reconsider only with rights-cleared source and explicit architectural approval. |
-| **E. Fetch XSDs at runtime or use a remote validation service** | Does not resolve rights | Requires network and adds availability, privacy, and security dependencies. | **Out of scope** for the fully offline product. |
+| **A. Pinned, statically linked libxml2 plus permitted, pinned XSD resources** | libxml2 exposes XML Schema parse/validation APIs and supports XSD 1.0; a pinned arm64 build can be embedded in the self-contained CLI. | Supports a closed local resolver and deterministic engine version in principle. Must ignore document-provided `xsi:schemaLocation`, reject DTD/entity input, deny all unapproved resource loads, bound work/memory, and be patched and regression-qualified. NIST records CVE-2026-6732 affecting libxml2 2.13.0 through <2.15.3: a crafted schema-validated document with an internal entity can cause a DoS. Pin only a reviewed fixed release (NVD currently identifies 2.15.3 as the first non-affected upstream version), then track security advisories and test the exact build. Rejecting DTDs/entities is additional defense, not a replacement for a fixed library. | libxml2 is MIT-licensed; include applicable notices. That license does not grant RTZ/GPX schema rights. Self-contained/offline and likely the best fit **if** rights clear and exact build security, macOS deployment, signing and validation evidence pass. Not implementation-ready or selected. |
+| **B. Apple/system XML facilities** | `XMLDocument.validate()` provides an XSD validation API, but project-safe deterministic use of only pinned local schemas and exact required XSD 1.0 behavior across the proposed macOS matrix is unverified. Apple documents schema validation through the document; the current document may supply `xsi:schemaLocation`. `XMLParser` alone does not provide schema validation. | The instance-supplied schema location or external-resource handling must not cause network/path access; no empirical qualification exists for denial controls, version consistency, resource bounds, or behavior across OS releases. System updates can change the engine, weakening reproducibility. | Avoids bundling a third-party validator, but does not resolve schema rights. Candidate only if documented Apple API behavior and an authorized target-macOS qualification prove the closed local-resource design. Not qualified. |
+| **C. Another self-contained validator (e.g. Xerces-C++)** | Xerces-C++ advertises XML Schema support and Apache License 2.0; technically embeddable, subject to XSD 1.0 feature and arm64 deployment verification. | Its upstream security page says it has no active maintainers, will no longer accept DoS reports as security vulnerabilities, and lists an unaddressed hash-collision DoS advisory. That maintenance posture is unsuitable for processing untrusted route documents without a compelling, independently supportable mitigation. Any alternative must also prove closed resolver/no-network behavior, resource limits, pinned version and patch ownership. | Apache-2.0 notices are manageable, but validator code licensing does not clear schema rights. **Not recommended** for V1 on current security/maintenance evidence. A different validator requires an explicit supported-security and XSD-conformance case; no dependency was installed. |
+| **D. User-supplied, separately obtained and licensed XSD resources** | Could validate offline if users obtain the exact authorized schema set and the application enforces its version/namespace/digest pairing and closed local resolver. | Adds first-run setup, schema authenticity/update/support burden, and risks mismatched or unsafe external resources. It is not self-contained on first launch; the application must never fetch schemas. | Could avoid project redistribution only if user acquisition and local use are expressly licensed and legally reviewed. It does not meet the approved self-contained product direction by default. Any V1 change requires owner/architect approval; not approved. |
 
-### Recommended candidate and security requirements
+**Conclusion:** Candidate A is the leading technical direction, conditional and unselected. It is not cleared for use until (1) exact schema rights and provenance are established, (2) an appropriate fixed libxml2 version/build receives security review and adversarial offline/resolver qualification, and (3) target-macOS, signing/notarization and output validation are verified. If A is infeasible or rights are denied, stop for an explicit architecture/product decision; do not silently weaken schema-backed validation or switch to a partial custom checker. Candidate D remains a potential product-direction change, not a workaround approved by this task.
 
-Conditionally pursue candidate B: after written rights for the exact schemas, pin approved RTZ 1.0, RTZ 1.2, and GPX 1.1 artifacts by version, namespace, and digest; include immutable permitted schemas as app resources; statically link a pinned supported libxml2 build into the bundled CLI; include required notices; and sign/notarize the nested CLI and app. This is a research recommendation, **not clearance, a selected implementation, or an implementation authorization**. If permission is denied, stop for product/architectural/legal review; do not silently substitute D or E.
+Security requirements for any future validator remain: select only locally pinned schemas by exact version/namespace; ignore instance-provided schema locations; reject/disable DTDs, external entities, XInclude and unapproved resource resolution; no network schema fetch or remote service; avoid entity substitution; enforce bounded reads, parse work and memory; do not log route contents; pin and monitor validator releases. `--nonet` alone is not a production guarantee. Prior `xmllint --nonet` results remain schema observations and do not qualify a packaged runtime.
 
-Future validation must select only locally pinned schemas through a closed resolver; ignore input `xsi:schemaLocation`; reject or disable DTDs, external entities, XInclude, and unapproved schema/resource loads; avoid entity substitution; enforce input/parser resource bounds; and avoid logging route contents. The exact APIs, resource loader, supported library build, and hardened behavior require review and adversarial checks in an authorized implementation stage. Upstream libxml2 documentation says `XML_PARSE_NONET` no longer disables built-in network access in versions where the built-in clients have been removed; custom resource loaders remain a separate boundary. Therefore `--nonet` alone is not a sufficient production guarantee. R1’s `xmllint --nonet` results remain only schema evidence, not runtime offline qualification.
+### Runtime and rights evidence
 
-### Technical comparison evidence
+- IEC says PAS 61174-1:2021 provides revised RTZ 1.2 while retaining RTZ 1.0 unchanged ([IEC publication record](https://webstore.iec.ch/en/publication/67774)). IEC copyright says publication use requires written permission, and current Webstore terms prohibit copying, modifying, publishing or making IEC Products available without written permission ([copyright](https://webstore.iec.ch/copyright), [terms](https://webstore.iec.ch/terms-conditions)). This does not establish that CIRM may grant rights over the exact XSDs; obtain written authority/permission.
+- Topografix’s GPX overview says “All text on this Web page is in the public domain” and links the official GPX schema ([overview](https://www.topografix.com/gpx.asp)). That wording does not expressly identify the raw XSD download. Keep GPX XSD rights conditional pending artifact-specific confirmation.
+- libxml2 upstream documents its [MIT license and security posture](https://github.com/GNOME/libxml2); the NVD describes [CVE-2026-6732](https://nvd.nist.gov/vuln/detail/CVE-2026-6732), affecting upstream versions 2.13.0 through <2.15.3. Pinning a version alone is insufficient: security updates and the exact build must be reviewed. NVD version data is a screening input, not a substitute for upstream advisory/build verification.
+- Apple documents [`XMLDocument.validate()`](https://developer.apple.com/documentation/foundation/xmldocument/validate%28%29) and [`XMLParserDelegate`](https://developer.apple.com/documentation/foundation/xmlparserdelegate); these APIs do not by themselves establish this product’s required local-only schema dispatch, complete XSD behavior, or safe untrusted-input runtime.
+- Xerces-C++ documents its [security and maintenance limitations](https://xerces.apache.org/xerces-c/secadv.html), including lack of active maintainers and DoS support limits. It is not recommended here.
 
-- Upstream libxml2 documents [schema parse/validation APIs](https://gnome.pages.gitlab.gnome.org/libxml2/html/xmlschemas_8h.html), its [MIT license](https://gnome.pages.gitlab.gnome.org/libxml2/), and [parser controls/resource loaders](https://gnome.pages.gitlab.gnome.org/libxml2/html/parser_8h.html). Those facts establish technical plausibility but not availability of a particular macOS system library/API or runtime behavior for this application.
-- Apple documents [embedding a command-line tool in a macOS app](https://developer.apple.com/documentation/xcode/embedding-a-helper-tool-in-a-sandboxed-app) and [distribution-signing/notarizing Mac code](https://developer.apple.com/documentation/xcode/creating-distribution-signed-code-for-the-mac/). This supports packaging feasibility in principle; no project build or notarization was attempted.
-- GPX 1.1 and both RTZ XSDs inspected in R1 have no imports/includes, simplifying a local closed schema set. RTZ 1.1 STM extension package has an unresolved relative import and remains conditional/non-blocking.
+No temporary technical probe was necessary to distinguish these candidates from the available primary documentation. No probe, dependency installation, build, or runtime test was performed in R3.
 
 ## 6. Ready-to-send publisher inquiries (not sent)
 
@@ -154,15 +177,16 @@ No external messages were sent. These drafts require separate user authorization
 
 **To:** office@cirm.org
 
-**Subject:** RTZ schema 1.2 provenance and redistribution permission for offline macOS application
+**Subject:** Exact RTZ XSD provenance and rights for repository copies and an offline application
 
 > CIRM’s RTZ XML Schemas page lists document 64 as `RTZ_Schema_version_1_2.xsd` (version 1.2, dated 2020-10-22). Its SHA-256 is `ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff`; its header says `Source: IEC PAS 6XXXX`. CIRM’s document 65 text-format download is byte-identical. IEC’s PAS 61174-1:2021 page says the PAS provides the revised RTZ 1.2 schema. Please confirm:
 >
 > 1. Is this exact CIRM-published file the RTZ 1.2 schema corresponding to IEC PAS 61174-1:2021? Can CIRM identify the correct source reference and explain/correct the `6XXXX` placeholder? Is there an authoritative checksum, release record, or IEC-to-CIRM artifact mapping?
 > 2. Who holds copyright/licensing authority for the RTZ 1.0 and 1.2 XSDs, and can CIRM grant the permissions below, including any necessary IEC permission?
-> 3. May the unmodified XSDs be included as local resources in a free or commercial, signed/notarized macOS application/DMG distributed worldwide, and used only for offline local validation? May they be copied in app backups? Please specify attribution, notice, link, source availability, fees, territory, duration, user-count, and update conditions.
-> 4. Does permission cover use by a statically linked validator or other compiled/embedded form? Are modifications or normalized copies prohibited? Is byte-for-byte inclusion allowed?
-> 5. What rights and notices apply to the RTZ 1.2 sample archive for internal validation without redistribution?
+> 3. May the exact RTZ 1.0 and 1.2 XSDs be copied into a public or private software repository, and then redistributed unchanged as local resources installed with a free or privately distributed offline application? Does the answer differ for non-commercial versus commercial use?
+> 4. Is local offline validation against the bundled, unchanged XSD copies permitted? Does permission cover a signed/notarized macOS application/DMG, app backups and updates? What attribution, license text, notices, links, fees, territory, duration, user-count, source-availability or other conditions apply?
+> 5. Are modifications, normalized copies, or embedding/packaging with a statically linked validator restricted? Is byte-for-byte inclusion permitted?
+> 6. What rights and notices apply to the RTZ 1.2 sample archive for internal validation without redistribution?
 >
 > We will not bundle schemas or samples until written terms identify the permitted scope.
 
@@ -175,6 +199,8 @@ No external messages were sent. These drafts require separate user authorization
 > CIRM publishes RTZ 1.0 and RTZ 1.2 XSDs. Its 1.2 file (SHA-256 `ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff`) has the header `IEC PAS 6XXXX`. IEC’s PAS 61174-1:2021 page says the PAS provides the revised RTZ 1.2 schema and retains RTZ 1.0 unchanged. Does IEC identify this exact file as schema text in or derived from the PAS or IEC 61174:2015? Does CIRM’s publication grant the rights needed to redistribute it, or is separate IEC permission required?
 >
 > If IEC permission is required, can IEC license inclusion of the exact RTZ 1.0 and 1.2 XSD files as immutable local resources in a free/commercial signed/notarized macOS application distributed worldwide, for offline validation only? Please specify fees, attribution/notice, source-link, modification, sublicensing, territory, duration, update, and user-count terms. We can provide the files and hashes on request.
+
+> Please also state whether the exact XSD files may be copied into a public or private source repository before release, retained locally for validation, installed with the application, redistributed unchanged in free/private or commercial products, and copied in updates/backups. Identify whether CIRM is authorized to grant those permissions and whether IEC permission is required.
 
 ### Topografix — GPX 1.1 XSD rights
 
@@ -194,4 +220,4 @@ No external messages were sent. These drafts require separate user authorization
 
 ## 7. Scope and privacy record
 
-No source-vessel route, user-provided route, private coordinate, credential, or route digest was used. No R1 validation tests were repeated for R2; R2 added publisher-rights research and a strategy comparison. No publisher inquiry was sent. No schema, test fixture, script, dependency, parser, application code, Shortcuts artifact, or package was added to Git. Static project fixtures are assigned to IP-1B and were not created. IP-1B onward, IP-2–IP-7, and release remain unauthorized.
+No source-vessel route, user-provided route, private coordinate, credential, or route digest was used. R3 did not repeat accepted R1/R2 schema-validation evidence. R3 reviewed public publisher, standards, platform, validator-license, and security sources; no publisher inquiry was sent. No probe, schema, test fixture, script, dependency, parser, application code, Shortcuts artifact, or package was created or added to Git. Static project fixtures are assigned to IP-1B and were not created here. This task authorizes IP-1A R3 only; IP-2–IP-7 execution and release remain unauthorized.
