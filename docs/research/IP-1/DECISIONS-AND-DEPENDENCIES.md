@@ -1,6 +1,6 @@
 # IP-1G — Decisions, Traceability, and Dependencies
 
-**Historical IP-1G closeout status:** REVIEW (at the time of its original handoff). IP-1G was subsequently independently accepted PASS. **Current IP-2A R1 status: PARTIAL; overall IP-1 remains PARTIAL / NOT PASS.** Current accepted IP-1 verdicts: IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation-level); IP-1F PASS (protocol-design only); IP-1G PASS / ARCHITECT ACCEPTED. IP-2A R1 is separately authorized; IP-2B onward remain NOT AUTHORIZED.
+**Historical IP-1G closeout status:** REVIEW (at the time of its original handoff). IP-1G was subsequently independently accepted PASS. **Current IP-2A R2 status: PARTIAL; overall IP-1 remains PARTIAL / NOT PASS.** Current accepted IP-1 verdicts: IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation-level); IP-1F PASS (protocol-design only); IP-1G PASS / ARCHITECT ACCEPTED. IP-2A R2 is separately authorized; IP-2B onward remain NOT AUTHORIZED.
 
 **Baseline:** `b964b51584c79fde7af06100809ccca1f54333df`
 **Branch:** `implementation/ip-1g-integration-closeout`
@@ -10,7 +10,7 @@
 
 The IP-1 work provides useful evidence and downstream contracts, but it does not satisfy the approved IP-1 execution-PASS conditions. Mandatory RTZ schema qualification and lawful offline schema validation remain unresolved; IP-1C has not received independent reproduction/review of its rhumb vectors and general G3-006 global-minimizer behavior remains unqualified; IP-1D has not qualified the Finder file-reference path; IP-1E is a packaging decision rather than package evidence; IP-1F is a protocol rather than Windy evidence. Those limitations are explicit and must not be converted into assumptions.
 
-**Historical readiness decision (after IP-1A R3; superseded):** IP-2A technical/security investigation was PARTIAL and not yet authorized. The current IP-2A R1 outcome and readiness are recorded in §7 below.
+**Historical readiness decision (after IP-1A R3; superseded):** IP-2A technical/security investigation was PARTIAL and not yet authorized. The current IP-2A R2 outcome and readiness are recorded below.
 
 ## 2. Evidence inventory and scope
 
@@ -109,9 +109,21 @@ This update records R3 outcomes without changing any G3 decision, approved plan,
 
 **R3 verdict: IP-1A PARTIAL. Overall IP-1: PARTIAL / NOT PASS.** No blocker is closed by this update. IP-1B through IP-1G accepted verdicts remain unchanged. The original IP-1G integration/review narrative below describes its historical state; IP-1G is now independently accepted PASS.
 
-## Current IP-2A R1 disposition (2026-10-13)
+## Current IP-2A R2 disposition (2026-10-13)
 
-This bounded continuation records parser/runtime feasibility and file-reference ownership without changing any G3 decision, approved implementation plan, schema, fixture or prior evidence. Gate 3 remains **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 remains stage-specific. IP-2A R1 alone is authorized. IP-2B–IP-2E, IP-3–IP-7 execution and production implementation remain **NOT AUTHORIZED**. Overall IP-1 remains **PARTIAL / NOT PASS**.
+This authorized continuation qualifies one disposable libxml2 2.15.4 candidate configuration using synthetic inputs only. Gate 3 remains **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 remains stage-specific. **IP-2A R2 alone is authorized.** IP-2B–IP-2E, IP-3–IP-7 execution and production implementation remain **NOT AUTHORIZED**. Overall IP-1 remains **PARTIAL / NOT PASS**.
+
+- **IP1-B03: PARTIAL / OPEN / NOT QUALIFIED.** On one macOS 26.6.2 arm64 host, a temporary static libxml2 2.15.4 build with `XML_PARSE_NONET | XML_PARSE_NO_XXE | XML_PARSE_NO_SYS_CATALOG | XML_PARSE_BIG_LINES`, per-context deny-all resource loaders and immediate `internalSubset` abort rejected the tested DOCTYPE/entity, external resource and malformed-input cases. No loader fallback or network client was observed. This is credible candidate evidence, not broad security qualification: supported-OS matrix, async/pathological cancellation bounds, per-input memory limits, production integration and independent review remain open.
+- **IP1-B04: PARTIAL / OPEN, unchanged.** No Finder/Shortcuts file-reference, alias, symlink, security-scope, permission, file-identity race or preview/export continuity case was tested. Joint IP-2A/IP-5/IP-7 policy remains unresolved; do not use a full source digest by default.
+- **Resource findings:** descriptor-style `xmlCtxtReadIO` accepted synthetic input at candidate 16 MiB−1 and 16 MiB, rejected 16 MiB+1 after reading limit+1, and closed once. Application callbacks accepted depth 64, 250,000 elements, 4 KiB single text/attribute and 8 MiB aggregate text at their boundaries, rejecting +1. Counters run after some parser allocations; aggregate harness RSS is not per-conversion memory. No proposed ceiling is approved; see `docs/research/IP-2/RESOURCE-LIMITS.md`.
+- **Schema/runtime:** IP1-B01 remains REQUIRES EXTERNAL CONFIRMATION; IP1-B02 remains BLOCKED / NOT CLEARED. No RTZ/GPX schemas were used, copied, bundled or qualified. The generic synthetic XSD resolver test only showed the deny-loader callback rejecting local/HTTP include requests; it is not schema-rights or IP-2C evidence. Well-formed XML alone remains insufficient.
+- **Readiness:** IP-2A **PARTIAL**; IP-2B **BLOCKED**; IP-2C **BLOCKED**; IP-2D **BLOCKED**. No IP-1 verdict or blocker other than parser-candidate evidence status changes.
+
+**IP-2A R2 verdict: PARTIAL.** Independent Architect review is next. No execution beyond IP-2A R2 is authorized.
+
+### Historical IP-2A R1 disposition (superseded)
+
+This was the R1 handoff; its authorization and “current” references are historical, superseded by the R2 status above. It records parser/runtime feasibility and file-reference ownership without changing any G3 decision, approved implementation plan, schema, fixture or prior evidence.
 
 - **IP1-B03: PARTIAL / OPEN, NOT QUALIFIED.** A disposable synthetic in-memory probe on macOS 26.6.2 arm64 / Swift 6.3.3 observed Foundation XMLParser accepting a bare DOCTYPE without a declaration callback. Foundation XMLParser alone is therefore not suitable for the strict DTD-rejection boundary. This observation is host- and case-specific. libxml2 remains a leading candidate only; it is not selected or security-qualified. DTD/entity rejection, external-resource denial, resolver/catalog isolation, adversarial behavior, limits, cancellation, exact build and supported-OS evidence remain outstanding.
 - **IP1-B04: PARTIAL / OPEN.** The contract now explicitly treats FileReference path and contents as untrusted until secure open and validation. Descriptor-based bounded reads and no unsafe path reopening are required. The actual Finder/Shortcuts carrier, aliases/security-scoped access, permissions, object identity/replacement and preview-to-export continuity remain joint IP-2A/IP-5/IP-7 questions; no final symlink or alias policy was chosen.
@@ -119,7 +131,7 @@ This bounded continuation records parser/runtime feasibility and file-reference 
 - **Schema/runtime:** IP1-B01 remains REQUIRES EXTERNAL CONFIRMATION; IP1-B02 remains BLOCKED / NOT CLEARED. No XSD rights, schema runtime, dialect or parser is qualified. Failure to obtain an authorized exact local schema must fail closed; well-formed XML alone is not acceptance.
 - **Readiness:** IP-2A R1 **PARTIAL**; IP-2B BLOCKED; IP-2C BLOCKED; IP-2D BLOCKED. IP-1 verdicts are unchanged and no blocker is closed.
 
-**IP-2A R1 verdict: PARTIAL.** Independent Architect review is next. No execution beyond IP-2A R1 is authorized.
+**Historical IP-2A R1 verdict: PARTIAL.** Its “independent Architect review is next” statement applied at R1 handoff only.
 
 ## 5. Cross-plan consistency audit
 
@@ -141,7 +153,7 @@ These were status/governance contradictions, not reasons to redesign G3-001–G3
 
 ## 6. Historical readiness and bounded IP-2 assessment at IP-1G closeout (superseded)
 
-The following readiness text records the earlier IP-1G handoff and is retained as history. The current IP-2A R1 assessment and authorization are in § “Current IP-2A R1 disposition” above.
+The following readiness text records the earlier IP-1G handoff and is retained as history. The current IP-2A R2 assessment and authorization are in § “Current IP-2A R2 disposition” above.
 
 ### Overall IP-1 disposition
 

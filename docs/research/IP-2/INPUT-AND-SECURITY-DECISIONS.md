@@ -1,6 +1,92 @@
-# IP-2A R1 — Input and Security Feasibility Record
+# IP-2A R2 — libxml2 Security Qualification
 
-**Status: PARTIAL.** This is a documentation-first security/runtime feasibility record. It does not approve a parser, close IP1-B03/B04, authorize IP-2B–IP-2E, or qualify schema-backed dialect support.
+**Verdict: PARTIAL.** This authorized disposable qualification supports libxml2 2.15.4 as a technically credible parser candidate under the exact configuration below; it does **not** select a product dependency, close IP1-B03/B04, qualify RTZ/XSD behavior, or authorize IP-2B–IP-2E. No RTZ/GPX schemas were used.
+
+**Authorization:** IP-2A R2 only. Gate 3 remains **PASS / ARCHITECT ACCEPTED**; Gate 4 is stage-specific. Overall IP-1 remains **PARTIAL / NOT PASS**. IP-2B–IP-2E, IP-3–IP-7 execution and production implementation remain **NOT AUTHORIZED**.
+
+**Branch:** `implementation/ip-2a-r2-libxml2-security-qualification`; baseline/parent `0625fc8980c0072a297a37fde6603538cf52cc06`. **Environment:** macOS 26.6.2 (25G83), arm64, Apple clang 21.0.0 / Xcode 26.6. All empirical claims below are limited to the disposable build and synthetic cases on this single host.
+
+## R2.1 Candidate release and build
+
+- **Exact candidate:** libxml2 2.15.4, upstream release dated 2026-09-01. Upstream archive SHA-256: `98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821`. The archive checksum was independently recomputed after download. Sources: [GNOME 2.15 release index](https://download.gnome.org/sources/libxml2/2.15/), [2.15.4 release notes](https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.news), [published SHA-256](https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.sha256sum).
+- **License:** upstream libxml2 MIT license; this does not grant rights to any RTZ or GPX schema. See [upstream API documentation](https://gnome.pages.gitlab.gnome.org/libxml2/html/).
+- **Temporary build:** static, host-native test build; no library source or binary was added to Git or installed as a product dependency. Configure options: `--disable-shared --enable-static --without-catalog --without-http --without-python --without-zlib --without-valid --without-xinclude --with-schemas --with-reader --with-push --with-iconv`. The feature report showed Reader, Push, Schemas and Iconv; Catalog, HTTP, Zlib, DTD validation, XInclude and Python bindings were absent. The standalone `xmlcatalog` tool was absent. The system libxml2 2.9.13 was not used.
+- The build demonstrates a candidate configuration only. It is not a final product dependency choice, signed/notarized build, supported-OS claim, ABI/deployment qualification, or general security certification.
+
+## R2.2 Exact parse configuration and boundaries
+
+The synthetic SAX push-parser probe used `XML_PARSE_NONET | XML_PARSE_NO_XXE | XML_PARSE_NO_SYS_CATALOG | XML_PARSE_BIG_LINES`. `XML_PARSE_BIG_LINES` was for useful diagnostics, not permissive parsing. Each parser context used `xmlCtxtSetResourceLoader` with a deny-all callback. Input came from `xmlCtxtReadIO` callbacks, in 4 KiB chunks; the callback enforced the byte cap and cancellation. A SAX `internalSubset` callback immediately called `xmlStopParser`; the application also counted SAX element, depth, text and attribute values and stopped on its candidate caps. No route model/tree was returned by the probe.
+
+Not enabled: `XML_PARSE_NOENT`, `XML_PARSE_DTDLOAD`, `XML_PARSE_DTDATTR`, `XML_PARSE_DTDVALID`, `XML_PARSE_RECOVER`, `XML_PARSE_HUGE`, `XML_PARSE_XINCLUDE`, `XML_PARSE_UNZIP`, `XML_PARSE_CATALOG_PI`, or any default resource loader. `XML_PARSE_NONET` was defense-in-depth only: in 2.15 it is not a standalone network boundary because custom loaders receive the policy and built-in HTTP/FTP clients are absent. The context loader must deny all requests. No global catalog or implicit fallback was permitted. API reference: [libxml2 parser API](https://gnome.pages.gitlab.gnome.org/libxml2/html/parser_8h.html).
+
+**DOCTYPE timing evidence:** locally inspected pinned upstream source shows the SAX `internalSubset` callback at [`parser.c` v2.15.4, around line 8016](https://gitlab.gnome.org/GNOME/libxml2/-/blob/v2.15.4/parser.c#L8016), before `xmlParseInternalSubset()`; that routine checks `PARSER_STOPPED` before processing the subset. In this build, each DOCTYPE case was rejected before element/text SAX events and with zero resource-loader calls. This supports early abort for the tested callback/configuration, not a proof against every parser bug or every input encoding.
+
+## R2.3 Observed synthetic security and XML matrix
+
+All cases were project-authored synthetic strings. No network request was made; external local-file tests used a temporary sentinel outside the repository. Expected policy was fail-closed for any DOCTYPE/resource request/malformed XML and acceptance only for well-formed ordinary XML at this parser layer.
+
+| Case | Observed result | Loader / callback evidence |
+|---|---|---|
+| Plain well-formed XML | Accepted | No loader calls |
+| Bare DOCTYPE; internal element declaration; internal general entity; internal parameter entity | Rejected | `doctype=1`; stopped before element/text callbacks; loader 0 |
+| External general entity (`file://`, `http://`); external DTD (local/network); external parameter entity (local/network); nested expansion attempt | Rejected | `doctype=1`; loader attempts 0; no external bytes observed |
+| Mismatched/malformed tags, two roots, trailing non-whitespace, `UTF-99`, invalid UTF-8 | Rejected | No recovery; no successful result |
+| Well-formed wrong namespace/version-like document | Accepted at XML layer | Expected: dialect dispatch/schema/semantic validation are separate and not qualified here |
+| `xsi:noNamespaceSchemaLocation` hint | Accepted at XML layer | Loader 0; no implicit fetch |
+| XInclude marker | Parsed as inert elements | Loader 0; XInclude was not built/enabled/invoked |
+| Synthetic XSD include to an existing local sentinel and synthetic HTTP URI, via schema-context loader | Both rejected | Per-schema-context deny loader called once per request; no fallback; accepted 0; no network client/request |
+
+The generic XSD loader check establishes only the deny-loader path for the tiny synthetic schema test. It is not RTZ/GPX schema or IP-2C qualification and does not resolve schema redistribution or runtime rights.
+
+## R2.4 Streaming, cancellation and candidate limits
+
+- **Streaming API:** `xmlCtxtReadIO` with descriptor-style read/close callbacks consumed the same open descriptor in bounded 4 KiB requests; it did not first copy the whole file into a second input buffer. The test close callback ran exactly once. No reads occurred after cancellation/stop was observed.
+- **Input-byte ceiling:** with a candidate 16 MiB callback cap, descriptor-backed synthetic inputs of 16 MiB−1 and exactly 16 MiB were accepted. 16 MiB+1 was rejected after delivering exactly 16 MiB+1 to the parser callback (`cap_exceeded=1`); close callback ran once. This shows the callback can observe at most limit+1 bytes, not that parser internal allocation or total process memory is capped at 16 MiB.
+- **Cancellation:** the read callback called `xmlStopParser` upon a synthetic cancellation signal at 64 KiB. Result was failure/no document; close callback exactly once; no later read callback. The tiny case took about 50 μs on this run; this is an observation, not a 250 ms bound. Asynchronous cross-thread cancellation and CPU-bound adversarial interruption remain unqualified.
+- **Depth:** application SAX counter accepted depth 64 and rejected 65. This is an application callback result, not an intrinsic libxml depth guarantee.
+- **Attribute value:** callback accepted 4095 and 4096 UTF-8 bytes; rejected 4097. The attribute value has already been materialized by the parser before the SAX start callback, so this is not an allocation hard limit.
+- **Text:** application counter accepted a single text value of 4095/4096 bytes and rejected 4097; aggregate text of 8 MiB−1 and exactly 8 MiB was accepted, 8 MiB+1 rejected.
+- **Element count:** 250,000 synthetic elements accepted; 250,001 rejected by application callback.
+- **Measurement limits:** `/usr/bin/time -l` reported 45,875,560 bytes (~43.8 MiB) for the full multi-case harness, including generated input buffers; this is not per-input parser RSS and is not a product memory bound. The 16 MiB cases reported about 44,768 KiB RSS for the harness. Small-case timings and one host do not establish performance targets or supported-system behavior. Candidate waypoint, extension, diagnostics, work-time, per-conversion memory and 250 ms cancellation ceilings remain unqualified; see `RESOURCE-LIMITS.md`.
+
+The boundary findings update provisional evidence only; none of the candidate ceilings is approved for product use. Callback checks can occur after parser token allocation. Production validation/model memory, schema work and process-wide containment have not been measured.
+
+## R2.5 Security advisory review
+
+| Advisory | Assessment for 2.15.4 candidate | Qualification note |
+|---|---|---|
+| CVE-2026-6732 | Upstream release notes indicate fixed before 2.15.3; 2.15.4 is beyond that fixed release. | NVD describes a schema-validation DoS involving an internal entity. This does not certify other paths/builds. [NVD](https://nvd.nist.gov/vuln/detail/CVE-2026-6732). |
+| CVE-2026-86137 through CVE-2026-86144 | 2.15.4 upstream release notes identify the security fixes; the chosen release includes them. | Verify against release notes and advisories again before any product dependency selection. [Upstream 2.15.4 news](https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.news), [Debian tracker](https://security-tracker.debian.org/tracker/source-package/libxml2). |
+| CVE-2026-74860 | Python binding-specific; Python bindings were disabled and absent in the temporary build. | Does not imply the C library is generally safe. [Ubuntu advisory](https://ubuntu.com/security/CVE-2026-74860). |
+| CVE-2026-11979 | Debian tracks an `xmlcatalog --shell` issue as unimportant; upstream disputes that it is a vulnerability. | Catalog support and `xmlcatalog` were disabled/absent in the test build. This is not a general parser exposure assessment. [Debian record](https://security-tracker.debian.org/tracker/CVE-2026-11979). |
+
+This review is limited to cited published records available at the task date and the tested build features. Advisory databases can change; dependency selection requires a fresh review, patch owner and update policy. No general security certification is claimed.
+
+## R2.6 Disposition and readiness
+
+- **IP1-B03: PARTIAL / OPEN / NOT QUALIFIED.** The exact candidate’s tested deny-DOCTYPE and deny-loader behavior is credible for the synthetic cases on one host. Still missing: supported macOS matrix, async/pathological cancellation bound, reliable per-input memory bound, production integration, schema-validator workload, broader security review and independent acceptance.
+- **IP1-B04: PARTIAL / OPEN, unchanged.** IP-2A R2 did not exercise Finder/Shortcuts references, aliases, security scope, permissions, identity races or preview/export continuity. Joint IP-2A/IP-5/IP-7 closure remains necessary.
+- **IP-2A R2: PARTIAL.** Qualification evidence is not a product parser or a dependency selection.
+
+| Assessment | Readiness | Reason |
+|---|---|---|
+| IP-2A | **PARTIAL** | Candidate config and bounded synthetic controls characterized; B03/B04 and legal schema/runtime dependencies remain open. |
+| IP-2B | **BLOCKED** | IP-2A not PASS; B04 and other mandatory dependencies remain unresolved. |
+| IP-2C | **BLOCKED** | IP1-B01/B02 schema provenance, rights and offline runtime remain unresolved; no schema was used. |
+| IP-2D | **BLOCKED** | Depends on qualified parsing/schema and reviewed semantics/model contract. |
+
+No later stage is authorized. Overall IP-1 remains **PARTIAL / NOT PASS**.
+
+### R2 sources
+
+- GNOME official [2.15 release index](https://download.gnome.org/sources/libxml2/2.15/), [2.15.4 notes](https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.news), [archive checksum](https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.sha256sum), [parser API](https://gnome.pages.gitlab.gnome.org/libxml2/html/parser_8h.html).
+- [NVD CVE-2026-6732](https://nvd.nist.gov/vuln/detail/CVE-2026-6732); [Debian libxml2 tracker](https://security-tracker.debian.org/tracker/source-package/libxml2); [Debian CVE-2026-11979](https://security-tracker.debian.org/tracker/CVE-2026-11979); [Ubuntu CVE-2026-74860](https://ubuntu.com/security/CVE-2026-74860).
+
+---
+
+# Historical IP-2A R1 — Input and Security Feasibility Record
+
+**Historical status at R1:** PARTIAL. Superseded by the R2 disposition above; this R1 record is retained as evidence of prior work.
 
 **Authorization:** IP-2A R1 only. **Gate 3:** PASS / ARCHITECT ACCEPTED. **Overall IP-1:** PARTIAL / NOT PASS. No parser, model, validator, CLI, Shortcut, or release work is authorized.
 
