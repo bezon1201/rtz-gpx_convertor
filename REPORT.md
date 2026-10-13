@@ -1,6 +1,19 @@
 # Architect review handoff
 
-## Current handoff — IP-1A R3 rights, provenance and offline validation
+## Current handoff — IP-2A R1 security and runtime feasibility
+
+- **Authorization:** IP-2A R1 only. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remain **NOT AUTHORIZED**. Gate 4 is stage-specific, never blanket authorization.
+- **Governance:** Gate 3 is **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. **Overall IP-1 remains PARTIAL / NOT PASS.** IP-1A R3 remains PARTIAL; IP-1B PASS; IP-1C/IP-1D PARTIAL; IP-1E PASS (documentation-level); IP-1F PASS (protocol only); IP-1G and governance reconciliation PASS / ARCHITECT ACCEPTED.
+- **IP-2A R1 verdict: PARTIAL.** Foundation XMLParser is unsuitable as the sole strict boundary based on the observed bare-DOCTYPE acceptance. Pinned libxml2 is a leading candidate only, not selected or qualified; Xerces-C++ is not recommended. No parser candidate closes IP1-B03.
+- **Blockers:** IP1-B03 remains **PARTIAL / OPEN, NOT QUALIFIED**; IP1-B04 remains **PARTIAL / OPEN** because the cross-stage file-reference, alias/security-scope and preview/export continuity policy is not qualified. IP1-B01/B02 rights/provenance/runtime blockers remain open. No blocker is closed by R1.
+- **Artifacts:** added `docs/research/IP-2/INPUT-AND-SECURITY-DECISIONS.md` and `docs/research/IP-2/RESOURCE-LIMITS.md`; updated `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md`, this report and `PROGRESS.md`. Resource ceilings are proposals only. No schemas, fixtures, dependencies, code, parser, CLI, Shortcut, app or runtime artifact was created.
+- **Probe boundary:** one disposable, in-memory Foundation probe used synthetic XML strings on macOS 26.6.2 / arm64 with Swift 6.3.3. It was explicitly authorized by the task; no route, schema, network, or filesystem XML input was used. Its results are host-specific observations, not cross-version or production security evidence. No application tests were run.
+- **Git:** branch `implementation/ip-2a-security-runtime-feasibility`, based on reviewed baseline `4329b04193652b7fe555180ecd51e238b1271d4d`. Pre-existing `AGENTS.md` modification is preserved and excluded.
+- **Next:** independent Architect review of IP-2A R1. Do not begin IP-2B or any later stage without separate authorization.
+
+### Historical handoff — IP-1A R3 rights, provenance and offline validation (superseded)
+
+## IP-1A R3 handoff at that time
 
 - **Authorization:** this task authorized IP-1A R3 only. IP-1B–IP-1G retain their already accepted verdicts; IP-2–IP-7 execution, production implementation, schema vendoring, Windy testing, packaging/signing and release are **NOT AUTHORIZED**. Gate 4 remains stage-specific, never blanket authorization.
 - **Governance:** Gate 3 is **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. IP-1G and Governance Status Reconciliation are PASS / ARCHITECT ACCEPTED. **Overall IP-1 remains PARTIAL / NOT PASS.**

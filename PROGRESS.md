@@ -1,6 +1,18 @@
 # Progress ledger
 
-## Current gate activity — IP-1A R3 rights, provenance and offline validation
+## Current gate activity — IP-2A R1 security and runtime feasibility
+
+**Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific, never blanket authorization. Current authorization is **IP-2A R1 only**. IP-2B–IP-2E, IP-3–IP-7 execution and implementation remain **NOT AUTHORIZED**.
+
+- IP-2A R1: **PARTIAL**. Foundation XMLParser alone does not meet the strict DTD policy in the observed case; libxml2 remains a candidate, not selected or qualified; Xerces-C++ is not recommended.
+- IP1-B03: **PARTIAL / OPEN, NOT QUALIFIED**. IP1-B04: **PARTIAL / OPEN**; joint FileReference, alias/security-scope and source-continuity requirements remain unqualified. IP1-B01/B02 remain open. Overall IP-1: **PARTIAL / NOT PASS**.
+- Provisional resource ceilings and future evidence requirements are in `docs/research/IP-2/RESOURCE-LIMITS.md`; none is approved or measured as a hard bound.
+- Disposable probe: synthetic in-memory XML only, on macOS 26.6.2 arm64 / Swift 6.3.3. The bare DOCTYPE was accepted with no DTD callback; this host-specific observation does not qualify other OS versions or production behavior. No app tests or persistent probe artifacts were created.
+- Added `docs/research/IP-2/INPUT-AND-SECURITY-DECISIONS.md` and `docs/research/IP-2/RESOURCE-LIMITS.md`; updated the blocker register, this ledger and REPORT.md. No schemas, fixtures, dependencies or implementation artifacts were created. Pre-existing `AGENTS.md` change remains untouched and uncommitted.
+- Branch `implementation/ip-2a-security-runtime-feasibility`, based on reviewed baseline `4329b04193652b7fe555180ecd51e238b1271d4d`.
+- **Next:** independent Architect review. Stop before IP-2B or later work.
+
+### Historical handoff — IP-1A R3 rights, provenance and offline validation (superseded)
 
 **Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific and never blanket authorization. The current task authorizes **IP-1A R3 only**. IP-2–IP-7 execution and implementation remain **NOT AUTHORIZED**.
 
