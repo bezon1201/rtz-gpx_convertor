@@ -1,0 +1,11 @@
+# IP-2A R7 independent receiver authority research
+
+This is a disposable, synthetic-only research harness authorized by [`IP-2A-R7-SCOPE-EXCEPTION.md`](../../../../../docs/research/IP-2/IP-2A-R7-SCOPE-EXCEPTION.md). It is not a production receiver or CLI. It opens bounded regular files through descriptors and uses `O_NOFOLLOW`; the independent receiver is separately ad-hoc signed with the explicit entitlement plist shown here. The executable is built in a temporary directory and removed on exit.
+
+On the authorized macOS 26 Apple Silicon host, run `./tests/research/ip2a/r7/run-matrix.sh`. It builds and verifies the receiver, displays host/compiler and code-signing/entitlement metadata, and runs synthetic access, type, deletion, replacement, symlink-retarget and cancellation cases. It never reads an RTZ/GPX or user file. The script has no elevated-access path and does not weaken sandboxing. Set `KEEP_SCRATCH=1` only to preserve the synthetic scratch directory temporarily while running the Shortcut carrier comparison; remove that directory manually after the research run.
+
+For the Shortcuts comparison, create a separately named, temporary research-only Shortcut with **Run Shell Script**, bind **Shortcut Input**, set **Pass Input: as arguments**, and use `shortcut-receiver.sh` as the action body after setting `RTZ_R7_RECEIVER` to the temporary signed receiver path. Only pass the synthetic files created by the harness. Inspect process identity and `launchctl procinfo` availability interactively; do not infer authority from a successful path open. The resulting Shortcut must remain separate from and must not replace any IP-1D/R5/R6 Shortcut.
+
+The standalone matrix's ordinary filesystem cases use the same separately signed receiver without sandbox entitlements only if a comparison is added deliberately; the committed entitlement plist is sandbox-on and has no user-selected-file permission. Record the exact build/signing variant before any such comparison. Do not describe ordinary unsandboxed reads as grants.
+
+All artifacts and logs are synthetic. Do not commit binaries, temporary directories, full paths, object identities, capabilities, bookmarks, real routes, or private user data. This research does not qualify product authority, alias policy, or preview/export continuity.

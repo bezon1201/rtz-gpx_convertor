@@ -1,6 +1,16 @@
 # Architect review handoff
 
-## Current handoff — IP-2A R6 Finder / Shortcuts transport
+## Current handoff — IP-2A R7 independent receiver authority
+
+**Authorization: IP-2A R7 research and decision work only. Verdict: PARTIAL.** On macOS 26.6.2 (25G83), arm64, a separately launched app-sandbox receiver with no selected-file or inherit entitlement was denied two readable synthetic path arguments with `EPERM`. An unsandboxed comparison receiver read two synthetic files under ordinary filesystem permissions and received `EACCES` for a mode-000 file; this is not a system-granted authority result. Deterministic replacement at the same pathname changed the device/inode identity, and the descriptor no longer matched the original object.
+
+The Shortcuts shell process was observed only in a no-input run; file-argument delivery and authority remain inconclusive. `launchctl procinfo` was unavailable or denied to the non-root probe. Accepted R5 picker/inherited-helper observations remain configuration-specific and historical. Full method and limits: [`docs/research/IP-2/INDEPENDENT-RECEIVER-AUTHORITY-R7.md`](docs/research/IP-2/INDEPENDENT-RECEIVER-AUTHORITY-R7.md); sanitized results: [`tests/research/ip2a/r7/results.json`](tests/research/ip2a/r7/results.json).
+
+**Disposition:** Finder/Shortcuts carrier **PARTIAL / NOT QUALIFIED**; independent sandboxed path authority **BLOCKED**; ordinary path reads **ORDINARY PERMISSIONS ONLY**; `IP1-B04` **PARTIAL / OPEN**; `IP1-B03` **OPEN / PARTIAL / NOT QUALIFIED, unchanged**; IP-1 overall **PARTIAL / NOT PASS**. IP-2B–IP-2E, production parser/CLI/app/Shortcut and release remain **NOT AUTHORIZED**. No Gate 3 decision or approved architecture changed.
+
+**Git baseline:** branch `implementation/ip-2a-r7-receiver-authority`, reviewed baseline and parent `ef4da7cf51818e079a9eb17c7b2c387d07d163e1`. The unrelated modified `AGENTS.md` remains excluded.
+
+### Historical handoff — IP-2A R6 Finder / Shortcuts transport
 
 **Authorization: IP-2A R6 only. Verdict: PARTIAL.** The Shortcuts action catalog became populated after an existing action-bearing Shortcut was opened, but the internal cause of the initial empty pane is not established. A local R6 research Shortcut was exposed in Finder Quick Actions. With its shell action explicitly bound to Shortcut Input and configured to pass input as arguments, Finder delivered one or two POSIX path strings; the receiver opened the synthetic regular files and matched their unique contents. A generic `Input` binding first produced zero arguments. Finder therefore supplies a **PATH LOCATOR ONLY** in this tested setup. No independent security-scoped authority, sandbox grant, identity continuity, cancellation/permission behavior, or product transport was qualified.
 

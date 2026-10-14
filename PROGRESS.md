@@ -1,6 +1,16 @@
 # Progress ledger
 
-## Current gate activity — IP-2A R6 Finder / Shortcuts transport
+## Current gate activity — IP-2A R7 independent receiver authority
+
+**Authorization: IP-2A R7 research and decision work only. Verdict: PARTIAL.** On macOS 26.6.2 (25G83), arm64, an independently launched sandboxed receiver without selected-file or inherit entitlement received `EPERM` for both readable synthetic paths. An ordinary unsandboxed comparison read synthetic files only where ordinary permissions allowed; mode-000 returned `EACCES`. A deterministic replacement at the same pathname changed object identity, and the opened descriptor did not match the original identity.
+
+The Shortcuts shell process was observed only without file input; a file-argument result was not conclusive. `launchctl procinfo` was unavailable or denied to the non-root probe. R5 native-picker/inherited-helper evidence remains a separate, historical configuration. Details: `docs/research/IP-2/INDEPENDENT-RECEIVER-AUTHORITY-R7.md`; sanitized outcomes: `tests/research/ip2a/r7/results.json`.
+
+**Disposition:** Shortcuts carrier **PARTIAL / NOT QUALIFIED**; independent sandboxed path authority **BLOCKED**; ordinary reads **ORDINARY PERMISSIONS ONLY**; `IP1-B04` **PARTIAL / OPEN**; `IP1-B03` **OPEN / PARTIAL / NOT QUALIFIED, unchanged**; IP-1 overall **PARTIAL / NOT PASS**. IP-2B–IP-2E and production implementation remain **NOT AUTHORIZED**.
+
+**Git baseline:** branch `implementation/ip-2a-r7-receiver-authority`, reviewed baseline and parent `ef4da7cf51818e079a9eb17c7b2c387d07d163e1`. Unrelated modified `AGENTS.md` remains untouched and excluded.
+
+### Historical gate activity — IP-2A R6 Finder / Shortcuts transport
 
 **Authorization: IP-2A R6 only. Verdict: PARTIAL.** The Shortcuts action catalog became populated after an existing action-bearing Shortcut was opened, but the internal cause of the initial empty pane is not established. A local R6 research Shortcut was exposed in Finder Quick Actions. With its shell action explicitly bound to Shortcut Input and configured to pass input as arguments, Finder delivered one or two POSIX path strings; the receiver opened the synthetic regular files and matched their unique contents. A generic `Input` binding first produced zero arguments. Finder therefore supplies a **PATH LOCATOR ONLY** in this tested setup. No independent security-scoped authority, sandbox grant, identity continuity, cancellation/permission behavior, or product transport was qualified.
 
@@ -246,7 +256,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
 | 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A R3 PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G PASS / ARCHITECT ACCEPTED | Overall IP-1 remains PARTIAL / NOT PASS. IP1-B01/B02/B03 remain open as recorded above. IP-2–IP-7 NOT AUTHORIZED. | IP-1A R3 commit in task handoff |
-| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R5 PARTIAL | R5 remains partial; IP1-B04 is open; IP-2B–IP-2E remain blocked/not authorized. | `b0f066a` |
+| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R7 PARTIAL | R7 narrows path-authority and replacement findings; IP1-B04 remains open; IP-2B–IP-2E remain blocked/not authorized. | R7 handoff commit |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |

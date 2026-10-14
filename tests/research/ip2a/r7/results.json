@@ -1,0 +1,61 @@
+{
+  "research": "IP-2A R7 independent receiver authority",
+  "host": {
+    "macOS": "26.6.2 (25G83)",
+    "architecture": "arm64",
+    "swift": "6.3.3",
+    "clang": "21.0.0"
+  },
+  "configurationA": {
+    "status": "partial",
+    "observed": [
+      "Run Shell Script ran as uid 501 under /bin/zsh when launched without file input",
+      "launchctl procinfo was unavailable or denied to the non-root probe"
+    ],
+    "notEstablished": [
+      "successful Shortcut file-argument invocation",
+      "sandbox state and security-scoped authority for Shortcut input"
+    ]
+  },
+  "configurationB": {
+    "status": "path alone denied",
+    "signing": "ad-hoc signed arm64 app bundle; codesign verification succeeded",
+    "entitlements": {
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.files.user-selected.read-only": false,
+      "com.apple.security.inherit": false
+    },
+    "readableSyntheticPaths": 2,
+    "openResults": ["EPERM", "EPERM"],
+    "authorityConclusion": "No selected-file authority was demonstrated by passing path strings."
+  },
+  "ordinaryFilesystemComparison": {
+    "status": "ordinary filesystem permissions only",
+    "unicodeAndSpaceFilesRead": 2,
+    "boundedBytesRead": [30, 28],
+    "mode000Result": "EACCES",
+    "nonregularResult": "FIFO rejected after fstat",
+    "symlinkNoFollowResult": "ELOOP",
+    "deletedBeforeOpenResult": "ENOENT",
+    "replacement": {
+      "deterministic": true,
+      "objectIdentityChanged": true,
+      "openedReplacement": true,
+      "matchesOriginalIdentity": false
+    },
+    "symlinkRetargetResult": "ELOOP",
+    "cancellationBeforeOpen": "receiver terminated with exit 143 before release gate; open not reached"
+  },
+  "configurationC": {
+    "status": "historical comparison only",
+    "source": "IP-2A R5 accepted research evidence",
+    "summary": "Native picker selected-file scope and inherited-sandbox helper reads were observed in that specific parent-child configuration; this was not repeated in R7."
+  },
+  "limitations": [
+    "One macOS host and synthetic local files only",
+    "No Developer ID signing or notarization",
+    "No product or production API qualification",
+    "No alias, File Provider, ACL, export-time reacquisition, semantic continuity, or complete cancellation qualification",
+    "Shortcut file-argument result was inconclusive"
+  ]
+}

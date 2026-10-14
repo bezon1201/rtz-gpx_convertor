@@ -1,12 +1,20 @@
 # Finder / Shortcuts File-Authority Transport Qualification
 
-## Current IP-2A R6 update (2026-10-14)
+## Historical IP-2A R6 update (2026-10-14)
 
 **Verdict: PARTIAL.** The Shortcuts action catalog became populated after an existing action-bearing Shortcut was opened, but the internal cause of the initial empty pane is not established. A local R6 research Shortcut was exposed in Finder Quick Actions. With its shell action explicitly bound to Shortcut Input and configured to pass input as arguments, Finder delivered one or two POSIX path strings; the receiver opened the synthetic regular files and matched their unique contents. A generic `Input` binding first produced zero arguments. Finder therefore supplies a **PATH LOCATOR ONLY** in this tested setup. No independent security-scoped authority, sandbox grant, identity continuity, cancellation/permission behavior, or product transport was qualified.
 
 The complete method, observations and limits are in [`SHORTCUTS-TRANSPORT-R6.md`](SHORTCUTS-TRANSPORT-R6.md). The retained research Shortcut's receiver was reduced after testing so it no longer reads files or writes logs. No research source, exception record, real route, fixture, executable, schema, dependency, product Shortcut, or runtime artifact was committed. The existing IP-1D Shortcut and empty R5 draft were preserved.
 
 **Disposition:** action-library root cause **UNRESOLVED**; Shortcuts carrier **PARTIAL**; Finder Quick Action carrier **PARTIAL**; standalone receiver authority **BLOCKED**; `IP1-B04` **PARTIAL / OPEN**; `IP1-B03` **OPEN / PARTIAL / NOT QUALIFIED, unchanged**; IP-1 overall **PARTIAL / NOT PASS**. Gate 3 remains **PASS / ARCHITECT ACCEPTED**; Gate 4 remains stage-specific. IP-2B–IP-2E, production work and release remain **NOT AUTHORIZED**.
+
+## Current IP-2A R7 update (2026-10-14)
+
+**Verdict: PARTIAL.** R7 distinguished process authority from a path locator. A separately launched sandboxed receiver with only `com.apple.security.app-sandbox=true` received two readable synthetic file paths and was denied both with `EPERM`; no selected-file authority was conveyed. An ordinary unsandboxed comparison receiver read synthetic files when ordinary user permissions allowed and failed a mode-000 file with `EACCES`; those successful opens are not system grants. The deterministic replacement case showed that the same pathname resolved to a different device/inode object, and the receiver's descriptor did not match the original identity.
+
+The Shortcuts shell action ran without input and exposed `/bin/zsh`, uid and process identifiers; `launchctl procinfo` was unavailable or denied to the non-root probe. File-argument invocation did not produce a reliable observable result, so Shortcuts file authority remains **UNKNOWN / NOT QUALIFIED**. R5 native-picker/inherited-helper evidence remains a separate, historically demonstrated process-tree configuration and was not repeated. Detailed method, constraints and sanitized results: [`INDEPENDENT-RECEIVER-AUTHORITY-R7.md`](INDEPENDENT-RECEIVER-AUTHORITY-R7.md).
+
+**Current disposition:** Shortcuts carrier **PARTIAL / NOT QUALIFIED**; standalone sandboxed path authority **BLOCKED**; ordinary path read **ORDINARY PERMISSIONS ONLY**; R5 picker/inherited helper **PARTIAL**; `IP1-B04` **PARTIAL / OPEN**; `IP1-B03` **OPEN / PARTIAL / NOT QUALIFIED, unchanged**; IP-1 overall **PARTIAL / NOT PASS**. IP-2B–IP-2E, production work and release remain **NOT AUTHORIZED**.
 
 ## Historical IP-2A R5 qualification
 
