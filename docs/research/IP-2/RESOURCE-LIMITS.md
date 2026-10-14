@@ -1,6 +1,8 @@
 # IP-2A R2 Baseline and R3 Addendum — Resource Limit Qualification Record
 
-## R3 runtime-safety evidence addendum (2026-10-14)
+**Current handoff:** IP-2A remains **PARTIAL / INCOMPLETE** after R8; no candidate ceiling is approved and IP1-B03 remains open. The R2/R3 measurements below are historical research evidence, not implementation limits. See [`IP-2A-CLOSEOUT-AND-HANDOFF.md`](IP-2A-CLOSEOUT-AND-HANDOFF.md) for consolidated status and remaining owners.
+
+## Historical R3 runtime-safety evidence addendum (2026-10-14)
 
 The R3 harness reran the R2 parser-boundary matrix against the same pinned static libxml2 2.15.4 candidate, then added cooperative asynchronous cancellation, cleanup cancellation, repeated synthetic parsing and disposable CPU-worker termination. These results remain **PROVISIONAL / PARTIALLY CHARACTERIZED**. No candidate ceiling is approved for product use.
 
@@ -18,9 +20,9 @@ The R3 harness reran the R2 parser-boundary matrix against the same pinned stati
 
 Full result objects and sanitized categories are in `tests/research/ip2a/results.jsonl`. The harness uses no real routes, schemas or network requests. The R3 artifacts are covered by the one-time exception in `IP-2A-R3-SCOPE-EXCEPTION.md`.
 
-**Disposition:** retain the prior candidate values strictly as experimental boundaries. No hard memory ceiling, CPU ceiling, cancellation deadline, or supported-macOS qualification is established. IP1-B03 remains **OPEN / PARTIAL / NOT QUALIFIED**; IP1-B04 remains open and unchanged.
+**R3 disposition:** retain the prior candidate values strictly as experimental boundaries. No hard memory ceiling, CPU ceiling, cancellation deadline, or supported-macOS qualification is established. IP1-B03 remains **OPEN / PARTIAL / NOT QUALIFIED**; IP1-B04 remained open and unchanged at that handoff.
 
-**Status: PROVISIONAL / PARTIALLY CHARACTERIZED.** No ceiling below is approved for product use or established as a hard process bound. Evidence is from disposable synthetic libxml2 2.15.4 probes on one macOS 26.6.2 arm64 host. See `INPUT-AND-SECURITY-DECISIONS.md` §R2.4. IP-2B must not treat a callback observation as approval of a limit.
+**Historical R2 status: PROVISIONAL / PARTIALLY CHARACTERIZED.** No ceiling below is approved for product use or established as a hard process bound. Evidence is from disposable synthetic libxml2 2.15.4 probes on one macOS 26.6.2 arm64 host. See `INPUT-AND-SECURITY-DECISIONS.md` §R2.4. IP-2B must not treat a callback observation as approval of a limit.
 
 ## Candidate ceilings and observed probe boundaries
 

@@ -8,13 +8,17 @@ The complete method, observations and limits are in [`SHORTCUTS-TRANSPORT-R6.md`
 
 **Disposition:** action-library root cause **UNRESOLVED**; Shortcuts carrier **PARTIAL**; Finder Quick Action carrier **PARTIAL**; standalone receiver authority **BLOCKED**; `IP1-B04` **PARTIAL / OPEN**; `IP1-B03` **OPEN / PARTIAL / NOT QUALIFIED, unchanged**; IP-1 overall **PARTIAL / NOT PASS**. Gate 3 remains **PASS / ARCHITECT ACCEPTED**; Gate 4 remains stage-specific. IP-2B–IP-2E, production work and release remain **NOT AUTHORIZED**.
 
-## Current IP-2A R7 update (2026-10-14)
+## Historical IP-2A R7 update (2026-10-14; superseded by R8 closeout)
 
 **Verdict: PARTIAL.** R7 distinguished process authority from a path locator. A separately launched sandboxed receiver with only `com.apple.security.app-sandbox=true` received two readable synthetic file paths and was denied both with `EPERM`; no selected-file authority was conveyed. An ordinary unsandboxed comparison receiver read synthetic files when ordinary user permissions allowed and failed a mode-000 file with `EACCES`; those successful opens are not system grants. The deterministic replacement case showed that the same pathname resolved to a different device/inode object, and the receiver's descriptor did not match the original identity.
 
 The Shortcuts shell action ran without input and exposed `/bin/zsh`, uid and process identifiers; `launchctl procinfo` was unavailable or denied to the non-root probe. File-argument invocation did not produce a reliable observable result, so Shortcuts file authority remains **UNKNOWN / NOT QUALIFIED**. R5 native-picker/inherited-helper evidence remains a separate, historically demonstrated process-tree configuration and was not repeated. Detailed method, constraints and sanitized results: [`INDEPENDENT-RECEIVER-AUTHORITY-R7.md`](INDEPENDENT-RECEIVER-AUTHORITY-R7.md).
 
-**Current disposition:** Shortcuts carrier **PARTIAL / NOT QUALIFIED**; standalone sandboxed path authority **BLOCKED**; ordinary path read **ORDINARY PERMISSIONS ONLY**; R5 picker/inherited helper **PARTIAL**; `IP1-B04` **PARTIAL / OPEN**; `IP1-B03` **OPEN / PARTIAL / NOT QUALIFIED, unchanged**; IP-1 overall **PARTIAL / NOT PASS**. IP-2B–IP-2E, production work and release remain **NOT AUTHORIZED**.
+**R7 disposition at that handoff:** Shortcuts carrier **PARTIAL / NOT QUALIFIED**; standalone sandboxed path authority **BLOCKED**; ordinary path read **ORDINARY PERMISSIONS ONLY**; R5 picker/inherited helper **PARTIAL**; `IP1-B04` **PARTIAL / OPEN**; `IP1-B03` **OPEN / PARTIAL / NOT QUALIFIED, unchanged**; IP-1 overall **PARTIAL / NOT PASS**. IP-2B–IP-2E, production work and release remain **NOT AUTHORIZED**.
+
+## Current IP-2A R8 closeout
+
+R8 consolidates the R1–R7 evidence without upgrading any partial observation to qualification. **IP-2A remains PARTIAL / INCOMPLETE; IP1-B03 and IP1-B04 remain open; IP-2B = BLOCKED.** See [`IP-2A-CLOSEOUT-AND-HANDOFF.md`](IP-2A-CLOSEOUT-AND-HANDOFF.md) for the status matrix, candidate boundary, authority recommendation, residual conditions and cross-stage ownership. No production transport or later-stage execution is authorized.
 
 ## Historical IP-2A R5 qualification
 

@@ -1,6 +1,12 @@
 # Progress ledger
 
-## Current gate activity — IP-2A R7 independent receiver authority
+## Current gate activity — IP-2A R8 closeout
+
+**Authorization: IP-2A R8 documentation and closeout only. IP-2A status: PARTIAL / INCOMPLETE; no PASS is claimed.** R8 consolidated R1–R7, recorded the candidate input/authority boundary for review, and assigned remaining qualifications to their owners. `IP1-B03` and `IP1-B04` remain open. **IP-2B = BLOCKED**; overall IP-1 remains **PARTIAL / NOT PASS**. No runtime probe or implementation was authorized or performed in R8. The closeout document is prepared for independent review.
+
+Details: `docs/research/IP-2/IP-2A-CLOSEOUT-AND-HANDOFF.md`. The unrelated local `AGENTS.md` modification remains untouched and excluded.
+
+### Historical gate activity — IP-2A R7 independent receiver authority
 
 **Authorization: IP-2A R7 research and decision work only. Verdict: PARTIAL.** On macOS 26.6.2 (25G83), arm64, an independently launched sandboxed receiver without selected-file or inherit entitlement received `EPERM` for both readable synthetic paths. An ordinary unsandboxed comparison read synthetic files only where ordinary permissions allowed; mode-000 returned `EACCES`. A deterministic replacement at the same pathname changed object identity, and the opened descriptor did not match the original identity.
 
@@ -55,7 +61,7 @@ At the R4 handoff, Gate 3 was **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee2524
 
 ### Historical gate activity — IP-2A R2 libxml2 security qualification
 
-The R2 handoff below records its results and authorization at that time; R3 was current at the R2 handoff, and the R5 current status is recorded at the top of this ledger.
+The R2 handoff below records its results and authorization at that time; R3 was current at the R2 handoff. R5 and R7 were later snapshots, and R8 is the current closeout status at the top of this ledger.
 
 ### Historical gate activity — IP-2A R1 security and runtime feasibility
 
@@ -256,7 +262,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
 | 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A R3 PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G PASS / ARCHITECT ACCEPTED | Overall IP-1 remains PARTIAL / NOT PASS. IP1-B01/B02/B03 remain open as recorded above. IP-2–IP-7 NOT AUTHORIZED. | IP-1A R3 commit in task handoff |
-| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R7 PARTIAL | R7 narrows path-authority and replacement findings; IP1-B04 remains open; IP-2B–IP-2E remain blocked/not authorized. | R7 handoff commit |
+| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R8 PARTIAL / INCOMPLETE | R8 closeout document prepared for review; IP1-B03/B04 remain open; IP-2B BLOCKED and IP-2B–IP-2E NOT AUTHORIZED. | R8 handoff commit |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |

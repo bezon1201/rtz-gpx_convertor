@@ -1,12 +1,12 @@
 # IP-2A — FileReference and Source Continuity Qualification
 
-**Current handoff:** IP-2A R7 **PARTIAL**. R4–R6 records below are historical snapshots. Current receiver-authority evidence is recorded in [`INDEPENDENT-RECEIVER-AUTHORITY-R7.md`](INDEPENDENT-RECEIVER-AUTHORITY-R7.md).
+**Current handoff:** IP-2A remains **PARTIAL / INCOMPLETE** after R8; the R8 closeout document is prepared for review but formal IP-2A criteria remain open. R4–R7 findings below are historical snapshots. See [`IP-2A-CLOSEOUT-AND-HANDOFF.md`](IP-2A-CLOSEOUT-AND-HANDOFF.md) for the consolidated boundary and open closure conditions.
 
 ## Historical IP-2A R4 qualification
 
 **Authorization:** IP-2A R4 only, at baseline `8b73f44fe82f3b47187c5ba49ad5ee315f4ea433`. The R4 research-only probe exception is recorded in [`IP-2A-R4-SCOPE-EXCEPTION.md`](IP-2A-R4-SCOPE-EXCEPTION.md). **Verdict: PARTIAL.** This is one-host research evidence, not product behavior or a final cross-stage API.
 
-## Status summary
+## Historical R4 status summary
 
 - **VERIFIED (this host, synthetic local files):** descriptor-backed reads remain bound to the opened filesystem object across rename/move, replacement of the old path, symlink retargeting and deletion. Path reopen can select a different object. Same-object in-place writes are visible on reread through the descriptor. POSIX type and read-permission checks worked for the tested directory, FIFO and mode-000 file.
 - **VERIFIED (this host, Foundation API behavior only):** a plain bookmark followed a rename, was marked stale, and resolved to the moved file; resolving after deletion failed. Foundation resource/file identifiers were available and equal across the tested rename; generation metadata was available. These observations do not establish identity or content guarantees on another volume/provider/OS.
@@ -93,11 +93,11 @@ R6 observed Finder Quick Action transport using a local research Shortcut on mac
 
 **R6 disposition:** Finder Quick Action **PARTIAL**; Shortcuts carrier **PARTIAL**; standalone receiver authority **BLOCKED**; `IP1-B04` **PARTIAL / OPEN**. `IP1-B03` remains **OPEN / PARTIAL / NOT QUALIFIED**, unchanged. Overall IP-1 remains **PARTIAL / NOT PASS**.
 
-## Current IP-2A R7 update (2026-10-14)
+## Historical IP-2A R7 update (2026-10-14; superseded by R8 closeout)
 
 R7's independently launched app-sandbox receiver had no user-selected-file or inherited-sandbox entitlement; both readable path arguments failed with `EPERM`. This establishes that path text alone did not grant access in the tested sandbox configuration. An unsandboxed comparison read files only under ordinary user permissions; it supplies no selected-file-authority evidence. The deterministic path-replacement test opened a different object than the one originally named. See the R7 report and sanitized result manifest for method and exact limits.
 
-**Current disposition:** Shortcuts file authority **UNKNOWN / NOT QUALIFIED**; standalone sandboxed path authority **BLOCKED**; R5 native-picker/inherited-helper authority **PARTIAL and configuration-specific**; `IP1-B04` **PARTIAL / OPEN**. Export-time authorization, alias/security-scope policy, provider behavior, permissions across target configurations and preview/export semantic continuity remain unresolved. `IP1-B03` remains **OPEN / PARTIAL / NOT QUALIFIED**, unchanged; IP-1A provenance/rights remain unresolved; overall IP-1 remains **PARTIAL / NOT PASS**. IP-2B–IP-2E and production work remain **NOT AUTHORIZED**.
+**R7 disposition at that handoff:** Shortcuts file authority **UNKNOWN / NOT QUALIFIED**; standalone sandboxed path authority **BLOCKED**; R5 native-picker/inherited-helper authority **PARTIAL and configuration-specific**; `IP1-B04` **PARTIAL / OPEN**. Export-time authorization, alias/security-scope policy, provider behavior, permissions across target configurations and preview/export semantic continuity remain unresolved. `IP1-B03` remains **OPEN / PARTIAL / NOT QUALIFIED**, unchanged; IP-1A provenance/rights remain unresolved; overall IP-1 remains **PARTIAL / NOT PASS**. IP-2B–IP-2E and production work remain **NOT AUTHORIZED**.
 
 ## Historical IP-2A R5 update (2026-10-14)
 
@@ -105,4 +105,4 @@ The R4 record above is preserved as the prior evidence snapshot. R5 adds a tempo
 
 On this host, two native-picker-selected synthetic files with spaces and composed/decomposed Unicode were descriptor-opened, bounded, and byte-matched. A mode-000 selected file returned a URL and a successful scope-start result but open failed `EACCES`. A sandboxed inherited child process read each accessible selection using a path locator and Foundation bookmark data created with default options; exact identity and expected payload matched. The probe did not classify bookmark scope flavor. Same-process delayed reopen after stopping the explicit access scope succeeded for the local files. These observations do not qualify Finder Quick Action, Shortcuts, a separately launched CLI, aliases/symlinks, replacement/deletion races, File Provider, or product export-time continuity.
 
-**Current disposition:** Finder Quick Action **BLOCKED**; Shortcuts **BLOCKED**; native picker authority **PARTIAL**; cross-process scope transfer **PARTIAL**; export-time reacquisition **PARTIAL**; `IP1-B04` **PARTIAL / OPEN**. `IP1-B03` remains **OPEN / PARTIAL / NOT QUALIFIED**; `IP1-B01/B02` remain unresolved. Overall IP-1 remains **PARTIAL / NOT PASS**. IP-2B–IP-2E, production code and release remain **NOT AUTHORIZED**.
+**R5 disposition at that handoff:** Finder Quick Action **BLOCKED**; Shortcuts **BLOCKED**; native picker authority **PARTIAL**; cross-process scope transfer **PARTIAL**; export-time reacquisition **PARTIAL**; `IP1-B04` **PARTIAL / OPEN**. `IP1-B03` remains **OPEN / PARTIAL / NOT QUALIFIED**; `IP1-B01/B02` remain unresolved. Overall IP-1 remains **PARTIAL / NOT PASS**. IP-2B–IP-2E, production code and release remain **NOT AUTHORIZED**.

@@ -1,6 +1,14 @@
 # Architect review handoff
 
-## Current handoff — IP-2A R7 independent receiver authority
+## Current handoff — IP-2A R8 closeout
+
+**Authorization: IP-2A R8 documentation and closeout only. IP-2A status: PARTIAL / INCOMPLETE; no PASS is claimed.** R8 consolidates R1–R7 findings, records the candidate input/authority boundary, retains IP1-B03 and IP1-B04 as open, and assigns remaining work to IP-2, IP-5, IP-7 and their joint qualification. **IP-2B = BLOCKED.** Overall IP-1 remains **PARTIAL / NOT PASS**. No implementation, runtime probe or later stage is authorized. The R8 closeout document itself is prepared for Architect review.
+
+The complete status matrix, residual sub-blockers, B03 evidence and qualification gaps, and current authority recommendation are in [`docs/research/IP-2/IP-2A-CLOSEOUT-AND-HANDOFF.md`](docs/research/IP-2/IP-2A-CLOSEOUT-AND-HANDOFF.md). The R8 work is documentation-only; R1–R7 evidence remains host/configuration-specific and no partial evidence is upgraded to PASS.
+
+**Git baseline:** branch `implementation/ip-2a-r8-closeout-handoff`, parent `e91cec69fdffc5d4484289207db8c740efa310b9`. Unrelated modified `AGENTS.md` remains untouched and excluded.
+
+### Historical handoff — IP-2A R7 independent receiver authority
 
 **Authorization: IP-2A R7 research and decision work only. Verdict: PARTIAL.** On macOS 26.6.2 (25G83), arm64, a separately launched app-sandbox receiver with no selected-file or inherit entitlement was denied two readable synthetic path arguments with `EPERM`. An unsandboxed comparison receiver read two synthetic files under ordinary filesystem permissions and received `EACCES` for a mode-000 file; this is not a system-granted authority result. Deterministic replacement at the same pathname changed the device/inode identity, and the descriptor no longer matched the original object.
 
@@ -53,7 +61,7 @@ The complete method, observations and limits are in [`docs/research/IP-2/SHORTCU
 
 ### Historical handoff — IP-2A R2 libxml2 security qualification
 
-- **Authorization:** IP-2A R2 only at that handoff. Gate 3 is **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 is stage-specific, never blanket authorization. R3 above supersedes this as the current handoff.
+- **Authorization:** IP-2A R2 only at that handoff. Gate 3 is **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 is stage-specific, never blanket authorization. R3 later superseded this snapshot; R8 is the current handoff.
 - **Verdict: IP-2A R2 PARTIAL.** The temporary candidate was libxml2 2.15.4 (upstream archive SHA-256 `98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821`), built static for this host. Candidate flags were `XML_PARSE_NONET | XML_PARSE_NO_XXE | XML_PARSE_NO_SYS_CATALOG | XML_PARSE_BIG_LINES`; per-context deny-all resource loader; SAX `internalSubset` calls `xmlStopParser`; descriptor-style `xmlCtxtReadIO` with 4 KiB reads and bounded byte/cancel callbacks. Forbidden expansion, DTD loading/defaulting/validation, recovery, huge mode, XInclude, decompression, catalogs and implicit/default loaders were disabled or absent. `NONET` was not treated as the security boundary.
 - **Observed security results:** synthetic bare DOCTYPE, internal DTD declarations/entities, external file/HTTP entities and DTDs, parameter entities and nested expansion attempts all failed before element/text callbacks; loader calls were zero. Malformed tags, multiple roots, trailing data, invalid declared encoding and invalid UTF-8 failed closed. A tiny generic synthetic XSD include test confirmed the context schema loader rejected both local and HTTP include requests without fallback; no network client/request was used. No RTZ/GPX schema was used.
 - **Streaming/cancellation:** descriptor callback accepted candidate 16 MiB−1 and 16 MiB, rejected 16 MiB+1 after limit+1 bytes, and closed exactly once. Synchronous cancellation at 64 KiB stopped parsing, returned no document and caused no later reads; ~50 μs on the tiny run is not a latency guarantee. Asynchronous/pathological cancellation is unqualified.

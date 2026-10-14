@@ -1,6 +1,6 @@
 # IP-2A R2 Baseline and R3 Addendum — libxml2 Security Qualification
 
-## Current IP-2A R4 FileReference / source continuity addendum (2026-10-14)
+## Historical IP-2A R4 FileReference / source continuity addendum (2026-10-14)
 
 **Verdict: PARTIAL.** Authorized R4 evidence and the candidate cross-stage contract are in [`FILE-REFERENCE-AND-CONTINUITY.md`](FILE-REFERENCE-AND-CONTINUITY.md). A narrowly bounded, expiring research-only exception is recorded in [`IP-2A-R4-SCOPE-EXCEPTION.md`](IP-2A-R4-SCOPE-EXCEPTION.md); it does not amend approved IP-2 §11 generally. The Swift/Foundation probe and synthetic local cases are in `tests/research/ip2a/r4/`; no product parser, model, CLI, app, Shortcut, route fixture, schema, or dependency was added.
 
@@ -9,7 +9,7 @@
 - **Candidate contract:** authorize and resolve via a qualified native reference; explicitly and boundedly resolve selected alias/link only if joint IP-2A/IP-5/IP-7 tests prove it safe; open one regular file once; bounded-read only that descriptor; validate; on export reacquire permission and repeat the read/validation; compare a deterministic output-affecting semantic projection. If access or equivalence is absent/inconclusive, invalidate route confirmation and bound publication consent and require fresh preview/confirmation. Never infer unchanged content from path, bookmark, inode/resource IDs, size or timestamps; no source digest by default.
 - **IP1-B04 remains PARTIAL / OPEN.** Evidence narrows but does not close concrete transport, sandbox scope, alias policy, export-time reacquisition and semantic-equivalence requirements. **IP1-B03 remains PARTIAL / OPEN / NOT QUALIFIED; IP1-B01/B02 remain unresolved.** Overall IP-1 remains **PARTIAL / NOT PASS**. IP-2B–IP-2E and later stages remain **NOT AUTHORIZED**.
 
-The R3 security-runtime addendum follows as historical evidence; R4 is the current IP-2A handoff.
+R3 and R4 are historical evidence snapshots. The consolidated current handoff is [`IP-2A-CLOSEOUT-AND-HANDOFF.md`](IP-2A-CLOSEOUT-AND-HANDOFF.md); it preserves open security, rights, limits, authority and continuity requirements.
 
 ## Historical IP-2A R3 runtime-safety addendum (2026-10-14)
 
@@ -37,14 +37,14 @@ The R3 security-runtime addendum follows as historical evidence; R4 is the curre
 - **Not established:** absolute CPU/memory ceilings, parser hard limits, schema-validation behavior/performance, adversarial algorithmic complexity, 250 ms cancellation objective, repeated long-duration stability, supported macOS matrix, Finder/Shortcuts references or permissions, production integration, or portability. No claim of complete libxml2 security qualification is made.
 - Upstream API documentation does not establish that calling parser-context operations such as `xmlStopParser` from an unrelated thread is safe. R3 therefore never does so. `xmlCleanupParser` remains process-exit-only and was not called during worker threads.
 
-### Current disposition
+### Historical R3 disposition
 
 - **IP1-B03: OPEN / PARTIAL / NOT QUALIFIED.** R3 reproducibly strengthens one-host candidate evidence but does not close the required supported-OS, robust hard-bound, integration or independent-review criteria.
 - **IP1-B04: OPEN / PARTIAL, unchanged.** No Finder/Shortcuts file reference, alias/symlink, security scope, permission, file replacement/identity, or preview/export continuity behavior was exercised.
 - **IP1-B01/B02 remain open:** RTZ 1.2 provenance and schema rights/offline runtime remain unresolved. No RTZ/GPX schema was used or bundled.
 - **IP-2A R3: PARTIAL. IP-2B–IP-2E: NOT AUTHORIZED.** Overall IP-1 remains **PARTIAL / NOT PASS**. Independent Architect review is next; stop before any later stage.
 
-The prior R2 record follows unchanged as evidence and is superseded only as the most recent IP-2A handoff.
+The R2 record follows as historical evidence; R2 was superseded as the latest handoff by R3 and subsequent R4–R8 records.
 
 **Verdict: PARTIAL.** This authorized disposable qualification supports libxml2 2.15.4 as a technically credible parser candidate under the exact configuration below; it does **not** select a product dependency, close IP1-B03/B04, qualify RTZ/XSD behavior, or authorize IP-2B–IP-2E. No RTZ/GPX schemas were used.
 
@@ -108,7 +108,7 @@ The boundary findings update provisional evidence only; none of the candidate ce
 
 This review is limited to cited published records available at the task date and the tested build features. Advisory databases can change; dependency selection requires a fresh review, patch owner and update policy. No general security certification is claimed.
 
-## R2.6 Disposition and readiness
+## Historical R2.6 disposition and readiness
 
 - **IP1-B03: PARTIAL / OPEN / NOT QUALIFIED.** The exact candidate’s tested deny-DOCTYPE and deny-loader behavior is credible for the synthetic cases on one host. Still missing: supported macOS matrix, async/pathological cancellation bound, reliable per-input memory bound, production integration, schema-validator workload, broader security review and independent acceptance.
 - **IP1-B04: PARTIAL / OPEN, unchanged.** IP-2A R2 did not exercise Finder/Shortcuts references, aliases, security scope, permissions, identity races or preview/export continuity. Joint IP-2A/IP-5/IP-7 closure remains necessary.
