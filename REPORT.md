@@ -1,6 +1,12 @@
 # Architect review handoff
 
-## Current handoff — IP-2A R11 B04 file-reference policy
+## Current handoff — IP-2A R12 parser resource-containment decision
+
+**Authorization:** R12 documentation/architecture decision only, using existing R2/R3/R10 evidence. Decision: **INSUFFICIENT EVIDENCE — FURTHER QUALIFICATION REQUIRED**; no parser architecture selected. B03 remains **PARTIAL / NARROWED / OPEN**. The byte cap is limited to the tested read boundary; callback counters are not hard parser-allocation caps; RSS/timing are observational; cancellation is cooperative; R3 child termination/reap is one research-only observation, not a production guarantee or memory cap. Neither in-process residual risk nor a worker architecture has been accepted. The decision and a single unexecuted future resource-control feasibility probe are in [`docs/research/IP-2/IP-2A-R12-RESOURCE-CONTAINMENT-DECISION.md`](docs/research/IP-2/IP-2A-R12-RESOURCE-CONTAINMENT-DECISION.md).
+
+Preserved: B01 **PENDING EXTERNAL CONFIRMATION**; B02 **PENDING / NOT CLEARED**; B04 minimum policy **PASS / ARCHITECT ACCEPTED**, B04 overall **PARTIAL / OPEN**; IP-2A **PARTIAL / INCOMPLETE**; IP-2B **BLOCKED / NOT AUTHORIZED**; overall IP-1 **PARTIAL / NOT PASS**. No probe, test, implementation, schema, dependency, or runtime work occurred. The unrelated `AGENTS.md` modification is preserved and excluded. Branch: `implementation/ip-2a-r12-resource-containment-decision`, from `a3492a6239098da7437295242ab673eee962beb6`. Stop for independent Architect review.
+
+### Historical handoff — IP-2A R11 B04 file-reference policy
 
 **Authorization:** IP-2A R11 documentation and joint policy work only, using existing R4–R8 evidence. **B04 = READY FOR FINAL POLICY REVIEW; blocker remains PARTIAL / OPEN.** R11 freezes the minimum conceptual contract: a path is a locator, not authority; successful unsandboxed open is ordinary permission, not a system capability; authority, object identity and content continuity are distinct; acquire/reacquire qualified authority; open once, check the descriptor, bounded-read that descriptor, avoid unsafe reopen, balance any security scope, and fail closed. Aliases/symlinks are not categorically rejected, but only explicit bounded resolution under qualified authority followed by secure target open is conditionally permitted.
 

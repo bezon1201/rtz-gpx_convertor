@@ -1,6 +1,6 @@
 # IP-2A Acceptance Recovery and Critical-Path Plan
 
-**Current status after R11:** R9 remains a historical acceptance-recovery plan. IP-2A R8 closeout and R10 documentation/evidence-classification substage were independently accepted PASS; **IP-2A overall remains PARTIAL / INCOMPLETE. B03 remains PARTIAL / NARROWED / OPEN; B04 remains PARTIAL / OPEN, with the minimum policy ready for final review; IP-2B remains BLOCKED / NOT AUTHORIZED.** Overall IP-1 remains PARTIAL / NOT PASS. R9's matrix is unchanged; subsequent R10/R11 notes record current dispositions without authorizing implementation.
+**Current status after R12:** R9 remains a historical acceptance-recovery plan. IP-2A R8 closeout, R10 documentation/evidence-classification, and R11 minimum file-reference-policy substages were independently accepted PASS; **IP-2A overall remains PARTIAL / INCOMPLETE. B03 remains PARTIAL / NARROWED / OPEN; R12 decision is INSUFFICIENT EVIDENCE — FURTHER QUALIFICATION REQUIRED. B04 minimum policy is PASS / ARCHITECT ACCEPTED, while B04 overall remains PARTIAL / OPEN. IP-2B remains BLOCKED / NOT AUTHORIZED.** Overall IP-1 remains PARTIAL / NOT PASS. R9's acceptance matrix is unchanged; R10–R12 record current dispositions without authorizing implementation. See [`IP-2A-R12-RESOURCE-CONTAINMENT-DECISION.md`](IP-2A-R12-RESOURCE-CONTAINMENT-DECISION.md). No R12 probe was run.
 
 **Baseline reviewed:** `f0ab28094a8a911ae5fdee315efeace482600b32`.
 

@@ -125,7 +125,7 @@ Preserved status: **B03 OPEN / PARTIAL / NOT QUALIFIED; B04 PARTIAL / OPEN; IP-2
 
 No new probe is needed to support this R10 classification. The smallest next action with the highest immediate value is an independent security review of this control/evidence matrix and the original R2/R3 manifest against IP-2 plan §§3–4 and 11. The review should determine whether any hard memory/CPU bound is mandatory and whether the exact candidate loader/configuration evidence is sufficient for a narrowed residual-risk recommendation. If it identifies a specific missing empirical case, authorize one bounded experiment named to that gap. Do not start broad adversarial testing or worker architecture work by default.
 
-This is a recommendation only. It does not execute another probe, close B03, pass IP-2A, or authorize IP-2B.
+This was a recommendation at the R10 handoff. R12 subsequently reviewed the existing evidence and records **INSUFFICIENT EVIDENCE — FURTHER QUALIFICATION REQUIRED**; it selects no architecture and does not execute another probe, close B03, pass IP-2A, or authorize IP-2B. See [`IP-2A-R12-RESOURCE-CONTAINMENT-DECISION.md`](IP-2A-R12-RESOURCE-CONTAINMENT-DECISION.md).
 
 ## 9. R10 scope and verification record
 
