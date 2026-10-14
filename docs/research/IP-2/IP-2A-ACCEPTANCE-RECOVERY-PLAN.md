@@ -1,6 +1,6 @@
 # IP-2A Acceptance Recovery and Critical-Path Plan
 
-**Status:** Planning only. IP-2A R8 documentation closeout was PASS / ARCHITECT ACCEPTED; **IP-2A overall remains PARTIAL / INCOMPLETE; IP1-B03 and IP1-B04 remain OPEN / PARTIAL; IP-2B remains BLOCKED / NOT AUTHORIZED.** Overall IP-1 remains PARTIAL / NOT PASS. This plan neither changes the approved IP-2 plan nor authorizes the recommended next action.
+**Current status after R11:** R9 remains a historical acceptance-recovery plan. IP-2A R8 closeout and R10 documentation/evidence-classification substage were independently accepted PASS; **IP-2A overall remains PARTIAL / INCOMPLETE. B03 remains PARTIAL / NARROWED / OPEN; B04 remains PARTIAL / OPEN, with the minimum policy ready for final review; IP-2B remains BLOCKED / NOT AUTHORIZED.** Overall IP-1 remains PARTIAL / NOT PASS. R9's matrix is unchanged; subsequent R10/R11 notes record current dispositions without authorizing implementation.
 
 **Baseline reviewed:** `f0ab28094a8a911ae5fdee315efeace482600b32`.
 
@@ -132,3 +132,7 @@ The R9 recommendation for a separately authorized IP-1A external-confirmation ac
 ### Subsequent authorization note — IP-2A R10 B03 review (2026-10-14)
 
 R10 separately reviewed the existing R2/R3 parser-security evidence and classified its controls; it did not change this acceptance matrix or close an IP-2A requirement. B03 is **PARTIAL / NARROWED, still OPEN / NOT QUALIFIED**. The byte limit is a read-boundary limit, event counters are application callback limits, RSS/timings are observations, and cancellation is cooperative absent a measured deadline. Hard parser/process memory and CPU bounds, lawful exact schema-validation workload, supported-OS behavior, and independent security disposition remain unresolved. No new probe was run. See `IP-2A-R10-B03-SECURITY-QUALIFICATION.md`; B01/B02 and B04 remain open, IP-2A remains PARTIAL / INCOMPLETE, and IP-2B remains BLOCKED / NOT AUTHORIZED.
+
+### Subsequent authorization note — IP-2A R11 B04 policy (2026-10-14)
+
+R11 freezes the minimum IP-2A/IP-5/IP-7 reference and secure-open policy for final review using existing R4–R8 evidence only. It distinguishes policy acceptance required before IP-2A PASS from full empirical Finder/Shortcuts/helper/provider UX and transport evidence owned downstream. B04 is **READY FOR FINAL POLICY REVIEW; still PARTIAL / OPEN**. No probe was run; no IP-2A requirement is claimed independently accepted by this note. See `IP-2A-R11-FILE-REFERENCE-POLICY.md` and its B04 closure matrix. IP-2B remains BLOCKED / NOT AUTHORIZED.

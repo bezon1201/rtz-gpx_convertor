@@ -1,5 +1,11 @@
 # Finder / Shortcuts File-Authority Transport Qualification
 
+## Current policy handoff — IP-2A R11
+
+R11 freezes the minimum reference/secure-open policy for final review; it does not upgrade the R4–R8 empirical transport evidence. Finder's observed carrier remains **PATH LOCATOR ONLY** in the tested R6 setup; R7's independently launched sandboxed receiver lacked authority for path arguments. A selected path, URL string or successful unsandboxed open is not a capability. **B04 remains PARTIAL / OPEN; IP-2A remains PARTIAL / INCOMPLETE; IP-2B remains BLOCKED / NOT AUTHORIZED.**
+
+The current alias/symlink, scope, replacement/reacquisition and preview/export policy is in [`IP-2A-R11-FILE-REFERENCE-POLICY.md`](IP-2A-R11-FILE-REFERENCE-POLICY.md). No Finder/Shortcuts, picker or sandbox probe was rerun for R11; actual product transport and provider behavior remain unqualified.
+
 ## Historical IP-2A R6 update (2026-10-14)
 
 **Verdict: PARTIAL.** The Shortcuts action catalog became populated after an existing action-bearing Shortcut was opened, but the internal cause of the initial empty pane is not established. A local R6 research Shortcut was exposed in Finder Quick Actions. With its shell action explicitly bound to Shortcut Input and configured to pass input as arguments, Finder delivered one or two POSIX path strings; the receiver opened the synthetic regular files and matched their unique contents. A generic `Input` binding first produced zero arguments. Finder therefore supplies a **PATH LOCATOR ONLY** in this tested setup. No independent security-scoped authority, sandbox grant, identity continuity, cancellation/permission behavior, or product transport was qualified.
@@ -16,7 +22,7 @@ The Shortcuts shell action ran without input and exposed `/bin/zsh`, uid and pro
 
 **R7 disposition at that handoff:** Shortcuts carrier **PARTIAL / NOT QUALIFIED**; standalone sandboxed path authority **BLOCKED**; ordinary path read **ORDINARY PERMISSIONS ONLY**; R5 picker/inherited helper **PARTIAL**; `IP1-B04` **PARTIAL / OPEN**; `IP1-B03` **OPEN / PARTIAL / NOT QUALIFIED, unchanged**; IP-1 overall **PARTIAL / NOT PASS**. IP-2B–IP-2E, production work and release remain **NOT AUTHORIZED**.
 
-## Current IP-2A R8 closeout
+## Historical IP-2A R8 closeout
 
 R8 consolidates the R1–R7 evidence without upgrading any partial observation to qualification. **IP-2A remains PARTIAL / INCOMPLETE; IP1-B03 and IP1-B04 remain open; IP-2B = BLOCKED.** See [`IP-2A-CLOSEOUT-AND-HANDOFF.md`](IP-2A-CLOSEOUT-AND-HANDOFF.md) for the status matrix, candidate boundary, authority recommendation, residual conditions and cross-stage ownership. No production transport or later-stage execution is authorized.
 

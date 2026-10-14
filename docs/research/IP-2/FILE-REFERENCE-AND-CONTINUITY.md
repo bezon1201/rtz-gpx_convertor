@@ -1,6 +1,12 @@
 # IP-2A — FileReference and Source Continuity Qualification
 
-**Current handoff:** IP-2A remains **PARTIAL / INCOMPLETE** after R8; the R8 closeout document is prepared for review but formal IP-2A criteria remain open. R4–R7 findings below are historical snapshots. See [`IP-2A-CLOSEOUT-AND-HANDOFF.md`](IP-2A-CLOSEOUT-AND-HANDOFF.md) for the consolidated boundary and open closure conditions.
+**Current handoff:** R11 freezes the minimum file-reference/security policy for final review; **B04 remains PARTIAL / OPEN; IP-2A remains PARTIAL / INCOMPLETE.** This does not qualify production transport, alias/provider behavior or preview/export continuity, and does not close B04. See [`IP-2A-R11-FILE-REFERENCE-POLICY.md`](IP-2A-R11-FILE-REFERENCE-POLICY.md) for current policy and B04 closure matrix. R4–R8 findings below remain historical evidence snapshots.
+
+## Current IP-2A R11 minimum policy status
+
+The conceptual `AuthorizedFileReference` is not a production type: paths are locators only; successful unsandboxed open is not a system grant; authorization, object identity and content continuity are separate. The minimum policy requires qualified authority/reacquisition, one secure target open, descriptor validation, bounded reads from that descriptor, no unsafe reopen, balanced scope lifetime if used, and fail-closed handling. Explicit bounded alias/symlink resolution may be supported only after qualification; no blanket rejection is imposed. At export, reacquire, reread, revalidate and compare a deterministic output-affecting semantic projection. Mismatch or inconclusive comparison invalidates route confirmation and dependent publication consent. No source digest by default.
+
+Policy is frozen for final Architect review. Product transport, alias/symlink UX, provider/OS matrix and actual semantic continuity remain unqualified downstream work. B04 remains **PARTIAL / OPEN**; R11 ran no probe and authorizes no implementation.
 
 ## Historical IP-2A R4 qualification
 
@@ -51,7 +57,7 @@ Apple documents `NSFileCoordinator` as coordination among file presenters and re
 
 Apple references: [`fileResourceIdentifierKey`](https://developer.apple.com/documentation/foundation/urlresourcekey/fileresourceidentifierkey?changes=lat__1_3), [`fileIdentifierKey`](https://developer.apple.com/documentation/foundation/urlresourcekey/fileidentifierkey?changes=_10%2C_10), and [`generationIdentifierKey`](https://developer.apple.com/documentation/foundation/urlresourcekey/generationidentifierkey?changes=_2). Their documented caveats remain part of the design; R4 does not upgrade them into universal identity guarantees.
 
-## Recommended continuity contract for cross-stage review
+## Historical R4 candidate continuity contract for cross-stage review
 
 This is a **candidate contract**, not a selected product API:
 

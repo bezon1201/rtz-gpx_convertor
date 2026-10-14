@@ -1,6 +1,14 @@
 # Architect review handoff
 
-## Current handoff — IP-2A R10 B03 security-control review
+## Current handoff — IP-2A R11 B04 file-reference policy
+
+**Authorization:** IP-2A R11 documentation and joint policy work only, using existing R4–R8 evidence. **B04 = READY FOR FINAL POLICY REVIEW; blocker remains PARTIAL / OPEN.** R11 freezes the minimum conceptual contract: a path is a locator, not authority; successful unsandboxed open is ordinary permission, not a system capability; authority, object identity and content continuity are distinct; acquire/reacquire qualified authority; open once, check the descriptor, bounded-read that descriptor, avoid unsafe reopen, balance any security scope, and fail closed. Aliases/symlinks are not categorically rejected, but only explicit bounded resolution under qualified authority followed by secure target open is conditionally permitted.
+
+Before export, reacquire, securely reread and revalidate, then compare a deterministic output-affecting semantic projection. Missing authority, changed semantics or inconclusive comparison invalidates route confirmation and dependent publication consent and requires refreshed preview/affirmative confirmation. No full source digest by default. Actual Finder/Shortcuts/helper transport, alias/provider UX, supported OS/provider coverage, replacement lifecycle and semantic continuity remain unqualified downstream work. No probes or implementation occurred.
+
+Preserved: R10 **PASS / ARCHITECT ACCEPTED** as a documentation/evidence-classification substage; B01 **PENDING EXTERNAL CONFIRMATION**; B02 **PENDING / NOT CLEARED**; B03 **PARTIAL / NARROWED / OPEN**; B04 **PARTIAL / OPEN**; IP-2A **PARTIAL / INCOMPLETE**; IP-2B **BLOCKED / NOT AUTHORIZED**; overall IP-1 **PARTIAL / NOT PASS**. The full policy and B04 matrix are in [`docs/research/IP-2/IP-2A-R11-FILE-REFERENCE-POLICY.md`](docs/research/IP-2/IP-2A-R11-FILE-REFERENCE-POLICY.md). Branch: `implementation/ip-2a-r11-file-reference-policy`, based on `7109738caf0bad2e8dfed86f4787a4abd090c1ca`. Stop for independent Architect review.
+
+### Historical handoff — IP-2A R10 B03 security-control review
 
 **Authorization:** IP-2A R10 documentation and review of existing R2/R3 evidence only. **B03 = PARTIAL / NARROWED; OPEN / NOT QUALIFIED.** The descriptor byte cap is a hard bound only at the read boundary; XML event counters are callback/application limits; harness RSS and timings are observational; parser cancellation is cooperative; and worker termination is a research-only experiment. No hard parser/process memory or CPU bound, fixed cancellation deadline, schema-validation workload, supported macOS matrix or production integration is qualified. No parser or process-isolation architecture is selected.
 
