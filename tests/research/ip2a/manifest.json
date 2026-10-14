@@ -1,0 +1,55 @@
+{
+  "record": "IP-2A R3 libxml2 research harness",
+  "scope_exception": "../../../docs/research/IP-2/IP-2A-R3-SCOPE-EXCEPTION.md",
+  "status": "research only; no product qualification",
+  "source_release": {
+    "name": "libxml2",
+    "version": "2.15.4",
+    "official_archive": "https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.tar.xz",
+    "archive_sha256": "98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821",
+    "vendored_or_committed": false
+  },
+  "host": {
+    "os": "macOS 26.6.2 (25G83)",
+    "architecture": "arm64",
+    "compiler": "Apple clang 21.0.0 (clang-2100.1.1.101)",
+    "runtime_version_guard": "xmlParserVersion == 21504",
+    "linkage": "static libxml2.a; otool -L check found no dynamic libxml2",
+    "system_libxml2": "2.9.13; not used"
+  },
+  "research_artifacts": {
+    "harness_source_sha256": "fd62262f5f076415c8321763280b053175f86fafe0cdc120698553a2bec8946a",
+    "build_script_sha256": "6bdb1d2d43b5fa9503ff5c8c62d0e7eb9708b76b58ad06bba0cb706e773e9547"
+  },
+  "build": {
+    "configure": "--disable-shared --enable-static --without-catalog --without-http --without-python --without-zlib --without-valid --without-xinclude --with-schemas --with-reader --with-push --with-iconv",
+    "parser_options": ["XML_PARSE_NONET", "XML_PARSE_NO_XXE", "XML_PARSE_NO_SYS_CATALOG", "XML_PARSE_BIG_LINES"],
+    "parser_options_hex": "0x2c00800",
+    "loader_policy": "deny-all per parser and schema context; no fallback",
+    "doctype_policy": "SAX internalSubset callback immediately calls xmlStopParser",
+    "read_policy": "descriptor callback; 4 KiB reads; 16 MiB cap plus one byte to detect excess",
+    "network_during_tests": false
+  },
+  "input_identity": "Each deterministic generated or literal input is hashed byte-for-byte with CommonCrypto SHA-256 immediately before parsing; exact hashes and byte counts are in results.jsonl. No input XML is emitted.",
+  "expected_outcome_classes": {
+    "reject": "DOCTYPE, entity/resource declaration, malformed input, or candidate callback cap exceeded; no partial accepted result",
+    "accept_xml_layer_only": "ordinary well-formed synthetic XML, including wrong namespace/version-like markup, schema hint, and inert XInclude marker",
+    "deny_resource": "synthetic generic XSD include request rejected by schema-context deny-all loader"
+  },
+  "cases": [
+    "plain", "doctype_bare", "doctype_internal", "entity_general", "entity_parameter",
+    "external_general_file", "external_general_http", "external_dtd_file", "external_dtd_http",
+    "external_parameter_file", "external_parameter_http", "malformed", "two_roots", "trailing_data",
+    "invalid_encoding", "invalid_utf8", "wrong_namespace_version_wellformed", "schema_hint_inert",
+    "xinclude_inert", "schema_include_file_denied", "schema_include_http_denied", "depth_64", "depth_65",
+    "depth_10000", "attribute_4096", "attribute_4097", "attributes_count_64", "attributes_count_65",
+    "text_4096", "text_4097", "aggregate_text_exact", "aggregate_text_plus1", "elements_exact",
+    "elements_plus1", "descriptor_bytes_cap_minus1", "descriptor_bytes_cap_exact",
+    "descriptor_bytes_cap_plus1", "async_cancel_descriptor_read", "async_cancel_cleanup",
+    "cpu_worker_termination", "measure_nodes_249999", "measure_nodes_250000",
+    "measure_deep_10000", "measure_attr_1048576", "measure_segtext_8388608"
+  ],
+  "result_file": "results.jsonl",
+  "interpretation": "Expected/observed values and exit statuses are recorded per case. Callback limits are not hard allocator/process limits. Measurements include the research harness and generated input. CPU worker is disposable research only.",
+  "reproduction": "tests/research/ip2a/build-and-run.sh /path/to/libxml2-2.15.4.tar.xz /tmp/ip2a-r3-build"
+}

@@ -1,21 +1,24 @@
 # Progress ledger
 
-## Current gate activity — IP-2A R2 libxml2 security qualification
+## Current gate activity — IP-2A R3 runtime safety
 
-**Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific, never blanket authorization. Current authorization: **IP-2A R2 only**. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remain **NOT AUTHORIZED**. Overall IP-1: **PARTIAL / NOT PASS**.
+**Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific, never blanket authorization. Current authorization: **IP-2A R3 only**, including the narrow expiring exception in `docs/research/IP-2/IP-2A-R3-SCOPE-EXCEPTION.md`. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remain **NOT AUTHORIZED**. Overall IP-1: **PARTIAL / NOT PASS**.
 
-- **IP-2A R2: PARTIAL.** Disposable synthetic security qualification used libxml2 2.15.4 on macOS 26.6.2 arm64, with exact candidate flags, deny-all context resource loaders, immediate SAX DOCTYPE stop and descriptor-style `xmlCtxtReadIO`; details in `docs/research/IP-2/INPUT-AND-SECURITY-DECISIONS.md`.
-- Synthetic DOCTYPE/entity/external-resource cases and malformed XML failed closed; no loader fallback, successful external load or network request was observed. A generic synthetic XSD include was denied by the schema-context loader; this does not qualify RTZ/GPX schemas or rights.
-- Descriptor callback accepted 16 MiB−1 and 16 MiB, rejected 16 MiB+1 after limit+1; synchronous read-callback cancellation at 64 KiB stopped with no result and deterministic close. App callbacks enforced tested depth/element/text/attribute candidate boundaries, but not parser allocation/memory hard bounds.
-- **IP1-B03 remains PARTIAL / OPEN / NOT QUALIFIED.** Supported macOS matrix, asynchronous/pathological cancellation, reliable per-conversion memory evidence, product integration and independent review remain open. **IP1-B04 remains PARTIAL / OPEN, unchanged**; Finder/Shortcuts references, aliases, security scopes, identity and continuity were not exercised. IP1-B01/B02 remain unresolved.
-- Readiness: IP-2A **PARTIAL**; IP-2B **BLOCKED**; IP-2C **BLOCKED**; IP-2D **BLOCKED**. IP-1 overall remains **PARTIAL / NOT PASS**. No downstream work is authorized.
-- Five authorized documentation files only; no app/parser/model/schema/fixture/dependency/product test/runtime artifact was created or committed. Temporary synthetic probe/build artifacts are disposable. Pre-existing `AGENTS.md` modification remains untouched and uncommitted.
-- Branch `implementation/ip-2a-r2-libxml2-security-qualification`, baseline `0625fc8980c0072a297a37fde6603538cf52cc06`; commit/remote HEAD will be reported in final handoff.
-- **Next:** independent Architect review. Stop before IP-2B or later work.
+- **IP-2A R3: PARTIAL.** A reproducible research harness rebuilt official libxml2 2.15.4 source (archive SHA-256 `98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821`) as a static arm64 candidate and verified runtime version `21504` with no dynamic libxml2 dependency. Host: macOS 26.6.2 (25G83), arm64, Apple clang 21.0.0. `self-test` completed with `failures=0`; inputs, expected/observed results and hashes are recorded under `tests/research/ip2a/`.
+- R2 synthetic DTD/entity/resource denial and callback boundary cases reproduced. Cooperative asynchronous cancellation was observed during descriptor read and cleanup; no partial result was returned, close ran once, and no parser-context API was called from the cancelling thread. A disposable CPU-bound child was terminated/reaped. Twenty-repeat CPU/RSS measurements include harness/runtime and generated inputs; callback boundaries are not hard allocation limits.
+- **IP1-B03 remains OPEN / PARTIAL / NOT QUALIFIED.** Supported macOS coverage, robust hard resource bounds, cancellation deadline, product integration and independent review remain open. **IP1-B04 remains OPEN / PARTIAL, unchanged**; Finder/Shortcuts references, aliases, security scopes, permissions, identity and continuity were not exercised. IP1-B01/B02 remain unresolved; no RTZ/GPX schema was used.
+- Readiness: IP-2A **PARTIAL**; IP-2B–IP-2E **NOT AUTHORIZED**. IP-1 overall remains **PARTIAL / NOT PASS**. No downstream work is authorized.
+- Added only the recorded scope exception, research harness sources/scripts/docs/results and the five requested documentation updates. No production implementation, production test target, RTZ/GPX schema, third-party source, binary, private route or vessel data was created or committed. The pre-existing `AGENTS.md` change is untouched and excluded.
+- Branch `implementation/ip-2a-r3-runtime-safety`, baseline/parent `636ce15f70e874f88f0a4317f3862a8efcb0936d`; commit/remote details will be reported after verification.
+- **Next:** independent Architect review of IP-2A R3. Stop before IP-2B or any later work.
+
+### Historical gate activity — IP-2A R2 libxml2 security qualification
+
+The R2 handoff below records its results and authorization at that time; R3 above is the current status.
 
 ### Historical gate activity — IP-2A R1 security and runtime feasibility
 
-**Historical authorization at the R1 handoff:** IP-2A R1 only. Gate 3 was **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 is stage-specific, never blanket authorization. Current authorization is recorded in the R2 section above.
+**Historical authorization at the R1 handoff:** IP-2A R1 only. Gate 3 was **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 is stage-specific, never blanket authorization. Current authorization is recorded in the R3 section above.
 
 - IP-2A R1: **PARTIAL**. Foundation XMLParser alone does not meet the strict DTD policy in the observed case; libxml2 remains a candidate, not selected or qualified; Xerces-C++ is not recommended.
 - IP1-B03: **PARTIAL / OPEN, NOT QUALIFIED**. IP1-B04: **PARTIAL / OPEN**; joint FileReference, alias/security-scope and source-continuity requirements remain unqualified. IP1-B01/B02 remain open. Overall IP-1: **PARTIAL / NOT PASS**.

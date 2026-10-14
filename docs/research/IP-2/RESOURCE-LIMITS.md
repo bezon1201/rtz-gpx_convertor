@@ -1,4 +1,24 @@
-# IP-2A R2 — Resource Limit Qualification Record
+# IP-2A R2 Baseline and R3 Addendum — Resource Limit Qualification Record
+
+## R3 runtime-safety evidence addendum (2026-10-14)
+
+The R3 harness reran the R2 parser-boundary matrix against the same pinned static libxml2 2.15.4 candidate, then added cooperative asynchronous cancellation, cleanup cancellation, repeated synthetic parsing and disposable CPU-worker termination. These results remain **PROVISIONAL / PARTIALLY CHARACTERIZED**. No candidate ceiling is approved for product use.
+
+| Dimension | R3 observation | Classification / limit |
+|---|---|---|
+| DTD/entity/resource denial | Reproduced denial of synthetic DTD/entity and local/HTTP schema include attempts; no accepted external content, fallback, or network request. | Single build/host and synthetic matrix only; does not close IP1-B03 or qualify RTZ/GPX schemas. |
+| Cancellation during reads | Separate thread set an atomic request; parser-thread callback observed it during a deliberately slowed descriptor read, returned failure, closed exactly once and did not read again after observation. | Cooperative only at callbacks. Recorded bytes/time are run-specific and no fixed cancellation deadline is established. |
+| Cancellation during cleanup | Cancellation synchronized to close callback produced failure/no acceptance and exactly one close. | Synthetic callback timing only; not application lifecycle evidence. |
+| CPU-bound cancellation | Disposable child repeatedly parsed 8,402,951 synthetic bytes; parent SIGTERM/reap succeeded. Recorded run: 35.630 ms CPU, 9,764,864 bytes Darwin peak RSS, 264 μs kill-to-reap. | Process isolation is an experiment, not product architecture. One host/run; no service-level latency claim. |
+| Repeated nodes workload | 20 sequential parses of 1,000,003 bytes / 250,000 elements: accepted in 121,186 μs, 2,867,200 bytes peak RSS; 250,001 elements rejected in 121,050 μs with same peak. | Generated input and process/runtime memory included; not parser-only or conversion-attributable. |
+| Repeated deep-nesting input | 20 parses of a 70,000-byte depth-10,000 input: rejected at callback in 95 μs aggregate; 2,162,688 bytes peak RSS. | Whole-harness peak; parser internal stack/allocation behavior not bounded by app callback. |
+| Repeated large-attribute input | 10 parses with a 1,048,576-byte attribute: rejected at callback in 15,682 μs aggregate; 4,096,000 bytes peak RSS. | Attribute is materialized before callback. Whole-process RSS only; not a hard cap. |
+| Repeated aggregate-text workload | 20 sequential parses of 8,402,951 bytes / 8 MiB text: 47,060 μs aggregate; 10,289,152 bytes peak RSS for whole harness process. | Same limitations; no product memory or performance conclusion. |
+| Hard limits vs callback limits | Byte callback delivered at most the limit plus one byte to detect excess. Element/depth/attribute/text checks fired at application SAX callbacks; attribute tokens and parser events had already been processed/materialized. | Byte input cap is observable at the read boundary. Other counters do not cap internal parser allocations; none is a hard process bound. |
+
+Full result objects and sanitized categories are in `tests/research/ip2a/results.jsonl`. The harness uses no real routes, schemas or network requests. The R3 artifacts are covered by the one-time exception in `IP-2A-R3-SCOPE-EXCEPTION.md`.
+
+**Disposition:** retain the prior candidate values strictly as experimental boundaries. No hard memory ceiling, CPU ceiling, cancellation deadline, or supported-macOS qualification is established. IP1-B03 remains **OPEN / PARTIAL / NOT QUALIFIED**; IP1-B04 remains open and unchanged.
 
 **Status: PROVISIONAL / PARTIALLY CHARACTERIZED.** No ceiling below is approved for product use or established as a hard process bound. Evidence is from disposable synthetic libxml2 2.15.4 probes on one macOS 26.6.2 arm64 host. See `INPUT-AND-SECURITY-DECISIONS.md` §R2.4. IP-2B must not treat a callback observation as approval of a limit.
 

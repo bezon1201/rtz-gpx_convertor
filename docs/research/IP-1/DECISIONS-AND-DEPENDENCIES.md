@@ -1,6 +1,6 @@
 # IP-1G — Decisions, Traceability, and Dependencies
 
-**Historical IP-1G closeout status:** REVIEW (at the time of its original handoff). IP-1G was subsequently independently accepted PASS. **Current IP-2A R2 status: PARTIAL; overall IP-1 remains PARTIAL / NOT PASS.** Current accepted IP-1 verdicts: IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation-level); IP-1F PASS (protocol-design only); IP-1G PASS / ARCHITECT ACCEPTED. IP-2A R2 is separately authorized; IP-2B onward remain NOT AUTHORIZED.
+**Historical IP-1G closeout status:** REVIEW (at the time of its original handoff). IP-1G was subsequently independently accepted PASS. **Current IP-2A R3 status: PARTIAL; overall IP-1 remains PARTIAL / NOT PASS.** Current accepted IP-1 verdicts: IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation-level); IP-1F PASS (protocol-design only); IP-1G PASS / ARCHITECT ACCEPTED. IP-2A R3 is separately authorized; IP-2B onward remain NOT AUTHORIZED.
 
 **Baseline:** `b964b51584c79fde7af06100809ccca1f54333df`
 **Branch:** `implementation/ip-1g-integration-closeout`
@@ -109,7 +109,16 @@ This update records R3 outcomes without changing any G3 decision, approved plan,
 
 **R3 verdict: IP-1A PARTIAL. Overall IP-1: PARTIAL / NOT PASS.** No blocker is closed by this update. IP-1B through IP-1G accepted verdicts remain unchanged. The original IP-1G integration/review narrative below describes its historical state; IP-1G is now independently accepted PASS.
 
-## Current IP-2A R2 disposition (2026-10-13)
+## Current IP-2A R3 disposition (2026-10-14)
+
+The owner authorized IP-2A R3 only, including the narrow expiring harness exception recorded in `docs/research/IP-2/IP-2A-R3-SCOPE-EXCEPTION.md`. Gate 3 remains **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 is stage-specific, never blanket authorization. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remain **NOT AUTHORIZED**. Overall IP-1 remains **PARTIAL / NOT PASS**.
+
+- **IP1-B03: OPEN / PARTIAL / NOT QUALIFIED.** A reproducible research-only harness rebuilt exact libxml2 2.15.4 from the official archive (SHA-256 `98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821`), verified runtime version `21504`, statically linked the candidate archive, and rejected silent dynamic/system-libxml2 linkage. On macOS 26.6.2 (25G83), arm64, Apple clang 21.0.0, the synthetic matrix reproduced DTD/entity/resource denial and callback boundaries. Cooperative cancellation was observed only in descriptor callbacks/cleanup; a separate disposable child could be terminated and reaped during repeated CPU-bound parsing. The measured RSS includes the whole harness and generated input. These observations do not establish hard parser memory/CPU limits, a cancellation deadline, other-OS behavior, product integration, or complete security qualification.
+- **IP1-B04: OPEN / PARTIAL, unchanged.** No Finder/Shortcuts file reference, alias/symlink, security scope, permission, identity/replacement race or preview/export continuity case was tested. The IP-2A/IP-5/IP-7 joint decision remains required.
+- **IP1-B01 remains REQUIRES EXTERNAL CONFIRMATION; IP1-B02 remains BLOCKED / NOT CLEARED.** RTZ 1.2 exact provenance and RTZ/GPX schema rights/offline validator remain unresolved. No real schema or route was used, copied, bundled or committed.
+- **IP-2A R3 verdict: PARTIAL.** IP-2A does not pass. IP-2B–IP-2E remain not authorized; readiness and overall IP-1 verdicts do not change. See `docs/research/IP-2/INPUT-AND-SECURITY-DECISIONS.md` and `RESOURCE-LIMITS.md` for experiment and classification details. Independent Architect review is next.
+
+## Historical IP-2A R2 disposition (2026-10-13; superseded as current handoff)
 
 This authorized continuation qualifies one disposable libxml2 2.15.4 candidate configuration using synthetic inputs only. Gate 3 remains **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 remains stage-specific. **IP-2A R2 alone is authorized.** IP-2B–IP-2E, IP-3–IP-7 execution and production implementation remain **NOT AUTHORIZED**. Overall IP-1 remains **PARTIAL / NOT PASS**.
 
@@ -153,7 +162,7 @@ These were status/governance contradictions, not reasons to redesign G3-001–G3
 
 ## 6. Historical readiness and bounded IP-2 assessment at IP-1G closeout (superseded)
 
-The following readiness text records the earlier IP-1G handoff and is retained as history. The current IP-2A R2 assessment and authorization are in § “Current IP-2A R2 disposition” above.
+The following readiness text records the earlier IP-1G handoff and is retained as history. The current IP-2A R3 assessment and authorization are in § “Current IP-2A R3 disposition” above.
 
 ### Overall IP-1 disposition
 
