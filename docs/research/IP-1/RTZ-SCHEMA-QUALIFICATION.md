@@ -1,6 +1,6 @@
 # IP-1A — RTZ and GPX Schema Qualification Record
 
-**Current execution status: PARTIAL — R3 public-source review completed; required publisher/legal confirmations and runtime qualification remain outstanding.** This record is not an IP-1 PASS, version support claim, legal opinion, implementation authorization, or independent sign-off. RTZ 1.0 and 1.2 remain mandatory qualification targets; RTZ 1.1 remains conditional and non-blocking. No schema is included in the repository or approved for application bundling.
+**Current execution status: PARTIAL — IP-1A R4 inquiry preparation is underway; publisher messages are not yet sent.** R3 public-source review is complete; required external confirmations and runtime qualification remain outstanding. This record is not an IP-1 PASS, version support claim, legal opinion, implementation authorization, or independent sign-off. RTZ 1.0 and 1.2 remain mandatory qualification targets; RTZ 1.1 remains conditional and non-blocking. No schema is included in the repository or approved for application bundling.
 
 **Repository baseline:** `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`
 
@@ -221,3 +221,9 @@ No external messages were sent. These drafts require separate user authorization
 ## 7. Scope and privacy record
 
 No source-vessel route, user-provided route, private coordinate, credential, or route digest was used. R3 did not repeat accepted R1/R2 schema-validation evidence. R3 reviewed public publisher, standards, platform, validator-license, and security sources; no publisher inquiry was sent. No probe, schema, test fixture, script, dependency, parser, application code, Shortcuts artifact, or package was created or added to Git. Static project fixtures are assigned to IP-1B and were not created here. This task authorizes IP-1A R3 only; IP-2–IP-7 execution and release remain unauthorized.
+
+## 8. Current IP-1A R4 external-confirmation preparation
+
+**Authorization:** IP-1A R4 preparation and outreach for IP1-B01/B02 only. **Current state:** exact artifact identities and outgoing text have been prepared in [`IP-1A-R4-EXTERNAL-CONFIRMATION.md`](IP-1A-R4-EXTERNAL-CONFIRMATION.md); no inquiry has yet been sent and no reply has been received. The artifact set is RTZ 1.0 SHA-256 `c63f002fe9ffa55a45d770cc642b62de7f4a8ef30e87f92a5540e1e5ad332072`, RTZ 1.2 SHA-256 `ba5695107e2b559ea0594eb80f7407b7e4f1c10da8cf09b447b4b920f681ceff`, and GPX 1.1 SHA-256 `9e4d1988b862edbe556305b130f8f6f1b29864fefd0dc02d5dab04ccdd1f34d6`. No replacement download, schema attachment or rights conclusion is part of preparation.
+
+Before responses, B01 remains **REQUIRES EXTERNAL CONFIRMATION**, B02 remains **BLOCKED / NOT CLEARED**, IP-1A remains **PARTIAL**, IP-2A remains **PARTIAL / INCOMPLETE**, and IP-2B remains **BLOCKED / NOT AUTHORIZED**. Historical R1–R3 findings above remain intact.

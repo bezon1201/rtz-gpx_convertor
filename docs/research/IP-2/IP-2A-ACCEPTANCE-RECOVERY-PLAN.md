@@ -124,3 +124,7 @@ Do not execute this recommendation under R9. New external outreach requires sepa
 - **Overall IP-1:** PARTIAL / NOT PASS.
 
 R9 authorizes documentation and planning only. It creates no probe, schema, fixture, code, dependency, test, runtime artifact or platform evidence and does not modify an approved plan. The next activity is independent Architect review of this recovery plan. Do not execute the recommendation or begin IP-2B without separate explicit authorization.
+
+### Subsequent authorization note — IP-1A R4 (2026-10-14)
+
+The R9 recommendation for a separately authorized IP-1A external-confirmation action was later authorized as IP-1A R4 from baseline `2630843a60f573856183fbc92a0fcccdaf45b3e7`. R4 is a separate IP-1A task; it does not change this plan's acceptance matrix or close any IP-2A requirement. At preparation checkpoint, the exact CIRM and Topografix messages were recorded but not yet sent. R9's statement that the action was not executed remains an accurate historical snapshot.

@@ -1,8 +1,14 @@
 # Progress ledger
 
-## Current gate activity — IP-2A R9 acceptance recovery
+## Current gate activity — IP-1A R4 external-confirmation preparation
 
-**Authorization: IP-2A R9 documentation and planning only. IP-2A R8 documentation closeout: PASS / ARCHITECT ACCEPTED; IP-2A overall remains PARTIAL / INCOMPLETE; no overall IP-2A PASS is claimed.** The §11 acceptance matrix and critical-path plan are in `docs/research/IP-2/IP-2A-ACCEPTANCE-RECOVERY-PLAN.md`. `IP1-B03` and `IP1-B04` remain OPEN / PARTIAL; `IP1-B01/B02` remain unresolved; **IP-2B = BLOCKED / NOT AUTHORIZED**; overall IP-1 remains **PARTIAL / NOT PASS**. No implementation, probe, schema, fixture, dependency, test, or platform work occurred. The proposed IP-1A external-confirmation action was not executed; no inquiry was sent. The unrelated local `AGENTS.md` modification remains untouched and excluded.
+**Authorization: IP-1A R4 preparation and outreach for IP1-B01/B02 only.** At this checkpoint, exact artifact identities and inquiry texts are prepared but not yet sent. B01 remains REQUIRES EXTERNAL CONFIRMATION; B02 remains BLOCKED / NOT CLEARED; IP-1A remains PARTIAL. IP-2A R9 documentation/critical-path stage was accepted PASS / ARCHITECT ACCEPTED, but IP-2A overall remains PARTIAL / INCOMPLETE; IP-2B remains BLOCKED / NOT AUTHORIZED; overall IP-1 remains PARTIAL / NOT PASS. No schema files were downloaded or attached and no runtime or implementation work occurred. The unrelated local `AGENTS.md` modification remains untouched and excluded.
+
+Details and exact prepared outgoing text: `docs/research/IP-1/IP-1A-R4-EXTERNAL-CONFIRMATION.md`. Current branch: `implementation/ip-1a-r4-external-confirmation`, based on `2630843a60f573856183fbc92a0fcccdaf45b3e7`. Commit the prepared record, then send only the CIRM and Topografix messages documented there. IEC is conditional follow-up only.
+
+### Historical gate activity — IP-2A R9 acceptance recovery
+
+**Authorization: IP-2A R9 documentation and planning only. IP-2A R8 documentation closeout: PASS / ARCHITECT ACCEPTED; IP-2A overall remains PARTIAL / INCOMPLETE; no overall IP-2A PASS is claimed.** The §11 acceptance matrix and critical-path plan are in `docs/research/IP-2/IP-2A-ACCEPTANCE-RECOVERY-PLAN.md`. `IP1-B03` and `IP1-B04` remain OPEN / PARTIAL; `IP1-B01/B02` remain unresolved; **IP-2B = BLOCKED / NOT AUTHORIZED**; overall IP-1 remains **PARTIAL / NOT PASS**. No implementation, probe, schema, fixture, dependency, test, or platform work occurred in R9. The proposed IP-1A external-confirmation action had not been executed at the R9 handoff. The unrelated local `AGENTS.md` modification remains untouched and excluded.
 
 R9 confirms that §11 requires an exact registry source, legal offline runtime, cap rationale/enforcement, reproducible security evidence, and joint IP-2A/IP-5/IP-7 file-reference policy. Actual product transport/UX and full preview/export integration remain assigned to later IP-5/IP-7 work, while the minimum joint policy remains an IP-2A PASS criterion. R8 evidence remains historical and unchanged.
 
