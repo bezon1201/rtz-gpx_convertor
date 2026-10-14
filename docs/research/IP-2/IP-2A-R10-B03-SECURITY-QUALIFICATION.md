@@ -127,6 +127,8 @@ No new probe is needed to support this R10 classification. The smallest next act
 
 This was a recommendation at the R10 handoff. R12 subsequently reviewed the existing evidence and recorded **INSUFFICIENT EVIDENCE — FURTHER QUALIFICATION REQUIRED**; it selected no architecture. The separately authorized R13 probe later produced host-specific CPU/watchdog evidence and partial address-space containment evidence, but did not close B03 or pass IP-2A. See [`IP-2A-R12-RESOURCE-CONTAINMENT-DECISION.md`](IP-2A-R12-RESOURCE-CONTAINMENT-DECISION.md) and [`IP-2A-R13-WORKER-RESOURCE-FEASIBILITY.md`](IP-2A-R13-WORKER-RESOURCE-FEASIBILITY.md).
 
+R14 subsequently identifies an isolated worker as a **candidate requiring qualification**, not selected production architecture. R13 supports only host-specific CPU-time enforcement, parent watchdog termination/reap, and limiting new mappings near a very large existing address-space baseline; it does not demonstrate hard RSS containment. The R10 classifications and open B03 status remain unchanged. See [`IP-2A-R14-CONTAINMENT-ARCHITECTURE-REVIEW.md`](IP-2A-R14-CONTAINMENT-ARCHITECTURE-REVIEW.md).
+
 ## 9. R10 scope and verification record
 
 R10 reviews existing documents and the already committed synthetic research results only. No research harness was modified or run; no new probe, test, build, schema, fixture, dependency, parser, product code or runtime artifact was created. The unrelated pre-existing `AGENTS.md` worktree modification is preserved and excluded. `git diff --check` and documentation consistency review are required before commit.

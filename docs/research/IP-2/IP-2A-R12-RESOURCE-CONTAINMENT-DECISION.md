@@ -12,6 +12,8 @@
 
 **R13 follow-up:** the narrowly authorized host-specific child-control probe later qualified the tested CPU-limit and watchdog/reap cases, and partially qualified address-space growth control. It did not qualify a general memory cap or select a production architecture. See [`IP-2A-R13-WORKER-RESOURCE-FEASIBILITY.md`](IP-2A-R13-WORKER-RESOURCE-FEASIBILITY.md); B03 remains open.
 
+**R14 follow-up:** documentation-only review selects **ISOLATED WORKER CANDIDATE — REQUIRES QUALIFICATION**, not a production architecture. R13 materially supports host-specific CPU-time enforcement, independently supervised wall-clock termination/reap, and new-mapping virtual-address containment. It does not establish a hard resident-memory limit; its `RLIMIT_AS` budget started from an unusually large ~415 GiB virtual-address baseline. One integrated parser/schema workload qualification is proposed, gated on a frozen supported OS and lawful exact schema/runtime. See [`IP-2A-R14-CONTAINMENT-ARCHITECTURE-REVIEW.md`](IP-2A-R14-CONTAINMENT-ARCHITECTURE-REVIEW.md). B03 remains OPEN / PARTIAL.
+
 ## 1. Decision basis and approved requirements
 
 The approved [IP-2 plan](../../implementation/IP-2-SAFE-INPUT-MODEL-PARSER-PLAN.md) §§3–4 and 11 requires bounded input and work evidence, resource-limit rationale and enforcement points, measured cancellation on qualified targets, fail-closed behavior with no partial model/output, safe cleanup, and a reviewed security/dependency decision before IP-2B. It does **not** approve the candidate 250 ms cancellation figure, 5-second parse/schema budget, or 128 MiB per-conversion memory value as product requirements. No deadline is introduced here.
