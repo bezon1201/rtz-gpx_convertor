@@ -1,0 +1,112 @@
+{
+  "stage": "IP-2A R5",
+  "verdict": "PARTIAL",
+  "host": {
+    "os": "macOS 26.6.2",
+    "build": "25G83",
+    "architecture": "arm64",
+    "swift": "Apple Swift 6.3.3 (swift-driver 1.148.6)",
+    "compiler": "Apple clang 21.0.0",
+    "sdk": "26.5",
+    "target": "arm64-apple-macosx26.0"
+  },
+  "build": {
+    "optimization": "-O",
+    "app_frameworks": ["AppKit", "Security"],
+    "receiver_frameworks": ["Security"],
+    "signing": "ad-hoc; temporary sandboxed app and helper; codesign --verify --deep --strict passed",
+    "app_entitlements": {
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.files.user-selected.read-only": true
+    },
+    "receiver_entitlements": {
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.inherit": true
+    }
+  },
+  "synthetic_inputs": [
+    {
+      "case": "readable-one",
+      "filename": "R5 selection one é.txt",
+      "payload_bytes": 25,
+      "payload_sha256": "74c0f188f8ef34ead6908100830c32ab39aee79852a372823fee617c6828ea68"
+    },
+    {
+      "case": "readable-two",
+      "filename": "R5 selection second é.txt",
+      "payload_bytes": 28,
+      "payload_sha256": "f6d22396d0662a1e4277c63bcdfd19456f0b694e1ad0fb1bce4610e78a9e4861"
+    },
+    {
+      "case": "permission-denied",
+      "filename": "R5 permission denied.txt",
+      "payload_bytes": 29,
+      "mode": "000",
+      "payload_sha256": "07f920be0b538758036783880058ef15ee3cb236842d1a5ca18f79ef71ce2c4e"
+    }
+  ],
+  "observations": [
+    {
+      "case": "native-picker-multiple-selection",
+      "result": "PASS_ON_THIS_HOST",
+      "detail": "Two individually selected file URLs were delivered. Space, composed é, decomposed e+combining acute and Ω survived the native selection and payload checks."
+    },
+    {
+      "case": "sender-descriptor-read",
+      "result": "PASS_ON_THIS_HOST",
+      "detail": "Both selected files opened with O_NOFOLLOW, passed regular-file/size checks and matched expected payload bytes; startAccessingSecurityScopedResource returned true. Descriptor identifiers were compared internally and not persisted."
+    },
+    {
+      "case": "child-helper-path-locator",
+      "result": "PASS_IN_THIS_INHERITED_SANDBOX_SETUP",
+      "detail": "The child helper exited 0 with a PID distinct from its sender and PPID equal to the sender PID; it received the URL path as an argument, reported sandbox and inherited sandbox entitlement, opened the same descriptor identity and matched the expected bytes. This does not establish path authority for an independently launched process or product CLI."
+    },
+    {
+      "case": "child-helper-bookmark-data",
+      "result": "PASS_IN_THIS_INHERITED_SANDBOX_SETUP",
+      "detail": "The child helper exited 0 with a PID distinct from its sender and PPID equal to the sender PID. Foundation bookmark data created with default options from each selected URL was passed on stdin. The sandboxed child resolved it, startAccessingSecurityScopedResource returned true, and the opened descriptor identity and payload matched. Bookmark scope flavor was not independently classified; no persistent bookmark behavior was tested."
+    },
+    {
+      "case": "same-process-delayed-reopen-after-scope-stop",
+      "result": "PASS_ON_THIS_HOST",
+      "detail": "After the sender balanced/stopped the explicit access scopes, a two-second delayed URL reopen returned the same descriptor identity and expected payload for both synthetic files. This narrow observation is not preview/export or cross-launch qualification."
+    },
+    {
+      "case": "mode-000-permission-denial",
+      "result": "PASS_ON_THIS_HOST",
+      "detail": "The native picker returned a URL and startAccessingSecurityScopedResource returned true, but descriptor open failed with EACCES. No helper was launched for this denied sender read."
+    },
+    {
+      "case": "finder-quick-action",
+      "result": "NOT_TESTED",
+      "detail": "No new Finder Quick Action was configured or invoked; no actual Finder carrier representation or receiver authority was observed."
+    },
+    {
+      "case": "shortcuts-actions-and-transport",
+      "result": "BLOCKED",
+      "detail": "The Shortcuts action library UI returned an empty list for searches including Run Shell Script, shell and Text. A uniquely named empty R5 research Shortcut draft exists but was not run or configured as a Finder Quick Action. The existing IP-1D iCloud Shortcut was not modified or invoked."
+    },
+    {
+      "case": "replacement-deletion-alias-symlink-races",
+      "result": "NOT_TESTED",
+      "detail": "The interactive probe had no controlled pause between selection and receiving-process open; no race, alias or symlink conclusion is drawn."
+    },
+    {
+      "case": "export_time_reacquisition",
+      "result": "NOT_TESTED",
+      "detail": "No RTZ parsing, preview model, export operation or product reacquisition flow was in scope for this probe."
+    }
+  ],
+  "runtime_checks": {
+    "bounded_regular_file_open": "source checks O_NOFOLLOW, fstat regular-file type and a 4096-byte size bound; synthetic inputs were 25, 28 and 29 bytes",
+    "partial_success_on_permission_denial": "denied source read produced EACCES; no cross-process attempt was made",
+    "cancellation": "picker cancellation behavior is implemented to emit CANCELLED, but cancellation was not exercised in this run",
+    "cleanup": "runner uses a shell trap to remove temporary app and synthetic files after the interactive app exits"
+  },
+  "shortcuts_ui": {
+    "new_draft_name": "IP-2A R5 Research Finder Input Probe 20261014",
+    "state": "empty, not run, not configured as a Finder Quick Action",
+    "existing_ip1d_shortcut": "untouched and not invoked"
+  },
+  "privacy": "No private route, coordinates, user file path, temporary directory, actual device/inode value, bookmark bytes, schema, credential, binary or third-party source is included. Payload hashes identify only project-authored synthetic text input."
+}

@@ -1,4 +1,8 @@
-# IP-2A R4 — FileReference and Source Continuity Qualification
+# IP-2A — FileReference and Source Continuity Qualification
+
+**Current handoff:** IP-2A R5 **PARTIAL**. R4 evidence and its verdict below are historical; the R5 observations and current status are appended at the end. See [`FINDER-SHORTCUTS-TRANSPORT-QUALIFICATION.md`](FINDER-SHORTCUTS-TRANSPORT-QUALIFICATION.md).
+
+## Historical IP-2A R4 qualification
 
 **Authorization:** IP-2A R4 only, at baseline `8b73f44fe82f3b47187c5ba49ad5ee315f4ea433`. The R4 research-only probe exception is recorded in [`IP-2A-R4-SCOPE-EXCEPTION.md`](IP-2A-R4-SCOPE-EXCEPTION.md). **Verdict: PARTIAL.** This is one-host research evidence, not product behavior or a final cross-stage API.
 
@@ -80,3 +84,11 @@ For a single uninterrupted conversion, the simplest proven object binding is to 
 | IP-7 / packaging | What about File Provider and offline files? | Test local provider placeholder and unavailable/offline state on candidate OS/account; coordinate where applicable and fail clearly if bytes cannot be read offline. No cloud hydration/network conversion. |
 
 `IP1-B04` remains **PARTIAL / OPEN**. R4 materially narrows expected behavior but does not satisfy concrete Finder/Shortcuts transport, sandbox authorization lifecycle, selected-alias policy, product reacquisition, or semantic equivalence closure. `IP1-B03` is unchanged and **PARTIAL / OPEN**. `IP1-B01/B02` provenance/rights blockers are unchanged. Overall IP-1 remains **PARTIAL / NOT PASS**; IP-2B–IP-2E and all later stages remain **NOT AUTHORIZED**.
+
+## Current IP-2A R5 update (2026-10-14)
+
+The R4 record above is preserved as the prior evidence snapshot. R5 adds a temporary ad-hoc-signed sandboxed `NSOpenPanel` app and inherited-sandbox helper, authorized by the separate expiring R5 scope exception. See [`FINDER-SHORTCUTS-TRANSPORT-QUALIFICATION.md`](FINDER-SHORTCUTS-TRANSPORT-QUALIFICATION.md), its sanitized [`results.json`](../../../tests/research/ip2a/r5/results.json), and the reproduction README for exact method and outcomes.
+
+On this host, two native-picker-selected synthetic files with spaces and composed/decomposed Unicode were descriptor-opened, bounded, and byte-matched. A mode-000 selected file returned a URL and a successful scope-start result but open failed `EACCES`. A sandboxed inherited child process read each accessible selection using a path locator and Foundation bookmark data created with default options; exact identity and expected payload matched. The probe did not classify bookmark scope flavor. Same-process delayed reopen after stopping the explicit access scope succeeded for the local files. These observations do not qualify Finder Quick Action, Shortcuts, a separately launched CLI, aliases/symlinks, replacement/deletion races, File Provider, or product export-time continuity.
+
+**Current disposition:** Finder Quick Action **BLOCKED**; Shortcuts **BLOCKED**; native picker authority **PARTIAL**; cross-process scope transfer **PARTIAL**; export-time reacquisition **PARTIAL**; `IP1-B04` **PARTIAL / OPEN**. `IP1-B03` remains **OPEN / PARTIAL / NOT QUALIFIED**; `IP1-B01/B02` remain unresolved. Overall IP-1 remains **PARTIAL / NOT PASS**. IP-2B–IP-2E, production code and release remain **NOT AUTHORIZED**.

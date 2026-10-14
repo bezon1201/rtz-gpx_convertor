@@ -1,8 +1,18 @@
 # Progress ledger
 
-## Current gate activity — IP-2A R4 FileReference / source continuity
+## Current gate activity — IP-2A R5 Finder / Shortcuts file-authority transport
 
-**Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific, never blanket authorization. Current authorization: **IP-2A R4 only**, including the narrow expiring research-only exception in `docs/research/IP-2/IP-2A-R4-SCOPE-EXCEPTION.md`. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remain **NOT AUTHORIZED**. Overall IP-1: **PARTIAL / NOT PASS**.
+**Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific, never blanket authorization. Current authorization: **IP-2A R5 only**, including its expiring research-only sender/receiver exception. IP-2B–IP-2E, production CLI/app/Shortcut, later stages and release remain **NOT AUTHORIZED**. Overall IP-1: **PARTIAL / NOT PASS**.
+
+- **IP-2A R5: PARTIAL.** A real sandboxed native picker selected two synthetic space/Unicode filenames and the app read their expected bytes through bounded descriptors. A mode-000 selected file failed descriptor open with `EACCES` even though scope start returned true. An inherited-sandbox helper read the same objects and bytes via a path locator and default-option Foundation bookmark data. A same-process delayed reopen after scope stop succeeded for the local files. Details and limitations: `docs/research/IP-2/FINDER-SHORTCUTS-TRANSPORT-QUALIFICATION.md`; result manifest and reproducible source: `tests/research/ip2a/r5/`.
+- **Carrier/readiness:** Finder Quick Action **BLOCKED / NOT TESTED**. Shortcuts **BLOCKED** because the action library UI returned no actions for relevant searches; a uniquely named empty R5 draft exists and was not run. The existing IP-1D iCloud Shortcut was not modified or invoked. Native picker and inherited-child transfer are **PARTIAL** for this single host/setup; neither proves standalone CLI authority. Export-time semantic continuity is **PARTIAL**, not qualified.
+- **IP1-B04 remains PARTIAL / OPEN.** Actual Finder/Shortcut transport, standalone receiver authority, alias/symlink/provider behavior, replacement/deletion races, supported OS matrix and preview/export semantic comparison remain unqualified. **IP1-B03 remains OPEN / PARTIAL / NOT QUALIFIED**; IP1-B01/B02 remain unresolved. No digest, private route or real coordinates were used.
+- `IP-2A R5` exception and research artifacts are limited to the approved Swift sender/receiver, temporary sandboxed build, synthetic inputs/results and README under `tests/research/ip2a/r5/`. No production code, schemas, dependencies, committed binaries, product Shortcut, app package or release artifact was created. The unrelated `AGENTS.md` modification remains untouched and uncommitted.
+- **Next:** independent Architect review of IP-2A R5 PARTIAL. Stop before IP-2B or any later stage.
+
+### Historical gate activity — IP-2A R4 FileReference / source continuity
+
+At the R4 handoff, Gate 3 was **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 was stage-specific, never blanket authorization. **Historical R4 authorization:** IP-2A R4 only, including the narrow expiring research-only exception in `docs/research/IP-2/IP-2A-R4-SCOPE-EXCEPTION.md`. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remained **NOT AUTHORIZED**. Overall IP-1: **PARTIAL / NOT PASS**.
 
 - **IP-2A R4: PARTIAL.** Synthetic one-host macOS 26.6.2 arm64 probes showed descriptor reads remain bound to the opened object through rename/move, path replacement, symlink retarget and deletion; in-place mutation is visible through that descriptor. Local permission/type checks passed. A bookmark followed rename while marked stale and failed after deletion. Full facts and limitations: `docs/research/IP-2/FILE-REFERENCE-AND-CONTINUITY.md`; reproducibility artifacts: `tests/research/ip2a/r4/`.
 - **IP1-B04 remains OPEN / PARTIAL.** Finder/Shortcuts carrier and sandbox scope handoff, alias policy, File Provider behavior and production semantic preview/export comparison remain unqualified. **IP1-B03 remains OPEN / PARTIAL / NOT QUALIFIED**; IP1-B01/B02 remain unresolved. No digest or real route data was used.
@@ -24,11 +34,11 @@
 
 ### Historical gate activity — IP-2A R2 libxml2 security qualification
 
-The R2 handoff below records its results and authorization at that time; R3 above is the current status.
+The R2 handoff below records its results and authorization at that time; R3 was current at the R2 handoff, and the R5 current status is recorded at the top of this ledger.
 
 ### Historical gate activity — IP-2A R1 security and runtime feasibility
 
-**Historical authorization at the R1 handoff:** IP-2A R1 only. Gate 3 was **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 is stage-specific, never blanket authorization. Current authorization is recorded in the R3 section above.
+**Historical authorization at the R1 handoff:** IP-2A R1 only. Gate 3 was **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 is stage-specific, never blanket authorization. Authorization at the R1 handoff was for R1 only.
 
 - IP-2A R1: **PARTIAL**. Foundation XMLParser alone does not meet the strict DTD policy in the observed case; libxml2 remains a candidate, not selected or qualified; Xerces-C++ is not recommended.
 - IP1-B03: **PARTIAL / OPEN, NOT QUALIFIED**. IP1-B04: **PARTIAL / OPEN**; joint FileReference, alias/security-scope and source-continuity requirements remain unqualified. IP1-B01/B02 remain open. Overall IP-1: **PARTIAL / NOT PASS**.
@@ -207,7 +217,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 - Next: Gate 3 cross-check after the complete detailed-plan set is available. IP-3 execution and overall implementation remain unauthorized.
 - IP-3 plan commit `9a5db3525b986a3e13e3239274dcc6ae6957d6e5` was pushed without force; R1 corrections are the current documentation update. The final R1 commit and remote-head verification are reported in the task handoff.
 
-### Preserved IP-2 status and evidence
+### Historical IP-2 plan status and evidence snapshot
 
 - Gate 1: **APPROVED / PASS**.
 - IP-1 plan: **APPROVED / READY FOR GATE 3 CROSS-CHECK**; IP-1 execution **NOT AUTHORIZED**.
@@ -225,7 +235,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
 | 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A R3 PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G PASS / ARCHITECT ACCEPTED | Overall IP-1 remains PARTIAL / NOT PASS. IP1-B01/B02/B03 remain open as recorded above. IP-2–IP-7 NOT AUTHORIZED. | IP-1A R3 commit in task handoff |
-| 2. Safe input model and parser (IP-2) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | — |
+| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R5 PARTIAL | R5 remains partial; IP1-B04 is open; IP-2B–IP-2E remain blocked/not authorized. | R5 commit in task handoff |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
