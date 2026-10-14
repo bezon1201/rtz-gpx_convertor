@@ -2,6 +2,8 @@
 
 **IP-1E verdict: PASS (documentation-level only).** The approved packaging direction, recommended bundle/install path, candidate OS floor, reproducible qualification matrix, clean-user procedure, and remaining blockers are recorded below. This is not a built, signed, notarized, installed, or released package. No OS version is declared supported. IP-1F onward and production implementation remain **NOT AUTHORIZED**.
 
+**Current OS decision (IP-1E R1, 2026-10-15): OS FLOOR NOT QUALIFIED.** Sequoia 15 remains the qualification candidate, with macOS 15.8.1 as the current candidate test image, not an approved or supported minimum. R1's assessment and exact matrix are in [`IP-1E-OS-SUPPORT-FLOOR-DECISION.md`](IP-1E-OS-SUPPORT-FLOOR-DECISION.md). This supersedes the earlier 15.8 patch reference but does not change the documentation-level IP-1E packaging verdict.
+
 **Baseline:** `767e1a1791202969122db8a98f7459a98201cab8`; branch `implementation/ip-1e-packaging-decision`. Research checked 2026-10-13. IP-1D evidence is carried forward without treating its observations as packaging qualification.
 
 ## 1. Decision within the approved architecture
@@ -54,16 +56,15 @@ The online build/release submission is separate from V1's offline runtime. No ru
 
 ## 3. Candidate macOS minimum and qualification matrix
 
-**Candidate minimum: macOS Sequoia 15.8 on Apple Silicon, with later major releases added after qualification.** As of 2026-10-13, Apple lists Sequoia 15.8, Tahoe 26.7.1 and Golden Gate 27 (initial release). Choosing 15.8 is a proposed V1 support-scope boundary, not an Apple minimum or a compatibility finding; Sonoma 14.8.9 is also listed by Apple, and is intentionally outside this candidate support set pending product-owner need and separate testing. In particular, the IP-1D observation on Tahoe 26.6.2 only covered a temporary Shortcut transport probe; it did not test a package or establish app compatibility. [Apple security releases](https://support.apple.com/en-us/100100), [Sequoia 15.8](https://support.apple.com/en-us/149043), [Tahoe 26.7.1](https://support.apple.com/en-us/149228), [Golden Gate 27](https://support.apple.com/en-us/149035).
+**Current status: OS FLOOR NOT QUALIFIED.** Sequoia 15 remains the preferred qualification candidate, but the app/Shortcut/API inventory and full clean-user matrix have not been executed. As of 2026-10-15, Apple's security-release list names Sequoia 15.8.1, Tahoe 26.7.1, and Golden Gate 27.0.1 (all dated 2026-09-28); Sonoma 14.8.9 is dated 2026-08-06. These dates inform candidate comparison but do not establish product compatibility or Apple's future maintenance commitment. R1's [OS-floor decision](IP-1E-OS-SUPPORT-FLOOR-DECISION.md) records the evidence, limitations, and qualification gates. The IP-1D observations on Tahoe 26.6.2 were a temporary Shortcut transport probe only, not package or OS-compatibility evidence. [Apple security releases](https://support.apple.com/en-us/100100), [Sequoia 15.8.1](https://support.apple.com/en-us/149229), [Tahoe 26.7.1](https://support.apple.com/en-us/149228), [Golden Gate 27 updates](https://support.apple.com/en-us/127257).
 
 | Candidate OS/build to test | Role | Evidence today | Release condition |
 |---|---|---|---|
-| macOS Sequoia 15.8, Apple Silicon | Proposed minimum | Not tested for this package | Full clean-user procedure passes; do not extrapolate to earlier 15.x |
-| macOS Tahoe 26.7.1, Apple Silicon | Maintained compatibility line | IP-1D used Tahoe 26.6.2 only; transport-only partial evidence | Full package and Shortcut procedure passes |
-| macOS Golden Gate 27 (initial release), Apple Silicon | Current major at review date | Not tested | Full clean-user procedure passes |
-| macOS Tahoe 26.6.2, Apple Silicon | Prior IP-1D host only | One-Mac stdin/error/Stop observations; not package evidence | Test only if the project intends to claim support for this patch |
+| macOS Sequoia 15.8.1, Apple Silicon | Proposed minimum qualification target | Not tested for this package | Full clean-user procedure passes on M1 oldest-class representative; test latest 15.x security patch at release |
+| macOS Tahoe 26.7.1, Apple Silicon | Previous-major compatibility target | IP-1D/R10–R14 used Tahoe 26.6.2 only for limited research; not package qualification | Full package and Shortcut procedure passes on the matrix hardware |
+| macOS Golden Gate 27.0.1, Apple Silicon | Current-major compatibility target | Not tested | Full clean-user procedure passes on the matrix hardware |
 
-For each advertised major, qualify the minimum supported patch listed above and repeat the matrix on the latest security update before release. Any added macOS release or Apple Silicon hardware family requires qualification. Maintain a support table with exact product version/build, chip family, Shortcut version, package SHA-256, test date and outcome. A version is not supported until this evidence is reviewed. No Intel claim is planned.
+Use the exact current product version/build in execution records; the versions above are as-of-2026-10-15 test targets and update to the latest security patch in the same major before qualification/release. Any added macOS release or Apple Silicon hardware family requires qualification. Maintain a support table with exact product version/build, chip family, Shortcut version, package SHA-256, test date and outcome. A version is not supported until this evidence is reviewed. No Intel claim is planned. The exact matrix is defined in `IP-1E-OS-SUPPORT-FLOOR-DECISION.md` §4; no row has passed.
 
 ## 4. Clean-user install, update, rollback, removal acceptance
 
@@ -98,12 +99,12 @@ No dependency install, package build, signing, notarization, account access, net
 |---|---|
 | Recommend self-contained app/CLI, install path and bundle layout within G3-010 | PASS — recommendation and alternatives recorded; runtime discovery remains a named downstream blocker |
 | Document signing, Hardened Runtime, nested signatures, notarization/stapling and Gatekeeper offline requirements | PASS — verified against current Apple primary documentation; no artifact tested |
-| Candidate minimum OS and concrete supported-version qualification matrix | PASS — proposes Sequoia 15.8 floor and exact current OS rows; explicitly not a support claim |
+| Candidate OS floor and qualification matrix | PASS — documented candidate Sequoia 15 and concrete rows; **OS FLOOR NOT QUALIFIED**, no version supported |
 | Define clean-user install/update/rollback/removal acceptance without admin or development tools | PASS — steps and data-preservation checks recorded |
 | Carry IP-1D transport/reference/security/cancellation blockers | PASS — retained with owners and closure evidence |
 | Account/cost/external prerequisites and release blockers | PASS — recorded; account status not verified and no purchase or signing occurred |
 
-**IP-1E verdict: PASS — documentation-level packaging decision.** This does not pass IP-1A, IP-1D, IP-1, Gate 4 as a whole, packaging, notarization, OS compatibility, or release. IP-1F and all implementation remain **NOT AUTHORIZED**. Next: independent Architect review of IP-1E.
+**IP-1E verdict: PASS — documentation-level packaging decision. OS FLOOR: NOT QUALIFIED.** This does not pass IP-1A, IP-1D, IP-1, Gate 4 as a whole, packaging, notarization, OS compatibility, or release. IP-1F and all implementation remain **NOT AUTHORIZED**. See R1 for the minimum-OS qualification recommendation and missing evidence.
 
 ## 7. Primary references
 
