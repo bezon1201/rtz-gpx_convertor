@@ -1,0 +1,77 @@
+{
+  "architecture" : "arm64 (host observed by uname)",
+  "os" : "Version 26.6.2 (Build 25G83)",
+  "results" : [
+    {
+      "detail" : "descriptor is regular and readable=true; dev\/inode tuple observed=true; byte count=9",
+      "name" : "normal-selected-regular-file",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "descriptor object identity stable=true; metadata changed after rename\/move=true; original path exists=false; moved path resolves=yes",
+      "name" : "rename-and-same-volume-move",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "resourceID available=true, equal after rename=true; inode available=true, equal after rename=true; generation available=true; regular=Optional(true); alias=Optional(false)",
+      "name" : "foundation-resource-identity-availability",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "open descriptor retained old object=true, descriptor bytes=confirmed-preview, reopened path bytes=replacement, same identity=false",
+      "name" : "replace-path-after-open",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "same descriptor object retained=true; metadata changed=true; descriptor reread=changed-after-preview",
+      "name" : "same-object-content-change-after-preview",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "selected descriptor still old identity=true, bytes=target-A; reopened link bytes=target-B; O_NOFOLLOW result=Too many levels of symbolic links",
+      "name" : "symlink-selection-and-target-replacement",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "fstat identifies directory=true; lstat identifies FIFO without blocking open=true; both must reject before parsing=true",
+      "name" : "directory-and-nonregular-classification",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "open denied for uid=501: Permission denied: errno=13",
+      "name" : "permission-denial",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "path exists=false; existing descriptor bytes=still-open",
+      "name" : "deleted-source-with-open-descriptor",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "stale=true; resolved URL equals moved URL=true; resolved path exists=true; security scope is not asserted by this non-sandboxed probe",
+      "name" : "bookmark-rename-resolution",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "resolution failed after deletion as expected",
+      "name" : "bookmark-resolution-after-delete",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "startAccessing on ordinary temporary URL returned true; sandbox\/capability handoff is not exercised by this unsandboxed command-line probe",
+      "name" : "plain-url-security-scope-call",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "bookmark creation\/resolution succeeded; stale=false; startAccessing returned true; this unsandboxed process does not establish sandbox-grant transport",
+      "name" : "security-scoped-bookmark-api-availability",
+      "outcome" : "PASS"
+    },
+    {
+      "detail" : "freshly reacquired bytes equivalent to preview=false; caller must invalidate confirmation=true",
+      "name" : "preview-export-reacquisition",
+      "outcome" : "PASS"
+    }
+  ],
+  "uid" : 501
+}

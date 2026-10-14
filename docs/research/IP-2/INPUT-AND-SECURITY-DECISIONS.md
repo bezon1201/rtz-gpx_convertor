@@ -1,6 +1,17 @@
 # IP-2A R2 Baseline and R3 Addendum — libxml2 Security Qualification
 
-## Current IP-2A R3 runtime-safety addendum (2026-10-14)
+## Current IP-2A R4 FileReference / source continuity addendum (2026-10-14)
+
+**Verdict: PARTIAL.** Authorized R4 evidence and the candidate cross-stage contract are in [`FILE-REFERENCE-AND-CONTINUITY.md`](FILE-REFERENCE-AND-CONTINUITY.md). A narrowly bounded, expiring research-only exception is recorded in [`IP-2A-R4-SCOPE-EXCEPTION.md`](IP-2A-R4-SCOPE-EXCEPTION.md); it does not amend approved IP-2 §11 generally. The Swift/Foundation probe and synthetic local cases are in `tests/research/ip2a/r4/`; no product parser, model, CLI, app, Shortcut, route fixture, schema, or dependency was added.
+
+- **Reproduced on one unsandboxed macOS 26.6.2 arm64 host:** descriptor-backed reads stayed bound to their opened object across rename/move, path replacement, symlink retargeting and source deletion; in-place content modification was visible through the same descriptor; mode-000 access was denied to uid 501; directory/FIFO types were identified; a plain bookmark followed rename while reporting stale, and failed resolution after deletion. Resource/file identifiers remained equal across the tested rename; their presence is not a content proof.
+- **Not qualified:** Finder/Shortcuts file-reference transport, sandboxed picker/CLI capability transfer, persistent security-scope lifecycle, Finder alias, File Provider/offline placeholder, ACL, cross-volume/provider behavior, semantic RTZ comparison, and product preview-to-export handling. `shortcuts help run --input-path` documents path text only. The security-scope API calls returning true in this unsandboxed process do not prove sandbox authorization or transport.
+- **Candidate contract:** authorize and resolve via a qualified native reference; explicitly and boundedly resolve selected alias/link only if joint IP-2A/IP-5/IP-7 tests prove it safe; open one regular file once; bounded-read only that descriptor; validate; on export reacquire permission and repeat the read/validation; compare a deterministic output-affecting semantic projection. If access or equivalence is absent/inconclusive, invalidate route confirmation and bound publication consent and require fresh preview/confirmation. Never infer unchanged content from path, bookmark, inode/resource IDs, size or timestamps; no source digest by default.
+- **IP1-B04 remains PARTIAL / OPEN.** Evidence narrows but does not close concrete transport, sandbox scope, alias policy, export-time reacquisition and semantic-equivalence requirements. **IP1-B03 remains PARTIAL / OPEN / NOT QUALIFIED; IP1-B01/B02 remain unresolved.** Overall IP-1 remains **PARTIAL / NOT PASS**. IP-2B–IP-2E and later stages remain **NOT AUTHORIZED**.
+
+The R3 security-runtime addendum follows as historical evidence; R4 is the current IP-2A handoff.
+
+## Historical IP-2A R3 runtime-safety addendum (2026-10-14)
 
 **Verdict: PARTIAL.** This R3 work is separately authorized by `docs/research/IP-2/IP-2A-R3-SCOPE-EXCEPTION.md`; it does not amend approved IP-2 §11 beyond this one expiring exception. No product parser/dependency is selected. Gate 3 remains **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 is stage-specific. **IP-2A R3 only** was authorized. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remain **NOT AUTHORIZED**. Overall IP-1 remains **PARTIAL / NOT PASS**.
 

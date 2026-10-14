@@ -1,6 +1,17 @@
 # Architect review handoff
 
-## Current handoff — IP-2A R3 runtime safety
+## Current handoff — IP-2A R4 FileReference / source continuity
+
+- **Authorization:** IP-2A R4 only. Gate 3 is **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 is stage-specific, never blanket authorization. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remain **NOT AUTHORIZED**. Overall IP-1 remains **PARTIAL / NOT PASS**.
+- **Verdict: IP-2A R4 PARTIAL.** Added the requested file-reference research record, updated security decision/dependency/report/progress records, and performed a reproducible probe using synthetic temporary files only. Full contract, evidence qualifications, mechanisms and unresolved work are in `docs/research/IP-2/FILE-REFERENCE-AND-CONTINUITY.md`.
+- **Observed host/evidence:** macOS 26.6.2 (25G83), Darwin arm64; Apple Swift 6.3.3, Apple clang 21.0.0, SDK 26.5. Descriptor-backed reads stayed attached to the opened object across rename/move, path replacement, symlink retargeting and source deletion. A same-inode write changed bytes visible through the descriptor. A plain bookmark tracked a rename while reporting stale, and resolving after deletion failed. Permission and nonregular-file checks behaved as expected. Results are limited to this unsandboxed host and local temporary filesystem.
+- **Not established:** actual Finder/Shortcuts input/capability transport; sandboxed security-scope behavior; Finder aliases; File Provider; OS/filesystem matrix; and production preview/export semantic comparison. The API calls returning `true` in this unsandboxed probe do not prove sandbox authority or handoff. `--input-path` is a locator, not a capability.
+- **Disposition:** IP1-B04 remains **PARTIAL / OPEN**, materially narrowed but not closed. IP1-B03 remains **OPEN / PARTIAL / NOT QUALIFIED**; IP1-B01/B02 remain unresolved. No full source digest was used. G3 decisions unchanged.
+- **Files:** added `docs/research/IP-2/FILE-REFERENCE-AND-CONTINUITY.md`, `docs/research/IP-2/IP-2A-R4-SCOPE-EXCEPTION.md`, and research-only `tests/research/ip2a/r4/` source/runner/README/result manifest; updated `docs/research/IP-2/INPUT-AND-SECURITY-DECISIONS.md`, `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md`, this report and `PROGRESS.md`. No product parser/model/CLI/app/Shortcut, schema, dependency, route, or binary was created. Existing `AGENTS.md` modification remains untouched and uncommitted.
+- **Git:** branch `implementation/ip-2a-r4-file-reference-continuity`, baseline/parent `8b73f44fe82f3b47187c5ba49ad5ee315f4ea433`. Commit and remote verification will be reported after review.
+- **Next:** independent Architect review of IP-2A R4 PARTIAL. Stop before IP-2B or any later stage.
+
+### Historical handoff — IP-2A R3 runtime safety
 
 - **Authorization:** IP-2A R3 only, including the narrowly documented, expiring research-harness exception. Gate 3 is **PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`; Gate 4 is stage-specific, never blanket authorization. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remain **NOT AUTHORIZED**. Overall IP-1 remains **PARTIAL / NOT PASS**.
 - **Verdict: IP-2A R3 PARTIAL.** Built and exercised a research-only harness against official libxml2 2.15.4 source archive (SHA-256 `98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821`), runtime version guard `21504`, static candidate link, and no dynamic libxml2 dependency. Host: macOS 26.6.2 (25G83), arm64, Apple clang 21.0.0. The run recorded `SUMMARY failures=0`; exact generated-input identities and outcomes are in `tests/research/ip2a/results.jsonl`.

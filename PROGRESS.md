@@ -1,8 +1,18 @@
 # Progress ledger
 
-## Current gate activity — IP-2A R3 runtime safety
+## Current gate activity — IP-2A R4 FileReference / source continuity
 
-**Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific, never blanket authorization. Current authorization: **IP-2A R3 only**, including the narrow expiring exception in `docs/research/IP-2/IP-2A-R3-SCOPE-EXCEPTION.md`. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remain **NOT AUTHORIZED**. Overall IP-1: **PARTIAL / NOT PASS**.
+**Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific, never blanket authorization. Current authorization: **IP-2A R4 only**, including the narrow expiring research-only exception in `docs/research/IP-2/IP-2A-R4-SCOPE-EXCEPTION.md`. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remain **NOT AUTHORIZED**. Overall IP-1: **PARTIAL / NOT PASS**.
+
+- **IP-2A R4: PARTIAL.** Synthetic one-host macOS 26.6.2 arm64 probes showed descriptor reads remain bound to the opened object through rename/move, path replacement, symlink retarget and deletion; in-place mutation is visible through that descriptor. Local permission/type checks passed. A bookmark followed rename while marked stale and failed after deletion. Full facts and limitations: `docs/research/IP-2/FILE-REFERENCE-AND-CONTINUITY.md`; reproducibility artifacts: `tests/research/ip2a/r4/`.
+- **IP1-B04 remains OPEN / PARTIAL.** Finder/Shortcuts carrier and sandbox scope handoff, alias policy, File Provider behavior and production semantic preview/export comparison remain unqualified. **IP1-B03 remains OPEN / PARTIAL / NOT QUALIFIED**; IP1-B01/B02 remain unresolved. No digest or real route data was used.
+- Added the R4 scope exception, research-only Swift probe, local runner, README and sanitized result manifest; updated the IP-2 security record, IP-1 blocker register, REPORT and this ledger. No production parser/model/CLI/app/Shortcut, schema, dependency or compiled artifact was added. The pre-existing `AGENTS.md` modification remains untouched and excluded.
+- Branch `implementation/ip-2a-r4-file-reference-continuity`, baseline/parent `8b73f44fe82f3b47187c5ba49ad5ee315f4ea433`; commit and remote details will be reported after verification.
+- **Next:** independent Architect review of IP-2A R4. Stop before IP-2B or later work.
+
+### Historical gate activity — IP-2A R3 runtime safety
+
+**Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific, never blanket authorization. **Authorization at the R3 handoff:** IP-2A R3 only, including the narrow expiring exception in `docs/research/IP-2/IP-2A-R3-SCOPE-EXCEPTION.md`. IP-2B–IP-2E, IP-3–IP-7 execution, production implementation and release remained **NOT AUTHORIZED**. Overall IP-1: **PARTIAL / NOT PASS**.
 
 - **IP-2A R3: PARTIAL.** A reproducible research harness rebuilt official libxml2 2.15.4 source (archive SHA-256 `98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821`) as a static arm64 candidate and verified runtime version `21504` with no dynamic libxml2 dependency. Host: macOS 26.6.2 (25G83), arm64, Apple clang 21.0.0. `self-test` completed with `failures=0`; inputs, expected/observed results and hashes are recorded under `tests/research/ip2a/`.
 - R2 synthetic DTD/entity/resource denial and callback boundary cases reproduced. Cooperative asynchronous cancellation was observed during descriptor read and cleanup; no partial result was returned, close ran once, and no parser-context API was called from the cancelling thread. A disposable CPU-bound child was terminated/reaped. Twenty-repeat CPU/RSS measurements include harness/runtime and generated inputs; callback boundaries are not hard allocation limits.
