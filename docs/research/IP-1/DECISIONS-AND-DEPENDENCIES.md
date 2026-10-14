@@ -1,6 +1,6 @@
 # IP-1G — Decisions, Traceability, and Dependencies
 
-**Historical IP-1G closeout status:** REVIEW (at the time of its original handoff). IP-1G was subsequently independently accepted PASS. **Current IP-2A status after R8: PARTIAL / INCOMPLETE; overall IP-1 remains PARTIAL / NOT PASS.** Current accepted IP-1 verdicts: IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation-level); IP-1F PASS (protocol-design only); IP-1G PASS / ARCHITECT ACCEPTED. R8 authorizes documentation closeout only; IP-2B onward remain NOT AUTHORIZED.
+**Historical IP-1G closeout status:** REVIEW (at the time of its original handoff). IP-1G was subsequently independently accepted PASS. **Current IP-2A status after R9: PARTIAL / INCOMPLETE; IP1-B03/B04 OPEN / PARTIAL; IP-2B BLOCKED / NOT AUTHORIZED; overall IP-1 remains PARTIAL / NOT PASS.** Current accepted IP-1 verdicts: IP-1A PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation-level); IP-1F PASS (protocol-design only); IP-1G PASS / ARCHITECT ACCEPTED. R9 authorizes documentation and planning only; IP-2B onward remain NOT AUTHORIZED. R8's closeout PASS / ARCHITECT ACCEPTED is preserved as a completed substage verdict, not an IP-2A overall PASS.
 
 **Baseline:** `b964b51584c79fde7af06100809ccca1f54333df`
 **Branch:** `implementation/ip-1g-integration-closeout`
@@ -140,9 +140,17 @@ The owner authorized IP-2A R7 research and decision work only. Gate 3 remains **
 - **`IP1-B03`: OPEN / PARTIAL / NOT QUALIFIED, unchanged.** R7 does not provide parser-security evidence. IP-1A `IP1-B01` remains REQUIRES EXTERNAL CONFIRMATION and `IP1-B02` remains BLOCKED / NOT CLEARED.
 - **IP-2A R7 verdict: PARTIAL. IP-2B remains BLOCKED / NOT AUTHORIZED.** See [`docs/research/IP-2/INDEPENDENT-RECEIVER-AUTHORITY-R7.md`](../IP-2/INDEPENDENT-RECEIVER-AUTHORITY-R7.md) and sanitized [`tests/research/ip2a/r7/results.json`](../../../tests/research/ip2a/r7/results.json). No later stage or product architecture is selected or authorized.
 
-## Current IP-2A R8 closeout (2026-10-14)
+## Historical IP-2A R8 closeout snapshot (2026-10-14; R9 recovery plan is current)
 
 **R8 closeout document: prepared for review. IP-2A status: PARTIAL / INCOMPLETE; no IP-2A PASS is claimed.** The consolidated handoff is `docs/research/IP-2/IP-2A-CLOSEOUT-AND-HANDOFF.md`. IP1-B03 and IP1-B04 remain open, IP-2B is **BLOCKED**, IP-1 remains **PARTIAL / NOT PASS**, and IP-2B–IP-2E plus production implementation remain **NOT AUTHORIZED**. R8 is documentation-only; no technical blocker is closed by status reconciliation.
+
+## Current IP-2A R9 acceptance recovery (2026-10-14)
+
+**Authorization: IP-2A R9 documentation and planning only. IP-2A R8 documentation closeout: PASS / ARCHITECT ACCEPTED; IP-2A overall remains PARTIAL / INCOMPLETE. IP1-B03 and IP1-B04 remain OPEN / PARTIAL; IP1-B01/B02 remain unresolved; IP-2B remains BLOCKED / NOT AUTHORIZED; overall IP-1 remains PARTIAL / NOT PASS.** The exact §11 acceptance matrix, blocker classification, and proposed critical path are in `docs/research/IP-2/IP-2A-ACCEPTANCE-RECOVERY-PLAN.md`.
+
+The approved IP-2A PASS criteria explicitly require the exact registry source, legal offline runtime, cap rationale/enforcement, reproducible security evidence, and jointly reviewed IP-2A/IP-5/IP-7 file-reference policy; §11 PASS evidence also requires reviewed dependency matrix, licensing, measurements, and execution authorization. R2/R3 parser evidence remains candidate-specific and does not establish hard CPU/memory limits, cancellation deadline, supported-OS behavior, or production integration. R4–R8 do not establish a complete authority/transport/continuity lifecycle. Prepared IP-1A publisher inquiries remain unsent; no permission is inferred from public availability.
+
+R9 recommends one next authorization: IP-1A external confirmation for exact RTZ schema provenance and schema rights/offline-use terms (B01/B02). That action was not executed, no external message was sent, and no schema was acquired. This recommendation alone cannot complete IP-2A; B03 and B04 remain required. No approved plan or historical R1–R8 evidence was changed.
 
 ## Historical IP-2A R5 disposition (2026-10-14)
 

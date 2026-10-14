@@ -1,6 +1,12 @@
 # Progress ledger
 
-## Current gate activity — IP-2A R8 closeout
+## Current gate activity — IP-2A R9 acceptance recovery
+
+**Authorization: IP-2A R9 documentation and planning only. IP-2A R8 documentation closeout: PASS / ARCHITECT ACCEPTED; IP-2A overall remains PARTIAL / INCOMPLETE; no overall IP-2A PASS is claimed.** The §11 acceptance matrix and critical-path plan are in `docs/research/IP-2/IP-2A-ACCEPTANCE-RECOVERY-PLAN.md`. `IP1-B03` and `IP1-B04` remain OPEN / PARTIAL; `IP1-B01/B02` remain unresolved; **IP-2B = BLOCKED / NOT AUTHORIZED**; overall IP-1 remains **PARTIAL / NOT PASS**. No implementation, probe, schema, fixture, dependency, test, or platform work occurred. The proposed IP-1A external-confirmation action was not executed; no inquiry was sent. The unrelated local `AGENTS.md` modification remains untouched and excluded.
+
+R9 confirms that §11 requires an exact registry source, legal offline runtime, cap rationale/enforcement, reproducible security evidence, and joint IP-2A/IP-5/IP-7 file-reference policy. Actual product transport/UX and full preview/export integration remain assigned to later IP-5/IP-7 work, while the minimum joint policy remains an IP-2A PASS criterion. R8 evidence remains historical and unchanged.
+
+### Historical gate activity — IP-2A R8 closeout
 
 **Authorization: IP-2A R8 documentation and closeout only. IP-2A status: PARTIAL / INCOMPLETE; no PASS is claimed.** R8 consolidated R1–R7, recorded the candidate input/authority boundary for review, and assigned remaining qualifications to their owners. `IP1-B03` and `IP1-B04` remain open. **IP-2B = BLOCKED**; overall IP-1 remains **PARTIAL / NOT PASS**. No runtime probe or implementation was authorized or performed in R8. The closeout document is prepared for independent review.
 
@@ -262,7 +268,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
 | 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A R3 PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G PASS / ARCHITECT ACCEPTED | Overall IP-1 remains PARTIAL / NOT PASS. IP1-B01/B02/B03 remain open as recorded above. IP-2–IP-7 NOT AUTHORIZED. | IP-1A R3 commit in task handoff |
-| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R8 PARTIAL / INCOMPLETE | R8 closeout document prepared for review; IP1-B03/B04 remain open; IP-2B BLOCKED and IP-2B–IP-2E NOT AUTHORIZED. | R8 handoff commit |
+| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R8 closeout PASS / ARCHITECT ACCEPTED; IP-2A overall PARTIAL / INCOMPLETE (R9 plan) | IP1-B01/B02 unresolved; IP1-B03/B04 OPEN / PARTIAL; R9 acceptance gaps and critical path documented; IP-2B BLOCKED / NOT AUTHORIZED. | R8 handoff commit; R9 planning |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |

@@ -1,6 +1,14 @@
 # Architect review handoff
 
-## Current handoff — IP-2A R8 closeout
+## Current handoff — IP-2A R9 acceptance recovery
+
+**Authorization: IP-2A R9 documentation and planning only. IP-2A R8 documentation closeout: PASS / ARCHITECT ACCEPTED; IP-2A overall remains PARTIAL / INCOMPLETE.** `IP1-B03` and `IP1-B04` remain OPEN / PARTIAL; `IP1-B01/B02` remain unresolved; **IP-2B = BLOCKED / NOT AUTHORIZED**; overall IP-1 remains **PARTIAL / NOT PASS**. R9 authorized/performed no implementation, probe, schema acquisition, fixture, dependency, test, or platform work. The proposed next action is not executed. The unrelated modified `AGENTS.md` remains untouched and excluded.
+
+R9 adds [`docs/research/IP-2/IP-2A-ACCEPTANCE-RECOVERY-PLAN.md`](docs/research/IP-2/IP-2A-ACCEPTANCE-RECOVERY-PLAN.md), mapping IP-2 plan §11 acceptance criteria to existing evidence and gaps, distinguishing IP-2A requirements from IP-5/IP-7 integration ownership, and setting a bounded critical path. It recommends a separately authorized IP-1A external-confirmation action for B01/B02; no inquiry was sent. See the recovery matrix and explicit stop criteria before authorizing any follow-up.
+
+The R8 closeout below is retained as a historical snapshot; R9 changes no approved plan or R1–R8 evidence.
+
+### Historical handoff — IP-2A R8 closeout
 
 **Authorization: IP-2A R8 documentation and closeout only. IP-2A status: PARTIAL / INCOMPLETE; no PASS is claimed.** R8 consolidates R1–R7 findings, records the candidate input/authority boundary, retains IP1-B03 and IP1-B04 as open, and assigns remaining work to IP-2, IP-5, IP-7 and their joint qualification. **IP-2B = BLOCKED.** Overall IP-1 remains **PARTIAL / NOT PASS**. No implementation, runtime probe or later stage is authorized. The R8 closeout document itself is prepared for Architect review.
 
