@@ -1,6 +1,16 @@
 # Progress ledger
 
-## Current gate activity — IP-2A R5 Finder / Shortcuts file-authority transport
+## Current gate activity — IP-2A R6 Finder / Shortcuts transport
+
+**Authorization: IP-2A R6 only. Verdict: PARTIAL.** The Shortcuts action catalog became populated after an existing action-bearing Shortcut was opened, but the internal cause of the initial empty pane is not established. A local R6 research Shortcut was exposed in Finder Quick Actions. With its shell action explicitly bound to Shortcut Input and configured to pass input as arguments, Finder delivered one or two POSIX path strings; the receiver opened the synthetic regular files and matched their unique contents. A generic `Input` binding first produced zero arguments. Finder therefore supplies a **PATH LOCATOR ONLY** in this tested setup. No independent security-scoped authority, sandbox grant, identity continuity, cancellation/permission behavior, or product transport was qualified.
+
+The complete method, observations and limits are in [`docs/research/IP-2/SHORTCUTS-TRANSPORT-R6.md`](docs/research/IP-2/SHORTCUTS-TRANSPORT-R6.md). The retained research Shortcut's receiver was reduced after testing so it no longer reads files or writes logs. No research source-code file or scope-exception record, real route, fixture, executable, schema, dependency, product Shortcut, or runtime artifact was committed. The existing IP-1D Shortcut and empty R5 draft were preserved.
+
+**Disposition:** action-library root cause **UNRESOLVED**; Shortcuts carrier **PARTIAL**; Finder Quick Action carrier **PARTIAL**; standalone receiver authority **BLOCKED**; `IP1-B04` **PARTIAL / OPEN**; `IP1-B03` **OPEN / PARTIAL / NOT QUALIFIED, unchanged**; IP-1 overall **PARTIAL / NOT PASS**. Gate 3 remains **PASS / ARCHITECT ACCEPTED**; Gate 4 remains stage-specific. IP-2B–IP-2E, production work and release remain **NOT AUTHORIZED**.
+
+**Git baseline:** branch `implementation/ip-2a-r6-shortcuts-transport`, reviewed baseline and parent `d7ca083a4069641599d281d23ebcfc66155ab395`.
+
+### Historical gate activity — IP-2A R5 Finder / Shortcuts file-authority transport
 
 **Gate 3: PASS / ARCHITECT ACCEPTED** at `b9c7d0a7dbee25244f2119fc57b296fbe4b30876`. Gate 4 is stage-specific, never blanket authorization. Current authorization: **IP-2A R5 only**, including its expiring research-only sender/receiver exception. IP-2B–IP-2E, production CLI/app/Shortcut, later stages and release remain **NOT AUTHORIZED**. Overall IP-1: **PARTIAL / NOT PASS**.
 

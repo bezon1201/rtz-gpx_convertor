@@ -1,6 +1,6 @@
 # IP-2A — FileReference and Source Continuity Qualification
 
-**Current handoff:** IP-2A R5 **PARTIAL**. R4 evidence and its verdict below are historical; the R5 observations and current status are appended at the end. See [`FINDER-SHORTCUTS-TRANSPORT-QUALIFICATION.md`](FINDER-SHORTCUTS-TRANSPORT-QUALIFICATION.md).
+**Current handoff:** IP-2A R6 **PARTIAL**. R4 and R5 evidence remain historical; the R6 current status is recorded below and in [`SHORTCUTS-TRANSPORT-R6.md`](SHORTCUTS-TRANSPORT-R6.md).
 
 ## Historical IP-2A R4 qualification
 
@@ -83,9 +83,17 @@ For a single uninterrupted conversion, the simplest proven object binding is to 
 | Joint IP-2A/IP-5/IP-7 | What semantic projection binds preview to export? | Freeze a deterministic projection covering every input that affects effective output; test source route mutations, rename-only changes, metadata-only changes, route-name edits, transformations, identity mismatch and inconclusive comparison. On mismatch, require refreshed preview/confirmation and invalidate prior publication consent. |
 | IP-7 / packaging | What about File Provider and offline files? | Test local provider placeholder and unavailable/offline state on candidate OS/account; coordinate where applicable and fail clearly if bytes cannot be read offline. No cloud hydration/network conversion. |
 
-`IP1-B04` remains **PARTIAL / OPEN**. R4 materially narrows expected behavior but does not satisfy concrete Finder/Shortcuts transport, sandbox authorization lifecycle, selected-alias policy, product reacquisition, or semantic equivalence closure. `IP1-B03` is unchanged and **PARTIAL / OPEN**. `IP1-B01/B02` provenance/rights blockers are unchanged. Overall IP-1 remains **PARTIAL / NOT PASS**; IP-2B–IP-2E and all later stages remain **NOT AUTHORIZED**.
+`IP1-B04` remained **PARTIAL / OPEN at the R4 handoff**. R4 materially narrows expected behavior but does not satisfy concrete Finder/Shortcuts transport, sandbox authorization lifecycle, selected-alias policy, product reacquisition, or semantic equivalence closure. `IP1-B03` is unchanged and **PARTIAL / OPEN**. `IP1-B01/B02` provenance/rights blockers are unchanged. Overall IP-1 remains **PARTIAL / NOT PASS**; IP-2B–IP-2E and all later stages remain **NOT AUTHORIZED**.
 
-## Current IP-2A R5 update (2026-10-14)
+## Current IP-2A R6 update (2026-10-14)
+
+R6 observed Finder Quick Action transport using a local research Shortcut on macOS 26.6.2 build 25G83 / Shortcuts 7.0 build 4711 / arm64. With the Run Shell Script action explicitly bound to Shortcut Input and set to “as arguments”, the receiver obtained separate POSIX path strings for one and two selected synthetic files. The two tested files had spaces and composed/decomposed Unicode in their names; the receiver opened regular files and read unique expected synthetic payload bytes. A generic “Input” binding produced zero arguments. See [`SHORTCUTS-TRANSPORT-R6.md`](SHORTCUTS-TRANSPORT-R6.md) for exact observations and Apple documentation references.
+
+**Authority boundary:** this is **PATH LOCATOR ONLY**. The shell receiver did not demonstrate an independently granted security scope, sandbox extension, bookmark, or other permission mechanism. The synthetic-content match supports the intended test-file read but is not sender/receiver file-ID comparison or source continuity. File-name accent normalization was observed; do not rely on path spelling as identity. Cancellation, denied permissions, aliases/symlinks, replacement/deletion, provider files, independent CLI access and semantic preview/export comparison remain untested.
+
+**R6 disposition:** Finder Quick Action **PARTIAL**; Shortcuts carrier **PARTIAL**; standalone receiver authority **BLOCKED**; `IP1-B04` **PARTIAL / OPEN**. `IP1-B03` remains **OPEN / PARTIAL / NOT QUALIFIED**, unchanged. Overall IP-1 remains **PARTIAL / NOT PASS**.
+
+## Historical IP-2A R5 update (2026-10-14)
 
 The R4 record above is preserved as the prior evidence snapshot. R5 adds a temporary ad-hoc-signed sandboxed `NSOpenPanel` app and inherited-sandbox helper, authorized by the separate expiring R5 scope exception. See [`FINDER-SHORTCUTS-TRANSPORT-QUALIFICATION.md`](FINDER-SHORTCUTS-TRANSPORT-QUALIFICATION.md), its sanitized [`results.json`](../../../tests/research/ip2a/r5/results.json), and the reproduction README for exact method and outcomes.
 

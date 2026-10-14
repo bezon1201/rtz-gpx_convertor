@@ -1,8 +1,18 @@
-# IP-2A R5 — Finder / Shortcuts File-Authority Transport Qualification
+# Finder / Shortcuts File-Authority Transport Qualification
+
+## Current IP-2A R6 update (2026-10-14)
+
+**Verdict: PARTIAL.** The Shortcuts action catalog became populated after an existing action-bearing Shortcut was opened, but the internal cause of the initial empty pane is not established. A local R6 research Shortcut was exposed in Finder Quick Actions. With its shell action explicitly bound to Shortcut Input and configured to pass input as arguments, Finder delivered one or two POSIX path strings; the receiver opened the synthetic regular files and matched their unique contents. A generic `Input` binding first produced zero arguments. Finder therefore supplies a **PATH LOCATOR ONLY** in this tested setup. No independent security-scoped authority, sandbox grant, identity continuity, cancellation/permission behavior, or product transport was qualified.
+
+The complete method, observations and limits are in [`SHORTCUTS-TRANSPORT-R6.md`](SHORTCUTS-TRANSPORT-R6.md). The retained research Shortcut's receiver was reduced after testing so it no longer reads files or writes logs. No research source, exception record, real route, fixture, executable, schema, dependency, product Shortcut, or runtime artifact was committed. The existing IP-1D Shortcut and empty R5 draft were preserved.
+
+**Disposition:** action-library root cause **UNRESOLVED**; Shortcuts carrier **PARTIAL**; Finder Quick Action carrier **PARTIAL**; standalone receiver authority **BLOCKED**; `IP1-B04` **PARTIAL / OPEN**; `IP1-B03` **OPEN / PARTIAL / NOT QUALIFIED, unchanged**; IP-1 overall **PARTIAL / NOT PASS**. Gate 3 remains **PASS / ARCHITECT ACCEPTED**; Gate 4 remains stage-specific. IP-2B–IP-2E, production work and release remain **NOT AUTHORIZED**.
+
+## Historical IP-2A R5 qualification
 
 **Authorization:** IP-2A R5 only, from reviewed baseline `7314b123723f6253544917b324529cfe767cd580`. The narrowly scoped exception is recorded in [`IP-2A-R5-SCOPE-EXCEPTION.md`](IP-2A-R5-SCOPE-EXCEPTION.md). **Verdict: PARTIAL.** Research evidence only; no production transport or API is selected.
 
-## Status summary
+## R5 status summary (historical snapshot)
 
 | Boundary | Status | R5 disposition |
 |---|---|---|
