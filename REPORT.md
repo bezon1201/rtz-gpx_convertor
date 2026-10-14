@@ -8,7 +8,7 @@
 - **Not established:** actual Finder/Shortcuts input/capability transport; sandboxed security-scope behavior; Finder aliases; File Provider; OS/filesystem matrix; and production preview/export semantic comparison. The API calls returning `true` in this unsandboxed probe do not prove sandbox authority or handoff. `--input-path` is a locator, not a capability.
 - **Disposition:** IP1-B04 remains **PARTIAL / OPEN**, materially narrowed but not closed. IP1-B03 remains **OPEN / PARTIAL / NOT QUALIFIED**; IP1-B01/B02 remain unresolved. No full source digest was used. G3 decisions unchanged.
 - **Files:** added `docs/research/IP-2/FILE-REFERENCE-AND-CONTINUITY.md`, `docs/research/IP-2/IP-2A-R4-SCOPE-EXCEPTION.md`, and research-only `tests/research/ip2a/r4/` source/runner/README/result manifest; updated `docs/research/IP-2/INPUT-AND-SECURITY-DECISIONS.md`, `docs/research/IP-1/DECISIONS-AND-DEPENDENCIES.md`, this report and `PROGRESS.md`. No product parser/model/CLI/app/Shortcut, schema, dependency, route, or binary was created. Existing `AGENTS.md` modification remains untouched and uncommitted.
-- **Git:** branch `implementation/ip-2a-r4-file-reference-continuity`, baseline/parent `8b73f44fe82f3b47187c5ba49ad5ee315f4ea433`. Commit and remote verification will be reported after review.
+- **Git:** branch `implementation/ip-2a-r4-file-reference-continuity`; R4 evidence commit `8315e677edbb5781f96aa838b8097e9928b11bea`, parent `8b73f44fe82f3b47187c5ba49ad5ee315f4ea433`. A follow-up handoff-record commit captures this SHA; final remote HEAD is reported after push verification.
 - **Next:** independent Architect review of IP-2A R4 PARTIAL. Stop before IP-2B or any later stage.
 
 ### Historical handoff — IP-2A R3 runtime safety
