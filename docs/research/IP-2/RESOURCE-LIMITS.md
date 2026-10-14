@@ -1,6 +1,6 @@
 # IP-2A R2 Baseline and R3 Addendum — Resource Limit Qualification Record
 
-**Current handoff:** IP-2A remains **PARTIAL / INCOMPLETE** after R8; no candidate ceiling is approved and IP1-B03 remains open. The R2/R3 measurements below are historical research evidence, not implementation limits. See [`IP-2A-CLOSEOUT-AND-HANDOFF.md`](IP-2A-CLOSEOUT-AND-HANDOFF.md) for consolidated status and remaining owners.
+**Current handoff:** IP-2A remains **PARTIAL / INCOMPLETE** after R10; no candidate ceiling is approved and IP1-B03 remains **OPEN / PARTIAL / NOT QUALIFIED**. The R2/R3 measurements below are historical research evidence, not implementation limits. R10's per-control classification is in [`IP-2A-R10-B03-SECURITY-QUALIFICATION.md`](IP-2A-R10-B03-SECURITY-QUALIFICATION.md). See [`IP-2A-CLOSEOUT-AND-HANDOFF.md`](IP-2A-CLOSEOUT-AND-HANDOFF.md) for the consolidated R8 closeout snapshot and ownership history.
 
 ## Historical R3 runtime-safety evidence addendum (2026-10-14)
 
@@ -60,3 +60,7 @@ The IP-1B manifest contains 35 synthetic fixture entries. The largest checked-in
 Before any ceiling becomes a product requirement or constant, separately authorized IP-2B qualification must use synthetic inputs and record exact parser/validator versions, OS/build and hardware; enforcement point; elapsed time; process memory methodology; cancellation latency; and cap−1/cap/cap+1 outcomes. Include schema-valid and malformed cases, nested markup, huge attributes/text, element/waypoint/extension counts, entity/DTD attacks and repeated runs. Demonstrate no partial model/output on rejection or cancellation. A callback counter alone is insufficient evidence for memory safety. Test any proposed hard bounds across the supported macOS matrix and end-to-end parse/schema/model pipeline.
 
 No product tests were created or run in IP-2A R2. Disposable security probes are summarized in the companion record; no probe source or binary is retained in the repository.
+
+## Current R10 classification note (2026-10-14)
+
+R10 reviewed the existing record without rerunning its harness. The input byte ceiling is a hard pre-parser bound only on bytes delivered through the bounded descriptor callback (limit+1 for excess detection); it is not a parser-memory or CPU bound. Depth, element, attribute, and text checks are callback/application limits; waypoint, extension and diagnostic ceilings are unqualified. Whole-harness RSS and synthetic elapsed times remain observational. The 250 ms cancellation value remains a candidate proposal, not an approved hard deadline. Read/cleanup cancellation is cooperative; the worker kill/reap result is only a one-host disposable experiment. See the R10 qualification matrix for precise evidence and future bounded actions. No values are approved for product constants by this note.

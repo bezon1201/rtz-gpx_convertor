@@ -1,5 +1,13 @@
 # IP-2A R2 Baseline and R3 Addendum — libxml2 Security Qualification
 
+## Current IP-2A R10 B03 classification (2026-10-14)
+
+R10 is a documentation-only review of the existing R2/R3 candidate evidence. The complete control matrix, requirements baseline and closure plan are in [`IP-2A-R10-B03-SECURITY-QUALIFICATION.md`](IP-2A-R10-B03-SECURITY-QUALIFICATION.md). **B03 = PARTIAL / NARROWED; OPEN / NOT QUALIFIED.** No candidate or production architecture is selected.
+
+The descriptor read callback's limit+1 behavior is a hard bound only on bytes supplied through that boundary. Depth, element, attribute and text counters are callback/application limits after parser work; waypoint, extension and diagnostic ceilings remain unqualified. Harness timing and RSS are observational, not per-conversion or hard bounds. Cancellation checks are cooperative; the R3 child termination/reaping result is only a disposable process-isolation experiment. No hard CPU/memory limit, fixed cancellation deadline, schema-validation workload, supported macOS matrix or production integration has been established. The 250 ms candidate value is not approved as a deadline.
+
+Preserved: B01 **PENDING EXTERNAL CONFIRMATION**; B02 **PENDING / NOT CLEARED**; B04 **PARTIAL / OPEN**; IP-2A **PARTIAL / INCOMPLETE**; IP-2B **BLOCKED / NOT AUTHORIZED**; overall IP-1 **PARTIAL / NOT PASS**. R10 ran no probe or test and changed no harness.
+
 ## Historical IP-2A R4 FileReference / source continuity addendum (2026-10-14)
 
 **Verdict: PARTIAL.** Authorized R4 evidence and the candidate cross-stage contract are in [`FILE-REFERENCE-AND-CONTINUITY.md`](FILE-REFERENCE-AND-CONTINUITY.md). A narrowly bounded, expiring research-only exception is recorded in [`IP-2A-R4-SCOPE-EXCEPTION.md`](IP-2A-R4-SCOPE-EXCEPTION.md); it does not amend approved IP-2 §11 generally. The Swift/Foundation probe and synthetic local cases are in `tests/research/ip2a/r4/`; no product parser, model, CLI, app, Shortcut, route fixture, schema, or dependency was added.

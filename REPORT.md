@@ -1,6 +1,12 @@
 # Architect review handoff
 
-## Current handoff — IP-1A R4 external confirmation
+## Current handoff — IP-2A R10 B03 security-control review
+
+**Authorization:** IP-2A R10 documentation and review of existing R2/R3 evidence only. **B03 = PARTIAL / NARROWED; OPEN / NOT QUALIFIED.** The descriptor byte cap is a hard bound only at the read boundary; XML event counters are callback/application limits; harness RSS and timings are observational; parser cancellation is cooperative; and worker termination is a research-only experiment. No hard parser/process memory or CPU bound, fixed cancellation deadline, schema-validation workload, supported macOS matrix or production integration is qualified. No parser or process-isolation architecture is selected.
+
+Preserved status: IP-1A R4 outreach **PASS / ARCHITECT ACCEPTED** (IP-1A overall remains PARTIAL); B01 **PENDING EXTERNAL CONFIRMATION**; B02 **PENDING / NOT CLEARED**; B04 **PARTIAL / OPEN**; IP-2A **PARTIAL / INCOMPLETE**; IP-2B **BLOCKED / NOT AUTHORIZED**; overall IP-1 **PARTIAL / NOT PASS**. No new probe, test, build, schema, fixture, dependency or implementation was created or run. The matrix and future closure evidence are in [`docs/research/IP-2/IP-2A-R10-B03-SECURITY-QUALIFICATION.md`](docs/research/IP-2/IP-2A-R10-B03-SECURITY-QUALIFICATION.md). Branch: `implementation/ip-2a-r10-b03-qualification-plan`, based on `2561888f717b1ae8fdfd2611495d21111c987d8c`. Independent Architect review is next.
+
+### Historical handoff — IP-1A R4 external confirmation
 
 **Authorization: IP-1A R4 external-confirmation preparation and outreach for B01/B02 only.** The CIRM inquiry was sent 2026-10-14 09:59:43 UTC and the Topografix publisher-linked inquiry at 09:59:58 UTC. Gmail shows both as sent; no replies or bounces were found at the status check, and receipt is not confirmed. B01 remains PENDING EXTERNAL CONFIRMATION; B02 remains PENDING / NOT CLEARED; IP-1A remains PARTIAL. IP-2A R9 was accepted PASS / ARCHITECT ACCEPTED as a documentation/critical-path stage, while IP-2A overall remains PARTIAL / INCOMPLETE. IP-2B remains BLOCKED / NOT AUTHORIZED; overall IP-1 remains PARTIAL / NOT PASS. No schemas were downloaded or attached, and no implementation/runtime work occurred. The unrelated local `AGENTS.md` modification remains untouched and excluded.
 

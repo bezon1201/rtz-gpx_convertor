@@ -128,3 +128,7 @@ R9 authorizes documentation and planning only. It creates no probe, schema, fixt
 ### Subsequent authorization note — IP-1A R4 (2026-10-14)
 
 The R9 recommendation for a separately authorized IP-1A external-confirmation action was later authorized as IP-1A R4 from baseline `2630843a60f573856183fbc92a0fcccdaf45b3e7`. R4 is a separate IP-1A task; it does not change this plan's acceptance matrix or close any IP-2A requirement. At the preparation checkpoint, the messages were recorded but not yet sent; they were subsequently sent to CIRM and the publisher-linked Topografix contact on 2026-10-14 UTC. Replies are pending, and neither blocker is closed. R9's statement that the action was not executed remains an accurate historical snapshot.
+
+### Subsequent authorization note — IP-2A R10 B03 review (2026-10-14)
+
+R10 separately reviewed the existing R2/R3 parser-security evidence and classified its controls; it did not change this acceptance matrix or close an IP-2A requirement. B03 is **PARTIAL / NARROWED, still OPEN / NOT QUALIFIED**. The byte limit is a read-boundary limit, event counters are application callback limits, RSS/timings are observations, and cancellation is cooperative absent a measured deadline. Hard parser/process memory and CPU bounds, lawful exact schema-validation workload, supported-OS behavior, and independent security disposition remain unresolved. No new probe was run. See `IP-2A-R10-B03-SECURITY-QUALIFICATION.md`; B01/B02 and B04 remain open, IP-2A remains PARTIAL / INCOMPLETE, and IP-2B remains BLOCKED / NOT AUTHORIZED.

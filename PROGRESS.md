@@ -1,6 +1,12 @@
 # Progress ledger
 
-## Current gate activity — IP-1A R4 external-confirmation preparation
+## Current gate activity — IP-2A R10 B03 security-control review
+
+**Authorization:** IP-2A R10 documentation and review of existing R2/R3 evidence only. **B03 = PARTIAL / NARROWED; OPEN / NOT QUALIFIED.** Existing controls are classified in `docs/research/IP-2/IP-2A-R10-B03-SECURITY-QUALIFICATION.md`: the byte cap is a read-boundary limit; event counters are application callback limits; timing/RSS are observations; cancellation is cooperative; process termination remains a research experiment. No hard parser/process memory or CPU bound, fixed cancellation deadline, schema-validation workload, supported macOS matrix, or production integration is qualified. No parser/worker architecture is selected.
+
+Preserved: IP-1A R4 outreach PASS / ARCHITECT ACCEPTED (IP-1A overall remains PARTIAL); B01 PENDING EXTERNAL CONFIRMATION; B02 PENDING / NOT CLEARED; B04 PARTIAL / OPEN; IP-2A PARTIAL / INCOMPLETE; IP-2B BLOCKED / NOT AUTHORIZED; overall IP-1 PARTIAL / NOT PASS. No probe, test, build, schema, fixture, dependency or implementation was created or run. Branch: `implementation/ip-2a-r10-b03-qualification-plan`, from `2561888f717b1ae8fdfd2611495d21111c987d8c`. The unrelated `AGENTS.md` worktree modification remains untouched and excluded. Stop for independent Architect review.
+
+### Historical gate activity — IP-1A R4 external-confirmation preparation
 
 **Authorization: IP-1A R4 preparation and outreach for IP1-B01/B02 only.** The CIRM inquiry was sent 2026-10-14 09:59:43 UTC and the Topografix publisher-linked inquiry at 09:59:58 UTC; Gmail confirms Sent status. No replies or bounces were found at the status check, and receipt is not confirmed. B01 remains PENDING EXTERNAL CONFIRMATION; B02 remains PENDING / NOT CLEARED; IP-1A remains PARTIAL. IP-2A R9 documentation/critical-path stage was accepted PASS / ARCHITECT ACCEPTED, but IP-2A overall remains PARTIAL / INCOMPLETE; IP-2B remains BLOCKED / NOT AUTHORIZED; overall IP-1 remains PARTIAL / NOT PASS. No schema files were downloaded or attached and no runtime or implementation work occurred. The unrelated local `AGENTS.md` modification remains untouched and excluded.
 
@@ -274,7 +280,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
 | 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A R4 outreach pending; IP-1A remains PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G PASS / ARCHITECT ACCEPTED | B01 external provenance confirmation pending; B02 rights not cleared; B03/B04 remain open. Overall IP-1 remains PARTIAL / NOT PASS. IP-2B–IP-7 execution NOT AUTHORIZED. | IP-1A R4 outreach commit series |
-| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R8 closeout PASS / ARCHITECT ACCEPTED; IP-2A overall PARTIAL / INCOMPLETE (R9 plan) | IP1-B01/B02 unresolved; IP1-B03/B04 OPEN / PARTIAL; R9 acceptance gaps and critical path documented; IP-2B BLOCKED / NOT AUTHORIZED. | R8 handoff commit; R9 planning |
+| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R8 closeout PASS / ARCHITECT ACCEPTED; IP-2A overall PARTIAL / INCOMPLETE; R10 B03 = PARTIAL / NARROWED | B01 external response pending; B02 rights not cleared; B03 OPEN / NOT QUALIFIED; B04 PARTIAL / OPEN; no hard parser/process CPU/memory bound, fixed cancellation deadline, schema-validation workload, supported-OS matrix or production integration. IP-2B BLOCKED / NOT AUTHORIZED. | R8 closeout; R9 recovery plan; R10 security classification |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
