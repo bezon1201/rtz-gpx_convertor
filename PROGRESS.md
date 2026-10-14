@@ -8,6 +8,7 @@
 - **Carrier/readiness:** Finder Quick Action **BLOCKED / NOT TESTED**. Shortcuts **BLOCKED** because the action library UI returned no actions for relevant searches; a uniquely named empty R5 draft exists and was not run. The existing IP-1D iCloud Shortcut was not modified or invoked. Native picker and inherited-child transfer are **PARTIAL** for this single host/setup; neither proves standalone CLI authority. Export-time semantic continuity is **PARTIAL**, not qualified.
 - **IP1-B04 remains PARTIAL / OPEN.** Actual Finder/Shortcut transport, standalone receiver authority, alias/symlink/provider behavior, replacement/deletion races, supported OS matrix and preview/export semantic comparison remain unqualified. **IP1-B03 remains OPEN / PARTIAL / NOT QUALIFIED**; IP1-B01/B02 remain unresolved. No digest, private route or real coordinates were used.
 - `IP-2A R5` exception and research artifacts are limited to the approved Swift sender/receiver, temporary sandboxed build, synthetic inputs/results and README under `tests/research/ip2a/r5/`. No production code, schemas, dependencies, committed binaries, product Shortcut, app package or release artifact was created. The unrelated `AGENTS.md` modification remains untouched and uncommitted.
+- **Git:** branch `implementation/ip-2a-r5-finder-shortcuts-transport`; R5 research commit `b0f066af96534f2834d024c0586b6959bf3f8058` (parent `7314b123723f6253544917b324529cfe767cd580`); reporting follow-up is the current handoff commit.
 - **Next:** independent Architect review of IP-2A R5 PARTIAL. Stop before IP-2B or any later stage.
 
 ### Historical gate activity — IP-2A R4 FileReference / source continuity
@@ -235,7 +236,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
 | 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A R3 PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G PASS / ARCHITECT ACCEPTED | Overall IP-1 remains PARTIAL / NOT PASS. IP1-B01/B02/B03 remain open as recorded above. IP-2–IP-7 NOT AUTHORIZED. | IP-1A R3 commit in task handoff |
-| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R5 PARTIAL | R5 remains partial; IP1-B04 is open; IP-2B–IP-2E remain blocked/not authorized. | R5 commit in task handoff |
+| 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R5 PARTIAL | R5 remains partial; IP1-B04 is open; IP-2B–IP-2E remain blocked/not authorized. | `b0f066a` |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |
 | 5. Stable local CLI and self-contained runtime (IP-5) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
