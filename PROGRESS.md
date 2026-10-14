@@ -2,9 +2,9 @@
 
 ## Current gate activity — IP-1A R4 external-confirmation preparation
 
-**Authorization: IP-1A R4 preparation and outreach for IP1-B01/B02 only.** At this checkpoint, exact artifact identities and inquiry texts are prepared but not yet sent. B01 remains REQUIRES EXTERNAL CONFIRMATION; B02 remains BLOCKED / NOT CLEARED; IP-1A remains PARTIAL. IP-2A R9 documentation/critical-path stage was accepted PASS / ARCHITECT ACCEPTED, but IP-2A overall remains PARTIAL / INCOMPLETE; IP-2B remains BLOCKED / NOT AUTHORIZED; overall IP-1 remains PARTIAL / NOT PASS. No schema files were downloaded or attached and no runtime or implementation work occurred. The unrelated local `AGENTS.md` modification remains untouched and excluded.
+**Authorization: IP-1A R4 preparation and outreach for IP1-B01/B02 only.** The CIRM inquiry was sent 2026-10-14 09:59:43 UTC and the Topografix publisher-linked inquiry at 09:59:58 UTC; Gmail confirms Sent status. No replies or bounces were found at the status check, and receipt is not confirmed. B01 remains PENDING EXTERNAL CONFIRMATION; B02 remains PENDING / NOT CLEARED; IP-1A remains PARTIAL. IP-2A R9 documentation/critical-path stage was accepted PASS / ARCHITECT ACCEPTED, but IP-2A overall remains PARTIAL / INCOMPLETE; IP-2B remains BLOCKED / NOT AUTHORIZED; overall IP-1 remains PARTIAL / NOT PASS. No schema files were downloaded or attached and no runtime or implementation work occurred. The unrelated local `AGENTS.md` modification remains untouched and excluded.
 
-Details and exact prepared outgoing text: `docs/research/IP-1/IP-1A-R4-EXTERNAL-CONFIRMATION.md`. Current branch: `implementation/ip-1a-r4-external-confirmation`, based on `2630843a60f573856183fbc92a0fcccdaf45b3e7`. Commit the prepared record, then send only the CIRM and Topografix messages documented there. IEC is conditional follow-up only.
+Exact outgoing text, hashes, UTC timestamps and mail IDs: `docs/research/IP-1/IP-1A-R4-EXTERNAL-CONFIRMATION.md`. Current branch: `implementation/ip-1a-r4-external-confirmation`, based on `2630843a60f573856183fbc92a0fcccdaf45b3e7`. IEC is conditional follow-up only if CIRM cannot establish lineage or rights authority.
 
 ### Historical gate activity — IP-2A R9 acceptance recovery
 
@@ -273,7 +273,7 @@ Historical reconciliation status, superseded by the current owner authorization 
 | Stage | State | Evidence / exit condition | Commit |
 |---|---|---|---|
 | 0. Discovery and master plan | PASS | Gate 1 approved; conditions closed. | `d57d093` |
-| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A R3 PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G PASS / ARCHITECT ACCEPTED | Overall IP-1 remains PARTIAL / NOT PASS. IP1-B01/B02/B03 remain open as recorded above. IP-2–IP-7 NOT AUTHORIZED. | IP-1A R3 commit in task handoff |
+| 1. Standards, fixtures, integration/packaging discovery (IP-1) | IP-1A R4 outreach pending; IP-1A remains PARTIAL; IP-1B PASS; IP-1C PARTIAL; IP-1D PARTIAL; IP-1E PASS (documentation only); IP-1F PASS (protocol design only); IP-1G PASS / ARCHITECT ACCEPTED | B01 external provenance confirmation pending; B02 rights not cleared; B03/B04 remain open. Overall IP-1 remains PARTIAL / NOT PASS. IP-2B–IP-7 execution NOT AUTHORIZED. | IP-1A R4 outreach commit series |
 | 2. Safe input model and parser (IP-2) | PLAN APPROVED; IP-2A R8 closeout PASS / ARCHITECT ACCEPTED; IP-2A overall PARTIAL / INCOMPLETE (R9 plan) | IP1-B01/B02 unresolved; IP1-B03/B04 OPEN / PARTIAL; R9 acceptance gaps and critical path documented; IP-2B BLOCKED / NOT AUTHORIZED. | R8 handoff commit; R9 planning |
 | 3. Route modes and geometry (IP-3) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 commit in task handoff |
 | 4. GPX serialization and loss report (IP-4) | PLAN APPROVED | Historical remote Gate 3 PASS declaration (superseded for current authorization); stage execution NOT AUTHORIZED. | R1 correction commit in task handoff |

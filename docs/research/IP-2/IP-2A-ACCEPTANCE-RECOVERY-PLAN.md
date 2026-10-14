@@ -98,7 +98,7 @@ The existing IP-1A record distinguishes three states:
 - **REQUIRES EXTERNAL CONFIRMATION:** exact CIRM RTZ 1.2 artifact linkage to IEC PAS 61174-1:2021 and resolution of the `IEC PAS 6XXXX` placeholder; authoritative exact artifact/hash mapping.
 - **BLOCKED / NOT CLEARED:** written RTZ 1.0/1.2 and GPX schema permissions for required copies/distribution/offline use and lawful closed runtime. GPX XSD licensing is conditional/not cleared. No published access is construed as redistribution permission.
 
-Ready-to-send CIRM, IEC and Topografix questions are in `docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md` §6; they were not sent. R9 neither sends them nor downloads, copies, or vendors schemas. The approved plans provide no evidence-backed, already-authorized substitute that satisfies the same schema-backed offline contract. If rights holders cannot authorize the required use, retain the blocker and return for explicit architecture/product-owner decision; do not substitute well-formed-only parsing or weaken validation.
+At the R9 handoff, ready-to-send CIRM, IEC and Topografix questions were in `docs/research/IP-1/RTZ-SCHEMA-QUALIFICATION.md` §6 and none had been sent. R9 neither sent them nor downloaded, copied, or vendored schemas. IP-1A R4 later sent the CIRM and Topografix inquiries; see the R4 evidence record. The approved plans provide no evidence-backed, already-authorized substitute that satisfies the same schema-backed offline contract. If rights holders cannot authorize the required use, retain the blocker and return for explicit architecture/product-owner decision; do not substitute well-formed-only parsing or weaken validation.
 
 ## 8. Proposed next authorization (not executed)
 
@@ -127,4 +127,4 @@ R9 authorizes documentation and planning only. It creates no probe, schema, fixt
 
 ### Subsequent authorization note — IP-1A R4 (2026-10-14)
 
-The R9 recommendation for a separately authorized IP-1A external-confirmation action was later authorized as IP-1A R4 from baseline `2630843a60f573856183fbc92a0fcccdaf45b3e7`. R4 is a separate IP-1A task; it does not change this plan's acceptance matrix or close any IP-2A requirement. At preparation checkpoint, the exact CIRM and Topografix messages were recorded but not yet sent. R9's statement that the action was not executed remains an accurate historical snapshot.
+The R9 recommendation for a separately authorized IP-1A external-confirmation action was later authorized as IP-1A R4 from baseline `2630843a60f573856183fbc92a0fcccdaf45b3e7`. R4 is a separate IP-1A task; it does not change this plan's acceptance matrix or close any IP-2A requirement. At the preparation checkpoint, the messages were recorded but not yet sent; they were subsequently sent to CIRM and the publisher-linked Topografix contact on 2026-10-14 UTC. Replies are pending, and neither blocker is closed. R9's statement that the action was not executed remains an accurate historical snapshot.
