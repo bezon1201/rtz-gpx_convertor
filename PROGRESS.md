@@ -1,8 +1,11 @@
 # Progress ledger
 
-## Current gate activity — Prototype R5 From Waypoint mode
+## Current gate activity — Prototype R6 Current Position Direct to Next WP
 
-**Authorization:** narrow local CLI prototype from baseline `17bdcac30d164fb0b18a219f74671d8505770361`. Added explicit `--from-waypoint-id ID` suffix conversion; selected point is included, preceding points omitted, following order/coordinates/names retained. Full Route default and route-name choices remain. Last-point selection produces one route point; no UI confirmation exists in this CLI and remains a later Shortcut/UI responsibility. `make test` and `git diff --check` passed. Local real-route smoke test (not committed): Athens RTZ 1.0: selected a middle source waypoint from a 50-point route; 25 output points exactly matched the source suffix. No real route identifiers or coordinates are recorded here. The RTZ and derived GPX remain local. No XSD validation or product support claim. No Current Position, geometry, GUI, Shortcut, worker/IPC or packaging work. Product OS floor NOT QUALIFIED; B01/B02 pending; B03 OPEN / PARTIAL; B04 minimum policy PASS / ARCHITECT ACCEPTED, overall OPEN / PARTIAL; IP-2A PARTIAL / INCOMPLETE; IP-2B–IP-2E NOT AUTHORIZED; overall IP-1 PARTIAL / NOT PASS. `AGENTS.md` preserved and excluded. Stop for Architect review.
+**Authorization:** narrow CLI prototype from baseline `9dd7118bfdf1f280c7260834d5b3168236e209f8`. Added explicit decimal latitude/longitude, next waypoint ID, and required rhumb/great-circle connector inputs. Output starts with the unnamed current position, then the selected WP and original suffix; no inference, default geometry, interpolation, or deduplication. Connector selection is reported but not represented by GPX geometry. `make test` and `git diff --check` passed. Local private-route smoke test: synthetic `(0, 0)` position, explicit midroute waypoint, resulting vertices matched the expected suffix; RTZ and GPX remain local and uncommitted. Product OS floor NOT QUALIFIED; B01/B02 pending; B03 OPEN / PARTIAL; B04 minimum policy PASS / ARCHITECT ACCEPTED, overall OPEN / PARTIAL; IP-2A PARTIAL / INCOMPLETE; IP-2B–IP-2E NOT AUTHORIZED; overall IP-1 PARTIAL / NOT PASS. `AGENTS.md` preserved and excluded. Stop for Architect review.
+### Historical gate activity — Prototype R5 From Waypoint mode
+
+Added explicit `--from-waypoint-id ID`; first/middle/last selection, unknown ID rejection, duplicate ID rejection, and unchanged Full Route behavior passed synthetic tests. A private Athens RTZ smoke test confirmed an ordered suffix and kept route data outside Git.
 
 ### Historical gate activity — IP-1E R2 provisional engineering OS baseline
 

@@ -51,6 +51,32 @@ grep -Fq '<name>SYN-C</name>' "$TMP/from-last.gpx" || fail 'last selected waypoi
 grep -Fq '<rtept lat="12.75" lon="24">' "$TMP/from-last.gpx" || fail 'last selected waypoint coordinates changed'
 reject_without_output valid-rtz-1.2-fields.xml "$TMP/unknown-id.gpx" --from-waypoint-id 999
 
+"$BIN" "$FIX/valid-rtz-1.2-fields.xml" "$TMP/current-middle.gpx" --current-position 1.5 -2.5 --next-waypoint-id 20 --connector rhumb >"$TMP/stdout"
+[[ "$(grep -c '<rtept ' "$TMP/current-middle.gpx")" -eq 3 ]] || fail 'Current Position middle selection produced the wrong point count'
+grep -Fq '<rtept lat="1.5" lon="-2.5">' "$TMP/current-middle.gpx" || fail 'current position was not first'
+grep -Fq '<rtept lat="12.5" lon="23.75">' "$TMP/current-middle.gpx" || fail 'selected next waypoint was not second'
+! grep -Fq '<name>SYN-A</name>' "$TMP/current-middle.gpx" || fail 'preceding waypoint remained in Current Position output'
+[[ "$(grep -n '<name>SYN-B</name>' "$TMP/current-middle.gpx" | cut -d: -f1)" -lt "$(grep -n '<name>SYN-C</name>' "$TMP/current-middle.gpx" | cut -d: -f1)" ]] || fail 'Current Position source suffix order changed'
+grep -Fq '<name>SYN-Fields-12</name>' "$TMP/current-middle.gpx" || fail 'Current Position source route name changed'
+grep -Fq 'rhumb (Rhumb Line / Loxodrome)' "$TMP/stdout" || fail 'selected connector was not reported'
+grep -Fq 'connector geometry semantics are not encoded' "$TMP/stdout" || fail 'GPX geometry limitation was not reported'
+
+"$BIN" "$FIX/valid-rtz-1.2-fields.xml" "$TMP/current-last.gpx" --current-position 1 2 --next-waypoint-id 30 --connector great-circle >"$TMP/stdout"
+[[ "$(grep -c '<rtept ' "$TMP/current-last.gpx")" -eq 2 ]] || fail 'final next waypoint should produce exactly two points'
+grep -Fq '<rtept lat="1" lon="2">' "$TMP/current-last.gpx" || fail 'current position missing from final-waypoint result'
+grep -Fq '<rtept lat="12.75" lon="24">' "$TMP/current-last.gpx" || fail 'final source waypoint missing'
+grep -Fq 'great-circle (Great Circle / Orthodrome)' "$TMP/stdout" || fail 'great-circle connector was not reported'
+
+"$BIN" "$FIX/valid-rtz-1.2-fields.xml" "$TMP/current-equal.gpx" --current-position 12.5 23.75 --next-waypoint-id 20 --connector rhumb >"$TMP/stdout"
+[[ "$(grep -c '<rtept lat="12.5" lon="23.75">' "$TMP/current-equal.gpx")" -eq 2 ]] || fail 'equal current/next coordinates were deduplicated'
+reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-latitude.gpx" --current-position 91 2 --next-waypoint-id 20 --connector rhumb
+reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-longitude.gpx" --current-position 1 181 --next-waypoint-id 20 --connector rhumb
+reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-unknown-id.gpx" --current-position 1 2 --next-waypoint-id 999 --connector rhumb
+reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-missing-connector.gpx" --current-position 1 2 --next-waypoint-id 20
+reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-invalid-connector.gpx" --current-position 1 2 --next-waypoint-id 20 --connector automatic
+reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-partial.gpx" --current-position 1 2 --connector rhumb
+reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-from-waypoint-conflict.gpx" --current-position 1 2 --next-waypoint-id 20 --connector rhumb --from-waypoint-id 10
+
 "$BIN" "$FIX/unicode-route-waypoint-text.xml" "$TMP/unicode.gpx" >"$TMP/stdout"
 grep -Fq '<name>SYN-海図-Δ</name>' "$TMP/unicode.gpx" || fail 'Unicode route name was not preserved'
 grep -Fq '<name>SYN-北</name>' "$TMP/unicode.gpx" || fail 'Unicode waypoint name was not preserved'

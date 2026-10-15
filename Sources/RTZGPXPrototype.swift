@@ -5,7 +5,7 @@ private let inputLimit = 16 * 1024 * 1024
 private let nameLimit = 256
 
 private struct Waypoint {
-    let id: String
+    let id: String?
     let latitude: String
     let longitude: String
     let name: String?
@@ -17,6 +17,18 @@ private struct Route {
     let waypoints: [Waypoint]
 }
 
+private enum Connector: String {
+    case rhumb
+    case greatCircle = "great-circle"
+
+    var description: String {
+        switch self {
+        case .rhumb: return "Rhumb Line / Loxodrome"
+        case .greatCircle: return "Great Circle / Orthodrome"
+        }
+    }
+}
+
 private enum ConverterError: Error, CustomStringConvertible {
     case usage
     case input(String)
@@ -26,7 +38,7 @@ private enum ConverterError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .usage:
-            return "Usage: rtz-gpx-converter <input.rtz> <output.gpx> [--from-waypoint-id ID] [--route-name NAME | --omit-route-name]"
+            return "Usage: rtz-gpx-converter <input.rtz> <output.gpx> [--from-waypoint-id ID | --current-position LAT LON --next-waypoint-id ID --connector rhumb|great-circle] [--route-name NAME | --omit-route-name]"
         case .input(let message), .parse(let message), .output(let message):
             return message
         }
@@ -258,7 +270,7 @@ private final class RTZParser: NSObject, XMLParserDelegate {
         parser.abortParsing()
     }
 
-    private static func coordinate(_ raw: String, label: String, lower: Decimal, upper: Decimal) throws -> String {
+    fileprivate static func coordinate(_ raw: String, label: String, lower: Decimal, upper: Decimal) throws -> String {
         let text = raw.trimmingCharacters(in: .whitespacesAndNewlines)
         let pattern = #"^[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)$"#
         guard text.range(of: pattern, options: .regularExpression) != nil,
@@ -387,6 +399,10 @@ private func run() throws {
     var override: String?
     var omitName = false
     var startWaypointID: String?
+    var currentLatitudeText: String?
+    var currentLongitudeText: String?
+    var nextWaypointID: String?
+    var connectorText: String?
     var index = 2
     while index < args.count {
         switch args[index] {
@@ -395,6 +411,22 @@ private func run() throws {
                 throw ConverterError.usage
             }
             startWaypointID = args[index + 1]
+            index += 2
+        case "--current-position":
+            guard currentLatitudeText == nil, currentLongitudeText == nil,
+                  index + 2 < args.count else { throw ConverterError.usage }
+            currentLatitudeText = args[index + 1]
+            currentLongitudeText = args[index + 2]
+            index += 3
+        case "--next-waypoint-id":
+            guard nextWaypointID == nil, index + 1 < args.count, !args[index + 1].isEmpty else {
+                throw ConverterError.usage
+            }
+            nextWaypointID = args[index + 1]
+            index += 2
+        case "--connector":
+            guard connectorText == nil, index + 1 < args.count else { throw ConverterError.usage }
+            connectorText = args[index + 1]
             index += 2
         case "--route-name":
             guard index + 1 < args.count, override == nil, !omitName else { throw ConverterError.usage }
@@ -411,11 +443,39 @@ private func run() throws {
 
     let data = try readBoundedFile(input)
     let sourceRoute = try RTZParser().parse(data)
-    let route = try routeSuffix(sourceRoute, startingAt: startWaypointID)
+    let hasCurrentPositionArguments = currentLatitudeText != nil || currentLongitudeText != nil ||
+        nextWaypointID != nil || connectorText != nil
+    var route: Route
+    var selectedConnector: Connector?
+    if hasCurrentPositionArguments {
+        guard startWaypointID == nil,
+              let rawLatitude = currentLatitudeText,
+              let rawLongitude = currentLongitudeText,
+              let nextWaypointID,
+              let connectorText else { throw ConverterError.usage }
+        guard let connector = Connector(rawValue: connectorText) else {
+            throw ConverterError.parse("Connector must be exactly 'rhumb' or 'great-circle'.")
+        }
+        let latitude = try RTZParser.coordinate(rawLatitude, label: "current-position latitude", lower: -90, upper: 90)
+        let longitude = try RTZParser.coordinate(rawLongitude, label: "current-position longitude", lower: -180, upper: 180)
+        if sourceRoute.version == "1.2", longitude == "180" {
+            throw ConverterError.parse("Prototype rejects positive 180 longitude for RTZ 1.2.")
+        }
+        let suffix = try routeSuffix(sourceRoute, startingAt: nextWaypointID)
+        let currentPosition = Waypoint(id: nil, latitude: latitude, longitude: longitude, name: nil)
+        route = Route(version: sourceRoute.version, name: sourceRoute.name,
+                      waypoints: [currentPosition] + suffix.waypoints)
+        selectedConnector = connector
+    } else {
+        route = try routeSuffix(sourceRoute, startingAt: startWaypointID)
+    }
     let exportName = try effectiveName(source: route.name, override: override, omit: omitName)
     let outputData = serialize(route, name: exportName)
     try publishAtomically(outputData, to: output)
     print("Wrote \(route.waypoints.count) waypoint(s) from RTZ \(route.version).")
+    if let selectedConnector {
+        print("Connector: \(selectedConnector.rawValue) (\(selectedConnector.description)). GPX preserves route vertices only; connector geometry semantics are not encoded.")
+    }
 }
 
 do {

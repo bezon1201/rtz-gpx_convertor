@@ -23,6 +23,14 @@ Export a suffix beginning at a waypoint (the selected waypoint is included):
 
 Selecting the last waypoint writes a one-point GPX route. This CLI prototype does not provide user-facing confirmation; confirmation belongs to the later Shortcut/UI layer.
 
+Prepend an explicitly entered position and continue from an explicitly selected next waypoint:
+
+```sh
+./build/rtz-gpx-converter input.rtz output.gpx --current-position 0 0 --next-waypoint-id 20 --connector rhumb
+```
+
+Current Position requires both decimal-degree coordinates, a next waypoint ID, and exactly `rhumb` or `great-circle`; it cannot be combined with From Waypoint. The CLI reports the connector choice, but GPX contains route vertices only and does not encode connector geometry or generate intermediate points. Coincident current-position and source-waypoint vertices are both retained.
+
 The source RTZ route name is used by default. To apply the approved export-only naming choice, pass either `--route-name 'Name'` or `--omit-route-name`; the output filename never changes the internal GPX route name. The destination directory must already exist and the destination file must not exist.
 
 Run the focused synthetic checks with:
