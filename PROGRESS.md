@@ -1,5 +1,11 @@
 # Progress ledger
 
+## Current gate activity — Prototype R10 stable local installation
+
+Added `make install-local` for the one-Mac user-local binary `/Users/master/Applications/RTZ-GPX Converter/rtz-gpx-converter` (mode `755`). Installation succeeded; installed and repository binaries have matching SHA-256. Direct installed-binary inspection and Full Route conversion succeeded from `/private/tmp`. Updated the existing **RTZ-GPX Converter — Prototype** Shortcut to use the stable path only; its interaction flow was not redesigned.
+
+Shortcut smoke tests with the approved synthetic RTZ 1.2 fixture passed: Full Route produced SYN-A → SYN-B → SYN-C (3 points); From Waypoint ID 20 produced SYN-B → SYN-C (2 points); Current Position `(1.5,-2.5)` + next WP ID 20 + Rhumb produced current position → SYN-B → SYN-C (3 points). GPX outputs and the `.rtz` copy are local under `/Users/master/Downloads/rtz-gpx/`, outside Git. `make test` and `git diff --check` passed. This is a one-Mac development installation, not release packaging. Modified `AGENTS.md` and the untracked fixture copy remain preserved and excluded. Stop for Architect review.
+
 ## Current gate activity — Prototype R9 Current Position → Direct to Next WP
 
 Extended the existing local **RTZ-GPX Converter — Prototype** Shortcut on macOS 26.6.2 (25G83), reusing the CLI unchanged. The menu now offers Full Route, From Waypoint, Current Position → Next Waypoint, and Cancel. The new mode asks for decimal coordinates, explicitly selects a next WP and Rhumb Line / Great Circle geometry, displays a preview and requires Convert confirmation before asking for output destination. Input checks reject latitude outside `[-90,90]`, longitude outside `[-180,+180)`, malformed decimals, and do not auto-correct. The preview states that GPX preserves route points and does not encode connector geometry.

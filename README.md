@@ -4,9 +4,9 @@ A proposed offline macOS Apple Silicon utility for converting maritime RTZ route
 
 ## Project status
 
-**Development prototype only.** This branch includes a small offline command-line converter for RTZ 1.0 and 1.2 input, supporting Full Route and From Waypoint by explicit source waypoint ID. It writes deterministic GPX 1.1, preserves waypoint order, validates coordinates, rejects malformed/unsupported/unsafe XML, and does not publish partial output.
+**Development prototype only.** This branch includes a small offline command-line converter for RTZ 1.0 and 1.2 input, supporting Full Route, From Waypoint by explicit source waypoint ID, and Current Position → Direct to Next WP. A local, one-Mac Shortcuts prototype supports those modes. It writes deterministic GPX 1.1, preserves waypoint order, validates coordinates, rejects malformed/unsupported/unsafe XML, and does not publish partial output.
 
-The prototype is **not schema validated** and does not claim RTZ 1.0/1.2 conformance or product support. It handles only the fields needed for this demonstration; other RTZ metadata is ignored. It has no GUI, Shortcuts/Finder integration, worker, IPC, packaging, or support for the other route modes. The input ceiling and route-name bound are prototype safeguards, not approved product limits. Automated repository tests use synthetic fixtures only; any authorized local real-route smoke test must keep its source and derived GPX outside Git. Its DOCTYPE guard conservatively rejects the literal `<!DOCTYPE` anywhere in UTF-8 input, so harmless occurrences in comments or text are rejected; non-UTF-8 input is rejected before parsing. This narrow check is not a complete XML security qualification. B01/B02 schema provenance and rights, IP-2A security/file-reference qualifications, and production acceptance gates remain open.
+The prototype is **not schema validated** and does not claim RTZ 1.0/1.2 conformance or product support. It handles only the fields needed for this demonstration; other RTZ metadata is ignored. It has no standalone GUI, Finder Quick Action, worker, IPC, release packaging, or support for Join Selected Route Leg. The input ceiling and route-name bound are prototype safeguards, not approved product limits. Automated repository tests use synthetic fixtures only; any authorized local real-route smoke test must keep its source and derived GPX outside Git. Its DOCTYPE guard conservatively rejects the literal `<!DOCTYPE` anywhere in UTF-8 input, so harmless occurrences in comments or text are rejected; non-UTF-8 input is rejected before parsing. This narrow check is not a complete XML security qualification. B01/B02 schema provenance and rights, IP-2A security/file-reference qualifications, and production acceptance gates remain open.
 
 Inspect a route without creating a GPX or modifying a file:
 
@@ -42,6 +42,18 @@ Prepend an explicitly entered position and continue from an explicitly selected 
 ```
 
 Current Position requires decimal-degree coordinates, a next waypoint ID, and exactly `rhumb` or `great-circle`. Longitude `+180` is rejected for both current positions and source waypoints regardless of RTZ version; `-180` is accepted. Current Position cannot be combined with From Waypoint. The CLI reports the connector choice, but GPX contains route vertices only and does not encode connector geometry or generate intermediate points. Coincident current-position and source-waypoint vertices are both retained.
+
+## One-Mac local Shortcut installation
+
+On the development Mac, build and explicitly install/update the local CLI with:
+
+```sh
+make install-local
+```
+
+This builds the repository CLI and atomically replaces the executable at `~/Applications/RTZ-GPX Converter/rtz-gpx-converter` with executable permissions. Re-run the same command after rebuilding to update it. The existing **RTZ-GPX Converter — Prototype** Shortcut calls this stable user-local path, so it no longer depends on the repository checkout location. The Shortcut itself remains a local development artifact.
+
+This is a one-Mac development installation, not release packaging. It does not create an app bundle, installer, DMG, signed/notarized artifact, Finder Quick Action, or portable Shortcut. No admin privileges or system-wide locations are used.
 
 The source RTZ route name is used by default. To apply the approved export-only naming choice, pass either `--route-name 'Name'` or `--omit-route-name`; the output filename never changes the internal GPX route name. The destination directory must already exist and the destination file must not exist.
 
