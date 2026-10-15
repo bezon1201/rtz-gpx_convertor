@@ -1,6 +1,12 @@
 # Progress ledger
 
-## Current gate activity — Prototype R8 first usable macOS Shortcut
+## Current gate activity — Prototype R9 Current Position → Direct to Next WP
+
+Extended the existing local **RTZ-GPX Converter — Prototype** Shortcut on macOS 26.6.2 (25G83), reusing the CLI unchanged. The menu now offers Full Route, From Waypoint, Current Position → Next Waypoint, and Cancel. The new mode asks for decimal coordinates, explicitly selects a next WP and Rhumb Line / Great Circle geometry, displays a preview and requires Convert confirmation before asking for output destination. Input checks reject latitude outside `[-90,90]`, longitude outside `[-180,+180)`, malformed decimals, and do not auto-correct. The preview states that GPX preserves route points and does not encode connector geometry.
+
+Test A: `(1.5,-2.5)` + SYN-B ID 20 + Rhumb → 3 points: current position, SYN-B, SYN-C; verified in `r9-rhumb-middle.gpx`. Test B: `(0,0)` + final SYN-C ID 30 + Great Circle → 2 points; verified in `r9-great-circle-final.gpx`. Test C: user canceled at preview; GPX listing unchanged. Test D: user reports latitude `91` showed the invalid-coordinate error; no output appeared before subsequent smoke. Existing-mode regression: Full Route still produced the 3 expected ordered source points in `r9-full-route-regression.gpx`. GPX SHA-256 values and detailed observations are in REPORT.md. An additional exploratory run created four points beginning at `(36,123)` followed by SYN-A/B/C; not counted as an acceptance case. Native dialogs were operated by the user because they were not exposed through UI automation. No permission prompt/runtime JXA error was reported. No real RTZ/GPX was used. `AGENTS.md` and the untracked user fixture copy remain untouched and excluded. `make test` passed; `git diff --check` passed for this report-only repository update. Stop for Architect review.
+
+### Historical gate activity — Prototype R8 first usable macOS Shortcut
 
 On macOS 26.6.2 (25G83), the local **RTZ-GPX Converter — Prototype** Shortcut completed synthetic Full Route and From Waypoint runs. Actions: `Select Files` → `Run Shell Script`; the latter calls the local CLI inspection mode, uses JXA/Foundation to parse JSON and present route identity/version/count and mode/waypoint/output dialogs, maps the selected waypoint to its exact source ID, then invokes conversion. The exact development-only CLI path and limitations are recorded in REPORT.md. No exported Shortcut or Finder Quick Action was created.
 
