@@ -1,6 +1,10 @@
 # Progress ledger
 
-## Current gate activity — Prototype R6.1 GPX longitude boundary
+## Current gate activity — Prototype R7 machine-readable route inspection
+
+Added `--inspect-json <input.rtz>` using the existing bounded reader and fail-closed parser. Foundation JSON serialization emits a single UTF-8 JSON document with route identity, nullable names, count, and ordered waypoint IDs/names/normalized coordinates; no GPX or other files are created and errors remain on stderr. `make test` passed for RTZ 1.0/1.2, fields/order, Unicode, absent route name, malformed/unsupported rejection, stdout/stderr separation and no side effects. `git diff --check` passed. Synthetic example and usage are in README.md. The private Athens RTZ requested for smoke inspection was not present at its supplied path or elsewhere in the local user tree; no substitute or derived route was used, and no real route data was committed. `AGENTS.md` remains preserved and excluded. Existing governance and qualification statuses are unchanged. Stop for Architect review.
+
+### Historical gate activity — Prototype R6.1 GPX longitude boundary
 
 **Authorization:** R6.1 narrow correction from baseline `bf19c524697120aec345dccfbb811bf14bbf119f`. Reject GPX longitude `+180` for Current Position regardless of RTZ version and for RTZ source waypoints; preserve `-180`, with no wrapping. Output starts with the unnamed current position, then the selected WP and original suffix; no inference, default geometry, interpolation, or deduplication. Connector selection is reported but not represented by GPX geometry. `make test` and `git diff --check` passed, including RTZ 1.0/1.2 Current Position `+180` rejection, valid `-180`, and RTZ 1.0 source `+180` rejection. The R6 local private-route smoke test: synthetic `(0, 0)` position, explicit midroute waypoint, resulting vertices matched the expected suffix; RTZ and GPX remain local and uncommitted. Product OS floor NOT QUALIFIED; B01/B02 pending; B03 OPEN / PARTIAL; B04 minimum policy PASS / ARCHITECT ACCEPTED, overall OPEN / PARTIAL; IP-2A PARTIAL / INCOMPLETE; IP-2B–IP-2E NOT AUTHORIZED; overall IP-1 PARTIAL / NOT PASS. `AGENTS.md` preserved and excluded. Stop for Architect review.
 ### Historical gate activity — Prototype R5 From Waypoint mode

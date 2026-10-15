@@ -38,7 +38,7 @@ private enum ConverterError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .usage:
-            return "Usage: rtz-gpx-converter <input.rtz> <output.gpx> [--from-waypoint-id ID | --current-position LAT LON --next-waypoint-id ID --connector rhumb|great-circle] [--route-name NAME | --omit-route-name]"
+            return "Usage: rtz-gpx-converter --inspect-json <input.rtz> | rtz-gpx-converter <input.rtz> <output.gpx> [--from-waypoint-id ID | --current-position LAT LON --next-waypoint-id ID --connector rhumb|great-circle] [--route-name NAME | --omit-route-name]"
         case .input(let message), .parse(let message), .output(let message):
             return message
         }
@@ -391,8 +391,40 @@ private func publishAtomically(_ data: Data, to path: String) throws {
     }
 }
 
+private func inspectionJSON(_ route: Route) throws -> Data {
+    let waypointObjects: [[String: Any]] = try route.waypoints.enumerated().map { index, waypoint in
+        guard let id = waypoint.id else {
+            throw ConverterError.parse("Cannot inspect a waypoint without a source ID.")
+        }
+        return [
+            "ordinal": index + 1,
+            "id": id,
+            "name": waypoint.name.map { $0 as Any } ?? NSNull(),
+            "lat": waypoint.latitude,
+            "lon": waypoint.longitude,
+        ]
+    }
+    let object: [String: Any] = [
+        "schema": 1,
+        "rtz_version": route.version,
+        "route_name": route.name.map { $0 as Any } ?? NSNull(),
+        "waypoint_count": route.waypoints.count,
+        "waypoints": waypointObjects,
+    ]
+    return try JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .sortedKeys])
+}
+
 private func run() throws {
     let args = Array(CommandLine.arguments.dropFirst())
+    if args.first == "--inspect-json" {
+        guard args.count == 2 else { throw ConverterError.usage }
+        let data = try readBoundedFile(args[1])
+        let route = try RTZParser().parse(data)
+        var json = try inspectionJSON(route)
+        json.append(0x0A)
+        try FileHandle.standardOutput.write(contentsOf: json)
+        return
+    }
     guard args.count >= 2 else { throw ConverterError.usage }
     let input = args[0]
     let output = args[1]

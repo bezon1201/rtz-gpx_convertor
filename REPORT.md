@@ -1,6 +1,12 @@
 # Architect review handoff
 
-## Current handoff — Prototype R6.1 GPX longitude boundary
+## Current handoff — Prototype R7 machine-readable route inspection
+
+**Authorization:** R7 inspection operation from baseline `d63cfbed42597a23ef6c0737446c37522cc71e07`, on `implementation/minimal-converter-prototype`. Added `--inspect-json <input.rtz>`, which reuses the bounded file reader and existing fail-closed parser, then emits one Foundation-serialized JSON document to stdout. It contains schema version, RTZ version, nullable route name, count, and source-ordered waypoints with ordinal, source ID/name, and normalized coordinate strings. It creates no GPX and writes no informational stdout; errors remain on stderr with non-zero exit.
+
+**Verification:** `make test` passed. Focused tests cover RTZ 1.0/1.2, waypoint count/order/IDs/names/coordinates, Unicode, absent route-name `null`, malformed and unsupported input with empty stdout, separated stderr, and no files created in the inspection working directory. `git diff --check` passed. Synthetic example is in README.md. The requested private Athens route could not be inspected: `/Users/master/Downloads/Athens Voyage Plan 11 Oct 2026/Athens WP RTZ 11 Oct 2026.rtz` is absent on this machine, and a local search found no matching RTZ file. Only its previously generated GPX is present, and that was not used as a substitute. No real-route data or inspection output was added to Git. Existing conversion behavior and tests remain intact. The unrelated `AGENTS.md` change is preserved and excluded. Stop for Architect review.
+
+### Historical handoff — Prototype R6.1 GPX longitude boundary
 
 **Authorization:** narrow prototype R6/R6.1, based on `bf19c524697120aec345dccfbb811bf14bbf119f`. Current Position Direct mode uses explicit `--current-position LAT LON --next-waypoint-id ID --connector rhumb|great-circle`. R6.1 applies GPX’s max-exclusive `+180` longitude boundary to every output route point regardless of RTZ version; it does not wrap `+180`, and preserves `-180`. This also closes the RTZ 1.0 source-waypoint case. The mode prepends the validated, unnamed current-position vertex and then includes the selected source waypoint and remaining suffix. It cannot combine with `--from-waypoint-id`; no connector defaults or waypoint inference exist. Connector is reported as transformation information only; GPX carries route vertices and no leg geometry semantics or interpolated points. Full Route and From Waypoint remain available. Last-source-WP selection in this mode yields two points. No advisory distance, Join Selected Route Leg, GUI, Shortcut, XSD, worker/IPC or packaging was added.
 

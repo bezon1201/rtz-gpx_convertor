@@ -123,4 +123,27 @@ reject_file_without_output "$ROOT/tests/prototype/fixtures/nested-waypoint-exten
 reject_file_without_output "$ROOT/tests/prototype/fixtures/misplaced-position-extension.xml" "$TMP/misplaced-position.gpx"
 reject_file_without_output "$ROOT/tests/prototype/fixtures/foreign-waypoint-rtz-position.xml" "$TMP/foreign-waypoint.gpx"
 
-echo 'PASS: RTZ 1.0/1.2, order/coordinates/names, Unicode, route-name choices, paths with spaces, existing-output protection, malformed/unsupported/ambiguous/DOCTYPE rejection, misplaced and foreign-namespace waypoint/position rejection, deterministic output, and no partial output.'
+mkdir "$TMP/inspect-cwd"
+(cd "$TMP/inspect-cwd" && "$BIN" --inspect-json "$FIX/valid-rtz-1.0-fields.xml") >"$TMP/inspect-v10.json" 2>"$TMP/inspect-v10.stderr"
+[[ ! -s "$TMP/inspect-v10.stderr" ]] || fail 'inspection wrote diagnostics for valid RTZ 1.0'
+jq -e '.schema == 1 and .rtz_version == "1.0" and .route_name == "SYN-Fields-10" and .waypoint_count == 3 and [.waypoints[].id] == ["10", "20", "30"] and [.waypoints[].ordinal] == [1, 2, 3] and [.waypoints[].name] == ["SYN-A", "SYN-B", "SYN-C"] and [.waypoints[].lat] == ["12.25", "12.5", "12.75"] and [.waypoints[].lon] == ["23.5", "23.75", "24"]' "$TMP/inspect-v10.json" >/dev/null || fail 'RTZ 1.0 inspection fields/order were incorrect'
+
+(cd "$TMP/inspect-cwd" && "$BIN" --inspect-json "$FIX/valid-rtz-1.2-fields.xml") >"$TMP/inspect-v12.json" 2>"$TMP/inspect-v12.stderr"
+[[ ! -s "$TMP/inspect-v12.stderr" ]] || fail 'inspection wrote diagnostics for valid RTZ 1.2'
+jq -e '.schema == 1 and .rtz_version == "1.2" and .route_name == "SYN-Fields-12" and .waypoint_count == 3 and [.waypoints[].id] == ["10", "20", "30"] and [.waypoints[].ordinal] == [1, 2, 3]' "$TMP/inspect-v12.json" >/dev/null || fail 'RTZ 1.2 inspection fields/order were incorrect'
+
+(cd "$TMP/inspect-cwd" && "$BIN" --inspect-json "$FIX/unicode-route-waypoint-text.xml") >"$TMP/inspect-unicode.json" 2>"$TMP/inspect-unicode.stderr"
+jq -e '.route_name == "SYN-海図-Δ" and .waypoints[0].name == "SYN-北" and .waypoints[1].name == "SYN-β"' "$TMP/inspect-unicode.json" >/dev/null || fail 'inspection did not preserve Unicode'
+(cd "$TMP/inspect-cwd" && "$BIN" --inspect-json "$FIX/missing-route-name.xml") >"$TMP/inspect-no-name.json" 2>"$TMP/inspect-no-name.stderr"
+jq -e '.route_name == null' "$TMP/inspect-no-name.json" >/dev/null || fail 'inspection did not represent absent route name as null'
+[[ -z "$(find "$TMP/inspect-cwd" -type f -print -quit)" ]] || fail 'inspection created a file in its working directory'
+
+for fixture in malformed-not-well-formed.xml unsupported-version-9.9.xml; do
+  if "$BIN" --inspect-json "$FIX/$fixture" >"$TMP/inspect-failure.json" 2>"$TMP/inspect-failure.stderr"; then
+    fail "inspection accepted $fixture"
+  fi
+  [[ ! -s "$TMP/inspect-failure.json" ]] || fail "inspection emitted partial JSON for $fixture"
+  [[ -s "$TMP/inspect-failure.stderr" ]] || fail "inspection omitted stderr diagnostic for $fixture"
+done
+
+echo 'PASS: conversion suite plus RTZ 1.0/1.2 JSON inspection, ordered fields, Unicode, fail-closed errors, stdout/stderr separation, and no inspection file side effects.'
