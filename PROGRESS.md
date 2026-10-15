@@ -1,6 +1,12 @@
 # Progress ledger
 
-## Current gate activity — Prototype R7 machine-readable route inspection
+## Current gate activity — Prototype R8 first usable macOS Shortcut
+
+On macOS 26.6.2 (25G83), the local **RTZ-GPX Converter — Prototype** Shortcut completed synthetic Full Route and From Waypoint runs. Actions: `Select Files` → `Run Shell Script`; the latter calls the local CLI inspection mode, uses JXA/Foundation to parse JSON and present route identity/version/count and mode/waypoint/output dialogs, maps the selected waypoint to its exact source ID, then invokes conversion. The exact development-only CLI path and limitations are recorded in REPORT.md. No exported Shortcut or Finder Quick Action was created.
+
+Test A output `synthetic-route1.gpx`: route `SYN-Fields-12`, 3 expected points in source order (SYN-A, SYN-B, SYN-C; coordinates 12.25/23.5, 12.5/23.75, 12.75/24). Test B output `synthetic-route2.gpx`: selected middle point SYN-B followed by SYN-C, 2 points, in `/Users/master/Downloads/rtz-gpx/`. Both GPX files were inspected and matched. The user reports canceling at the waypoint picker ended normally; only the two successful outputs are present. The chosen `.rtz` was a byte-identical copy of the approved synthetic RTZ 1.2 fixture; original remained unchanged. Initial selection of its `.xml` filename was rejected as expected by the `.rtz` check, then the renamed copy worked. No permission prompt was visible in supplied evidence. `make test` and `git diff --check` are run for this documentation update. No private route data was used. One-host prototype only; no Finder Quick Action, Dock/keyboard, packaging, portability, release, or other-OS claim. `AGENTS.md` and the user-created untracked synthetic fixture copy remain untouched and excluded. Stop for Architect review.
+
+### Historical gate activity — Prototype R7 machine-readable route inspection
 
 Added `--inspect-json <input.rtz>` using the existing bounded reader and fail-closed parser. Foundation JSON serialization emits a single UTF-8 JSON document with route identity, nullable names, count, and ordered waypoint IDs/names/normalized coordinates; no GPX or other files are created and errors remain on stderr. `make test` passed for RTZ 1.0/1.2, fields/order, Unicode, absent route name, malformed/unsupported rejection, stdout/stderr separation and no side effects. `git diff --check` passed. Synthetic example and usage are in README.md. The private Athens RTZ requested for smoke inspection was not present at its supplied path or elsewhere in the local user tree; no substitute or derived route was used, and no real route data was committed. `AGENTS.md` remains preserved and excluded. Existing governance and qualification statuses are unchanged. Stop for Architect review.
 
