@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<route xmlns="http://www.cirm.org/RTZ/1/2" version="1.2">
+  <routeInfo routeName="SYN-MISPLACED-POSITION" />
+  <waypoints>
+    <waypoint id="one" name="SYN-ONE">
+      <extension><position lat="9" lon="8" /></extension>
+      <position lat="1" lon="2" />
+    </waypoint>
+  </waypoints>
+</route>

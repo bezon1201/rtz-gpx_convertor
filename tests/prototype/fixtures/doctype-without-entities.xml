@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE route>
+<route xmlns="http://www.cirm.org/RTZ/1/2" version="1.2">
+  <routeInfo routeName="SYN-DOCTYPE" />
+  <waypoints>
+    <waypoint id="1" name="SYN-A"><position lat="1" lon="2" /></waypoint>
+  </waypoints>
+</route>

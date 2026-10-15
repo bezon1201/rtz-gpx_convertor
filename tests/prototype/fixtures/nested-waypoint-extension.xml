@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<route xmlns="http://www.cirm.org/RTZ/1/2" version="1.2">
+  <routeInfo routeName="SYN-NESTED" />
+  <waypoints>
+    <waypoint id="outer" name="SYN-OUTER">
+      <extension>
+        <waypoint id="nested" name="SYN-NESTED"><position lat="9" lon="8" /></waypoint>
+      </extension>
+    </waypoint>
+    <waypoint id="second" name="SYN-SECOND"><position lat="3" lon="4" /></waypoint>
+  </waypoints>
+</route>

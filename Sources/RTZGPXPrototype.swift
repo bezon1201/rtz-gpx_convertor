@@ -58,6 +58,15 @@ private final class RTZParser: NSObject, XMLParserDelegate {
     }
 
     func parse(_ data: Data) throws -> Route {
+        // XMLParser has no delegate callback for a bare DOCTYPE (without a declaration).
+        // This prototype therefore performs a conservative UTF-8 preflight before parsing.
+        guard let text = String(data: data, encoding: .utf8) else {
+            throw ConverterError.parse("Prototype DOCTYPE preflight requires UTF-8 XML input.")
+        }
+        guard !text.contains("<!DOCTYPE") else {
+            throw ConverterError.parse("DOCTYPE declarations are not accepted.")
+        }
+
         let parser = XMLParser(data: data)
         parser.delegate = self
         parser.shouldProcessNamespaces = true
@@ -110,6 +119,14 @@ private final class RTZParser: NSObject, XMLParserDelegate {
             version = declaredVersion
             routeNamespace = uri
         } else if uri == routeNamespace {
+            if name == "waypoint" && stack.last != "waypoints" {
+                reject(parser, "Waypoint elements are only accepted directly inside waypoints.")
+                return
+            }
+            if name == "position" && stack.last != "waypoint" {
+                reject(parser, "Position elements are only accepted directly inside a waypoint.")
+                return
+            }
             switch (stack.last, name) {
             case ("route", "routeInfo"):
                 routeInfoCount += 1
@@ -163,7 +180,8 @@ private final class RTZParser: NSObject, XMLParserDelegate {
             reject(parser, "Ambiguous XML element nesting.")
             return
         }
-        if name == "waypoint", namespaceURI == routeNamespace, let builder = currentWaypoint {
+        if name == "waypoint", namespaceURI == routeNamespace,
+           stack == ["route", "waypoints", "waypoint"], let builder = currentWaypoint {
             guard builder.positionCount == 1,
                   let rawLatitude = builder.latitude,
                   let rawLongitude = builder.longitude else {

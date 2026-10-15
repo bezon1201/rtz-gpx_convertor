@@ -13,6 +13,11 @@ reject_without_output() {
   if "$BIN" "$FIX/$fixture" "$output" >"$TMP/stdout" 2>"$TMP/stderr"; then fail "accepted $fixture"; fi
   [[ ! -e "$output" ]] || fail "partial output exists for $fixture"
 }
+reject_file_without_output() {
+  local input="$1" output="$2"
+  if "$BIN" "$input" "$output" >"$TMP/stdout" 2>"$TMP/stderr"; then fail "accepted $input"; fi
+  [[ ! -e "$output" ]] || fail "partial output exists for $input"
+}
 
 "$BIN" "$FIX/valid-rtz-1.0-fields.xml" "$TMP/v10.gpx" >"$TMP/stdout"
 grep -Fq '<name>SYN-Fields-10</name>' "$TMP/v10.gpx" || fail 'RTZ 1.0 route name was not retained'
@@ -62,5 +67,8 @@ reject_without_output missing-waypoint-id.xml "$TMP/missing-id.gpx"
 reject_without_output duplicate-waypoint-id.xml "$TMP/duplicate-id.gpx"
 reject_without_output missing-routeInfo.xml "$TMP/missing-route-info.gpx"
 reject_without_output missing-waypoints.xml "$TMP/missing-waypoints.gpx"
+reject_file_without_output "$ROOT/tests/prototype/fixtures/doctype-without-entities.xml" "$TMP/doctype-no-entities.gpx"
+reject_file_without_output "$ROOT/tests/prototype/fixtures/nested-waypoint-extension.xml" "$TMP/nested-waypoint.gpx"
+reject_file_without_output "$ROOT/tests/prototype/fixtures/misplaced-position-extension.xml" "$TMP/misplaced-position.gpx"
 
-echo 'PASS: RTZ 1.0/1.2, order/coordinates/names, Unicode, route-name choices, paths with spaces, existing-output protection, malformed/unsupported/ambiguous/DTD rejection, deterministic output, and no partial output.'
+echo 'PASS: RTZ 1.0/1.2, order/coordinates/names, Unicode, route-name choices, paths with spaces, existing-output protection, malformed/unsupported/ambiguous/DOCTYPE rejection, misplaced waypoint/position rejection, deterministic output, and no partial output.'
