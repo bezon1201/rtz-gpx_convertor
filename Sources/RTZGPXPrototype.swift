@@ -5,6 +5,7 @@ private let inputLimit = 16 * 1024 * 1024
 private let nameLimit = 256
 
 private struct Waypoint {
+    let id: String
     let latitude: String
     let longitude: String
     let name: String?
@@ -25,7 +26,7 @@ private enum ConverterError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .usage:
-            return "Usage: rtz-gpx-converter <input.rtz> <output.gpx> [--route-name NAME | --omit-route-name]"
+            return "Usage: rtz-gpx-converter <input.rtz> <output.gpx> [--from-waypoint-id ID] [--route-name NAME | --omit-route-name]"
         case .input(let message), .parse(let message), .output(let message):
             return message
         }
@@ -56,6 +57,7 @@ private final class RTZParser: NSObject, XMLParserDelegate {
     private var sawRoot = false
 
     private struct WaypointBuilder {
+        let id: String
         let name: String?
         var positionCount = 0
         var latitude: String?
@@ -173,7 +175,7 @@ private final class RTZParser: NSObject, XMLParserDelegate {
                     reject(parser, "Ambiguous input: waypoint IDs must be unique.")
                     return
                 }
-                currentWaypoint = WaypointBuilder(name: attributes["name"])
+                currentWaypoint = WaypointBuilder(id: id, name: attributes["name"])
             case ("waypoint", "position"):
                 guard currentWaypoint != nil else {
                     reject(parser, "Position appeared outside a waypoint.")
@@ -220,7 +222,7 @@ private final class RTZParser: NSObject, XMLParserDelegate {
                 if version == "1.2", longitude == "180" {
                     throw ConverterError.parse("Prototype rejects positive 180 longitude for RTZ 1.2.")
                 }
-                waypoints.append(Waypoint(latitude: latitude, longitude: longitude, name: builder.name))
+                waypoints.append(Waypoint(id: builder.id, latitude: latitude, longitude: longitude, name: builder.name))
             } catch {
                 reject(parser, error.localizedDescription)
                 return
@@ -348,6 +350,14 @@ private func serialize(_ route: Route, name: String?) -> Data {
     return Data(lines.joined(separator: "\n").utf8)
 }
 
+private func routeSuffix(_ route: Route, startingAt waypointID: String?) throws -> Route {
+    guard let waypointID else { return route }
+    guard let index = route.waypoints.firstIndex(where: { $0.id == waypointID }) else {
+        throw ConverterError.parse("Starting waypoint ID was not found in the source route.")
+    }
+    return Route(version: route.version, name: route.name, waypoints: Array(route.waypoints[index...]))
+}
+
 private func publishAtomically(_ data: Data, to path: String) throws {
     let destination = URL(fileURLWithPath: path).standardizedFileURL
     let parent = destination.deletingLastPathComponent()
@@ -376,9 +386,16 @@ private func run() throws {
     let output = args[1]
     var override: String?
     var omitName = false
+    var startWaypointID: String?
     var index = 2
     while index < args.count {
         switch args[index] {
+        case "--from-waypoint-id":
+            guard index + 1 < args.count, startWaypointID == nil, !args[index + 1].isEmpty else {
+                throw ConverterError.usage
+            }
+            startWaypointID = args[index + 1]
+            index += 2
         case "--route-name":
             guard index + 1 < args.count, override == nil, !omitName else { throw ConverterError.usage }
             override = args[index + 1]
@@ -393,7 +410,8 @@ private func run() throws {
     }
 
     let data = try readBoundedFile(input)
-    let route = try RTZParser().parse(data)
+    let sourceRoute = try RTZParser().parse(data)
+    let route = try routeSuffix(sourceRoute, startingAt: startWaypointID)
     let exportName = try effectiveName(source: route.name, override: override, omit: omitName)
     let outputData = serialize(route, name: exportName)
     try publishAtomically(outputData, to: output)

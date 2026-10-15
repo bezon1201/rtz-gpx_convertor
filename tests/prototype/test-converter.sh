@@ -10,7 +10,8 @@ trap 'rm -rf "$TMP"' EXIT
 fail() { echo "FAIL: $*" >&2; exit 1; }
 reject_without_output() {
   local fixture="$1" output="$2"
-  if "$BIN" "$FIX/$fixture" "$output" >"$TMP/stdout" 2>"$TMP/stderr"; then fail "accepted $fixture"; fi
+  shift 2
+  if "$BIN" "$FIX/$fixture" "$output" "$@" >"$TMP/stdout" 2>"$TMP/stderr"; then fail "accepted $fixture"; fi
   [[ ! -e "$output" ]] || fail "partial output exists for $fixture"
 }
 reject_file_without_output() {
@@ -31,6 +32,24 @@ grep -Fq '<name>SYN-Fields-12</name>' "$TMP/v12.gpx" || fail 'RTZ 1.2 route name
 grep '<rtept ' "$TMP/v12.gpx" | sed -n '1p' | grep -Fq 'lat="12.25" lon="23.5"' || fail 'first waypoint order/coordinate incorrect'
 grep '<rtept ' "$TMP/v12.gpx" | sed -n '2p' | grep -Fq 'lat="12.5" lon="23.75"' || fail 'second waypoint order/coordinate incorrect'
 grep '<rtept ' "$TMP/v12.gpx" | sed -n '3p' | grep -Fq 'lat="12.75" lon="24"' || fail 'third waypoint order/coordinate incorrect'
+
+"$BIN" "$FIX/valid-rtz-1.2-fields.xml" "$TMP/from-first.gpx" --from-waypoint-id 10 >"$TMP/stdout"
+cmp "$TMP/v12.gpx" "$TMP/from-first.gpx" >/dev/null || fail 'selecting the first waypoint changed Full Route output'
+"$BIN" "$FIX/valid-rtz-1.2-fields.xml" "$TMP/from-middle.gpx" --from-waypoint-id 20 >"$TMP/stdout"
+[[ "$(grep -c '<rtept ' "$TMP/from-middle.gpx")" -eq 2 ]] || fail 'middle waypoint selection did not produce a two-point suffix'
+grep -Fq '<name>SYN-B</name>' "$TMP/from-middle.gpx" || fail 'middle waypoint missing from suffix'
+grep -Fq '<name>SYN-C</name>' "$TMP/from-middle.gpx" || fail 'destination waypoint missing from suffix'
+! grep -Fq '<name>SYN-A</name>' "$TMP/from-middle.gpx" || fail 'preceding waypoint remained in suffix'
+[[ "$(grep -n '<name>SYN-B</name>' "$TMP/from-middle.gpx" | cut -d: -f1)" -lt "$(grep -n '<name>SYN-C</name>' "$TMP/from-middle.gpx" | cut -d: -f1)" ]] || fail 'middle suffix order changed'
+grep -Fq '<rtept lat="12.5" lon="23.75">' "$TMP/from-middle.gpx" || fail 'selected middle waypoint coordinates changed'
+"$BIN" "$FIX/valid-rtz-1.2-fields.xml" "$TMP/from-middle-override.gpx" --from-waypoint-id 20 --route-name 'Suffix & Route' >"$TMP/stdout"
+grep -Fq '<name>Suffix &amp; Route</name>' "$TMP/from-middle-override.gpx" || fail 'route-name override changed in From Waypoint mode'
+[[ "$(grep -c '<rtept ' "$TMP/from-middle-override.gpx")" -eq 2 ]] || fail 'route-name override changed the selected suffix'
+"$BIN" "$FIX/valid-rtz-1.2-fields.xml" "$TMP/from-last.gpx" --from-waypoint-id 30 >"$TMP/stdout"
+[[ "$(grep -c '<rtept ' "$TMP/from-last.gpx")" -eq 1 ]] || fail 'last waypoint selection did not produce one route point'
+grep -Fq '<name>SYN-C</name>' "$TMP/from-last.gpx" || fail 'last selected waypoint missing'
+grep -Fq '<rtept lat="12.75" lon="24">' "$TMP/from-last.gpx" || fail 'last selected waypoint coordinates changed'
+reject_without_output valid-rtz-1.2-fields.xml "$TMP/unknown-id.gpx" --from-waypoint-id 999
 
 "$BIN" "$FIX/unicode-route-waypoint-text.xml" "$TMP/unicode.gpx" >"$TMP/stdout"
 grep -Fq '<name>SYN-海図-Δ</name>' "$TMP/unicode.gpx" || fail 'Unicode route name was not preserved'

@@ -4,9 +4,9 @@ A proposed offline macOS Apple Silicon utility for converting maritime RTZ route
 
 ## Project status
 
-**Development prototype only.** This branch includes a small offline command-line converter for project-authored synthetic RTZ 1.0 and 1.2 input, limited to Full Route mode. It writes deterministic GPX 1.1, preserves waypoint order, validates coordinates, rejects malformed/unsupported/unsafe XML, and does not publish partial output.
+**Development prototype only.** This branch includes a small offline command-line converter for RTZ 1.0 and 1.2 input, supporting Full Route and From Waypoint by explicit source waypoint ID. It writes deterministic GPX 1.1, preserves waypoint order, validates coordinates, rejects malformed/unsupported/unsafe XML, and does not publish partial output.
 
-The prototype is **not schema validated** and does not claim RTZ 1.0/1.2 conformance or product support. It handles only the fields needed for this demonstration; other RTZ metadata is ignored. It has no GUI, Shortcuts/Finder integration, worker, IPC, packaging, or support for the other route modes. The input ceiling and route-name bound are prototype safeguards, not approved product limits. Use synthetic fixtures only. Its DOCTYPE guard conservatively rejects the literal `<!DOCTYPE` anywhere in UTF-8 input, so harmless occurrences in comments or text are rejected; non-UTF-8 input is rejected before parsing. This narrow check is not a complete XML security qualification. B01/B02 schema provenance and rights, IP-2A security/file-reference qualifications, and production acceptance gates remain open.
+The prototype is **not schema validated** and does not claim RTZ 1.0/1.2 conformance or product support. It handles only the fields needed for this demonstration; other RTZ metadata is ignored. It has no GUI, Shortcuts/Finder integration, worker, IPC, packaging, or support for the other route modes. The input ceiling and route-name bound are prototype safeguards, not approved product limits. Automated repository tests use synthetic fixtures only; any authorized local real-route smoke test must keep its source and derived GPX outside Git. Its DOCTYPE guard conservatively rejects the literal `<!DOCTYPE` anywhere in UTF-8 input, so harmless occurrences in comments or text are rejected; non-UTF-8 input is rejected before parsing. This narrow check is not a complete XML security qualification. B01/B02 schema provenance and rights, IP-2A security/file-reference qualifications, and production acceptance gates remain open.
 
 Build and convert a synthetic fixture with the installed macOS Swift compiler:
 
@@ -14,6 +14,14 @@ Build and convert a synthetic fixture with the installed macOS Swift compiler:
 make build
 ./build/rtz-gpx-converter tests/fixtures/rtz/synthetic/valid-rtz-1.2-fields.xml /tmp/example.gpx
 ```
+
+Export a suffix beginning at a waypoint (the selected waypoint is included):
+
+```sh
+./build/rtz-gpx-converter input.rtz output.gpx --from-waypoint-id 20
+```
+
+Selecting the last waypoint writes a one-point GPX route. This CLI prototype does not provide user-facing confirmation; confirmation belongs to the later Shortcut/UI layer.
 
 The source RTZ route name is used by default. To apply the approved export-only naming choice, pass either `--route-name 'Name'` or `--omit-route-name`; the output filename never changes the internal GPX route name. The destination directory must already exist and the destination file must not exist.
 
