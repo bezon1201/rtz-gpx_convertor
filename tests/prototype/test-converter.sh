@@ -70,5 +70,6 @@ reject_without_output missing-waypoints.xml "$TMP/missing-waypoints.gpx"
 reject_file_without_output "$ROOT/tests/prototype/fixtures/doctype-without-entities.xml" "$TMP/doctype-no-entities.gpx"
 reject_file_without_output "$ROOT/tests/prototype/fixtures/nested-waypoint-extension.xml" "$TMP/nested-waypoint.gpx"
 reject_file_without_output "$ROOT/tests/prototype/fixtures/misplaced-position-extension.xml" "$TMP/misplaced-position.gpx"
+reject_file_without_output "$ROOT/tests/prototype/fixtures/foreign-waypoint-rtz-position.xml" "$TMP/foreign-waypoint.gpx"
 
-echo 'PASS: RTZ 1.0/1.2, order/coordinates/names, Unicode, route-name choices, paths with spaces, existing-output protection, malformed/unsupported/ambiguous/DOCTYPE rejection, misplaced waypoint/position rejection, deterministic output, and no partial output.'
+echo 'PASS: RTZ 1.0/1.2, order/coordinates/names, Unicode, route-name choices, paths with spaces, existing-output protection, malformed/unsupported/ambiguous/DOCTYPE rejection, misplaced and foreign-namespace waypoint/position rejection, deterministic output, and no partial output.'

@@ -33,12 +33,17 @@ private enum ConverterError: Error, CustomStringConvertible {
 }
 
 private final class RTZParser: NSObject, XMLParserDelegate {
+    private struct ElementFrame: Equatable {
+        let name: String
+        let namespaceURI: String
+    }
+
     private let namespaceByVersion = [
         "1.0": "http://www.cirm.org/RTZ/1/0",
         "1.2": "http://www.cirm.org/RTZ/1/2",
     ]
 
-    private var stack: [String] = []
+    private var stack: [ElementFrame] = []
     private var version: String?
     private var routeNamespace: String?
     private var routeName: String?
@@ -119,15 +124,29 @@ private final class RTZParser: NSObject, XMLParserDelegate {
             version = declaredVersion
             routeNamespace = uri
         } else if uri == routeNamespace {
-            if name == "waypoint" && stack.last != "waypoints" {
-                reject(parser, "Waypoint elements are only accepted directly inside waypoints.")
-                return
+            let route = ElementFrame(name: "route", namespaceURI: uri)
+            let waypointsGroup = ElementFrame(name: "waypoints", namespaceURI: uri)
+            let waypoint = ElementFrame(name: "waypoint", namespaceURI: uri)
+            switch name {
+            case "routeInfo", "waypoints":
+                guard stack == [route] else {
+                    reject(parser, "RTZ routeInfo and waypoints must be direct route children.")
+                    return
+                }
+            case "waypoint":
+                guard stack == [route, waypointsGroup] else {
+                    reject(parser, "RTZ waypoint elements are only accepted directly inside RTZ waypoints.")
+                    return
+                }
+            case "position":
+                guard stack == [route, waypointsGroup, waypoint] else {
+                    reject(parser, "RTZ position elements are only accepted directly inside an RTZ waypoint.")
+                    return
+                }
+            default:
+                break
             }
-            if name == "position" && stack.last != "waypoint" {
-                reject(parser, "Position elements are only accepted directly inside a waypoint.")
-                return
-            }
-            switch (stack.last, name) {
+            switch (stack.last?.name, name) {
             case ("route", "routeInfo"):
                 routeInfoCount += 1
                 guard routeInfoCount == 1 else {
@@ -171,17 +190,24 @@ private final class RTZParser: NSObject, XMLParserDelegate {
                 break // Other RTZ metadata is intentionally ignored by this prototype.
             }
         }
-        stack.append(name)
+        stack.append(ElementFrame(name: name, namespaceURI: uri))
     }
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         let name = elementName.isEmpty ? (qName ?? "") : elementName
-        guard stack.last == name else {
+        let uri = namespaceURI ?? ""
+        guard stack.last == ElementFrame(name: name, namespaceURI: uri) else {
             reject(parser, "Ambiguous XML element nesting.")
             return
         }
-        if name == "waypoint", namespaceURI == routeNamespace,
-           stack == ["route", "waypoints", "waypoint"], let builder = currentWaypoint {
+        let rtzNamespace = routeNamespace ?? ""
+        let expectedWaypointPath = [
+            ElementFrame(name: "route", namespaceURI: rtzNamespace),
+            ElementFrame(name: "waypoints", namespaceURI: rtzNamespace),
+            ElementFrame(name: "waypoint", namespaceURI: rtzNamespace),
+        ]
+        if name == "waypoint", uri == routeNamespace,
+           stack == expectedWaypointPath, let builder = currentWaypoint {
             guard builder.positionCount == 1,
                   let rawLatitude = builder.latitude,
                   let rawLongitude = builder.longitude else {

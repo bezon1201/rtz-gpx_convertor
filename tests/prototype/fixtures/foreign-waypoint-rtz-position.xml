@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<route xmlns="http://www.cirm.org/RTZ/1/2" xmlns:x="urn:synthetic:foreign" version="1.2">
+  <routeInfo routeName="SYN-FOREIGN-NESTING" />
+  <waypoints>
+    <waypoint id="outer" name="SYN-OUTER">
+      <x:waypoint id="foreign" name="SYN-FOREIGN">
+        <position lat="9" lon="8" />
+      </x:waypoint>
+    </waypoint>
+    <waypoint id="second" name="SYN-SECOND"><position lat="3" lon="4" /></waypoint>
+  </waypoints>
+</route>
