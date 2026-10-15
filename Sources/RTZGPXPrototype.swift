@@ -231,8 +231,8 @@ private final class RTZParser: NSObject, XMLParserDelegate {
             do {
                 let latitude = try Self.coordinate(rawLatitude, label: "latitude", lower: -90, upper: 90)
                 let longitude = try Self.coordinate(rawLongitude, label: "longitude", lower: -180, upper: 180)
-                if version == "1.2", longitude == "180" {
-                    throw ConverterError.parse("Prototype rejects positive 180 longitude for RTZ 1.2.")
+                if longitude == "180" {
+                    throw ConverterError.parse("GPX route points cannot use positive 180 longitude.")
                 }
                 waypoints.append(Waypoint(id: builder.id, latitude: latitude, longitude: longitude, name: builder.name))
             } catch {
@@ -458,8 +458,8 @@ private func run() throws {
         }
         let latitude = try RTZParser.coordinate(rawLatitude, label: "current-position latitude", lower: -90, upper: 90)
         let longitude = try RTZParser.coordinate(rawLongitude, label: "current-position longitude", lower: -180, upper: 180)
-        if sourceRoute.version == "1.2", longitude == "180" {
-            throw ConverterError.parse("Prototype rejects positive 180 longitude for RTZ 1.2.")
+        if longitude == "180" {
+            throw ConverterError.parse("GPX route points cannot use positive 180 longitude.")
         }
         let suffix = try routeSuffix(sourceRoute, startingAt: nextWaypointID)
         let currentPosition = Waypoint(id: nil, latitude: latitude, longitude: longitude, name: nil)

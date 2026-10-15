@@ -29,7 +29,7 @@ Prepend an explicitly entered position and continue from an explicitly selected 
 ./build/rtz-gpx-converter input.rtz output.gpx --current-position 0 0 --next-waypoint-id 20 --connector rhumb
 ```
 
-Current Position requires both decimal-degree coordinates, a next waypoint ID, and exactly `rhumb` or `great-circle`; it cannot be combined with From Waypoint. The CLI reports the connector choice, but GPX contains route vertices only and does not encode connector geometry or generate intermediate points. Coincident current-position and source-waypoint vertices are both retained.
+Current Position requires decimal-degree coordinates, a next waypoint ID, and exactly `rhumb` or `great-circle`. Longitude `+180` is rejected for both current positions and source waypoints regardless of RTZ version; `-180` is accepted. Current Position cannot be combined with From Waypoint. The CLI reports the connector choice, but GPX contains route vertices only and does not encode connector geometry or generate intermediate points. Coincident current-position and source-waypoint vertices are both retained.
 
 The source RTZ route name is used by default. To apply the approved export-only naming choice, pass either `--route-name 'Name'` or `--omit-route-name`; the output filename never changes the internal GPX route name. The destination directory must already exist and the destination file must not exist.
 

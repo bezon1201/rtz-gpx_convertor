@@ -71,6 +71,12 @@ grep -Fq 'great-circle (Great Circle / Orthodrome)' "$TMP/stdout" || fail 'great
 [[ "$(grep -c '<rtept lat="12.5" lon="23.75">' "$TMP/current-equal.gpx")" -eq 2 ]] || fail 'equal current/next coordinates were deduplicated'
 reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-latitude.gpx" --current-position 91 2 --next-waypoint-id 20 --connector rhumb
 reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-longitude.gpx" --current-position 1 181 --next-waypoint-id 20 --connector rhumb
+reject_without_output valid-rtz-1.0-fields.xml "$TMP/current-plus-180-v10.gpx" --current-position 1 180 --next-waypoint-id 10 --connector rhumb
+reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-plus-180-v12.gpx" --current-position 1 180 --next-waypoint-id 10 --connector rhumb
+"$BIN" "$FIX/valid-rtz-1.0-fields.xml" "$TMP/current-minus-180.gpx" --current-position 1 -180 --next-waypoint-id 10 --connector rhumb >"$TMP/stdout"
+grep -Fq '<rtept lat="1" lon="-180">' "$TMP/current-minus-180.gpx" || fail 'negative 180 longitude should remain valid'
+sed 's/lon="23.5"/lon="180"/' "$FIX/valid-rtz-1.0-fields.xml" >"$TMP/source-plus-180-v10.xml"
+reject_file_without_output "$TMP/source-plus-180-v10.xml" "$TMP/source-plus-180-v10.gpx"
 reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-unknown-id.gpx" --current-position 1 2 --next-waypoint-id 999 --connector rhumb
 reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-missing-connector.gpx" --current-position 1 2 --next-waypoint-id 20
 reject_without_output valid-rtz-1.2-fields.xml "$TMP/current-invalid-connector.gpx" --current-position 1 2 --next-waypoint-id 20 --connector automatic
