@@ -1,5 +1,11 @@
 # Progress ledger
 
+## Current gate activity — Prototype R11 Finder Quick Action input
+
+The existing local **RTZ-GPX Converter — Prototype** Shortcut is configured on this Mac for Finder Quick Action input using the explicit `Shortcut Input` variable and the stable installed CLI. The user invoked it from Finder on a synthetic RTZ 1.2 route and reported that the Quick Action works. The generated GPX was independently checked: `SYN-Fields-12`, three points in order (SYN-A → SYN-B → SYN-C), with expected coordinates. Source copy and GPX remain outside Git.
+
+The owner requested not to repeat the full Shortcut test suite. R11 is therefore **PARTIAL**: only a Finder launch/output smoke was checked; mode-specific Finder runs, manual-launch regression, spaces, invalid input and multiple-selection behavior were not separately tested. On macOS 26.6.2 (25G83), `make test` and `git diff --check` passed. Modified `AGENTS.md` and the untracked user fixture copy remain untouched and excluded. Stop for Architect review.
+
 ## Current gate activity — Prototype R10 stable local installation
 
 Added `make install-local` for the one-Mac user-local binary `/Users/master/Applications/RTZ-GPX Converter/rtz-gpx-converter` (mode `755`). Installation succeeded; installed and repository binaries have matching SHA-256. Direct installed-binary inspection and Full Route conversion succeeded from `/private/tmp`. Updated the existing **RTZ-GPX Converter — Prototype** Shortcut to use the stable path only; its interaction flow was not redesigned.
