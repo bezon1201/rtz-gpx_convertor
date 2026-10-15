@@ -1,5 +1,7 @@
 # IP-1E R1 — Minimum Supported macOS Decision
 
+**R2 status note:** R1’s product conclusion remains **OS FLOOR NOT QUALIFIED**. IP-1E R2 subsequently accepted Sequoia 15 only as a provisional engineering baseline for future authorized research; it does not qualify Sequoia as a supported product OS. See [`IP-1E-R2-ENGINEERING-OS-BASELINE.md`](IP-1E-R2-ENGINEERING-OS-BASELINE.md).
+
 **Decision status: OS FLOOR NOT QUALIFIED.** No macOS version is frozen or currently supported by product evidence.
 
 **Qualification candidate only:** macOS Sequoia 15 (test the currently listed patch, 15.8.1, before qualification). This preserves IP-1E's earlier Sequoia 15 candidate for evaluation; it is not a support claim or a decision to ship with that deployment target.

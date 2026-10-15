@@ -1,10 +1,14 @@
 # Architect review handoff
 
-## Current handoff — IP-1E R1 minimum macOS support-floor decision
+## Current handoff — IP-1E R2 provisional engineering OS baseline
 
-**Authorization:** documentation-only decision stage. Result: **OS FLOOR NOT QUALIFIED**; no version is currently declared supported. Sequoia 15 remains the preferred qualification candidate (currently listed patch 15.8.1), not a frozen minimum. Apple’s current security-release list shows Sequoia 15.8.1, Tahoe 26.7.1 and Golden Gate 27.0.1; documentary security/API facts do not prove product compatibility. The exact three-row qualification matrix and missing evidence are in [`docs/research/IP-1/IP-1E-OS-SUPPORT-FLOOR-DECISION.md`](docs/research/IP-1/IP-1E-OS-SUPPORT-FLOOR-DECISION.md). No probes, tests, build, package, signing, notarization or implementation occurred.
+**Authorization:** documentation-only API compatibility assessment. Decision: **SEQUOIA 15 ACCEPTED AS PROVISIONAL ENGINEERING BASELINE** for future authorized research only. No documented mandatory API family requires a version later than macOS 15; selected APIs/action semantics and product workflows remain empirically unqualified. This is not a product support claim: **OS FLOOR NOT QUALIFIED; no supported product OS or release matrix**. The detailed inventory and separate engineering/product/release gates are in [`docs/research/IP-1/IP-1E-R2-ENGINEERING-OS-BASELINE.md`](docs/research/IP-1/IP-1E-R2-ENGINEERING-OS-BASELINE.md). No probes, tests, builds, packages, signing, notarization or implementation occurred.
 
-Preserved: IP-1E packaging direction **PASS (documentation-level)** only; B01/B02 pending; B03 OPEN / PARTIAL; B04 minimum policy accepted, overall OPEN / PARTIAL; IP-2A PARTIAL / INCOMPLETE; IP-2B–IP-2E NOT AUTHORIZED. R14's isolated worker remains a candidate requiring qualification, not a production selection. Branch `implementation/ip-1e-os-support-floor`, based on `7d45e67db6bc62bb0bf43b827ecd4cbf21eebdf2`. The pre-existing `AGENTS.md` edit is preserved and excluded. Stop for independent Architect review.
+R14 prerequisite status: Sequoia target identified; target environment/build not verified; lawful exact schema/runtime unavailable/not cleared; integrated parser/schema workload not authorized; workload not run. B01/B02 pending; B03 OPEN / PARTIAL; B04 minimum policy accepted, overall OPEN / PARTIAL; IP-2A PARTIAL / INCOMPLETE; IP-2B–IP-2E NOT AUTHORIZED; overall IP-1 PARTIAL / NOT PASS. IP-1E documentation decision remains PASS / ARCHITECT ACCEPTED. Branch `implementation/ip-1e-r2-engineering-os-baseline`, based on `e459b0157cc7f6cb551434dfa23bb98c45cf92c8`. The pre-existing `AGENTS.md` edit is preserved and excluded. Stop for independent Architect review.
+
+### Historical handoff — IP-1E R1 minimum macOS support-floor decision
+
+R1 concluded **OS FLOOR NOT QUALIFIED**, retaining Sequoia 15 as a qualification candidate. R2 accepts it solely as a provisional engineering baseline; product compatibility remains unqualified. See [`docs/research/IP-1/IP-1E-OS-SUPPORT-FLOOR-DECISION.md`](docs/research/IP-1/IP-1E-OS-SUPPORT-FLOOR-DECISION.md). Stop for independent Architect review.
 
 ### Historical handoff — IP-2A R14 resource-containment architecture review
 

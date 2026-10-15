@@ -4,6 +4,8 @@
 
 **Current OS decision (IP-1E R1, 2026-10-15): OS FLOOR NOT QUALIFIED.** Sequoia 15 remains the qualification candidate, with macOS 15.8.1 as the current candidate test image, not an approved or supported minimum. R1's assessment and exact matrix are in [`IP-1E-OS-SUPPORT-FLOOR-DECISION.md`](IP-1E-OS-SUPPORT-FLOOR-DECISION.md). This supersedes the earlier 15.8 patch reference but does not change the documentation-level IP-1E packaging verdict.
 
+**Engineering baseline (IP-1E R2): Sequoia 15 ACCEPTED AS PROVISIONAL ENGINEERING BASELINE.** This is a target for future authorized research only. Product OS floor remains NOT QUALIFIED; no package, Shortcut workflow, or release matrix is supported by this decision. See [`IP-1E-R2-ENGINEERING-OS-BASELINE.md`](IP-1E-R2-ENGINEERING-OS-BASELINE.md).
+
 **Baseline:** `767e1a1791202969122db8a98f7459a98201cab8`; branch `implementation/ip-1e-packaging-decision`. Research checked 2026-10-13. IP-1D evidence is carried forward without treating its observations as packaging qualification.
 
 ## 1. Decision within the approved architecture
