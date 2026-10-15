@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="RTZ-GPX Converter Prototype">
+  <rte>
+    <name>SYN-Fields-12</name>
+    <rtept lat="12.25" lon="23.5">
+      <name>SYN-A</name>
+    </rtept>
+    <rtept lat="12.5" lon="23.75">
+      <name>SYN-B</name>
+    </rtept>
+    <rtept lat="12.75" lon="24">
+      <name>SYN-C</name>
+    </rtept>
+  </rte>
+</gpx>

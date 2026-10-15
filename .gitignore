@@ -5,6 +5,7 @@
 
 # Xcode / Swift build output (when implementation is authorized)
 .build/
+/build/
 DerivedData/
 *.xcuserstate
 xcuserdata/
@@ -14,6 +15,7 @@ xcuserdata/
 *.rtzp
 *.gpx
 !tests/fixtures/synthetic/*.gpx
+!examples/rtz-1.2-synthetic-example.gpx
 
 # Local private route material and generated exports
 /private-routes/

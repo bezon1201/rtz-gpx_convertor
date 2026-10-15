@@ -1,8 +1,12 @@
 # Progress ledger
 
-## Current gate activity — IP-1E R2 provisional engineering OS baseline
+## Current gate activity — minimal converter prototype
 
-**Authorization:** documentation-only API compatibility assessment. Decision: **SEQUOIA 15 ACCEPTED AS PROVISIONAL ENGINEERING BASELINE** for future authorized research; no documented mandatory API requires a later OS. This does not establish product support: **OS FLOOR NOT QUALIFIED**, no supported product OS or release matrix. Sequoia target is identified, but target environment/build is not verified. R14: exact lawful schema/runtime unavailable/not cleared; integrated parser/schema workload not authorized; actual workload not run. IP-1E documentation decision remains PASS / ARCHITECT ACCEPTED. B01/B02 pending; B03 OPEN / PARTIAL; B04 minimum policy PASS / ARCHITECT ACCEPTED, overall OPEN / PARTIAL; IP-2A PARTIAL / INCOMPLETE; IP-2B–IP-2E NOT AUTHORIZED; overall IP-1 PARTIAL / NOT PASS. No probes, tests, builds, packages, signing or implementation occurred. `AGENTS.md` is preserved and excluded. Branch: `implementation/ip-1e-r2-engineering-os-baseline`, from `e459b0157cc7f6cb551434dfa23bb98c45cf92c8`. Stop for independent Architect review.
+**Authorization:** minimal prototype only, from `03e3f5f13267a51772ceb6aef4430bb0375aff82`. One Swift CLI handles synthetic RTZ 1.0/1.2 in Full Route mode and writes deterministic GPX 1.1. It rejects malformed, unsupported, invalid-coordinate and DTD/entity input and does not publish output on failure. XSD validation is absent; no conformance/support claim is made. No UI, Shortcut, worker, IPC, schema, dependency, or packaging was added. `make test` passed focused tests; no Windy import was run. Example: `examples/rtz-1.2-synthetic-example.gpx`. The Sequoia 15 engineering baseline remains research-only; product OS floor NOT QUALIFIED. B01/B02 pending; B03 OPEN / PARTIAL; B04 minimum policy PASS / ARCHITECT ACCEPTED, overall OPEN / PARTIAL; IP-2A PARTIAL / INCOMPLETE; IP-2B–IP-2E remain NOT AUTHORIZED; this prototype is a separate, narrow authorization; overall IP-1 PARTIAL / NOT PASS. `AGENTS.md` is preserved and excluded. Branch: `implementation/minimal-converter-prototype`, from `03e3f5f13267a51772ceb6aef4430bb0375aff82`. Stop for Architect review before expanding scope.
+
+### Historical gate activity — IP-1E R2 provisional engineering OS baseline
+
+R2 accepted Sequoia 15 as a provisional engineering target only. Product OS floor remained NOT QUALIFIED. See [`docs/research/IP-1/IP-1E-R2-ENGINEERING-OS-BASELINE.md`](docs/research/IP-1/IP-1E-R2-ENGINEERING-OS-BASELINE.md).
 
 ### Historical gate activity — IP-1E R1 minimum macOS support-floor decision
 

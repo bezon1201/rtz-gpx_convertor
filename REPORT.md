@@ -1,10 +1,14 @@
 # Architect review handoff
 
-## Current handoff — IP-1E R2 provisional engineering OS baseline
+## Current handoff — minimal converter prototype
 
-**Authorization:** documentation-only API compatibility assessment. Decision: **SEQUOIA 15 ACCEPTED AS PROVISIONAL ENGINEERING BASELINE** for future authorized research only. No documented mandatory API family requires a version later than macOS 15; selected APIs/action semantics and product workflows remain empirically unqualified. This is not a product support claim: **OS FLOOR NOT QUALIFIED; no supported product OS or release matrix**. The detailed inventory and separate engineering/product/release gates are in [`docs/research/IP-1/IP-1E-R2-ENGINEERING-OS-BASELINE.md`](docs/research/IP-1/IP-1E-R2-ENGINEERING-OS-BASELINE.md). No probes, tests, builds, packages, signing, notarization or implementation occurred.
+**Authorization:** minimal local prototype only, based on `03e3f5f13267a51772ceb6aef4430bb0375aff82`. Implemented a single-file Swift CLI for project-authored synthetic RTZ 1.0/1.2 fixtures, Full Route mode, coordinate/name extraction, deterministic GPX 1.1 output, explicit route-name override/omission, malformed/unsupported/DTD rejection, and no partial publication. No XSD validation is performed; this prototype does not claim RTZ conformance or product support. It adds no GUI, Shortcut, worker, IPC, schema, or external dependency.
 
-R14 prerequisite status: Sequoia target identified; target environment/build not verified; lawful exact schema/runtime unavailable/not cleared; integrated parser/schema workload not authorized; workload not run. B01/B02 pending; B03 OPEN / PARTIAL; B04 minimum policy accepted, overall OPEN / PARTIAL; IP-2A PARTIAL / INCOMPLETE; IP-2B–IP-2E NOT AUTHORIZED; overall IP-1 PARTIAL / NOT PASS. IP-1E documentation decision remains PASS / ARCHITECT ACCEPTED. Branch `implementation/ip-1e-r2-engineering-os-baseline`, based on `e459b0157cc7f6cb551434dfa23bb98c45cf92c8`. The pre-existing `AGENTS.md` edit is preserved and excluded. Stop for independent Architect review.
+**Verification:** `make test` passed the focused synthetic checks. Example: [`examples/rtz-1.2-synthetic-example.gpx`](examples/rtz-1.2-synthetic-example.gpx). No Windy import was run. The approved engineering baseline is Sequoia 15 for future research only; this prototype was built on the existing macOS 26 development machine. Product OS floor remains NOT QUALIFIED. B01/B02 pending; B03 OPEN / PARTIAL; B04 minimum policy accepted, overall OPEN / PARTIAL; IP-2A PARTIAL / INCOMPLETE; IP-2B–IP-2E remain NOT AUTHORIZED; this prototype is a separate, narrow authorization; overall IP-1 PARTIAL / NOT PASS. Branch `implementation/minimal-converter-prototype`, from `03e3f5f13267a51772ceb6aef4430bb0375aff82`. The pre-existing `AGENTS.md` edit is preserved and excluded. Stop for Architect review before expanding functionality.
+
+### Historical handoff — IP-1E R2 provisional engineering OS baseline
+
+IP-1E R2 accepted Sequoia 15 as a provisional engineering target only. Product OS floor remained NOT QUALIFIED. The prototype task does not alter those determinations.
 
 ### Historical handoff — IP-1E R1 minimum macOS support-floor decision
 
